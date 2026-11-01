@@ -139,7 +139,7 @@
    const d=pathFor(f.geometry,area);
    if(!d)return '';
    const name=area==='turkey'?(f.properties?.il_adi||'il'):(f.properties?.name||'ülke');
-   return '<path class="'+(area==='turkey'?'province'+(S.province?'':' calm'):'land')
+   return '<path class="'+(area==='turkey'?'province':'land')
     +'" d="'+d+'" data-feature="'+esc(name)+'"/>';
   }).join('');
   // Stroke toggled by CSS class on entire map; polygons remain geographically grounded.
@@ -362,12 +362,14 @@
   setActions('<button type="button" class="primary" data-action="toggle-review">Tüm soruları göster</button>');
  }
  function selectAnswer(id){
-  const q=currentQuestion();
-  if(!q||!q.pins.includes(id))return;
   if(S.mode==='explore'){
+   const allowed=getExploreItems();
+   if(!allowed.includes(id))return;
    if(S.area==='contour')S.contourSelection=id;else S.exploreSelection=id;
    showExplore();drawCurrentMap();return;
   }
+  const q=currentQuestion();
+  if(!q||!q.pins.includes(id))return;
   if(S.mode==='recall'){
    if(S.answered)return;
    S.choice=id;presentQuestion();drawCurrentMap();return;
