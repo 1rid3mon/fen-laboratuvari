@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f4f1">
+<meta name="description" content="Begüm için TYT coğrafya harita laboratuvarı: gerçek dünya ve Türkiye haritaları, izohips etkinlikleri, keşfet–hatırla–TYT sınavı ve yanlışlarım haritası.">
+<title>TYT Coğrafya · Harita Laboratuvarı</title>
+<link rel="stylesheet" href="cografya-harita.css">
+<script src="cografya-veri.js" defer></script>
+<script src="cografya-harita.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#map">Haritaya geç</a>
+<div class="shell">
+<header class="hero">
+  <a class="back" href="../index.html">← Fen Laboratuvarı</a>
+  <div class="brandline"><span>🦋</span><span>BEGÜM İÇİN · K + B</span><span>🦋</span></div>
+  <h1>Haritada gör. <em>Kalıcı öğren.</em></h1>
+  <p>TYT Coğrafya · gerçek haritada konuyu keşfet, isimsiz haritada hatırla, sınav formatında kendini ölç.</p>
+  <div class="tags"><span>2018 MEB / TYT</span><span>Yalnız TYT · AYT yok</span><span>Harita isimsiz ve gri</span><span>Yerel tekrar takibi</span></div>
+</header>
+<main class="work" id="main">
+ <div class="topnav">
+  <div class="tabs" id="mode-tabs" role="group" aria-label="Öğrenme modu">
+   <button type="button" data-mode="explore" class="active" aria-pressed="true">01 <b>Keşfet</b></button>
+   <button type="button" data-mode="recall" aria-pressed="false">02 <b>Hatırla</b></button>
+   <button type="button" data-mode="exam" aria-pressed="false">03 <b>TYT Sınavı</b></button>
+  </div>
+  <div class="progress-pill" id="mastery" aria-live="polite">Başlamak için harita seç</div>
+ </div>
+ <div class="controls-row">
+  <div class="region-pills" id="area-tabs" role="group" aria-label="Harita bölgesi">
+   <button type="button" class="active" data-area="turkey" aria-pressed="true">🇹🇷 Türkiye</button>
+   <button type="button" data-area="world" aria-pressed="false">🌍 Dünya</button>
+   <button type="button" data-area="contour" aria-pressed="false">〰️ İzohips</button>
+  </div>
+  <label class="field">Konu
+   <select id="topic-select" aria-label="TYT coğrafya konu filtresi"></select>
+  </label>
+  <label class="reveal" id="label-toggle-wrap"><input type="checkbox" id="label-toggle"> <span>Yer adlarını göster</span></label>
+ </div>
+ <div class="content">
+  <section class="map-panel" aria-labelledby="map-title">
+   <div class="panel-heading">
+    <div><span class="kicker" id="scene-kicker">KEŞİF MODU</span><h2 id="map-title">Türkiye haritası</h2><p id="scene-description">Gri işaretlere dokun; konunun nedenini öğren.</p></div>
+    <div class="pin-counter" id="pin-counter">—</div>
+   </div>
+   <div id="map" class="map" tabindex="-1" aria-label="Etkileşimli coğrafya haritası"><div class="loading" role="status">Harita hazırlanıyor…</div></div>
+   <div id="map-caption" class="map-caption">İşaretlerin konumu gerçek coğrafi koordinatlara dayanır. Gösterimler eğitim amaçlıdır.</div>
+   <div class="map-actions">
+    <button type="button" class="outline" id="new-question">↻ Yeni soru</button>
+    <button type="button" class="outline" id="review-button">✦ Yanlışlarımı tekrarla</button>
+    <button type="button" class="outline" id="province-button" aria-pressed="false">İl sınırları: Kapalı</button>
+   </div>
+  </section>
+  <aside class="side">
+   <section class="question-panel">
+    <div class="section-label"><span class="section-icon">✦</span><span id="lesson-label">KONU ANLATIMI</span></div>
+    <h2 id="prompt-heading">Haritadaki bir noktayı seç.</h2>
+    <p id="prompt-detail" class="muted">Dokunduğun konumun neden önemli olduğunu ve TYT'de nasıl sorulabileceğini göreceksin.</p>
+    <div id="answer-options" class="answers" aria-label="Beş seçenekli soru yanıtları"></div>
+    <div id="result" class="result" role="status" aria-live="polite"></div>
+    <div id="lesson" class="lesson"></div>
+    <div id="question-actions" class="question-actions"></div>
+   </section>
+   <section class="review-panel">
+    <div class="review-head"><div><span class="section-label">YANLIŞLARIM HARİTASI</span><h3>Tekrar defteri</h3></div><span class="count-bubble" id="wrong-count">0</span></div>
+    <p id="review-summary" class="muted">Yanlışların bu cihazda saklanır. Zamanı gelince tekrar karşına çıkar.</p>
+    <div id="wrong-list" class="wrong-list"></div>
+    <button type="button" class="clear-button" id="clear-progress">Öğrenme kayıtlarını sıfırla</button>
+   </section>
+  </aside>
+ </div>
+</main>
+<footer>
+ <p><b>Harita laboratuvarı</b> · TYT için harita yorumlama pratiği. Konu temaları 2018 MEB kazanımlarıyla eşleştirildi; 2027 YKS'nin nihai kapsamı ÖSYM duyurularına bağlıdır. Üç mod da yeni soruları üretir; sorular ÖSYM'den alınmamış, özgün alıştırmalardır.</p>
+ <p>Harita sınırları: Natural Earth, kamu malı ülke geometrileri. İl geometrileri: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap katkıcıları</a>, <a href="https://github.com/theaiagent/turkiye_iller_geojson" target="_blank" rel="noopener noreferrer">theaiagent/turkiye_iller_geojson</a>, <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL 1.0</a>. Türkiye il sınırları resmî idari sınır belgesi değildir. Ülke sınırları uluslararası uyuşmazlıklar açısından taraf belirtmez. Kayıtlar yalnızca bu tarayıcıdadır.</p>
+</footer>
+</div>
+</body>
+</html>
