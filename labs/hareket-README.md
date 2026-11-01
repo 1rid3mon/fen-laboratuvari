@@ -2,7 +2,7 @@
 
 ## İçerik ve girişler
 - /labs/vektorler-bagil-hareket.html: vektör bileşenleri ve 2B bileşke, hareketli gözlemci, karşılaşma/yetişme, akıntılı nehir, rüzgârlı uçak ve 13 özgün TYT/AYT hazırlık sorusu (AYT 2018 kazanımı).
-- /labs/newton-hareket-yasalari.html: yatay net kuvvet ve F = ma, yatay statik/kinetik sürtünme, eğik düzlem bileşenleri, asansör normal kuvveti, etki–tepki ve 12 özgün soru.
+- /labs/newton-hareket-yasalari.html: yatay net kuvvet ve F = ma, yatay statik/kinetik sürtünme, eğik düzlem bileşenleri, düşey duvarda sürtünme, asansör normal kuvveti, etki–tepki ve 13 özgün soru.
 
 Bu sayfalar 2018 MEB **11. sınıf fizik ünitesi**nin şu kazanımlarına dayanır; mezun YKS adayı için AYT olarak kategorilenmiştir:
 - 11.1.1.1–11.1.1.4: vektör özellikleri, bileşenler, vektörel bileşke, uç uca ve paralelkenar yöntemi, kosinüs.
@@ -29,9 +29,10 @@ Bu sayfalar 2018 MEB **11. sınıf fizik ünitesi**nin şu kazanımlarına dayan
 1. Net kuvvet: iki yatay dış kuvvet; durgun veya sabit hızlı başlangıç; Fnet = m a.
 2. Yatay sürtünme: durgun blokta statik sürtünme gereken büyüklükte uyum sağlar; yalnız en büyük değer μs N; eşik aşılınca kayma ve μk N. Bu model cisim ilk anda **durgun** varsayımıyla çalışır.
 3. Eğik düzlem: mg sinθ ve mg cosθ, normal, eğim boyunca uygulanan kuvvet ve sürtünmenin yönü, kayma veya statik denge.
-4. Asansör: a yukarı pozitif, N = m(g + a); sabit hızda N=mg.
-5. Etki–tepki: aynı büyüklük, ters yön, **farklı cisimler**; kütleleri eşit olmasa kuvvetler eşittir.
-6. 12 özgün AYT konusu sorusu.
+4. Düşey duvar: blok duvara yatay kuvvetle bastırılır; N=Fbasma ve statik sürtünme mg kadar olabilir. Yetersiz basma kuvvetinde aşağı kayma başlar.
+5. Asansör: a yukarı pozitif, N = m(g + a); sabit hızda N=mg.
+6. Etki–tepki: aynı büyüklük, ters yön, **farklı cisimler**; kütleleri eşit olmasa kuvvetler eşittir.
+7. 13 özgün AYT konusu sorusu.
 
 **Fiziksel varsayımlar:** ideal rijit cisim, düzgün yatay/eğik yüzey, m>0, g>0, cismin ilk anda durgun olması; hava direnci yok. Tipik μk≤μs koşulu kullanıcı arayüzünde korunur. Net kuvvet hesabında diğer fiziksel kuvvetlerin gösterilmesi için ilgili FBD şeması kullanılır. Sabit hızlı hareketin ivmesi sıfırdır; kuvvet olmaması değil net kuvvetin sıfır olması gerekir.
 
