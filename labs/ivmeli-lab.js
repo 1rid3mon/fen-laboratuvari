@@ -16,13 +16,13 @@ const base={
  brake:{v0:22,decel:4,t:0},
  fall:{h:80,g:10,t:0},
  throw:{h:0,v0:20,g:10,t:0},
- drag:{h:100,mass:1,k:.05,g:10,t:0},
+ drag:{h:100,mass:1,k:.05,area:.1,shape:'flat',rho:1.2,g:10,t:0},
  quiz:{index:0,choice:null,checked:false,score:0,attempts:0}
 };
 const S={tab:'motion',playing:false,raf:null,last:0,chartMode:'all'};
 for(const id of Object.keys(base))S[id]=JSON.parse(JSON.stringify(base[id]));
 const Q=[
- {q:'x₀=2 m, v₀=4 m/s, a=2 m/s². 3 saniye sonra yer değiştirme?',cs:['6 m','12 m','18 m','21 m','24 m'],a:2,why:'Δx = v₀t+½at² = 4×3+½×2×9 = 21 m. Doğru seçenek 21 m.',fix:3},
+ {q:'x₀=2 m, v₀=4 m/s, a=2 m/s². 3 saniye sonra yer değiştirme?',cs:['6 m','12 m','18 m','21 m','24 m'],a:3,why:'Δx = v₀t+½at² = 4×3+½×2×9 = 21 m.'},
  {q:'v₀=5 m/s, a=3 m/s², t=4 s. Son hız?',cs:['8','12','15','17','20'],a:3,why:'v = v₀+at = 5+3×4 = 17 m/s.'},
  {q:'İvme negatif olan bir cismin hızı mutlaka azalır mı?',cs:['Evet','Hayır, hız negatifse sürat artabilir','Daima durur','Sadece ilk hız sıfırsa','Daima ileri gider'],a:1,why:'İvme ve hız aynı işaretliyse sürat artar; ikisi de negatifse cisim hızlanır.'},
  {q:'Hız-zaman grafiğinin eğimi hangi büyüklüktür?',cs:['Konum','Yer değiştirme','İvme','Alınan yol','Sürat'],a:2,why:'v–t eğimi Δv/Δt = a (sabit ivmede).'},
@@ -39,8 +39,6 @@ const Q=[
  {q:'Hava sürtünmesi hangi faktörlerden etkilenebilir?',cs:['Yalnız renk','Yalnız kütle','Yalnız konum','Hız, şekil ve kesit alanı','Sadece sıcaklık'],a:3,why:'Hava direnci hız, şekil, kesit alanı ve ortam yoğunluğu gibi etkenlerle değişir.'},
  {q:'x–t grafiğinde eğim negatif olduğunda cismin hareket yönü?',cs:['Pozitif yönde','Durgun','Negatif yönde','Kesin hızlanıyor','Kesin yavaşlıyor'],a:2,why:'x–t eğimi işaretli hızdır. Negatif eğim → v<0, negatif yönde hareket.'}
 ];
-// fix any answer text ambiguity through deterministic inline checks
-Q[0].a=3;delete Q[0].fix;
 const name={motion:'Sabit İvmeli Hareket',graphs:'Grafiklerin dönüşümü',brake:'Frenleme ve yön değiştirme',fall:'Serbest düşme',throw:'Düşey yukarı/aşağı atış',drag:'Hava direnci ve limit hız',quiz:'AYT mini soru bankası'};
 const desc={
  motion:'Bir doğrultuda x₀, v₀, ivme ve zamanı değiştir. İvmenin işareti ile süratin artması aynı şey değildir.',
@@ -68,12 +66,14 @@ function button(title,action){
  return '<button class="btn" type="button" data-action="'+action+'">'+H(title)+'</button>';
 }
 function activeParams(){return S[S.tab];}
+const shapeFactor={round:.55,flat:1,parachute:1.6};
+function effectiveDrag(s){return s.k*(s.area/.1)*(s.rho/1.2)*shapeFactor[s.shape];}
 function maxTime(mode){
  if(mode==='motion'||mode==='graphs')return 12;
  if(mode==='brake')return 12;
  if(mode==='fall'){const q=M.freeFall({height:S.fall.h,g:S.fall.g,t:0});return Math.max(3,Math.min(14,Math.ceil(q.impactTime)+2));}
  if(mode==='throw'){const q=M.verticalThrow({height:S.throw.h,v0:S.throw.v0,g:S.throw.g,t:0});return Math.max(3,Math.min(14,Math.ceil(q.impactTime)+2));}
- if(mode==='drag'){const q=M.resistance({mass:S.drag.mass,k:S.drag.k,g:S.drag.g,t:0,height:S.drag.h});return Math.max(4,Math.min(22,Math.ceil(q.impactTime)+2));}
+ if(mode==='drag'){const q=M.resistance({mass:S.drag.mass,k:effectiveDrag(S.drag),g:S.drag.g,t:0,height:S.drag.h});return Math.max(4,Math.min(22,Math.ceil(q.impactTime)+2));}
  return 12;
 }
 function sample(mode,t){
@@ -99,7 +99,7 @@ function sample(mode,t){
   return {x:r.y,v:r.v,a:r.acceleration,t,result:r,axis:'up',positionLabel:'yerden yükseklik'};
  }
  if(mode==='drag'){
-  const r=M.resistance({mass:s.mass,k:s.k,g:s.g,t,height:s.h});
+  const r=M.resistance({mass:s.mass,k:effectiveDrag(s),g:s.g,t,height:s.h});
   return {x:r.fallen,v:r.v,a:r.acceleration,t,result:r,axis:'down',positionLabel:'düşülen yol'};
  }
  return null;
@@ -121,7 +121,9 @@ function formatRows(p){
  }
  if(S.tab==='throw')arr.push(['En yüksek nokta',F(r.peakHeight,'m')],['Tepe zamanı',F(r.peakTime,'s')]);
  if(S.tab==='drag')arr.push(['Hava direnci',F(r.drag,'N')],['Ağırlık',F(r.weight,'N')],
-   ['Limit hıza yakınlık',r.terminalSpeed===null?'Direnç yok':F(100*(r.ratio??0),'%'),'Bu bir limit hız hesaplama sorusu değildir.']);
+   ['Kesit alanı',F(S.drag.area,'m²')],['Hava yoğunluğu',F(S.drag.rho,'kg/m³')],
+   ['Etkin direnç katsayısı',F(effectiveDrag(S.drag),'N/(m/s)²')],
+   ['Limit hıza yakınlık',r.impacted?'Zemine ulaştı':r.terminalSpeed===null?'Direnç yok':F(100*(r.ratio??0),'%'),'Bu bir limit hız hesaplama sorusu değildir.']);
  metric(arr);
 }
 function lessonFor(mode,p){
@@ -265,7 +267,10 @@ function makeControls(){
  if(t==='throw')h=slider('h','Atış yüksekliği',0,80,5,s.h,'m')+
   slider('v0','İlk hız (+yukarı)',-20,40,1,s.v0,'m/s')+slider('g','Yerçekimi',8,10,.2,s.g,'m/s²');
  if(t==='drag')h=slider('h','Bırakma yüksekliği',10,120,5,s.h,'m')+slider('mass','Cismin kütlesi',.5,4,.5,s.mass,'kg')
-  +slider('k','Hava direnci katsayısı',0,.2,.01,s.k,'N/(m/s)²')+slider('g','Yerçekimi',8,10,.2,s.g,'m/s²');
+  +slider('area','Havayla karşılaşan kesit alanı',.02,.3,.01,s.area,'m²')
+  +combo('shape','Cismin şekli',[['round','Yuvarlak — az direnç'],['flat','Düz yüzey'],['parachute','Paraşüt — çok direnç']],s.shape)
+  +slider('rho','Hava yoğunluğu',.6,1.6,.1,s.rho,'kg/m³')
+  +slider('k','Temel direnç katsayısı',0,.2,.01,s.k,'N/(m/s)²')+slider('g','Yerçekimi',8,10,.2,s.g,'m/s²');
  if(t!=='quiz')h+=slider('t','Zamanı elle ilerlet',0,T,.1,Math.min(T,s.t),'s');
  $('controls').innerHTML=h||'<p class="muted">Soruyu seçip yanıtını kontrol et.</p>';
 }
@@ -289,7 +294,7 @@ function setMode(id){
 function onChange(key,value){
  const s=S[S.tab];
  if(!s||!(key in s)||S.tab==='quiz')return;
- S.playing=false;S.last=0;s[key]=Number(value);
+ S.playing=false;S.last=0;s[key]=key==='shape'?value:Number(value);
  if(key!=='t'){s.t=0;makeControls();}
  s.t=Math.max(0,Math.min(s.t,maxTime(S.tab)));
  update();
@@ -331,6 +336,7 @@ function init(){
  $('tabs').innerHTML=tabs.map(([id,title])=>'<button type="button" data-tab="'+id+'" aria-pressed="false">'+H(title)+'</button>').join('');
  $('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)setMode(b.dataset.tab);});
  $('controls').addEventListener('input',e=>{const b=e.target.closest('[data-range]');if(!b)return;onChange(b.dataset.range,b.value);});
+ $('controls').addEventListener('change',e=>{const b=e.target.closest('select[data-select]');if(b)onChange(b.dataset.select,b.value);});
  $('buttons').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b&&!b.disabled)action(b.dataset.action);});
  $('quiz').addEventListener('click',e=>{const b=e.target.closest('[data-answer]');if(b&&S.tab==='quiz'&&!S.quiz.checked){S.quiz.choice=Number(b.dataset.answer);update();}});
  d.addEventListener('visibilitychange',()=>{if(d.hidden){S.playing=false;S.last=0;buttons();}});
