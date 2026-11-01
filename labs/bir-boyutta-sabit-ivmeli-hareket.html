@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#06111e">
+<meta name="description" content="AYT 2018 MEB: Bir Boyutta Sabit İvmeli Hareket. Konum-zaman, hız-zaman ve ivme-zaman grafikleri; frenleme, yön değiştirme, serbest düşme, düşey atış, hava direnci ve limit hız.">
+<title>AYT Fizik · Bir Boyutta Sabit İvmeli Hareket</title>
+<link rel="stylesheet" href="hareket-lab.css">
+<style>
+.graph-layout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:13px}
+.plot{min-width:0;border:1px solid #36566c;border-radius:12px;background:#07192b;padding:8px}
+.plot svg{display:block;width:100%;height:auto}
+.plot h3{margin:0 0 4px;font-size:.78rem;color:#cfedf7}
+.plot p{font-size:.7rem;color:#95bbd0;margin:4px 0 0}
+.graph-summary{border:1px solid #376c74;border-radius:11px;padding:10px 12px;margin-top:10px;font-size:.81rem;color:#b6efdf;line-height:1.6;background:#0b2930}
+@media(max-width:850px){.graph-layout{grid-template-columns:1fr}}
+</style>
+<script defer src="hareket-math.js"></script>
+<script defer src="ivmeli-math.js"></script>
+<script defer src="ivmeli-lab.js"></script>
+</head><body>
+<div class="shell">
+<header class="intro">
+<a href="../index.html" class="back">← Fen Laboratuvarı</a>
+<div class="eyebrow">AYT FİZİK · 2018 MEB / 11.1.4.1–11.1.4.6</div>
+<h1>🚀 Bir Boyutta <em>Sabit İvmeli Hareket</em></h1>
+<p>Hız ve konumu ayrı kavramlar olarak gör. <strong>x–t, v–t, a–t</strong> grafiklerini aynı anda incele; eğim ve alanın fiziksel karşılığını, serbest düşmeyi ve limit hızı deneyerek öğren.</p>
+<div class="chips">
+<span>1B sabit ivme</span><span>Grafik yorumu ve dönüşümleri</span><span>Serbest düşme</span><span>Hava direnci / limit hız</span><span>Düşey atış</span><span>Özgün AYT soruları</span>
+</div>
+</header>
+<nav id="tabs" class="tabs" aria-label="İvmeli hareket deneyleri"></nav>
+<main class="workspace">
+<section class="card">
+ <div class="eyebrow" id="tagline">11.1.4 · HAREKETİ GÖR</div>
+ <h2 id="heading">Yükleniyor</h2><p class="muted" id="intro"></p>
+ <div class="scene" id="scene" role="group" aria-label="Bir boyutta hareket simülasyonu"></div>
+ <div id="buttons" class="toolbar"></div>
+ <div id="hint" class="hint" role="status"></div>
+ <div id="graphs-section"><h3>📈 Üç grafik, tek hareket</h3>
+ <div class="graph-layout" id="graphs" aria-label="Konum-zaman, hız-zaman ve ivme-zaman grafikleri"></div>
+ <div id="graph-summary" class="graph-summary" aria-live="polite"></div></div>
+</section>
+<aside class="sidebar">
+<section class="card"><h2>🎛️ Deneyi yönet</h2>
+<p class="muted">Başlangıç değerlerini değiştir, zamanı kaydır veya ▶ Oynat. Eğriler ve cisim aynı verilerden hesaplanır.</p>
+<div class="controls" id="controls"></div>
+</section>
+<section class="card"><h2>📐 Anlık değerler</h2><div class="results" id="results" aria-live="polite"></div>
+<h3>🧠 YKS bağlantısı</h3><div class="lesson" id="lesson"></div>
+<div class="quiz" id="quiz"></div></section>
+</aside>
+</main>
+<p class="footer">**2018 MEB Fizik 11.1.4.1–11.1.4.6** esas alınır; Maarif Modeli kapsamında başka bir konu eklenmemiştir. Hava direncinde gösterilen karesel model, limit hızın nitel yorumu içindir: MEB bu modelin <strong>matematiksel hesaplamalarını zorunlu tutmaz.</strong> Düşey atışlar 1 boyutludur; yatay ve eğik atışlar ayrı 11.1.5 konusudur. <a href="newton-hareket-yasalari.html">← Newton’un Hareket Yasaları</a></p>
+</div>
+</body></html>
