@@ -165,7 +165,7 @@ test('DOM: interactive scrub/slider, free fall, air resistance, quiz and lazy pl
  assert.match(h.nodes.get('results').innerHTML,/m\/s/);
  h.fire('tabs','click','[data-tab]',{dataset:{tab:'drag'}});
  assert.match(h.nodes.get('graph-summary').textContent,/Hava direnci/);
- assert.match(h.nodes.get('controls').innerHTML,/Kesit alanı/);
+ assert.match(h.nodes.get('controls').innerHTML,/kesit alanı/i);
  h.fire('controls','input','[data-range]',{dataset:{range:'area',unit:'m²'},value:'0.2'});
  near(h.snapshot().drag.area,0.2);
  h.fire('controls','change','select[data-select]',{dataset:{select:'shape'},value:'parachute'});
