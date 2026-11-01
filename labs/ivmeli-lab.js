@@ -295,7 +295,13 @@ function onChange(key,value){
  const s=S[S.tab];
  if(!s||!(key in s)||S.tab==='quiz')return;
  S.playing=false;S.last=0;s[key]=key==='shape'?value:Number(value);
- if(key!=='t'){s.t=0;makeControls();}
+ if(key!=='t'){
+  s.t=0;
+  // Never recreate range inputs during input events: preserve iPad/phone dragging.
+  const timeInput=$('in-t'),timeOutput=$('out-t');
+  if(timeInput){timeInput.value='0';timeInput.max=String(maxTime(S.tab));}
+  if(timeOutput)timeOutput.textContent=F(0,'s');
+ }
  s.t=Math.max(0,Math.min(s.t,maxTime(S.tab)));
  update();
 }
