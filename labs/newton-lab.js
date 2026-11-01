@@ -98,14 +98,17 @@ function drawFriction(){
 function drawIncline(){
  const s=st.incline,theta=s.angle*PI/180,r=P.incline({mass:s.mass,angleDeg:s.angle,force:s.force,g:s.g,muStatic:s.muStatic,muKinetic:s.muKinetic});
  const low=P.vec(135,440),len=500,tx=Math.cos(theta),ty=-Math.sin(theta),high=P.vec(low.x+len*tx,low.y+len*ty);
- const center=P.vec(low.x+len*tx*.53,low.y+len*ty*.53),up=P.vec(tx,Math.sin(theta)),normal=P.vec(-Math.sin(theta),Math.cos(theta));
+ const slide=Math.max(-200,Math.min(180,.5*r.acceleration*s.time*s.time*9));
+ const ratio=Math.max(.1,Math.min(.85,.53+slide/len));
+ const center=P.vec(low.x+len*tx*ratio,low.y+len*ty*ratio);
+ const forceScale=Math.min(2.4,125/Math.max(1,s.mass*s.g,r.N,Math.abs(s.force),Math.abs(r.friction)));
  let g='<path d="M'+low.x+' '+low.y+'L'+high.x.toFixed(1)+' '+high.y.toFixed(1)+'L'+high.x.toFixed(1)+' 475L'+low.x+' 475Z" fill="#30465b" stroke="#a3c6d7" stroke-width="2"/>';
  g+='<g transform="rotate('+-s.angle+' '+center.x.toFixed(1)+' '+center.y.toFixed(1)+')">'+box(center.x,center.y-35,s.mass+' kg')+'</g>';
  const ox=center.x,oy=center.y-35;
- g+=vector(ox,oy,s.force*tx,s.force*Math.sin(theta),'#64bcff','blue','F',3);
- g+=vector(ox,oy,r.friction*tx,r.friction*Math.sin(theta),'#ff8c9f','pink','f',3);
- g+=vector(ox,oy,0,-s.mass*s.g,'#f5c978','gold','mg',2);
- g+=vector(ox,oy,r.N*(-Math.sin(theta)),r.N*Math.cos(theta),'#50e2c2','green','N',2);
+ g+=vector(ox,oy,s.force*tx,s.force*Math.sin(theta),'#64bcff','blue','F',forceScale);
+ g+=vector(ox,oy,r.friction*tx,r.friction*Math.sin(theta),'#ff8c9f','pink','f',forceScale);
+ g+=vector(ox,oy,0,-s.mass*s.g,'#f5c978','gold','mg',forceScale);
+ g+=vector(ox,oy,r.N*(-Math.sin(theta)),r.N*Math.cos(theta),'#50e2c2','green','N',forceScale);
  g+=label(18,34,'Pozitif eksen: eğim yukarı · mg sinθ eğim aşağı.');
  g+=label(18,485,'mg·sinθ eğim aşağı, mg·cosθ düzleme dik');
  $('scene').innerHTML=graph(g);
@@ -113,7 +116,7 @@ function drawIncline(){
  ['Eğim açısı',F(s.angle,'°')],['mg sinθ (aşağı)',F(r.down,'N')],
  ['mg cosθ = N',F(r.N,'N')],['Statik sınır',F(r.maxStatic,'N')],
  ['Sürtünme (işaretli)',F(r.friction,'N')],['Net eğim kuvveti',F(r.net,'N')],
- ['İvme (+yukarı)',F(r.acceleration,'m/s²')]
+ ['İvme (+yukarı)',F(r.acceleration,'m/s²')],['Zaman',F(s.time,'s')]
  ]);
  lesson('ΣF∥ = Fuygulanan − mg sinθ + fsürtünme = ma',
  'Düzlemin dik bileşenindeki kuvvetler dengedeyse normal N=mg cosθ. Eğim boyunca ağırlık bileşeni mg sinθ daima aşağı yönlüdür.',
@@ -122,37 +125,41 @@ function drawIncline(){
 }
 function drawElevator(){
  const s=st.elevator,r=P.elevator({mass:s.mass,acceleration:s.a,g:s.g});
+ const shift=Math.max(-78,Math.min(78,-.5*s.a*s.time*s.time*2));
+ const personY=295+shift,platformY=337+shift,forceScale=Math.min(.15,110/Math.max(1,r.normal,r.weight));
  let g='<rect x="215" y="60" width="430" height="386" rx="16" fill="#102b40" stroke="#6f9aaf" stroke-width="4"/>'
-  +'<path d="M430 60 V446" stroke="#436f86" stroke-width="2"/><rect x="280" y="337" width="300" height="35" rx="10" fill="#4b6e80"/>';
- g+=box(430,295,s.mass+' kg');
- g+=vector(430,295,0,r.normal/9,'#50e2c2','green','N',2.3);
- g+=vector(430,295,0,-r.weight/9,'#ff8c9f','pink','mg',2.3);
+  +'<path d="M430 60 V446" stroke="#436f86" stroke-width="2"/><rect x="280" y="'+platformY.toFixed(1)+'" width="300" height="35" rx="10" fill="#4b6e80"/>';
+ g+=box(430,personY,s.mass+' kg');
+ g+=vector(430,personY,0,r.normal,'#50e2c2','green','N',forceScale);
+ g+=vector(430,personY,0,-r.weight,'#ff8c9f','pink','mg',forceScale);
  g+=vector(680,260,0,s.a*20,'#f5c978','gold','a',3);
  g+=label(20,32,'Asansör ivmesi yukarı +a, aşağı −a');
  g+=label(20,483,'Baskülün gösterdiği değer: Normal kuvvet N (birimi N).');
  $('scene').innerHTML=graph(g);
- meter([['Ağırlık mg',F(r.weight,'N')],['Baskül N',F(r.normal,'N')],['Net kuvvet (yukarı +)',F(r.net,'N')],['Asansör ivmesi',F(s.a,'m/s²')]]);
+ meter([['Ağırlık mg',F(r.weight,'N')],['Baskül N',F(r.normal,'N')],['Net kuvvet (yukarı +)',F(r.net,'N')],['Asansör ivmesi',F(s.a,'m/s²')],['Zaman',F(s.time,'s')]]);
  lesson('N − mg = m a ⇒ N = m(g+a)',
  'Yukarı yönde ivmelenen asansörde N>mg olur. Aşağı yönde ivmelenirse N<mg olur. Sabit hızla hareket ederse a=0 ve N=mg.',
  'Baskül kütleyi değil normal kuvveti ölçer; kütle değişmez. Serbest düşüşte ideal N=0 olur.');
  hint('İvmeyi pozitif, sıfır ve negatif yap. Asansörün yukarı hareket etmesi ile yukarı ivmelenmesi aynı şey değildir.');
 }
 function drawThird(){
- const s=st.third,F0=s.F,m1=s.m1,m2=s.m2;
- const g=staticFloor(361)
-  +box(270,315,'A','#64bcff')+box(590,315,'B','#f5c978')
-  +vector(306,315,F0,0,'#64bcff','blue','A→B ?',0)
-  +vector(554,315,-F0,0,'#ff8c9f','pink','B→A ?',0);
- // Draw forces with explicit correct points and directions; no same-body cancellation.
- const ar=vector(570,295,F0,0,'#50e2c2','green','F(A→B)',3.2)
-  +vector(290,335,-F0,0,'#ff8c9f','pink','F(B→A)',3.2);
- $('scene').innerHTML=graph(g+ar+label(18,32,'Kuvvet çifti farklı cisimler üzerindedir; burada aynı cisimde toplanamaz.'));
+ const s=st.third,F0=s.F,m1=s.m1,m2=s.m2,t=s.time;
+ // Two blocks interact, starting at rest, on a frictionless horizontal plane.
+ // Equal-and-opposite internal forces act on DIFFERENT bodies, so accelerations differ.
+ const xA=270-Math.min(140,.5*(F0/m1)*t*t*1.4);
+ const xB=590+Math.min(140,.5*(F0/m2)*t*t*1.4);
+ let g=staticFloor(361)+box(xA,315,'A','#64bcff')+box(xB,315,'B','#f5c978');
+ const factor=Math.min(3.2,125/Math.max(1,F0));
+ g+=vector(xB+22,295,F0,0,'#50e2c2','green','F(A→B)',factor);
+ g+=vector(xA-22,335,-F0,0,'#ff8c9f','pink','F(B→A)',factor);
+ g+=label(18,32,'Etki–tepki: eşit kuvvet, farklı kütle → farklı ivme.');
+ $('scene').innerHTML=graph(g);
  meter([['A’nın B’ye kuvveti',F(F0,'N'),'B üzerinde, sağa'],['B’nin A’ya kuvveti',F(F0,'N'),'A üzerinde, sola'],
- ['A kütlesi',F(m1,'kg')],['B kütlesi',F(m2,'kg')],['A ivmesi (tek kuvvet modeli)',F(-F0/m1,'m/s²')],['B ivmesi (tek kuvvet modeli)',F(F0/m2,'m/s²')]]);
- lesson('F⃗(A→B) = −F⃗(B→A)',
- 'Etki ve tepki eşit büyüklükte, aynı doğrultuda ve ters yönde olup farklı cisimleri etkiler. İki cismin kütleleri farklıysa, aynı kuvvete karşı farklı ivmeler oluşabilir.',
- 'Şemada yalnız çiftin etkileşim kuvvetleri ve yataydaki ideal net kuvvet gösteriliyor. Normal ve ağırlık yatay harekette birbirini dengeler.');
- hint('Büyük kütleli cisim daha küçük ivmelenebilir; ama etki-tepki kuvvet büyüklükleri değişmez.');
+ ['A kütlesi',F(m1,'kg')],['B kütlesi',F(m2,'kg')],
+ ['A ivmesi (yalnız yatay etkileşim)',F(-F0/m1,'m/s²')],
+ ['B ivmesi (yalnız yatay etkileşim)',F(F0/m2,'m/s²')],['Zaman',F(t,'s')]]);
+ lesson('F⃗(A→B) = −F⃗(B→A)','Etki ve tepki eşit büyüklükte, aynı doğrultuda ve ters yönde olup farklı cisimleri etkiler. İki cismin kütleleri farklıysa, aynı kuvvete karşı farklı ivmeler oluşabilir.','Şemada yatay doğrultuda yalnız çiftin kuvvetleri, dik doğrultuda N ve mg dengesi varsayılır. Etki–tepki farklı cisimlerde olduğu için birbirini bir cismin Fnet hesabında sıfırlamaz.');
+ hint('Kütleleri ve kuvveti değiştir; oynatınca blokların farklı ivmeyle birbirinden uzaklaştığını gör. Eşit kuvvet, eşit ivme demek değildir.');
 }
 function paintQuiz(){
  const q=Q[st.quiz.index%Q.length],s=st.quiz;
@@ -190,7 +197,7 @@ function makeControls(){
   +control('muStatic','Statik sürtünme',0,1,.05,s.muStatic,'')
   +control('muKinetic','Kinetik sürtünme',0,1,.05,s.muKinetic,'')
   +control('g','g',8,10,1,s.g,'m/s²');
- else if(t==='elevator')html=control('mass','Kütle',20,120,5,s.mass,'kg')+control('a','Yukarı (+) ivme',-9,9,.5,s.a,'m/s²')+control('g','g',8,10,1,s.g,'m/s²');
+ else if(t==='elevator')html=control('mass','Kütle',20,120,5,s.mass,'kg')+control('a','Yukarı (+) ivme',-8,8,.5,s.a,'m/s²')+control('g','g',8,10,1,s.g,'m/s²');
  else if(t==='third')html=control('m1','A kütlesi',1,20,1,s.m1,'kg')+control('m2','B kütlesi',1,20,1,s.m2,'kg')
   +control('F','Etkileşim kuvveti',1,80,1,s.F,'N');
  else html='<div class="hint">Her soruda kuvvet diyagramı ve yön işaretlerini kullan.</div>';
@@ -213,25 +220,34 @@ function onChange(k,val){
  const s=st[st.tab];if(!s||!(k in s)||k==='time')return;
  st.playing=false;
  s[k]=Number(val);
+ // Typical school model: kinetic coefficient cannot exceed static coefficient.
+ if(['friction','incline'].includes(st.tab)&&s.muKinetic>s.muStatic){
+  const other=k==='muStatic'?'muKinetic':'muStatic';
+  s[other]=s[k];
+  const inp=$('n-'+other),out=$('out-'+other);
+  if(inp)inp.value=s[other];if(out)out.textContent=F(s[other]);
+ }
  if('time' in s)s.time=0;
  paint();
 }
 function act(a){
  const s=st[st.tab];
- if(a==='play'){st.playing=!st.playing;last=0;actions();}
+ if(a==='play'){st.playing=!st.playing;last=0;actions();if(st.playing)schedule();}
  if(a==='reset'){st.playing=false;st[st.tab]=JSON.parse(JSON.stringify(defaults[st.tab]));makeControls();paint();}
  if(a==='check'&&st.tab==='quiz'&&s.choice!==null&&!s.checked){s.checked=true;s.attempts++;if(s.choice===Q[s.index%Q.length].a)s.score++;paint();}
  if(a==='next'&&st.tab==='quiz'){s.index=(s.index+1)%Q.length;s.choice=null;s.checked=false;paint();}
 }
-let last=0;
+let last=0,frameHandle=null;
+function schedule(){if(st.playing&&frameHandle===null)frameHandle=w.requestAnimationFrame(frame);}
 function frame(now){
+ frameHandle=null;
  if(st.playing){
   const dt=Math.min(.05,last?(now-last)/1000:0);
   const s=st[st.tab];
   if(s&&typeof s.time==='number'){s.time=Math.min(12,s.time+dt);if(s.time>=12)st.playing=false;}
   paint();
  }
- last=now;w.requestAnimationFrame(frame);
+ last=now;if(st.playing)schedule();
 }
 function init(){
  if(!$('tabs')||!$('scene'))return;
@@ -244,7 +260,7 @@ function init(){
  $('buttons').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b&&!b.disabled)act(b.dataset.action);});
  $('quiz').addEventListener('click',e=>{const b=e.target.closest('[data-answer]');if(b&&st.tab==='quiz'&&!st.quiz.checked){st.quiz.choice=Number(b.dataset.answer);paint();}});
  d.addEventListener('visibilitychange',()=>{if(d.hidden){st.playing=false;last=0;actions();}});
- switchTab('net');w.requestAnimationFrame(frame);
+ switchTab('net');
 }
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',init);else init();
 w.NewtonLabDebug=Object.freeze({snapshot:()=>JSON.parse(JSON.stringify({tab:st.tab,net:st.net,friction:st.friction,incline:st.incline,elevator:st.elevator,third:st.third,quiz:st.quiz}))});
