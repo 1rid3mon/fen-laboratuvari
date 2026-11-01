@@ -117,6 +117,19 @@ test('controlled science experiment validates independent variable, saves observ
   assert.match(x.render(s,U).metrics[3].value,/CO₂/);
 });
 
+test('light wavelength is also a selectable controlled variable',()=>{
+  const x=registry.exp4,s=x.createState();
+  x.interact(s,'measure',null,U);
+  x.change(s,'scan','color',U);
+  x.change(s,'color','green',U);
+  assert.equal(x.interact(s,'measure',null,U).level,'success');
+  assert.equal(s.records[1].good,true);
+  assert.match(x.render(s,U).scene,/Renk kodları/);
+  const previous=s.color;
+  x.next(s,U);
+  assert.notEqual(s.color,previous);
+});
+
 test('pigment graph responds to wavelength, selection; action spectrum separate',()=>{
   const x=registry.exp5,s=x.createState();s.wavelength=450;
   const blue=Number(x.render(s,U).metrics[1].value.split(' ')[0]);
@@ -163,13 +176,23 @@ test('chemosynthesis automatic steps visit five distinct organisms and stop',()=
   assert.equal(x.next(s,U).complete,true);
 });
 
-test('comparison demonstrates distinct energy and shared carbon source',()=>{
+test('oxygenic and anoxygenic photoautotrophs differ from chemotrophs',()=>{
   const x=registry.exp7,s=x.createState();
-  assert.equal(x.interact(s,'energy','LIGHT',U).ok,true);
-  assert.equal(x.interact(s,'carbon','CO2',U).complete,true);
-  x.change(s,'mode','chemo',U);
-  assert.equal(x.interact(s,'energy','H2S',U).ok,true);
-  assert.equal(x.interact(s,'carbon','CO2',U).complete,true);
+  for(const [mode,energy,donor] of [
+    ['photo','LIGHT','H2O'],['cyan','LIGHT','H2O'],
+    ['purple','LIGHT','H2S'],['chemo','H2S','H2S']
+  ]){
+    x.change(s,'mode',mode,U);
+    assert.equal(x.interact(s,'energy',energy,U).ok,true);
+    assert.equal(x.interact(s,'carbon','CO2',U).ok,true);
+    assert.equal(x.interact(s,'donor',donor,U).ok,true);
+  }
+  assert.equal(s.visited.length,4);
+  assert.equal(x.next(s,U).complete,true);
+  x.change(s,'mode','purple',U);
+  assert.notEqual(x.interact(s,'energy','H2S',U).ok,true);
+  assert.match(x.render(s,U).insight,/elektron|hidrojen/i);
+  assert.match(x.render(s,U).metrics[3].value,/O₂ açığa çıkmaz/);
 });
 
 test('nitrit first, nitrat second, plant absorption third',()=>{
