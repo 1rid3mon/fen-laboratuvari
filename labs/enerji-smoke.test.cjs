@@ -68,10 +68,13 @@ test('light-dependent schema separates input and output without detailed reactio
   assert.notEqual(x.interact(s,'products','ATP',U).ok,true);
   assert.equal(x.interact(s,'inputs','LIGHT',U).ok,true);
   assert.equal(x.interact(s,'inputs','H2O',U).ok,true);
+  assert.notEqual(x.interact(s,'products','O2',U).ok,true,'NADP and ADP inputs are still missing');
+  assert.equal(x.interact(s,'inputs','ADP',U).ok,true);
+  assert.equal(x.interact(s,'inputs','NADP',U).ok,true);
   assert.equal(x.interact(s,'products','O2',U).ok,true);
   assert.equal(x.interact(s,'products','ATP',U).ok,true);
   assert.equal(x.interact(s,'products','NADPH',U).complete,true);
-  assert.equal(Object.keys(s.placed).length,5);
+  assert.equal(Object.keys(s.placed).length,7);
   assert.notEqual(x.interact(s,'products','NADPH',U).ok,true);
   x.change(s,'tracer','18o',U);
   assert.match(x.render(s,U).scene,/¹⁸O/);
