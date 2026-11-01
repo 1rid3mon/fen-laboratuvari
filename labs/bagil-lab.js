@@ -222,7 +222,7 @@ function sync(id,val){
 }
 function action(id){
  const t=st.tab,s=st[t];
- if(id==='play'){st.playing=!st.playing;last=0;paint();return;}
+ if(id==='play'){st.playing=!st.playing;last=0;paint();if(st.playing)schedule();return;}
  if(id==='parallel'){s.parallel=!s.parallel;paint();return;}
  if(id==='flip'){s.ref=s.ref==='A'?'B':'A';sync('ref',s.ref);paint();return;}
  if(id==='meeting'||id==='chase'||id==='none'){
@@ -282,8 +282,10 @@ function moveDrag(e){
  }
  paint();
 }
-let last=0;
+let last=0,frameHandle=null;
+function schedule(){if(st.playing&&frameHandle===null)frameHandle=w.requestAnimationFrame(frame);}
 function frame(now){
+ frameHandle=null;
  if(st.playing){
   const dt=Math.min(.05,last?(now-last)/1000:0);
   let s=st[st.tab];
@@ -298,7 +300,7 @@ function frame(now){
   }
   paint();
  }
- last=now;w.requestAnimationFrame(frame);
+ last=now;if(st.playing)schedule();
 }
 function init(){
  if(!$('tabs')||!$('scene'))return;
@@ -317,7 +319,7 @@ function init(){
  $('scene').addEventListener('pointercancel',()=>{st.drag=null;});
  $('scene').addEventListener('lostpointercapture',()=>{st.drag=null;});
  d.addEventListener('visibilitychange',()=>{if(d.hidden){st.playing=false;last=0;drawActions();}});
- switchTab('vectors');w.requestAnimationFrame(frame);
+ switchTab('vectors');
 }
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',init);else init();
 w.BagilLabDebug=Object.freeze({snapshot:()=>JSON.parse(JSON.stringify({tab:st.tab,observer:st.observer,river:st.river,wind:st.wind,meet:st.meet,quiz:st.quiz}))});
