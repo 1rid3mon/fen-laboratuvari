@@ -295,7 +295,7 @@
   setText('lesson-label','KEŞİF KARTI');
   setText('prompt-heading',sel?itemName(sel):'Haritadaki bir noktayı seç.');
   setText('prompt-detail','Haritadaki gri harfli noktalara dokun. Önce nedenini öğren, sonra Hatırla modunda kendini sınav yap.');
-  setHTML('answer-options','');
+  setHTML('answer-options',ids.map((id,i)=>'<button type="button" data-answer="'+esc(id)+'" class="'+(sel===id?'selected':'')+'" aria-pressed="'+(sel===id)+'"><span class="letter">'+esc(ROMAN[i]||String(i+1))+'</span><span>'+esc(ROMAN[i]||String(i+1))+'. numaralı harita işaretini incele</span></button>').join(''));
   setResult('');
   setHTML('lesson',sel?pointDetail(sel):'<div class="empty-state">Bir harfli işarete dokunduğunda o yerin iklim, yer şekli, ekonomi veya afet açısından TYT ipucu burada açılır. 🦋</div>');
   setActions('<button type="button" class="primary" data-action="goto-recall">Hatırla moduna geç →</button>');
