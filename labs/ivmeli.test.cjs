@@ -123,7 +123,7 @@ function harness(){
   getElementById(id){if(!nodes.has(id))nodes.set(id,makeNode(id));return nodes.get(id);},
   querySelectorAll(sel){if(sel!=='[data-tab]')return [];
    return [...nodes.get('tabs').innerHTML.matchAll(/data-tab="([^"]+)"/g)].map(m=>({
-    dataset:{tab:m[1]},classList:{toggle(){}},setAttribute(){}}
+    dataset:{tab:m[1]},classList:{toggle(){}},setAttribute(){}
    }));},
   addEventListener(k,cb){listeners.set('doc:'+k,cb);}
  };
