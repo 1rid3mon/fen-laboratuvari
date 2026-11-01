@@ -1,10 +1,12 @@
-name: AYT Fizik Vektor Bagil Newton
+name: AYT Fizik Vektor Bagil Newton ve Bir Boyutta Hareket
 on:
   push:
     paths:
       - 'labs/hareket-*'
       - 'labs/bagil-lab.js'
       - 'labs/newton-lab.js'
+      - 'labs/ivmeli-*'
+      - 'labs/bir-boyutta-sabit-ivmeli-hareket.html'
       - 'labs/vektorler-bagil-hareket.html'
       - 'labs/newton-hareket-yasalari.html'
       - '.github/workflows/ayt-fizik-hareket-ci.yml'
@@ -13,6 +15,8 @@ on:
       - 'labs/hareket-*'
       - 'labs/bagil-lab.js'
       - 'labs/newton-lab.js'
+      - 'labs/ivmeli-*'
+      - 'labs/bir-boyutta-sabit-ivmeli-hareket.html'
       - 'labs/vektorler-bagil-hareket.html'
       - 'labs/newton-hareket-yasalari.html'
       - '.github/workflows/ayt-fizik-hareket-ci.yml'
@@ -33,6 +37,9 @@ jobs:
           node --check labs/hareket-math.js
           node --check labs/bagil-lab.js
           node --check labs/newton-lab.js
+          node --check labs/ivmeli-math.js
+          node --check labs/ivmeli-lab.js
+          node --check labs/ivmeli.test.cjs
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
-        run: node --test labs/hareket.test.cjs
+        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs

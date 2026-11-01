@@ -1,19 +1,23 @@
 /* Newton Laws AYT 2018: 11.1.3.1 and 11.1.3.2, explanatory FBD simulations. */
 (function(w,d){
 'use strict';
-const P=w.HareketMath;if(!P)return;
+const P=w.HareketMath,M=w.IvmeliMath;if(!P||!M)return;
 const $=id=>d.getElementById(id),H=P.escapeHtml,F=P.f,PI=Math.PI;
-const tabs=[['net','Net kuvvet · F=ma'],['friction','Yatay sürtünme'],['incline','Eğik düzlem'],['wall','Düşey duvar'],['elevator','Asansör'],['third','Etki–tepki'],['quiz','YKS mini test']];
+const tabs=[['inertia','I. yasa · Eylemsizlik'],['net','Net kuvvet · F=ma'],['friction','Yatay sürtünme'],['incline','Eğik düzlem'],['wall','Düşey duvar'],['angle','Açılı kuvvet'],['linked','Bağlı bloklar'],['atwood','İdeal makara'],['elevator','Asansör'],['third','Etki–tepki'],['quiz','YKS mini test']];
 const defaults={
+ inertia:{mass:4,v0:6,time:0},
  net:{mass:5,F1:16,F2:-6,v0:0,time:0},
  friction:{mass:5,force:20,muStatic:.5,muKinetic:.3,g:10,time:0},
  incline:{mass:5,angle:30,force:0,muStatic:.35,muKinetic:.25,g:10,time:0},
  wall:{mass:2,push:30,muStatic:.8,muKinetic:.5,g:10,time:0},
+ angle:{mass:5,force:40,angleDeg:30,muStatic:.4,muKinetic:.25,g:10,time:0},
+ linked:{mA:2,mB:3,force:20,time:0},
+ atwood:{mA:2,mB:3,g:10,time:0},
  elevator:{mass:70,a:2,g:10,time:0},
  third:{m1:2,m2:5,F:20,time:0},
  quiz:{index:0,choice:null,checked:false,score:0,attempts:0}
 };
-const st={tab:'net',playing:false};
+const st={tab:'inertia',playing:false,showForces:true};
 for(const id of Object.keys(defaults))st[id]=JSON.parse(JSON.stringify(defaults[id]));
 const Q=[
  {q:'5 kg kütleli cisme sağa 18 N, sola 8 N kuvvet uygulanıyor. İvme kaç m/s²?',cs:['1 sağ','2 sağ','2 sol','5 sağ','0'],a:1,why:'Fnet=18−8=10 N sağ. a=10/5=2 m/s².'},
@@ -29,11 +33,19 @@ const Q=[
  {q:'2 kg blok duvara 50 N kuvvetle bastırılıyor; μs = 0,5, g=10. Blok duruyorsa sürtünme büyüklüğü?',cs:['0','10 N','20 N','25 N','50 N'],a:2,why:'mg=20 N, max statik=0,5×50=25 N. Gereken statik sürtünme 20 N yukarıdır.'},
  {q:'Etki ve tepki neden birbirini dengeleyip sıfırlamaz?',cs:['Büyüklükleri farklı','Aynı cisim üzerindedir','Farklı cisimlere etkir','Daima sürtünme vardır','Sadece durgunken oluşur'],a:2,why:'F_A→B, B üzerinde; F_B→A, A üzerinde etkilidir. Bir cismin net kuvvetinde toplanmazlar.'},
  {q:'5 kg blok üzerinde sağa 35 N, sola 10 N net dış kuvvet varsa ivme?',cs:['1 sağ','3 sağ','5 sağ','7 sağ','9 sol'],a:2,why:'Fnet=35−10=25 N sağ; a=25/5=5 m/s².'}
+,
+ {"q":"6 kg ve 4 kg iki blok, sürtünmesiz düzlemde birlikte. 50 N kuvvetle çekilirse ivme?","cs":["2 m/s²","3 m/s²","5 m/s²","6 m/s²","10 m/s²"],"a":2,"why":"Sistem kütlesi 10 kg; ivme 50/10=5 m/s²."},
+ {"q":"2 kg A ve 3 kg B sürtünmesiz, 20 N kuvvet B’ye sağa uygulanıyor. A-B ipinde gerilme?","cs":["4 N","8 N","12 N","20 N","40 N"],"a":1,"why":"a=20/(2+3)=4; A üzerindeki T=mA×a=2×4=8 N."},
+ {"q":"2 kg ve 3 kg kütleler ideal Atwood makarasına asılı, g=10. İvme?","cs":["1 m/s²","2 m/s²","4 m/s²","5 m/s²","10 m/s²"],"a":1,"why":"a=(3−2)×10/(2+3)=2 m/s²; ağır olan aşağı."},
+ {"q":"İdeal makara sisteminde iki kütle eşitse hangi ifade kesin doğrudur?","cs":["Gerilme sıfır","İvme sıfır","İpte kopma olur","Ağır olan hızlanır","Normal kuvvet mg"],"a":1,"why":"Net dış çekiş (mB−mA)g=0; ivme sıfırdır, ip gerilmesi sıfır değildir."},
+ {"q":"Yatay zeminde kuvvet yukarı açıyla çekildiğinde cisim temas hâlindeyse normal kuvvet nasıl değişir?","cs":["Her zaman artar","Azalır","Değişmez","Negatif olur","Daima sıfırdır"],"a":1,"why":"N = mg−Fsinθ. Yukarı yönlü kuvvet bileşeni zeminin desteğini azaltır."},
+ {"q":"Sürtünmesiz düzlemde bir cisim 5 m/s sabit hızla gidiyorsa net kuvveti?","cs":["5 N","Sıfır","m×5 N","mg","Kütleye bağlı"],"a":1,"why":"Sabit hız, sıfır ivme: Fnet=m×0=0."}
 ];
 const marker='<defs><marker id="newton-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64bcff"/></marker><marker id="newton-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#f5c978"/></marker><marker id="newton-pink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#ff8c9f"/></marker><marker id="newton-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#50e2c2"/></marker></defs>';
 function graph(content){return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 510" role="img" aria-label="Serbest cisim diyagramı">'+marker+content+'</svg>';}
 function label(x,y,text,color='#d6edfa',size=14){return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" fill="'+color+'" font-size="'+size+'" font-family="system-ui">'+H(text)+'</text>';}
 function vector(x,y,fx,fy,color,id,name,scale=3){
+ if(!st.showForces)return '';
  const len=Math.hypot(fx,fy);if(len<.1)return '';
  const endX=x+fx*scale,endY=y-fy*scale;
  return '<line x1="'+x.toFixed(2)+'" y1="'+y.toFixed(2)+'" x2="'+endX.toFixed(2)+'" y2="'+endY.toFixed(2)+'" stroke="'+color+'" stroke-width="3.4" marker-end="url(#newton-'+id+')"/>'
@@ -48,11 +60,11 @@ function meter(rows){$('results').innerHTML=rows.map(a=>'<div class="metric"><sm
 function lesson(formula,details,warning=''){$('lesson').innerHTML='<div class="formula">'+H(formula)+'</div><p>'+H(details)+'</p>'+(warning?'<aside>'+H(warning)+'</aside>':'');}
 function hint(text){$('hint').textContent=text;}
 function setTitle(t){
- const titles={net:'Net kuvvet ve Newton’un ikinci yasası',friction:'Yatay düzlemde statik ve kinetik sürtünme',incline:'Eğik düzlem: ağırlık bileşenleri',wall:'Düşey duvarda sürtünme',elevator:'Asansörde görünür ağırlık',third:'Etki–tepki: Newton’un üçüncü yasası',quiz:'Newton Yasaları · YKS mini test'};
+ const titles={net:'Net kuvvet ve Newton’un ikinci yasası',friction:'Yatay düzlemde statik ve kinetik sürtünme',inertia:'Newton’un I. yasası: Eylemsizlik',incline:'Eğik düzlem: ağırlık bileşenleri',angle:'Açılı kuvvet ve normal',linked:'Bağlı cisimlerde gerilme',atwood:'İdeal makara ve ivme',wall:'Düşey duvarda sürtünme',elevator:'Asansörde görünür ağırlık',third:'Etki–tepki: Newton’un üçüncü yasası',quiz:'Newton Yasaları · YKS mini test'};
  const descriptions={
  net:'Kütle, dış kuvvet ve başlangıç hızını değiştir. Net kuvvetin ivmeye etkisini gözle.',
  friction:'Cisim ilk anda durgun. Statik sürtünme sınırını aşınca kinetik sürtünme başlar.',
- incline:'Eğimin açısı ve kuvvetler değiştikçe blok durabilir veya aşağı/yukarı kayabilir.',
+ inertia:'Sürtünmesiz yatay zeminde net kuvvet sıfırken farklı ilk hızları incele.',incline:'Eğimin açısı ve kuvvetler değiştikçe blok durabilir veya aşağı/yukarı kayabilir.',angle:'Kuvvetin düşey bileşeni normali ve sürtünmeyi değiştirir.',linked:'İki bloğu birlikte veya ayrı ayrı inceleyerek ipteki gerilmeyi bul.',atwood:'İdeal makara ve iki asılı blok için ayrı serbest cisim diyagramları kur.',
  wall:'Duvara basma kuvveti, normal kuvveti ve statik sürtünme sınırını belirler.',
  elevator:'Asansörün ivmesi baskülün okuduğu normal kuvveti değiştirir.',
  third:'İki cismin birbirine uyguladığı etki–tepki kuvvetleri daima eşit büyüklükte ve zıt yönlüdür.',
@@ -187,6 +199,95 @@ function drawThird(){
  lesson('F⃗(A→B) = −F⃗(B→A)','Etki ve tepki eşit büyüklükte, aynı doğrultuda ve ters yönde olup farklı cisimleri etkiler. İki cismin kütleleri farklıysa, aynı kuvvete karşı farklı ivmeler oluşabilir.','Şemada yatay doğrultuda yalnız çiftin kuvvetleri, dik doğrultuda N ve mg dengesi varsayılır. Etki–tepki farklı cisimlerde olduğu için birbirini bir cismin Fnet hesabında sıfırlamaz.');
  hint('Kütleleri ve kuvveti değiştir; oynatınca blokların farklı ivmeyle birbirinden uzaklaştığını gör. Eşit kuvvet, eşit ivme demek değildir.');
 }
+
+/* Newton I: force-free uniform motion (not necessarily rest). */
+function drawInertia(){
+ const s=st.inertia,dx=s.v0*s.time,x=Math.max(82,Math.min(780,430+dx*6));
+ let g=staticFloor(353)+label(18,32,'Eylemsizlik: ΣF = 0 ise a = 0; v sıfır olmak zorunda değildir.');
+ g+=box(x,318,s.mass+' kg');
+ g+=vector(x,318,0,28,'#50e2c2','green','N',3)
+   +vector(x,318,0,-28,'#f5c978','gold','mg',3);
+ if(Math.abs(s.v0)>0.01)g+=label(16,475,'Sabit hız '+F(s.v0,'m/s')+'; yer değiştirme '+F(dx,'m'));
+ else g+=label(16,475,'Başlangıçta durgun cisim durgun kalır.');
+ $('scene').innerHTML=graph(g);
+ meter([['Net yatay kuvvet','0 N'],['İvme','0 m/s²'],
+ ['Hız',F(s.v0,'m/s')],['Yer değiştirme',F(dx,'m')],['Zaman',F(s.time,'s')]]);
+ lesson('ΣF = 0 → a = 0 → v = sabit',
+ 'Newton’un birinci yasasında net dış kuvvet sıfırken cisim duruyorsa durur, hareket ediyorsa doğrusal sabit hızla gider. Bir cismin hareket etmesi için mutlaka hareket yönünde net kuvvet gerekmez.',
+ 'Zemin sürtünmesizdir. Düşey doğrultuda N ve mg birbirini dengeler.');
+ hint('İlk hızı sıfırdan farklı yap ve Oynat: net kuvvet hâlâ sıfır ama cisim yer değiştirir.');
+}
+/* 2D force components, horizontal contact model and normal force calculation. */
+function drawAngle(){
+ const s=st.angle,r=M.angledPull(s),theta=s.angleDeg*Math.PI/180;
+ const px=Math.max(86,Math.min(770,400+.5*r.ax*s.time*s.time*5)),py=320-Math.max(0,.5*r.ay*s.time*s.time*3);
+ let g=staticFloor(355)+label(18,30,'Yatay zeminde eğik yönde çekme (+θ yukarı) / itme (−θ aşağı)');
+ g+=box(px,py,s.mass+' kg');
+ const scale=Math.min(3.8,140/Math.max(1,s.force,s.mass*s.g,r.normal));
+ g+=vector(px,py,r.fx,r.fy,'#64bcff','blue','F açı',scale);
+ g+=vector(px,py,r.friction,0,'#ff8c9f','pink','f',scale);
+ g+=vector(px,py,0,r.normal,'#50e2c2','green','N',scale);
+ g+=vector(px,py,0,-s.mass*s.g,'#f5c978','gold','mg',scale);
+ g+=label(20,480,r.contact?'Temas var: düşey net kuvvet = 0.':'Temas kesildi! N=0, cisim yukarı yönde ivmelenebilir.');
+ $('scene').innerHTML=graph(g);
+ meter([['Fₓ = F cosθ',F(r.fx,'N')],['Fᵧ = F sinθ',F(r.fy,'N')],
+ ['Normal kuvvet',F(r.normal,'N')],['Maksimum statik sürtünme',F(r.limit,'N')],
+ ['Gerçek sürtünme',F(r.friction,'N')],['Yatay ivme',F(r.ax,'m/s²')],
+ ['Düşey ivme',F(r.ay,'m/s²')],['Durum',r.state==='static'?'Denge':r.state==='sliding'?'Kayma başlar':'Yerden ayrılıyor']]);
+ lesson('Fₓ = Fcosθ;  N = mg − Fsinθ (temas varsa)',
+ 'Yukarı doğru açılı çekmede normal azalır ve sürtünme de azalabilir; aşağı doğru itmede normal artar. Cisim ilk anda durgun kabul edilir, statik sürtünme gerektiği kadar oluşur.',
+ 'Fsinθ ağırlığı aştığında temas kaybolur: N=0, sürtünme=0 ve düşey ivme ayrıca hesaplanır. Bu durumda zemin teması varmış gibi N=mg−Fsinθ kullanılmaz.');
+ hint('Açıyı pozitiften negatife çek. Normal kuvvetin ve sürtünme eşiğinin nasıl değiştiğini izle.');
+}
+/* Connected blocks and internal tension. Horizontal plane is frictionless. */
+function drawLinked(){
+ const s=st.linked,r=M.connected(s),move=Math.min(135,.5*r.acceleration*s.time*s.time*5);
+ const xA=260+move,xB=510+move;
+ let g=staticFloor(361)+label(18,29,'Sürtünmesiz yüzey · A—ip—B bağlantısı · F, B’ye sağa uygulanır');
+ g+='<line x1="'+(xA+36)+'" y1="316" x2="'+(xB-36)+'" y2="316" stroke="#d9e9df" stroke-width="4"/>';
+ g+=box(xA,317,s.mA+' kg','#64bcff')+box(xB,317,s.mB+' kg','#f5c978');
+ const k=Math.min(5,135/Math.max(1,s.force,r.tension));
+ g+=vector(xA,317,r.tension,0,'#50e2c2','green','T (A)',k);
+ g+=vector(xB,317,-r.tension,0,'#ff8c9f','pink','T (B)',k);
+ g+=vector(xB,317,s.force,0,'#64bcff','blue','F',k);
+ g+=vector(xA,317,0,18,'#50e2c2','green','N',2)+vector(xA,317,0,-18,'#f5c978','gold','mg',2);
+ g+=vector(xB,317,0,18,'#50e2c2','green','N',2)+vector(xB,317,0,-18,'#f5c978','gold','mg',2);
+ g+=label(19,481,'A: T = mA·a     B: F − T = mB·a     Sistem: F = (mA+mB)·a');
+ $('scene').innerHTML=graph(g);
+ meter([['Toplam kütle',F(s.mA+s.mB,'kg')],['Sisteme dış kuvvet',F(s.force,'N')],
+ ['Ortak ivme',F(r.acceleration,'m/s²')],['İpte gerilme',F(r.tension,'N')],
+ ['A üzerindeki yatay net',F(r.tension,'N')],['B üzerindeki yatay net',F(s.force-r.tension,'N')],
+ ['Zaman',F(s.time,'s')]]);
+ lesson('a = F/(mA+mB);  T = mA·a',
+ 'İpteki gerilme, her bloğa ayrı ayrı etkir. İki blok birlikte incelenirse ip gerilmesi iç kuvvettir ve sistemin net dış kuvvetine katılmaz.',
+ 'Makara yok, ip kütlesiz ve esnemez, zemin sürtünmesizdir. Aynı ipin iki ucundaki gerilmeler eşit kabul edilir.');
+ hint('Kütleleri değiştir. Toplam ivme nasıl değişiyor? İpteki gerilmenin neden her zaman uygulanan kuvvete eşit olmadığını kontrol et.');
+}
+/* Ideal Atwood — application of ΣF=ma to two vertically linked masses. */
+function drawAtwood(){
+ const s=st.atwood,r=M.atwood(s),move=Math.max(-74,Math.min(74,.5*r.acceleration*s.time*s.time*6));
+ const xA=340,xB=520,yA=305-move,yB=305+move;
+ let g='<rect width="860" height="510" fill="#0a2135"/>';
+ g+='<circle cx="430" cy="100" r="90" fill="#374b60" stroke="#a8c4d5" stroke-width="4"/>';
+ g+='<circle cx="430" cy="100" r="12" fill="#7f9baf"/>';
+ g+='<path d="M340 '+yA+'L340 100 A90 90 0 0 1 520 100 L520 '+yB+'" fill="none" stroke="#e3dac7" stroke-width="4"/>';
+ g+=box(xA,yA,s.mA+' kg','#64bcff')+box(xB,yB,s.mB+' kg','#f5c978');
+ const k=Math.min(4,110/Math.max(1,r.tension,r.weightA,r.weightB));
+ g+=vector(xA,yA,0,r.tension,'#50e2c2','green','T',k)
+   +vector(xA,yA,0,-r.weightA,'#ff8c9f','pink','mA g',k)
+   +vector(xB,yB,0,r.tension,'#50e2c2','green','T',k)
+   +vector(xB,yB,0,-r.weightB,'#ff8c9f','pink','mB g',k);
+ g+=label(19,31,'İdeal Atwood: esnemez kütlesiz ip, sürtünmesiz makara.');
+ g+=label(22,484,'aB aşağı +, aA yukarı +; kütleler eşitse ikisi de ivmelenmez.');
+ $('scene').innerHTML=graph(g);
+ meter([['B’nin aşağı ivmesi (+)',F(r.acceleration,'m/s²')],['A’nın yukarı ivmesi (+)',F(r.acceleration,'m/s²')],
+ ['İpte gerilme',F(r.tension,'N')],['A ağırlığı',F(r.weightA,'N')],
+ ['B ağırlığı',F(r.weightB,'N')],['Zaman',F(s.time,'s')]]);
+ lesson('a = (mB−mA)g/(mA+mB);  T = mA(g+a)',
+ 'B ağırsa B aşağı iner ve A yukarı çıkar. Aynı ipin iki ucunda ivme büyüklükleri eşittir. Her cisim için ağırlık ve gerilme ayrı yazılır; sonra sistem denklemi kurulur.',
+ 'İdeal makara bir Newton uygulama örneğidir. Makara dönme dinamiği ve atalet momenti bu deneyin kapsamında değildir.');
+ hint('Kütleleri eşitleyip Oynat. İpe gerilme etki ettiği hâlde net sistem ivmesi neden sıfır kalabiliyor?');
+}
 function paintQuiz(){
  const q=Q[st.quiz.index%Q.length],s=st.quiz;
  $('scene').innerHTML=graph('<rect x="66" y="61" width="728" height="390" rx="22" fill="#102c40" stroke="#587688"/>'
@@ -198,14 +299,18 @@ function paintQuiz(){
  $('quiz').innerHTML='<div class="quiz-prompt">'+H(q.q)+'</div>'+q.cs.map((x,i)=>'<button type="button" class="answer '+(s.checked?(i===q.a?'correct':i===s.choice?'wrong':''):'')+'" data-answer="'+i+'" '+(s.checked?'disabled':'')+'><span>'+('ABCDE'[i])+'</span>'+H(x)+'</button>').join('')
  +(s.checked?'<div class="feedback '+(s.choice===q.a?'success':'error')+'">'+H(q.why)+'</div>':'<div class="feedback info">Bir şıkkı seç; cevabı kontrol ettiğinde nedenini de göreceksin.</div>');
  $('lesson').innerHTML='<p><strong>11.1.3.1/2:</strong> Net kuvvet, serbest cisim diyagramı ve sürtünmeli/sürtünmesiz günlük yaşam soruları.</p><aside>Özgün alıştırmalar; resmî ÖSYM sorusu değildir.</aside>';
- hint('13 temel soru. Formül seçmekten önce kuvvetlerin hangi cisme uygulandığını belirle.');
+ hint('19 temel soru. Formül seçmekten önce kuvvetlerin hangi cisme uygulandığını belirle.');
 }
 function paint(){
  $('quiz').innerHTML='';
- if(st.tab==='net')drawNet();
+ if(st.tab==='inertia')drawInertia();
+ else if(st.tab==='net')drawNet();
  else if(st.tab==='friction')drawFriction();
  else if(st.tab==='incline')drawIncline();
  else if(st.tab==='wall')drawWall();
+ else if(st.tab==='angle')drawAngle();
+ else if(st.tab==='linked')drawLinked();
+ else if(st.tab==='atwood')drawAtwood();
  else if(st.tab==='elevator')drawElevator();
  else if(st.tab==='third')drawThird();
  else paintQuiz();
@@ -213,7 +318,8 @@ function paint(){
 }
 function makeControls(){
  const s=st[st.tab],t=st.tab;let html='';
- if(t==='net')html=control('mass','Kütle',1,20,1,s.mass,'kg')+control('F1','F1 (sağ +)',-50,50,1,s.F1,'N')
+ if(t==='inertia')html=control('mass','Kütle',1,20,1,s.mass,'kg')+control('v0','Başlangıç hızı',-10,10,1,s.v0,'m/s');
+ else if(t==='net')html=control('mass','Kütle',1,20,1,s.mass,'kg')+control('F1','F1 (sağ +)',-50,50,1,s.F1,'N')
   +control('F2','F2 (sağ +)',-50,50,1,s.F2,'N')+control('v0','İlk hız',-10,10,.5,s.v0,'m/s');
  else if(t==='friction')html=control('mass','Kütle',1,20,1,s.mass,'kg')+control('force','Yatay kuvvet',-100,100,1,s.force,'N')
   +control('muStatic','Statik sürtünme katsayısı',0,1,.05,s.muStatic,'')
@@ -228,17 +334,29 @@ function makeControls(){
   +control('muStatic','Statik sürtünme',0,1,.05,s.muStatic,'')
   +control('muKinetic','Kinetik sürtünme',0,1,.05,s.muKinetic,'')
   +control('g','g',8,10,1,s.g,'m/s²');
+ else if(t==='angle')html=control('mass','Kütle',2,20,1,s.mass,'kg')+control('force','Kuvvet büyüklüğü',0,100,5,s.force,'N')
+  +control('angleDeg','F açısı (+yukarı)',-60,70,5,s.angleDeg,'°')
+  +control('muStatic','Statik sürtünme',0,1,.05,s.muStatic,'')
+  +control('muKinetic','Kinetik sürtünme',0,1,.05,s.muKinetic,'')
+  +control('g','g',8,10,1,s.g,'m/s²');
+ else if(t==='linked')html=control('mA','A kütlesi',1,20,1,s.mA,'kg')
+  +control('mB','B kütlesi',1,20,1,s.mB,'kg')
+  +control('force','B’ye uygulanan kuvvet',0,100,5,s.force,'N');
+ else if(t==='atwood')html=control('mA','A kütlesi',1,20,1,s.mA,'kg')
+  +control('mB','B kütlesi',1,20,1,s.mB,'kg')
+  +control('g','Yerçekimi',8,10,1,s.g,'m/s²');
  else if(t==='elevator')html=control('mass','Kütle',20,120,5,s.mass,'kg')+control('a','Yukarı (+) ivme',-8,8,.5,s.a,'m/s²')+control('g','g',8,10,1,s.g,'m/s²');
  else if(t==='third')html=control('m1','A kütlesi',1,20,1,s.m1,'kg')+control('m2','B kütlesi',1,20,1,s.m2,'kg')
   +control('F','Etkileşim kuvveti',1,80,1,s.F,'N');
  else html='<div class="hint">Her soruda kuvvet diyagramı ve yön işaretlerini kullan.</div>';
+ if(t!=='quiz')html+=control('time','Zamanı elle ayarla',0,12,.2,s.time,'s');
  $('controls').innerHTML=html;
 }
 function actions(){
  let h='';
  if(st.tab==='quiz')h='<button class="btn primary" type="button" data-action="check" '+(st.quiz.choice===null||st.quiz.checked?'disabled':'')+'>Cevabı kontrol et</button>'
   +btn('Sonraki →','next')+btn('Testi sıfırla','reset');
- else h=btn(st.playing?'Ⅱ Duraklat':'▶ Oynat','play')+btn('↺ Sıfırla','reset');
+ else h=btn(st.playing?'Ⅱ Duraklat':'▶ Oynat','play')+btn('+0,5 saniye','step')+btn('Serbest cisim okları: '+(st.showForces?'açık':'kapalı'),'toggle-forces')+btn('↺ Sıfırla','reset');
  $('buttons').innerHTML=h;
 }
 function switchTab(t){
@@ -252,18 +370,20 @@ function onChange(k,val){
  st.playing=false;
  s[k]=Number(val);
  // Typical school model: kinetic coefficient cannot exceed static coefficient.
- if(['friction','incline','wall'].includes(st.tab)&&s.muKinetic>s.muStatic){
+ if(['friction','incline','wall','angle'].includes(st.tab)&&s.muKinetic>s.muStatic){
   const other=k==='muStatic'?'muKinetic':'muStatic';
   s[other]=s[k];
   const inp=$('n-'+other),out=$('out-'+other);
   if(inp)inp.value=s[other];if(out)out.textContent=F(s[other]);
  }
- if('time' in s)s.time=0;
+ if('time' in s&&k!=='time')s.time=0;
  paint();
 }
 function act(a){
  const s=st[st.tab];
- if(a==='play'){st.playing=!st.playing;last=0;actions();if(st.playing)schedule();}
+ if(a==='toggle-forces'){st.showForces=!st.showForces;paint();return;}
+ if(a==='step'&&typeof s.time==='number'){st.playing=false;s.time=Math.min(12,s.time+.5);const inp=$('n-time'),out=$('out-time');if(inp)inp.value=s.time;if(out)out.textContent=F(s.time,'s');paint();return;}
+ if(a==='play'){if(s.time>=12)s.time=0;st.playing=!st.playing;last=0;actions();if(st.playing)schedule();}
  if(a==='reset'){st.playing=false;st[st.tab]=JSON.parse(JSON.stringify(defaults[st.tab]));makeControls();paint();}
  if(a==='check'&&st.tab==='quiz'&&s.choice!==null&&!s.checked){s.checked=true;s.attempts++;if(s.choice===Q[s.index%Q.length].a)s.score++;paint();}
  if(a==='next'&&st.tab==='quiz'){s.index=(s.index+1)%Q.length;s.choice=null;s.checked=false;paint();}
@@ -275,7 +395,7 @@ function frame(now){
  if(st.playing){
   const dt=Math.min(.05,last?(now-last)/1000:0);
   const s=st[st.tab];
-  if(s&&typeof s.time==='number'){s.time=Math.min(12,s.time+dt);if(s.time>=12)st.playing=false;}
+  if(s&&typeof s.time==='number'){s.time=Math.min(12,s.time+dt);const inp=$('n-time'),out=$('out-time');if(inp)inp.value=s.time;if(out)out.textContent=F(s.time,'s');if(s.time>=12)st.playing=false;}
   paint();
  }
  last=now;if(st.playing)schedule();
@@ -291,8 +411,8 @@ function init(){
  $('buttons').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b&&!b.disabled)act(b.dataset.action);});
  $('quiz').addEventListener('click',e=>{const b=e.target.closest('[data-answer]');if(b&&st.tab==='quiz'&&!st.quiz.checked){st.quiz.choice=Number(b.dataset.answer);paint();}});
  d.addEventListener('visibilitychange',()=>{if(d.hidden){st.playing=false;last=0;actions();}});
- switchTab('net');
+ switchTab('inertia');
 }
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',init);else init();
-w.NewtonLabDebug=Object.freeze({snapshot:()=>JSON.parse(JSON.stringify({tab:st.tab,net:st.net,friction:st.friction,incline:st.incline,elevator:st.elevator,third:st.third,quiz:st.quiz}))});
+w.NewtonLabDebug=Object.freeze({snapshot:()=>JSON.parse(JSON.stringify({tab:st.tab,inertia:st.inertia,angle:st.angle,linked:st.linked,atwood:st.atwood,showForces:st.showForces,net:st.net,friction:st.friction,incline:st.incline,elevator:st.elevator,third:st.third,quiz:st.quiz}))});
 })(window,document);
