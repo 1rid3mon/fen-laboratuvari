@@ -175,6 +175,17 @@ test('relative DOM: all six tabs render with user controls and no crashes',()=>{
   assert.ok(h.elements.get('results').innerHTML.length>35);
  }
 });
+test('mobile vector coordinate sliders update physics and keep active controls in DOM',()=>{
+ const h=harness('bagil-lab.js','BagilLabDebug');
+ assert.match(h.elements.get('controls').innerHTML,/x bileşeni/);
+ assert.match(h.elements.get('controls').innerHTML,/y bileşeni/);
+ const before=h.elements.get('results').innerHTML;
+ h.event('controls','input','input[data-range]',{dataset:{range:'x_K',unit:'br'},value:'6'});
+ assert.notEqual(h.elements.get('results').innerHTML,before);
+ assert.match(h.elements.get('controls').innerHTML,/x_K/);
+ h.event('controls','input','input[data-range]',{dataset:{range:'y_K',unit:'br'},value:'-2'});
+ assert.match(h.elements.get('results').innerHTML,/Bileşke/);
+});
 test('relative DOM: observer switch, river correction, wind controls, quiz choice',()=>{
  const h=harness('bagil-lab.js','BagilLabDebug');
  h.event('tabs','click','[data-tab]',{dataset:{tab:'observer'}});
