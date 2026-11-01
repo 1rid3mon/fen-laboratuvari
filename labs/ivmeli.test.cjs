@@ -152,8 +152,10 @@ test('DOM: seven tabs render track, 3 real charts and one quiz without throwing'
 });
 test('DOM: interactive scrub/slider, free fall, air resistance, quiz and lazy playback',()=>{
  const h=harness();
+ const controlsBefore=h.nodes.get('controls').innerHTML;
  h.fire('controls','input','[data-range]',{dataset:{range:'v0',unit:'m/s'},value:'10'});
  near(h.snapshot().motion.v0,10);
+ assert.equal(h.nodes.get('controls').innerHTML,controlsBefore,'active mobile slider must not be destroyed by input');
  h.fire('controls','input','[data-range]',{dataset:{range:'a',unit:'m/s²'},value:'-5'});
  h.fire('controls','input','[data-range]',{dataset:{range:'t',unit:'s'},value:'4'});
  near(h.snapshot().motion.t,4);
