@@ -266,11 +266,11 @@ function drawLinked(){
 /* Ideal Atwood — application of ΣF=ma to two vertically linked masses. */
 function drawAtwood(){
  const s=st.atwood,r=M.atwood(s),move=Math.max(-74,Math.min(74,.5*r.acceleration*s.time*s.time*6));
- const xA=276,xB=585,yA=285-move,yB=285+move;
+ const xA=340,xB=520,yA=305-move,yB=305+move;
  let g='<rect width="860" height="510" fill="#0a2135"/>';
- g+='<circle cx="430" cy="91" r="68" fill="#374b60" stroke="#a8c4d5" stroke-width="4"/>';
- g+='<circle cx="430" cy="91" r="12" fill="#7f9baf"/>';
- g+='<path d="M276 '+yA+'L276 91 Q276 -60 430 -60 Q585 -60 585 91 L585 '+yB+'" fill="none" stroke="#e3dac7" stroke-width="4"/>';
+ g+='<circle cx="430" cy="100" r="90" fill="#374b60" stroke="#a8c4d5" stroke-width="4"/>';
+ g+='<circle cx="430" cy="100" r="12" fill="#7f9baf"/>';
+ g+='<path d="M340 '+yA+'L340 100 A90 90 0 0 1 520 100 L520 '+yB+'" fill="none" stroke="#e3dac7" stroke-width="4"/>';
  g+=box(xA,yA,s.mA+' kg','#64bcff')+box(xB,yB,s.mB+' kg','#f5c978');
  const k=Math.min(4,110/Math.max(1,r.tension,r.weightA,r.weightB));
  g+=vector(xA,yA,0,r.tension,'#50e2c2','green','T',k)
@@ -299,7 +299,7 @@ function paintQuiz(){
  $('quiz').innerHTML='<div class="quiz-prompt">'+H(q.q)+'</div>'+q.cs.map((x,i)=>'<button type="button" class="answer '+(s.checked?(i===q.a?'correct':i===s.choice?'wrong':''):'')+'" data-answer="'+i+'" '+(s.checked?'disabled':'')+'><span>'+('ABCDE'[i])+'</span>'+H(x)+'</button>').join('')
  +(s.checked?'<div class="feedback '+(s.choice===q.a?'success':'error')+'">'+H(q.why)+'</div>':'<div class="feedback info">Bir şıkkı seç; cevabı kontrol ettiğinde nedenini de göreceksin.</div>');
  $('lesson').innerHTML='<p><strong>11.1.3.1/2:</strong> Net kuvvet, serbest cisim diyagramı ve sürtünmeli/sürtünmesiz günlük yaşam soruları.</p><aside>Özgün alıştırmalar; resmî ÖSYM sorusu değildir.</aside>';
- hint('13 temel soru. Formül seçmekten önce kuvvetlerin hangi cisme uygulandığını belirle.');
+ hint('19 temel soru. Formül seçmekten önce kuvvetlerin hangi cisme uygulandığını belirle.');
 }
 function paint(){
  $('quiz').innerHTML='';
