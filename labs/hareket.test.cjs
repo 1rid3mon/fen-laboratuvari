@@ -47,6 +47,16 @@ test('river crossing time, downstream drift, steering upstream and limiting case
  const upstream=M.river({speed:8,angleDeg:90,current:-3,width:120});
  near(upstream.exit,-45);
 });
+test('optional school 37°–53° triangle gives exact 3–4–5 ratios',()=>{
+ const ship=M.river({speed:10,angleDeg:37,current:0,width:60,approx:true});
+ near(ship.water.x,8);near(ship.water.y,6);near(ship.time,10);
+ const exact=M.river({speed:10,angleDeg:37,current:0,width:60,approx:false});
+ assert.ok(Math.abs(exact.time-10)>.005,'exact sine should differ slightly from textbook ratio');
+ const air=M.wind({speed:100,angleDeg:53,windX:0,windY:0,northDistance:160,approx:true});
+ near(air.air.x,60);near(air.air.y,80);near(air.time,2);
+ const negative=M.polarForSchool(10,143,true);
+ near(negative.x,-8);near(negative.y,6);
+});
 test('airplane wind vector, crosswind, headwind and corrected heading',()=>{
  const w=M.wind({speed:300,angleDeg:90,windX:40,windY:0,northDistance:600});
  near(w.time,2);near(w.exit,80);near(M.mag(w.ground),Math.hypot(300,40));
@@ -178,6 +188,8 @@ test('relative DOM: observer switch, river correction, wind controls, quiz choic
  const r=h.inspect().river;
  const ground=M.river({speed:r.speed,angleDeg:r.heading,current:r.current,width:r.width});
  assert.ok(Math.abs(ground.exit)<.07,'rounded heading should land near target');
+ h.event('controls','change','select[data-select]',{dataset:{select:'approx'},value:'no'});
+ assert.equal(h.inspect().river.approx,false);
  h.event('tabs','click','[data-tab]',{dataset:{tab:'quiz'}});
  h.event('quiz','click','[data-answer]',{dataset:{answer:'0'}});
  h.event('buttons','click','[data-action]',{dataset:{action:'check'}});
@@ -186,6 +198,7 @@ test('relative DOM: observer switch, river correction, wind controls, quiz choic
 });
 test('Newton DOM: six experiments and sliders; quiz scoring',()=>{
  const h=harness('newton-lab.js','NewtonLabDebug');
+ assert.equal(h.win.frames.length,0,'paused simulation must not run background frames');
  for(const tab of ['net','friction','incline','wall','elevator','third','quiz']){
   h.event('tabs','click','[data-tab]',{dataset:{tab}});
   assert.equal(h.inspect().tab,tab);
