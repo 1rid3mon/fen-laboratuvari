@@ -173,7 +173,11 @@ function paint(){
 function renderControls(){
  const t=st.tab,s=st[t];let html='';
  if(t==='vectors'){
-  for(const v of s.items)html+=control('k_'+v.id,v.id+' katsayısı',-2,2,.5,v.k,'×');
+  for(const v of s.items){
+   html+=control('x_'+v.id,v.id+' x bileşeni',-8,8,.5,v.x,'br');
+   html+=control('y_'+v.id,v.id+' y bileşeni',-6,6,.5,v.y,'br');
+   html+=control('k_'+v.id,v.id+' katsayısı',-2,2,.5,v.k,'×');
+  }
   html+=select('snap','Sürükleme hassasiyeti',[['yes','Tam sayıya yapış'],['no','0,1 birim']],s.snap?'yes':'no');
  }else if(t==='observer'){
   for(const k of ['a','b']){html+=control(k+'vx',k.toUpperCase()+' x hızı',-8,8,.5,s[k].vx,'m/s');html+=control(k+'vy',k.toUpperCase()+' y hızı',-8,8,.5,s[k].vy,'m/s');}
@@ -205,8 +209,8 @@ function drawActions(){
 function change(id,val){
  const t=st.tab,s=st[t];st.playing=false;
  if(t==='vectors'){
-  const v=s.items.find(x=>id==='k_'+x.id);
-  if(v)v.k=Number(val);
+  const match=id.match(/^([xyk])_([KLM])$/);
+  if(match){const v=s.items.find(x=>x.id===match[2]);if(v)v[match[1]]=Number(val);}
   if(id==='snap')s.snap=val==='yes';
  }else if(t==='observer'){
   const mat=id.match(/^([ab])(vx|vy)$/);
@@ -275,6 +279,7 @@ function moveDrag(e){
   if(v.k===0){v.k=1;sync('k_'+v.id,1);}
   const step=st.vectors.snap?1:.1;
   v.x=snap((p.x-430)/37/v.k,step,-8,8);v.y=snap((255-p.y)/37/v.k,step,-6,6);
+  sync('x_'+v.id,v.x);sync('y_'+v.id,v.y);
  }else{
   const s=st.observer,id=st.drag.id.toLowerCase(),v=s[id],t=s.time;
   const pos=P.vec(v.x+v.vx*t,v.y+v.vy*t);
