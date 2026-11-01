@@ -165,6 +165,14 @@ test('DOM: interactive scrub/slider, free fall, air resistance, quiz and lazy pl
  assert.match(h.nodes.get('results').innerHTML,/m\/s/);
  h.fire('tabs','click','[data-tab]',{dataset:{tab:'drag'}});
  assert.match(h.nodes.get('graph-summary').textContent,/Hava direnci/);
+ assert.match(h.nodes.get('controls').innerHTML,/Kesit alanı/);
+ h.fire('controls','input','[data-range]',{dataset:{range:'area',unit:'m²'},value:'0.2'});
+ near(h.snapshot().drag.area,0.2);
+ h.fire('controls','change','select[data-select]',{dataset:{select:'shape'},value:'parachute'});
+ assert.equal(h.snapshot().drag.shape,'parachute');
+ assert.match(h.nodes.get('results').innerHTML,/Etkin direnç katsayısı/);
+ h.fire('controls','input','[data-range]',{dataset:{range:'rho',unit:'kg\/m³'},value:'1.5'});
+ near(h.snapshot().drag.rho,1.5);
  h.fire('tabs','click','[data-tab]',{dataset:{tab:'quiz'}});
  h.fire('quiz','click','[data-answer]',{dataset:{answer:'3'}});
  h.fire('buttons','click','[data-action]',{dataset:{action:'check'}});
