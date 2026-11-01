@@ -1,0 +1,38 @@
+name: AYT Fizik Vektor Bagil Newton
+on:
+  push:
+    paths:
+      - 'labs/hareket-*'
+      - 'labs/bagil-lab.js'
+      - 'labs/newton-lab.js'
+      - 'labs/vektorler-bagil-hareket.html'
+      - 'labs/newton-hareket-yasalari.html'
+      - '.github/workflows/ayt-fizik-hareket-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/hareket-*'
+      - 'labs/bagil-lab.js'
+      - 'labs/newton-lab.js'
+      - 'labs/vektorler-bagil-hareket.html'
+      - 'labs/newton-hareket-yasalari.html'
+      - '.github/workflows/ayt-fizik-hareket-ci.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check labs/hareket-math.js
+          node --check labs/bagil-lab.js
+          node --check labs/newton-lab.js
+          node --check labs/hareket.test.cjs
+      - name: Physics and DOM regression tests
+        run: node --test labs/hareket.test.cjs
