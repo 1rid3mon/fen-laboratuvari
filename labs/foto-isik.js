@@ -1,15 +1,107 @@
-(function(w){'use strict';var E=w.EnerjiLab;if(!E)return;
-var steps=[
- {zone:'psii',mol:'LIGHT',title:'Fotosistem II ışığı soğurur',text:'Klorofil fotonu soğurur; elektronlar uyarılır. Fotosistem II (P680) ışığa bağımlı tepkimelerin ilk ışık yakalama basamağıdır.'},
- {zone:'psii',mol:'H2O',title:'Suyun fotolizi',text:'2H₂O → O₂ + 4H⁺ + 4e⁻. Fotosistem II tarafından kaybedilen elektronlar sudan tamamlanır; açığa çıkan O₂ sudan gelir.'},
- {zone:'psi',mol:'LIGHT',title:'Fotosistem I elektronu yeniden uyarır',text:'Elektronlar ETS boyunca taşınırken H⁺ gradyanına katkı sağlanır. Fotosistem I (P700) yeni fotonlarla elektronları yeniden uyarır.'},
- {zone:'psi',mol:'NADP',title:'NADP⁺ indirgenir',text:'NADP⁺ elektron ve H⁺ alarak NADPH hâline gelir. NADPH indirgeme gücünü stromadaki Calvin döngüsüne taşır.'},
- {zone:'atp',mol:'ADP',title:'ATP sentaz kemiosmozla ATP sentezler',text:'Tilakoit lümeninde biriken H⁺, ATP sentazdan stromaya döner; ADP + Pi → ATP olur. ATP Calvin döngüsünde kullanılır.'}
-];
-E.registerExperiment('exp2',{title:'Işığa bağımlı tepkimeler',subtitle:'Fotosistem II → suyun fotolizi → ETS → Fotosistem I → NADPH ve ATP.',group:'FOTOSENTEZ • IŞIK EVRESİ',createState:function(){return {i:0,tracer:'normal'};},
-render:function(s,U){var st=steps[Math.min(s.i,4)],pct=s.i/5*100;var z='<div class="scene-grid">'+U.zone('psii','Fotosistem II • P680','Işık yakalama ve suyun fotolizi',s.i>=2,s.i<2)+U.zone('psi','Fotosistem I • P700','İkinci ışık uyarılması, NADP⁺ indirgenmesi',s.i>=4,s.i>=2&&s.i<4)+U.zone('atp','ATP sentaz','H⁺ gradyanı ile ADP + Pi → ATP',s.i>=5,s.i===4)+'</div>';var text='<p class="math">2H₂O → O₂ + 4H⁺ + 4e⁻</p><p class="summaryline">İşaretli su deneyi: '+(s.tracer==='18o'?'H₂¹⁸O kullanıldığında açığa çıkan O₂, ¹⁸O taşır.':'Normal H₂O kullanılıyor.')+'</p>';
-return {step:Math.min(5,s.i+1),steps:5,scene:'<h3>'+(s.i===5?'✓ Işık evresi tamamlandı':U.esc(st.title))+'</h3><p class="summaryline">'+(s.i===5?'ATP ve NADPH stromadaki Calvin döngüsünde kullanılabilir.':U.esc(st.text))+'</p>'+z+U.progress(pct)+text,molecules:['LIGHT','H2O','NADP','ADP','ATP','CO2'],controls:[{id:'tracer',label:'Suyun oksijenini izleme',type:'buttons',value:s.tracer,options:[U.option('normal','Normal H₂O'),U.option('18o','H₂¹⁸O izotopu')]}],metrics:[{label:'Tamamlanan basamak',value:s.i+' / 5'},{label:'O₂ kaynağı',value:s.i>=2?'H₂O':'Henüz fotoliz yok',note:'CO₂ değildir'},{label:'NADPH',value:s.i>=4?'Üretildi':'Bekleniyor'},{label:'ATP',value:s.i>=5?'Üretildi':'Bekleniyor'}],guidance:s.i===5?'Beş basamak tamamlandı. Baştan denemek için sıfırla.':'Şimdi '+(U.names[st.mol]||st.mol)+' molekülünü '+(st.zone==='psii'?'Fotosistem II':st.zone==='psi'?'Fotosistem I':'ATP sentaz')+' bölgesine yerleştir.',insight:'Oksijen, karbondioksitten değil sudan çıkar. ATP üretimi kemiosmozla sağlanır. Fotosistem II ve I ayrı ışık soğurma olaylarıdır. Basamak sırası öğretim amaçlı sadeleştirilmiştir.'};},
-interact:function(s,zone,mol,U){if(s.i>=steps.length)return {message:'Işık evresi tamamlandı. Sıfırla ve tekrar dene.',complete:true};var t=steps[s.i];if(!mol)return {message:'Bu bölgeye doğru molekülü yerleştir: '+(U.names[t.mol]||t.mol),level:'info'};if(zone!==t.zone||mol!==t.mol)return {message:'Bu aşamada '+(U.names[t.mol]||t.mol)+' → '+(t.zone==='psii'?'Fotosistem II':t.zone==='psi'?'Fotosistem I':'ATP sentaz')+' olmalı.',level:'error'};s.i++;return {ok:true,message:t.title+'. '+t.text,complete:s.i===5};},
-next:function(s,U){if(s.i===5)return {message:'Tamamlandı.',complete:true};var t=steps[s.i];return this.interact(s,t.zone,t.mol,U);},
-change:function(s,id,val){if(id==='tracer')s.tracer=val;return {message:val==='18o'?'İşaretli su seçildi: Üretilen O₂ içindeki oksijen sudan gelir.':'Normal su seçildi.',level:'info'};}
-});})(window);
+/*
+ * AYT Fotosentez — ışığa bağımlı reaksiyonlarda giriş/ürün şeması.
+ * MEB 2018 12.2.2.2: Tepkime basamakları ve matematiksel hesaplamalar verilmez.
+ */
+(function (w) {
+  'use strict';
+  const E = w.EnerjiLab;
+  if (!E) return;
+
+  const matches = {
+    LIGHT: 'inputs',
+    H2O: 'inputs',
+    O2: 'products',
+    ATP: 'products',
+    NADPH: 'products'
+  };
+  const order = ['LIGHT', 'H2O', 'O2', 'ATP', 'NADPH'];
+
+  function count(s) { return Object.keys(s.placed).length; }
+  function finished(s) { return count(s) === order.length; }
+
+  E.registerExperiment('exp2', {
+    title: 'Işığa bağımlı tepkimeler',
+    subtitle: 'Tilakoit zarında ışık ve su kullanımı; O₂, ATP ve NADPH oluşumu.',
+    group: 'FOTOSENTEZ • IŞIĞA BAĞIMLI EVRE',
+
+    createState: function () { return { placed: {}, tracer: 'normal' }; },
+
+    render: function (s, U) {
+      const n = count(s);
+      const hasInputs = !!(s.placed.LIGHT && s.placed.H2O);
+      const inputText = [
+        s.placed.LIGHT ? '✓ Işık' : 'Işık',
+        s.placed.H2O ? '✓ Su (H₂O)' : 'Su (H₂O)'
+      ].join(' • ');
+
+      const outputText = [
+        s.placed.O2 ? '✓ O₂' : 'O₂',
+        s.placed.ATP ? '✓ ATP' : 'ATP',
+        s.placed.NADPH ? '✓ NADPH' : 'NADPH'
+      ].join(' • ');
+
+      return {
+        step: Math.min(n + 1, order.length),
+        steps: order.length,
+        scene: '<h3>Işığa bağımlı tepkimelerin şemasını tamamla</h3>'
+          + '<p class="summaryline">Kloroplastın <strong>tilakoit zarında</strong> gerçekleşen olaylar için giren maddeleri ve oluşan ürünleri ayır. Burada ürünleri ilgili kutuya yerleştirmen onları “reaksiyona eklediğin” anlamına gelmez; şemanın ürün kısmını tamamlıyorsun.</p>'
+          + '<div class="scene-grid">'
+          + U.zone('inputs', '☀️ Girdiler', inputText, !!(s.placed.LIGHT && s.placed.H2O), !hasInputs)
+          + U.zone('products', '🫧 Ürünler', outputText, !!(s.placed.O2 && s.placed.ATP && s.placed.NADPH), hasInputs && !finished(s))
+          + '</div>'
+          + U.progress(n / order.length * 100)
+          + '<p class="math">Işık + H₂O → O₂ + ATP + NADPH (ışığa bağımlı evrenin ürün şeması)</p>'
+          + '<p class="summaryline">' + (s.tracer === '18o'
+            ? '🧪 İzotop düşünce deneyi: Su molekülünün oksijeni ¹⁸O ile işaretlenirse oluşan O₂ de işaretli oksijen taşır.'
+            : '🧪 O₂ açığa çıkmasının kaynağı CO₂ değil, suyun fotolizidir.')
+          + '</p>',
+        molecules: ['LIGHT', 'H2O', 'O2', 'ATP', 'NADPH', 'CO2'],
+        controls: [{
+          id: 'tracer', label: 'Oksijenin kaynağını araştır',
+          type: 'buttons', value: s.tracer,
+          options: [U.option('normal', 'Normal H₂O'), U.option('18o', 'H₂¹⁸O düşünce deneyi')]
+        }],
+        metrics: [
+          { label: 'Doğru yerleştirme', value: n + ' / ' + order.length },
+          { label: 'Kullanılan su', value: s.placed.H2O ? 'H₂O ✓' : 'Bekleniyor' },
+          { label: 'O₂ kaynağı', value: 'H₂O', note: 'CO₂ değil' },
+          { label: 'ATP ve NADPH', value: s.placed.ATP && s.placed.NADPH ? 'Üretildi ✓' : 'Ürünlere yerleştir', note: 'Işıktan bağımsız evrede kullanılır' }
+        ],
+        guidance: finished(s)
+          ? 'Tebrikler! Girdiler ve ürünler eşleştirildi. Şimdi Calvin döngüsünü incele.'
+          : hasInputs
+            ? 'Girdiler tamam. O₂, ATP ve NADPH moleküllerini “Ürünler” bölümüne bırak.'
+            : 'Önce Işık ve H₂O moleküllerini “Girdiler” bölümüne bırak.',
+        insight: '2018 MEB: Suyun fotolizi belirtilir. Işığa bağımlı ve ışıktan bağımsız reaksiyonlar ürünler açısından karşılaştırılır; ayrıntılı elektron aktarım basamakları ve sayısal ATP hesapları YKS hedefi değildir. O₂ sudan çıkar; CO₂ organik besin sentezi aşamasında kullanılır.'
+      };
+    },
+
+    interact: function (s, zone, mol, U) {
+      if (!mol) return { message: 'Sol panelden Işık, H₂O veya bir ürünü seçip doğru bölgeye dokun.', level: 'info' };
+      if (!Object.prototype.hasOwnProperty.call(matches, mol)) return { message: 'Bu molekül, ışığa bağımlı evre şemasında yer almıyor.', level: 'error' };
+      if (matches[mol] !== zone) return { message: (U.names[mol] || mol) + ' için doğru şema bölümü: ' + (matches[mol] === 'inputs' ? 'Girdiler' : 'Ürünler') + '.', level: 'error' };
+      if (s.placed[mol]) return { message: 'Bu molekülün eşleştirmesi zaten tamamlandı.', level: 'info' };
+      if (matches[mol] === 'products' && !(s.placed.LIGHT && s.placed.H2O)) return { message: 'Önce ışığı ve suyu “Girdiler” bölümüne yerleştir.', level: 'warning' };
+      s.placed[mol] = true;
+      return {
+        ok: true,
+        message: mol === 'O2'
+          ? 'Doğru: O₂, suyun fotolizi sonucunda oluşur.'
+          : mol === 'ATP' || mol === 'NADPH'
+            ? 'Doğru: ' + mol + ' ışığa bağımlı evrede üretilir; karbon bağlama evresinde kullanılır.'
+            : 'Doğru: ' + (U.names[mol] || mol) + ' bu evrenin girdilerindendir.',
+        complete: finished(s)
+      };
+    },
+
+    next: function (s, U) {
+      const mol = order.find(function (id) { return !s.placed[id]; });
+      return mol ? this.interact(s, matches[mol], mol, U) : { message: 'Tüm girdi ve ürünler tamamlandı.', complete: true };
+    },
+
+    change: function (s, id, value) {
+      if (id === 'tracer') s.tracer = value;
+      return { message: s.tracer === '18o' ? 'İşaretli oksijen suya konursa ortaya çıkan O₂ de işaretli olur.' : 'Suyun fotolizi O₂ kaynağıdır.', level: 'info' };
+    }
+  });
+})(window);
