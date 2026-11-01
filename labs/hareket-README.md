@@ -20,7 +20,7 @@ Bu sayfalar 2018 MEB **11. sınıf fizik ünitesi**nin şu kazanımlarına dayan
 3. Sabit hızlı karşılaşma/yetişme; negatif buluşma zamanı = gelecekte kavuşmazlar.
 4. Akıntılı nehir: suya göre hız + akıntı = yere göre hız; kıyıya dik hız bileşeninden süre; x yönündeki sapma; tam karşıya hedefleme açısı.
 5. Rüzgârlı uçak: havaya göre hız + rüzgâr = yere göre hız; hem yan hem arka/ön rüzgâr; kuzey mesafesi/yer hızı.
-6. 13 özgün soru, 5 seçenek, çözüm gerekçesi.
+6. 13 özgün soru, 5 seçenek, çözüm gerekçesi. Nehir ve uçakta 37°/53° için gerçek sin/cos veya 3–4–5 YKS yaklaşımı ayrı seçilebilir.
 
 **İşaret ve açı konvansiyonu:** +x doğu/sağ, +y kuzey/karşı kıyı; yön açısı +x ekseninden ölçülür (kıyıya dik 90°). Uçakta km/h ve km kullanılır; nehirde m/s ve m kullanılır.
 **Fiziksel sınır:** |akıntı| = kayık sürati ise teorik sıfır yatay sapmada karşıya doğru bileşen sıfırdır, dolayısıyla geçiş gerçekleşmez. Tam karşıya çıkmak için |akıntı| < kayık sürati.
