@@ -7,11 +7,14 @@
   const E=w.EnerjiLab;
   if(!E)return;
   const colorEffect={white:1,blue:.98,red:.94,green:.24};
+  const colorOrder=['white','blue','green','red'];
+  const colorNames={white:'Beyaz',blue:'Mor-mavi',green:'Yeşil',red:'Kırmızı'};
   const axis={
     light:{min:0,max:100,step:5,label:'Işık şiddeti',unit:'bağıl'},
     co2:{min:50,max:1000,step:50,label:'CO₂ derişimi',unit:'ppm'},
     temp:{min:0,max:55,step:1,label:'Sıcaklık',unit:'°C'},
-    pigment:{min:10,max:100,step:5,label:'Klorofil miktarı',unit:'bağıl'}
+    pigment:{min:10,max:100,step:5,label:'Klorofil miktarı',unit:'bağıl'},
+    color:{min:1,max:4,step:1,label:'Işığın rengi',unit:'renk kodu'}
   };
   const factors=['light','co2','temp','pigment','color'];
 
@@ -28,7 +31,7 @@
     const c=components(s);
     return Math.max(0,Math.min(100,100*c.light*c.co2*c.temperature*c.pigment*c.color*1.65));
   }
-  function value(s,k){return s[k]+(axis[k]?' '+axis[k].unit:'');}
+  function value(s,k){return k==='color'?(colorNames[s.color]||s.color):s[k]+(axis[k]?' '+axis[k].unit:'');}
   function observations(s,U){
     if(!s.records.length)return '<p class="summaryline">Henüz ölçüm yapılmadı. Önce başlangıç ölçümü, sonra sadece tek değişkeni değiştirerek yeni ölçüm yap.</p>';
     return '<div class="scene-grid">'+s.records.slice(-4).reverse().map(function(r){
@@ -51,10 +54,11 @@
       const points=[];
       for(let x=a.min;x<=a.max+0.0001;x+=(a.max-a.min)/32){
         const copy=Object.assign({},s);
-        copy[s.scan]=x;
+        if(s.scan==='color')copy.color=colorOrder[Math.max(0,Math.min(3,Math.round(x)-1))];
+        else copy[s.scan]=x;
         points.push([x,rate(copy)]);
       }
-      points.push([a.max,rate(Object.assign({},s,{[s.scan]:a.max}))]);
+      points.push([a.max,rate(Object.assign({},s,s.scan==='color'?{color:'red'}:{[s.scan]:a.max}))]);
       points.sort(function(x,y){return x[0]-y[0];});
       const limiting=[
         ['Işık',c.light],['CO₂',c.co2],['Sıcaklık',c.temperature],
@@ -66,7 +70,8 @@
         scene:'<h3>Bilimsel yöntem: bir değişkeni değiştir</h3>'
           +'<p class="summaryline"><strong>Bağımsız değişken:</strong> '+U.esc(a.label)
           +'. <strong>Bağımlı değişken:</strong> fotosentez hızı. <strong>Kontrol edilenler:</strong> grafikteki diğer ortam değişkenleri.</p>'
-          +U.plot([{label:'Bağıl hız (temsili model)',color:'#59e3b6',points:points}],a.min,a.max,a.label+' ('+a.unit+') → bağıl fotosentez hızı',s[s.scan])
+          +U.plot([{label:'Bağıl hız (temsili model)',color:'#59e3b6',points:points}],a.min,a.max,a.label+' ('+a.unit+') → bağıl fotosentez hızı',s.scan==='color'?colorOrder.indexOf(s.color)+1:s[s.scan])
+          +(s.scan==='color'?'<p class="fine">Renk kodları: 1 Beyaz • 2 Mor-mavi • 3 Yeşil • 4 Kırmızı. Sadece renk farklı olsun; şiddet ve diğer değişkenler aynı kalmalı.</p>':'')
           +'<div class="scene-grid">'
           +U.zone('measure','🔬 Ölçümü kaydet','Bir ölçüm kaydet, seçili bağımsız değişkeni değiştir ve yeni ölçümle karşılaştır.',false,true)
           +U.card('Serada yapay ışıklandırma','LED aydınlatmada ışık şiddeti, rengi ve süre ayarlanabilir. Daha fazla ışık her koşulda daha fazla ürün anlamına gelmez; diğer sınırlayıcı etmenler ve enerji maliyeti de değerlendirilir.')
@@ -75,7 +80,7 @@
         molecules:[],
         controls:[
           {id:'scan',label:'Grafikte değiştirilen bağımsız değişken',type:'select',value:s.scan,options:[
-            U.option('light','Işık şiddeti'),U.option('co2','CO₂'),U.option('temp','Sıcaklık'),U.option('pigment','Klorofil miktarı')
+            U.option('light','Işık şiddeti'),U.option('co2','CO₂'),U.option('temp','Sıcaklık'),U.option('pigment','Klorofil miktarı'),U.option('color','Işık rengi')
           ]},
           {id:'light',label:'Işık şiddeti',type:'range',min:0,max:100,step:5,value:s.light,unit:'bağıl'},
           {id:'co2',label:'CO₂ derişimi',type:'range',min:50,max:1000,step:50,value:s.co2,unit:'ppm'},
@@ -119,6 +124,11 @@
 
     next:function(s,U){
       const a=axis[s.scan]||axis.light;
+      if(s.scan==='color'){
+        const i=colorOrder.indexOf(s.color);
+        s.color=colorOrder[(i+1)%colorOrder.length];
+        return {ok:true,message:'Işığın rengi: '+colorNames[s.color]+'. Diğer koşulları sabit tutup ölçüm kaydet.'};
+      }
       const v=s[s.scan],next=v+a.step>a.max?a.min:v+a.step;
       this.change(s,s.scan,String(next),U);
       return {ok:true,message:a.label+' = '+next+' '+a.unit+'. Diğer koşulları değiştirmeden ölçüm kaydet.'};
