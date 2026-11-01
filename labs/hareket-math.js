@@ -56,6 +56,17 @@ function incline({mass,angleDeg,force=0,g=10,muStatic=0,muKinetic=0}){
  const net=driving+friction;
  return {N,down,driving,maxStatic,friction,net,acceleration:net/mass,state:staticMode?'static':'sliding'};
 }
+/* Body pressed horizontally against a vertical wall; initially at rest.
+   +y upward. For a sliding body in this scenario motion begins downward. */
+function wall({mass,push,g=10,muStatic=0,muKinetic=0}){
+ if(!(mass>0)||!(g>0)||push<0)throw Error('mass, g must be positive and push >= 0');
+ const N=push,weight=mass*g,maxStatic=Math.max(0,muStatic)*N;
+ const staticMode=weight<=maxStatic+EPS;
+ const kinetic=Math.min(Math.max(0,muKinetic),Math.max(0,muStatic));
+ const friction=staticMode?weight:kinetic*N; // upwards to oppose downward slipping
+ const net=friction-weight;
+ return {N,weight,maxStatic,friction,net,acceleration:net/mass,state:staticMode?'static':'sliding'};
+}
 function elevator({mass,acceleration,g=10}){
  if(!(mass>0)||!(g>0))throw Error('mass and g must be positive');
  const normal=mass*(g+acceleration);
@@ -63,5 +74,5 @@ function elevator({mass,acceleration,g=10}){
 }
 const f=(n,unit='',p=2)=>Number.isFinite(n)?round(n,p).toLocaleString('tr-TR',{maximumFractionDigits:p})+(unit?' '+unit:''):'—';
 const escapeHtml=str=>String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-root.HareketMath=Object.freeze({EPS,round,vec,add,sub,scale,mag,dot,angle,fromPolar,relative,river,wind,rendezvous,horizontal,incline,elevator,f,escapeHtml});
+root.HareketMath=Object.freeze({EPS,round,vec,add,sub,scale,mag,dot,angle,fromPolar,relative,river,wind,rendezvous,horizontal,incline,wall,elevator,f,escapeHtml});
 })(window);
