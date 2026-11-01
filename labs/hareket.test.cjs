@@ -140,7 +140,7 @@ test('source boundaries and standalone AYT links',()=>{
 });
 function harness(module,which){
  const win={HareketMath:loadMath(),requestAnimationFrame(fn){this.frames.push(fn);return this.frames.length;},frames:[]};
- vm.runInNewContext(fs.readFileSync(path.join(basedir,'ivmeli-math.js'),'utf8'),{window:win,Intl,Math,Object,Number,JSON},{filename:'ivmeli-math.js'});
+ vm.runInNewContext(fs.readFileSync(path.join(base,'ivmeli-math.js'),'utf8'),{window:win,Intl,Math,Object,Number,JSON},{filename:'ivmeli-math.js'});
  const elements=new Map(),listeners=new Map(),tabObjects=[];
  function el(id){return {
   id,innerHTML:'',textContent:'',value:'',dataset:{},className:'',disabled:false,
