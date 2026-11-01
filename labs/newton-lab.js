@@ -3,11 +3,12 @@
 'use strict';
 const P=w.HareketMath;if(!P)return;
 const $=id=>d.getElementById(id),H=P.escapeHtml,F=P.f,PI=Math.PI;
-const tabs=[['net','Net kuvvet · F=ma'],['friction','Yatay sürtünme'],['incline','Eğik düzlem'],['elevator','Asansör'],['third','Etki–tepki'],['quiz','YKS mini test']];
+const tabs=[['net','Net kuvvet · F=ma'],['friction','Yatay sürtünme'],['incline','Eğik düzlem'],['wall','Düşey duvar'],['elevator','Asansör'],['third','Etki–tepki'],['quiz','YKS mini test']];
 const defaults={
  net:{mass:5,F1:16,F2:-6,v0:0,time:0},
  friction:{mass:5,force:20,muStatic:.5,muKinetic:.3,g:10,time:0},
  incline:{mass:5,angle:30,force:0,muStatic:.35,muKinetic:.25,g:10,time:0},
+ wall:{mass:2,push:30,muStatic:.8,muKinetic:.5,g:10,time:0},
  elevator:{mass:70,a:2,g:10,time:0},
  third:{m1:2,m2:5,F:20,time:0},
  quiz:{index:0,choice:null,checked:false,score:0,attempts:0}
@@ -25,6 +26,7 @@ const Q=[
  {q:'60 kg kişi yukarı yönde 2 m/s² ivmelenen asansörde, g=10. Baskül kaç N gösterir?',cs:['480','600','720','120','840'],a:2,why:'N−mg=ma ⇒ N=m(g+a)=60×12=720 N.'},
  {q:'60 kg kişi aşağı yönde 3 m/s² ivmelenen asansörde, g=10. Baskül?',cs:['420 N','600 N','780 N','180 N','0'],a:0,why:'a_yukarı=−3. N=m(10−3)=420 N.'},
  {q:'A cismi B’ye 15 N itme kuvveti uygularsa, B’nin A’ya kuvveti?',cs:['0 N','7,5 N aynı yönde','15 N ters yönde','30 N ters yönde','B’nin kütlesine göre değişir'],a:2,why:'Etki–tepki kuvvetleri eşit büyüklükte ve ters yöndedir, farklı cisimlere etkir.'},
+ {q:'2 kg blok duvara 50 N kuvvetle bastırılıyor; μs = 0,5, g=10. Blok duruyorsa sürtünme büyüklüğü?',cs:['0','10 N','20 N','25 N','50 N'],a:2,why:'mg=20 N, max statik=0,5×50=25 N. Gereken statik sürtünme 20 N yukarıdır.'},
  {q:'Etki ve tepki neden birbirini dengeleyip sıfırlamaz?',cs:['Büyüklükleri farklı','Aynı cisim üzerindedir','Farklı cisimlere etkir','Daima sürtünme vardır','Sadece durgunken oluşur'],a:2,why:'F_A→B, B üzerinde; F_B→A, A üzerinde etkilidir. Bir cismin net kuvvetinde toplanmazlar.'},
  {q:'5 kg blok üzerinde sağa 35 N, sola 10 N net dış kuvvet varsa ivme?',cs:['1 sağ','3 sağ','5 sağ','7 sağ','9 sol'],a:2,why:'Fnet=35−10=25 N sağ; a=25/5=5 m/s².'}
 ];
@@ -46,14 +48,15 @@ function meter(rows){$('results').innerHTML=rows.map(a=>'<div class="metric"><sm
 function lesson(formula,details,warning=''){$('lesson').innerHTML='<div class="formula">'+H(formula)+'</div><p>'+H(details)+'</p>'+(warning?'<aside>'+H(warning)+'</aside>':'');}
 function hint(text){$('hint').textContent=text;}
 function setTitle(t){
- const titles={net:'Net kuvvet ve Newton’un ikinci yasası',friction:'Yatay düzlemde statik ve kinetik sürtünme',incline:'Eğik düzlem: ağırlık bileşenleri',elevator:'Asansörde görünür ağırlık',third:'Etki–tepki: Newton’un üçüncü yasası',quiz:'Newton Yasaları · YKS mini test'};
+ const titles={net:'Net kuvvet ve Newton’un ikinci yasası',friction:'Yatay düzlemde statik ve kinetik sürtünme',incline:'Eğik düzlem: ağırlık bileşenleri',wall:'Düşey duvarda sürtünme',elevator:'Asansörde görünür ağırlık',third:'Etki–tepki: Newton’un üçüncü yasası',quiz:'Newton Yasaları · YKS mini test'};
  const descriptions={
  net:'Kütle, dış kuvvet ve başlangıç hızını değiştir. Net kuvvetin ivmeye etkisini gözle.',
  friction:'Cisim ilk anda durgun. Statik sürtünme sınırını aşınca kinetik sürtünme başlar.',
  incline:'Eğimin açısı ve kuvvetler değiştikçe blok durabilir veya aşağı/yukarı kayabilir.',
+ wall:'Duvara basma kuvveti, normal kuvveti ve statik sürtünme sınırını belirler.',
  elevator:'Asansörün ivmesi baskülün okuduğu normal kuvveti değiştirir.',
  third:'İki cismin birbirine uyguladığı etki–tepki kuvvetleri daima eşit büyüklükte ve zıt yönlüdür.',
- quiz:'2018 MEB Newton kazanımlarına yönelik 12 özgün, beş seçenekli soru.'
+ quiz:'2018 MEB Newton kazanımlarına yönelik 13 özgün, beş seçenekli soru.'
  };
  $('heading').textContent=titles[t];$('intro').textContent=descriptions[t];
  $('tagline').textContent=t==='quiz'?'AYT SORU ANTRENMANI':'2018 MEB · 11.1.3';
@@ -123,6 +126,29 @@ function drawIncline(){
  'Statik sürtünme, kendiliğinden aşağı yönlü olmak zorunda değildir: blok yukarı doğru kayma eğilimindeyse sürtünme aşağı, aşağı kayma eğilimindeyse yukarı yönlüdür.');
  hint('Eğimi arttır; mg sinθ büyürken N=mg cosθ azalır. Durgun kalma sınırı nasıl değişiyor gör.');
 }
+function drawWall(){
+ const s=st.wall,r=P.wall({mass:s.mass,push:s.push,muStatic:s.muStatic,muKinetic:s.muKinetic,g:s.g});
+ const displacement=Math.min(125,Math.max(-60,-.5*r.acceleration*s.time*s.time*3));
+ const x=450,y=225+displacement,scale=Math.min(3,125/Math.max(1,r.N,r.weight,Math.abs(r.friction)));
+ let g='<rect x="500" y="40" width="82" height="410" rx="7" fill="#3c5160" stroke="#acc4d3" stroke-width="2"/>';
+ for(let i=0;i<9;i++)g+='<line x1="505" y1="'+(55+i*45)+'" x2="565" y2="'+(85+i*45)+'" stroke="#6c8496"/>';
+ g+=box(x,y,s.mass+' kg');
+ g+=vector(x,y,s.push,0,'#64bcff','blue','F basma',scale);
+ g+=vector(x,y,-r.N,0,'#f5c978','gold','N',scale);
+ g+=vector(x,y,0,r.friction,'#50e2c2','green','f',scale);
+ g+=vector(x,y,0,-r.weight,'#ff8c9f','pink','mg',scale);
+ g+=label(18,31,'Düşey duvar: +y yukarı, +x sağ → cisim başlangıçta durgun');
+ g+=label(18,488,'ΣFₓ = Fbasma − N = 0; ΣFᵧ = f − mg = m·a');
+ $('scene').innerHTML=graph(g);
+ meter([['Duvara basma kuvveti',F(s.push,'N')],['Normal N',F(r.N,'N')],
+ ['Ağırlık mg',F(r.weight,'N')],['Maksimum statik sürtünme',F(r.maxStatic,'N')],
+ ['Gerçek sürtünme (+yukarı)',F(r.friction,'N')],['Rejim',r.state==='static'?'Denge':'Aşağı kayıyor'],
+ ['Düşey ivme',F(r.acceleration,'m/s²')],['Zaman',F(s.time,'s')]]);
+ lesson('ΣFᵧ = f − mg = m·a; N = Fbasma',
+ 'Duvara bastırılan ve ilk anda durgun blokta sürtünme düşmeye karşı koyar. Gereken statik sürtünme mg; ama ancak mg ≤ μs N ise statik denge sağlanır. Bu sınır aşılırsa kayma başlar, kinetik sürtünme μkN yukarı yönlüdür.',
+ 'Burada normal kuvvet yataydır ve uygulanan basma kuvvetiyle dengededir. Düşey düzlemde hareketin olup olmadığını düşey sürtünme ve ağırlık belirler.');
+ hint('Örneğin m=2 kg, g=10, μs=0,8: Fbasma=30 N iken max sürtünme 24 N ve blok durur. Basma kuvvetini azaltırsan blok aşağı kayar.');
+}
 function drawElevator(){
  const s=st.elevator,r=P.elevator({mass:s.mass,acceleration:s.a,g:s.g});
  const shift=Math.max(-78,Math.min(78,-.5*s.a*s.time*s.time*2));
@@ -172,13 +198,14 @@ function paintQuiz(){
  $('quiz').innerHTML='<div class="quiz-prompt">'+H(q.q)+'</div>'+q.cs.map((x,i)=>'<button type="button" class="answer '+(s.checked?(i===q.a?'correct':i===s.choice?'wrong':''):'')+'" data-answer="'+i+'" '+(s.checked?'disabled':'')+'><span>'+('ABCDE'[i])+'</span>'+H(x)+'</button>').join('')
  +(s.checked?'<div class="feedback '+(s.choice===q.a?'success':'error')+'">'+H(q.why)+'</div>':'<div class="feedback info">Bir şıkkı seç; cevabı kontrol ettiğinde nedenini de göreceksin.</div>');
  $('lesson').innerHTML='<p><strong>11.1.3.1/2:</strong> Net kuvvet, serbest cisim diyagramı ve sürtünmeli/sürtünmesiz günlük yaşam soruları.</p><aside>Özgün alıştırmalar; resmî ÖSYM sorusu değildir.</aside>';
- hint('12 temel soru. Formül seçmekten önce kuvvetlerin hangi cisme uygulandığını belirle.');
+ hint('13 temel soru. Formül seçmekten önce kuvvetlerin hangi cisme uygulandığını belirle.');
 }
 function paint(){
  $('quiz').innerHTML='';
  if(st.tab==='net')drawNet();
  else if(st.tab==='friction')drawFriction();
  else if(st.tab==='incline')drawIncline();
+ else if(st.tab==='wall')drawWall();
  else if(st.tab==='elevator')drawElevator();
  else if(st.tab==='third')drawThird();
  else paintQuiz();
@@ -194,6 +221,10 @@ function makeControls(){
   +control('g','g',8,10,1,s.g,'m/s²');
  else if(t==='incline')html=control('mass','Kütle',1,20,1,s.mass,'kg')+control('angle','Eğim açısı',0,60,1,s.angle,'°')
   +control('force','Eğime paralel kuvvet (+yukarı)',-100,100,1,s.force,'N')
+  +control('muStatic','Statik sürtünme',0,1,.05,s.muStatic,'')
+  +control('muKinetic','Kinetik sürtünme',0,1,.05,s.muKinetic,'')
+  +control('g','g',8,10,1,s.g,'m/s²');
+ else if(t==='wall')html=control('mass','Kütle',1,20,1,s.mass,'kg')+control('push','Duvara yatay basma kuvveti',0,100,1,s.push,'N')
   +control('muStatic','Statik sürtünme',0,1,.05,s.muStatic,'')
   +control('muKinetic','Kinetik sürtünme',0,1,.05,s.muKinetic,'')
   +control('g','g',8,10,1,s.g,'m/s²');
@@ -221,7 +252,7 @@ function onChange(k,val){
  st.playing=false;
  s[k]=Number(val);
  // Typical school model: kinetic coefficient cannot exceed static coefficient.
- if(['friction','incline'].includes(st.tab)&&s.muKinetic>s.muStatic){
+ if(['friction','incline','wall'].includes(st.tab)&&s.muKinetic>s.muStatic){
   const other=k==='muStatic'?'muKinetic':'muStatic';
   s[other]=s[k];
   const inp=$('n-'+other),out=$('out-'+other);
