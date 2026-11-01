@@ -11,7 +11,7 @@ Bu geliştirme mezun öğrencinin **AYT Fizik** kapsamına göre 2018 MEB öğre
 | **11.1.4.1** Bir boyutta sabit ivmeli hareket ve x–t/v–t/a–t grafikleri ile dönüşümü | Bir Boyutta Sabit İvmeli Hareket: üç grafiği eşzamanlı incele, v(t), x(t), a(t), grafik eğimi, işaretli alan, yön değişimi | x–t eğimi v; v–t eğimi a; v–t alanı yer değiştirme; a–t alanı hız değişimi |
 | **11.1.4.2** Bir boyutta sabit ivme hesapları | v=v₀+at; Δx=v₀t+½at²; v²−v₀²=2aΔx; fren süresi/mesafesi | Yer değiştirme ile alınan toplam yol **farklıdır**; hızla ivmenin işaretleri ayrı yorumlanır |
 | **11.1.4.3** Hava direnci ihmal edilen serbest düşme | Düşey aşağı pozitif serbest düşme; konum, hız ve ivme grafikleri; çarpma süresi/hızı | Serbest düşme ivmesi kütleden bağımsız; çarpma sonrası ideal olarak durdurulur |
-| **11.1.4.4** Hava direncinin bağlı olduğu değişkenler | Hava direnci karşılaştırması: k, kütle, düşülen yol; dirençli/dirençsiz cisimlerin aynı anda görünmesi | Hava direnci v, şekil, alan ve ortam yoğunluğuna bağlıdır; deneyde k bunları temsil eder |
+| **11.1.4.4** Hava direncinin bağlı olduğu değişkenler | Hava direnci karşılaştırması: temel k, kesit alanı, gövde şekli, hava yoğunluğu, kütle ve düşülen yol; dirençli/dirençsiz cismin aynı anda görünmesi | Hava direnci v, şekil, alan ve ortam yoğunluğuna bağlıdır; deneyde k bunları temsil eder |
 | **11.1.4.5** Limit hız kavramı | Drag bölümünde direnç büyür, net kuvvet azalır ve limit hıza yaklaşma grafiği | MEB limit hızın matematiksel modelini tanıtır, **sayısal limit hız hesapları** yaptırmaz |
 | **11.1.4.6** Düşey doğrultuda ilk hızı olan cisimlerin hareketi | Yukarı/aşağı yönlü ilk hız, tepe nokta, düşey atış, x–t/v–t/a–t grafikleri, düşme süresi | Yukarı (+) seçilirse a=−g; tepe noktada v=0 ama a=−g. Yatay/eğik atış **11.1.5'in ayrı konusu** |
 
@@ -47,7 +47,7 @@ Her fiziki deneyde kuvvet diyagramları açılıp kapatılabilir, zaman kaydır�
 6. Hava direnci ve limit hıza yaklaşma
 7. **16 özgün soruluk AYT mini testi**
 
-Konum, hız ve ivme grafiklerinin hepsi aynı saf fizik hesap motoruna dayanır. Ölçüm zamanı kaydırılabilir, deney oynatılabilir. Hava direnci bölümünde örnek model \(F_{\rm direnç}=k v^2\) yalnız nitel açıklama içindir; **limit hız hesabı çalıştırılmaz veya sınav sorusu sorulmaz.** Hava direnci yokken formüller tam analitiktir; havalı düşmede analitik hız/yer değiştirme eğrileri aynı varsayımdan hesaplanır.
+Konum, hız ve ivme grafiklerinin hepsi aynı saf fizik hesap motoruna dayanır. Ölçüm zamanı kaydırılabilir, deney oynatılabilir. Hava direnci bölümünde örnek model \(F_{\rm direnç}=k_{\rm etkin} v^2\) kullanılır; kesit alanı, şekil ve yoğunluk etkileri etkin katsayıya çarpan olarak eklenir. Bu, gerçek hava akışını hesaplayan CFD modeli değildir ve yalnız nitel açıklama içindir; **limit hız hesabı çalıştırılmaz veya sınav sorusu sorulmaz.** Hava direnci yokken formüller tam analitiktir; havalı düşmede analitik hız/yer değiştirme eğrileri aynı varsayımdan hesaplanır.
 
 Serbest düşme, yukarı/aşağı atış ve hava direnci simülasyonunda cisim yere temas edince durur. Model çarpmanın süresini ve etkileşim kuvvetlerini çözmez; **çarpma hızı ayrı bilgi olarak** gösterilir. Zemin altına düşüş veya çarptıktan sonra hızlanma simüle edilmez.
 
