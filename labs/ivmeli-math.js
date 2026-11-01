@@ -28,8 +28,8 @@ function freeFall({height=80,g=10,t=0}){
  const impactTime=Math.sqrt(2*height/g);
  const elapsed=Math.min(t,impactTime);
  const fallen=.5*g*elapsed*elapsed;
- return {impactTime,elapsed,height:Math.max(0,height-fallen),fallen,v:g*elapsed,
-  impacted:t>=impactTime-EPS,acceleration:t<impactTime-EPS?g:0};
+ return {impactTime,elapsed,height:Math.max(0,height-fallen),fallen,v:t<impactTime-EPS?g*elapsed:0,
+  impactSpeed:g*impactTime,impacted:t>=impactTime-EPS,acceleration:t<impactTime-EPS?g:0};
 }
 function verticalThrow({height=0,v0=20,g=10,t=0}){
  finite(height,v0,g,t);if(height<0||g<=0||t<0)throw new Error('invalid vertical throw');
@@ -40,8 +40,8 @@ function verticalThrow({height=0,v0=20,g=10,t=0}){
  const v=v0-g*elapsed;
  const peakTime=v0>0?v0/g:0;
  const peakHeight=height+(v0>0?v0*v0/(2*g):0);
- return {impactTime,elapsed,y,v,peakTime,peakHeight,impacted:t>=impactTime-EPS,
-  acceleration:t<impactTime-EPS?-g:0};
+ return {impactTime,elapsed,y,v:t<impactTime-EPS?v:0,impactVelocity:v0-g*impactTime,
+  peakTime,peakHeight,impacted:t>=impactTime-EPS,acceleration:t<impactTime-EPS?-g:0};
 }
 function logCosh(z){const a=Math.abs(z);return a+Math.log1p(Math.exp(-2*a))-Math.LN2;}
 function resistance({mass=1,k=.05,g=10,t=0,height=100}){
@@ -67,8 +67,8 @@ function resistance({mass=1,k=.05,g=10,t=0,height=100}){
  const elapsed=Math.min(t,impactTime);
  const p=sampled(elapsed),vacuum=freeFall({height,g,t:elapsed});
  return {terminalSpeed:terminal,impactTime,elapsed,fallen:Math.min(height,p.s),
-  height:Math.max(0,height-p.s),v:p.v,drag:p.drag,weight:mass*g,
-  acceleration:t<impactTime-EPS?g-p.drag/mass:0,
+  height:Math.max(0,height-p.s),v:t<impactTime-EPS?p.v:0,drag:t<impactTime-EPS?p.drag:0,weight:mass*g,
+  impactSpeed:sampled(impactTime).v,acceleration:t<impactTime-EPS?g-p.drag/mass:0,
   vacuumFallen:Math.min(height,.5*g*elapsed*elapsed),vacuumV:g*elapsed,
   ratio:terminal? p.v/terminal:null,impacted:t>=impactTime-EPS};
 }
