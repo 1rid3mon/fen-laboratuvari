@@ -1,8 +1,65 @@
-(function(w){'use strict';var E=w.EnerjiLab;if(!E)return;
-function used(s){return Math.min(s.co2,s.atp,s.nadph);}
-E.registerExperiment('exp3',{title:'Calvin döngüsü',subtitle:'Altı CO₂ ile bir heksoz eşdeğeri: 18 ATP ve 12 NADPH gerekir.',group:'FOTOSENTEZ • KARBON BAĞLAMA',createState:function(){return {co2:0,atp:0,nadph:0};},
-render:function(s,U){var n=used(s),done=n===6,card='<div class="scene-grid">'+U.zone('carbon','CO₂ • karbon girişi',s.co2+'/6 CO₂ eklendi',s.co2===6,s.co2<6)+U.zone('energy','ATP paketi',s.atp+'/6 paket; her paket 3 ATP (toplam '+(s.atp*3)+')',s.atp===6,s.atp<6)+U.zone('reducing','NADPH paketi',s.nadph+'/6 paket; her paket 2 NADPH (toplam '+(s.nadph*2)+')',s.nadph===6,s.nadph<6)+'</div>';
-return {step:Math.min(n+1,6),steps:6,scene:'<h3>CO₂ bağlama → indirgeme → RuBP yenilenmesi</h3><p class="summaryline">Altı CO₂ bağlandığında ve gerekli enerji taşınıcıları sağlandığında iki net üç karbonlu PGAL (G3P) üzerinden bir altı karbonlu şeker eşdeğeri üretilebilir. Kalan PGAL, RuBP yenilenmesinde kullanılır.</p>'+card+U.progress(n/6*100)+'<p class="math">6 CO₂ + 18 ATP + 12 NADPH → 1 heksoz eşdeğeri (net karbon dengesi)</p><p class="summaryline"><strong>'+ (done?'✓ Bir heksoz eşdeğerine yetecek girdi tamamlandı.':'Henüz glikoz tamamlanmadı.')+'</strong> 1 CO₂ ≠ 1 glikoz.</p>',molecules:['CO2','ATP','NADPH','H2O','O2'],controls:[],metrics:[{label:'CO₂',value:s.co2+' / 6'},{label:'ATP sağlandı',value:(s.atp*3)+' / 18',note:'1 dokunuş = 3 ATP paketi'},{label:'NADPH sağlandı',value:(s.nadph*2)+' / 12',note:'1 dokunuş = 2 NADPH paketi'},{label:'Heksoz eşdeğeri',value:done?'1':'0',note:'Tam denklem değil, karbon/enerji oranı'}],guidance:'CO₂, ATP ve NADPH moleküllerini ilgili yuvalara altışar kez yerleştir. Hızlı ilerlemek için “Sonraki adım” kullan.',insight:'C₃ bitkilerinde CO₂, RuBP ile birleşir; ilk kararlı ürün 3-PGA’dır. PGAL (G3P) sonraki indirgeme evresinde oluşur. Altı CO₂ için net iki PGAL ayrılır; RuBP yeniden oluşturulur. 18 ATP ve 12 NADPH toplam gereksinimdir.'};},
-interact:function(s,zone,mol){var map={carbon:['CO2','co2'],energy:['ATP','atp'],reducing:['NADPH','nadph']},cfg=map[zone];if(!cfg)return {message:'Bir reaktif yuvası seç.',level:'info'};if(!mol)return {message:'Bu bölgeye '+cfg[0]+' bırak.',level:'info'};if(mol!==cfg[0])return {message:'Yanlış molekül: '+cfg[0]+' gerekiyor.',level:'error'};if(s[cfg[1]]>=6)return {message:'Bu girdiden altı paket yeterli. Diğerlerine geç.',level:'info'};s[cfg[1]]++;return {ok:true,message:cfg[0]+' eklendi. '+(used(s)===6?'Altı CO₂ için enerji ve indirgeme gücü tamamlandı!':'Altı CO₂ için girdiler birikiyor.'),complete:used(s)===6};},
-next:function(s,U){if(used(s)===6)return {message:'Calvin girdi dengesi tamamlandı.',complete:true};var keys=[['co2','carbon','CO2'],['atp','energy','ATP'],['nadph','reducing','NADPH']];keys.sort(function(a,b){return s[a[0]]-s[b[0]];});return this.interact(s,keys[0][1],keys[0][2],U);}
-});})(window);
+/*
+ * AYT Fotosentez — ışıktan bağımsız evre / Calvin döngüsü, şematik.
+ * 2018 MEB 12.2.2.2: Matematiksel hesap ve ayrıntılı tepkime basamakları yok.
+ */
+(function (w) {
+  'use strict';
+  const E = w.EnerjiLab;
+  if (!E) return;
+
+  const zones = { CO2: 'carbon', ATP: 'energy', NADPH: 'reducing' };
+  const order = ['CO2', 'ATP', 'NADPH'];
+
+  function count(s) { return Object.keys(s.placed).length; }
+  function done(s) { return count(s) === order.length; }
+
+  E.registerExperiment('exp3', {
+    title: 'Calvin döngüsü',
+    subtitle: 'Stromada CO₂ bağlanması ve ATP–NADPH kullanımı (şematik).',
+    group: 'FOTOSENTEZ • IŞIKTAN BAĞIMSIZ EVRE',
+
+    createState: function () { return { placed: {} }; },
+
+    render: function (s, U) {
+      const n = count(s);
+      return {
+        step: Math.min(n + 1, 3),
+        steps: 3,
+        scene: '<h3>Işıktan bağımsız evre: girdileri doğru yerlere koy</h3>'
+          + '<p class="summaryline">Bu evre <strong>kloroplastın stromasında</strong> gerçekleşir. Doğrudan ışık kullanılmaz; ancak ışığa bağımlı evrede elde edilmiş ATP ve NADPH gereklidir.</p>'
+          + '<div class="scene-grid">'
+          + U.zone('carbon', '🌫️ Karbon kaynağı', s.placed.CO2 ? 'CO₂ seçildi ✓' : 'Organik besinin karbonu nereden gelir?', !!s.placed.CO2, !s.placed.CO2)
+          + U.zone('energy', '⚡ Enerji', s.placed.ATP ? 'ATP tüketilir ✓' : 'Hangi molekül enerji sağlar?', !!s.placed.ATP, !s.placed.ATP)
+          + U.zone('reducing', '🟣 İndirgeme gücü', s.placed.NADPH ? 'NADPH tüketilir ✓' : 'İndirgeme gücünü hangi molekül taşır?', !!s.placed.NADPH, !s.placed.NADPH)
+          + '</div>'
+          + U.progress(n / 3 * 100)
+          + '<p class="math">CO₂ + ATP + NADPH → organik besin sentezi (temsili şema)</p>'
+          + '<p class="summaryline"><strong>' + (done(s) ? '✓ Organik besin sentezi için gerekli temel girdiler tamamlandı.' : 'Üç temel girdi henüz tamamlanmadı.') + '</strong> Bu şema molekül sayısı veya glikoz verimi hesabı yapmaz.</p>',
+        molecules: ['CO2', 'ATP', 'NADPH', 'H2O', 'O2', 'LIGHT'],
+        controls: [],
+        metrics: [
+          { label: 'Karbon kaynağı', value: s.placed.CO2 ? 'CO₂ ✓' : 'Bekleniyor' },
+          { label: 'ATP', value: s.placed.ATP ? 'Kullanılır ✓' : 'Bekleniyor', note: 'Enerji sağlar' },
+          { label: 'NADPH', value: s.placed.NADPH ? 'Kullanılır ✓' : 'Bekleniyor', note: 'İndirgeme gücü sağlar' },
+          { label: 'Organik besin', value: done(s) ? 'Sentez mümkün ✓' : 'Girdiler eksik', note: 'Glikoz adedi hesaplanmaz' }
+        ],
+        guidance: 'CO₂, ATP ve NADPH moleküllerini ilgili yuvalarla eşleştir. Işık doğrudan burada kullanılmaz.',
+        insight: '2018 MEB: Işıktan bağımsız reaksiyonların giriş ve ürün ilişkisi üzerinde durulur. “Işıktan bağımsız”, tamamen ışıktan etkilenmeyen demek değildir; ATP ve NADPH ışığa bağımlı reaksiyonlardan sağlanır. Calvin ara basamakları ve matematiksel ATP/NADPH hesapları bu kazanımın dışındadır.'
+      };
+    },
+
+    interact: function (s, zone, mol) {
+      if (!mol) return { message: 'CO₂, ATP veya NADPH seçip doğru bölgeye bırak.', level: 'info' };
+      if (!Object.prototype.hasOwnProperty.call(zones, mol)) return { message: 'Bu molekül bu evrenin gerekli girdilerinden değil.', level: 'error' };
+      if (zones[mol] !== zone) return { message: 'Bu molekül yanlış yuva için seçildi: ' + mol + '.', level: 'error' };
+      if (s.placed[mol]) return { message: 'Bu girdi zaten eşleştirildi.', level: 'info' };
+      s.placed[mol] = true;
+      return { ok: true, message: mol === 'CO2' ? 'CO₂ organik besinin karbon kaynağıdır.' : mol + ' burada kullanılır; ışığa bağımlı evrede üretilir.', complete: done(s) };
+    },
+
+    next: function (s, U) {
+      const mol = order.find(function (id) { return !s.placed[id]; });
+      return mol ? this.interact(s, zones[mol], mol, U) : { message: 'Temel girdiler tamamlandı.', complete: true };
+    }
+  });
+})(window);
