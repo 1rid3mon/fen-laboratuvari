@@ -13,9 +13,19 @@ const mag=a=>Math.hypot(a.x,a.y);
 const dot=(a,b)=>a.x*b.x+a.y*b.y;
 const angle=a=>Math.atan2(a.y,a.x)*180/Math.PI;
 const fromPolar=(m,d)=>vec(m*Math.cos(d*Math.PI/180),m*Math.sin(d*Math.PI/180));
+/* The 37°/53° 3-4-5 convention commonly used in AYT worked examples.
+   Do not silently mix school approximations with exact math trig. */
+function polarForSchool(speed,angleDeg,approx=false){
+ if(approx){
+  const lookup={'37':[.8,.6],'53':[.6,.8],'127':[-.6,.8],'143':[-.8,.6]};
+  const pair=lookup[String(angleDeg)];
+  if(pair)return vec(speed*pair[0],speed*pair[1]);
+ }
+ return fromPolar(speed,angleDeg);
+}
 const relative=(target,observer)=>sub(target,observer);
-function river({speed,angleDeg,current,width}){
- const water=fromPolar(speed,angleDeg);
+function river({speed,angleDeg,current,width,approx=false}){
+ const water=polarForSchool(speed,angleDeg,approx);
  const stream=vec(current,0);
  const ground=add(water,stream);
  const time=water.y>EPS?width/water.y:null;
@@ -23,8 +33,8 @@ function river({speed,angleDeg,current,width}){
   possibleAcross:Math.abs(current)<speed,headingForAcross:Math.abs(current)<speed?
   Math.acos(-current/speed)*180/Math.PI:null};
 }
-function wind({speed,angleDeg,windX,windY,northDistance}){
- const air=fromPolar(speed,angleDeg),wind=vec(windX,windY),ground=add(air,wind);
+function wind({speed,angleDeg,windX,windY,northDistance,approx=false}){
+ const air=polarForSchool(speed,angleDeg,approx),wind=vec(windX,windY),ground=add(air,wind);
  const time=ground.y>EPS?northDistance/ground.y:null;
  return {air,wind,ground,time,exit:time===null?null:ground.x*time};
 }
@@ -74,5 +84,5 @@ function elevator({mass,acceleration,g=10}){
 }
 const f=(n,unit='',p=2)=>Number.isFinite(n)?round(n,p).toLocaleString('tr-TR',{maximumFractionDigits:p})+(unit?' '+unit:''):'—';
 const escapeHtml=str=>String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-root.HareketMath=Object.freeze({EPS,round,vec,add,sub,scale,mag,dot,angle,fromPolar,relative,river,wind,rendezvous,horizontal,incline,wall,elevator,f,escapeHtml});
+root.HareketMath=Object.freeze({EPS,round,vec,add,sub,scale,mag,dot,angle,fromPolar,polarForSchool,relative,river,wind,rendezvous,horizontal,incline,wall,elevator,f,escapeHtml});
 })(window);
