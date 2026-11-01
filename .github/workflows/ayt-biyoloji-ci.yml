@@ -1,0 +1,27 @@
+name: AYT Biyoloji Fen Laboratuvari
+on:
+  push:
+    paths:
+      - 'labs/enerji-*'
+      - 'labs/foto-*'
+      - 'labs/kemo-*'
+      - '.github/workflows/ayt-biyoloji-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/enerji-*'
+      - 'labs/foto-*'
+      - 'labs/kemo-*'
+      - '.github/workflows/ayt-biyoloji-ci.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: |
+          for file in labs/enerji-core.js labs/foto-*.js labs/kemo-*.js; do node --check "$file"; done
+      - name: Science and interaction regression tests
+        run: node --test labs/enerji-smoke.test.cjs
