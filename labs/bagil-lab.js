@@ -140,6 +140,7 @@ function paintMedium(plane){
   const north=correction===null?null:s.speed*Math.sin(correction*PI/180)+s.windY;
   m.push(['Sapmasız kuzey yönü',correction!==null&&north>0?F(correction,'°'):'Bu koşullarda yok','Doğu-batı rüzgârını ters bileşenle dengeler.']);
  }else m.push(['Tam karşıya çıkış',r.possibleAcross?F(r.headingForAcross,'°'):'Mümkün değil','|akıntı| kayık süratinden küçük olmalı.']);
+ m.push(['Trigonometrik hesap',s.approx?'YKS: 37°/53° ≈ 3–4–5':'Gerçek sin/cos','Yaklaşım yalnız 37°, 53°, 127°, 143° için uygulanır.']);
  meter(m);
  note(plane?'v⃗(yer) = v⃗(hava) + v⃗(rüzgâr)':'v⃗(yer) = v⃗(su) + v⃗(akıntı)',
  'Kuzey/karşı kıyı bileşenini kullan: t = mesafe / yere göre kuzey hızı. Yatay sapma = yere göre yatay hız × t.',
