@@ -4,3 +4,10 @@
 /* Keep exam geography muted; province lines are optional without rebuilding SVG. */
 .map .borders-off .province{stroke:transparent;stroke-width:0}
 .map .borders-on .province{stroke:#aeb2ad;stroke-width:.55}
+
+/* Phone: pan the genuine SVG map at a readable size; all place pins also have large side buttons. */
+@media(max-width:720px){
+ .map{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+ .map>svg{width:100%;min-width:730px}
+ .answers button{min-height:50px}
+}
