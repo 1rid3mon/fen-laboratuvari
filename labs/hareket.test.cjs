@@ -140,6 +140,7 @@ test('source boundaries and standalone AYT links',()=>{
 });
 function harness(module,which){
  const win={HareketMath:loadMath(),requestAnimationFrame(fn){this.frames.push(fn);return this.frames.length;},frames:[]};
+ vm.runInNewContext(fs.readFileSync(path.join(basedir,'ivmeli-math.js'),'utf8'),{window:win,Intl,Math,Object,Number,JSON},{filename:'ivmeli-math.js'});
  const elements=new Map(),listeners=new Map(),tabObjects=[];
  function el(id){return {
   id,innerHTML:'',textContent:'',value:'',dataset:{},className:'',disabled:false,
@@ -210,7 +211,7 @@ test('relative DOM: observer switch, river correction, wind controls, quiz choic
 test('Newton DOM: six experiments and sliders; quiz scoring',()=>{
  const h=harness('newton-lab.js','NewtonLabDebug');
  assert.equal(h.win.frames.length,0,'paused simulation must not run background frames');
- for(const tab of ['net','friction','incline','wall','elevator','third','quiz']){
+ for(const tab of ['inertia','net','friction','incline','wall','angle','linked','atwood','elevator','third','quiz']){
   h.event('tabs','click','[data-tab]',{dataset:{tab}});
   assert.equal(h.inspect().tab,tab);
   assert.match(h.elements.get('scene').innerHTML,/<svg/);
@@ -227,6 +228,20 @@ test('Newton DOM: six experiments and sliders; quiz scoring',()=>{
  assert.match(h.elements.get('results').innerHTML,/Kinetik/);
  h.event('controls','input','input[data-range]',{dataset:{range:'muKinetic',unit:''},value:'0.9'});
  assert.equal(h.inspect().friction.muStatic,0.9,'UI must make typical kinetic ≤ static friction explicit');
+ h.event('tabs','click','[data-tab]',{dataset:{tab:'angle'}});
+ assert.match(h.elements.get('results').innerHTML,/Fₓ/);
+ h.event('controls','input','input[data-range]',{dataset:{range:'angleDeg',unit:'°'},value:'-30'});
+ assert.equal(h.inspect().angle.angleDeg,-30);
+ h.event('tabs','click','[data-tab]',{dataset:{tab:'linked'}});
+ assert.match(h.elements.get('results').innerHTML,/gerilme/);
+ h.event('tabs','click','[data-tab]',{dataset:{tab:'atwood'}});
+ assert.match(h.elements.get('lesson').innerHTML,/mB−mA/);
+ const withForces=h.elements.get('scene').innerHTML;
+ h.event('buttons','click','[data-action]',{dataset:{action:'toggle-forces'}});
+ assert.equal(h.inspect().showForces,false);
+ assert.notEqual(h.elements.get('scene').innerHTML,withForces);
+ h.event('buttons','click','[data-action]',{dataset:{action:'toggle-forces'}});
+ assert.equal(h.inspect().showForces,true);
  h.event('tabs','click','[data-tab]',{dataset:{tab:'wall'}});
  assert.match(h.elements.get('results').innerHTML,/Normal N/);
 });
