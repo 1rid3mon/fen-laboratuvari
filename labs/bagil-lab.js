@@ -8,8 +8,8 @@ const defaults={
  vectors:{items:[{id:'K',x:3,y:4,k:1,color:'#64bcff'},{id:'L',x:-2,y:3,k:1,color:'#f5c978'},{id:'M',x:2,y:-1,k:1,color:'#b5a3ff'}],parallel:false,snap:true},
  observer:{a:{x:-6,y:2,vx:3,vy:0},b:{x:6,y:-3,vx:0,vy:4},ref:'Yer',time:0},
  meet:{xA:0,xB:80,vA:6,vB:-4,time:0},
- river:{speed:8,heading:90,current:3,width:120,time:0},
- wind:{speed:300,heading:90,windX:45,windY:0,distance:600,time:0},
+ river:{speed:8,heading:90,current:3,width:120,approx:true,time:0},
+ wind:{speed:300,heading:90,windX:45,windY:0,distance:600,approx:true,time:0},
  quiz:{index:0,choice:null,checked:false,score:0,attempts:0}
 };
 const st={tab:'vectors',playing:false,drag:null,changed:false};
@@ -110,7 +110,7 @@ function paintMeet(){
 }
 function paintMedium(plane){
  const s=plane?st.wind:st.river;
- const r=plane?P.wind({speed:s.speed,angleDeg:s.heading,windX:s.windX,windY:s.windY,northDistance:s.distance}):P.river({speed:s.speed,angleDeg:s.heading,current:s.current,width:s.width});
+ const r=plane?P.wind({speed:s.speed,angleDeg:s.heading,windX:s.windX,windY:s.windY,northDistance:s.distance,approx:s.approx}):P.river({speed:s.speed,angleDeg:s.heading,current:s.current,width:s.width,approx:s.approx});
  const object=plane?r.air:r.water,environment=plane?r.wind:r.stream,ground=r.ground,dist=plane?s.distance:s.width;
  const t=r.time===null?0:Math.min(s.time,r.time),left=430,low=440,high=73,sy=(low-high)/dist,dx=r.exit??0,sx=Math.min(2.8,280/Math.max(1,Math.abs(dx)));
  const px=left+ground.x*t*sx,py=low-ground.y*t*sy;
@@ -182,11 +182,13 @@ function renderControls(){
    +control('vA','A hız (+sağ)',-15,15,1,s.vA,'m/s')+control('vB','B hız (+sağ)',-15,15,1,s.vB,'m/s');
  }else if(t==='river'){
   html+=control('speed','Kayık suya göre sürat',1,20,1,s.speed,'m/s')+control('heading','Yön açısı (+x ile)',5,175,1,s.heading,'°')
-   +control('current','Akıntı hızı (+sağ)',-12,12,.5,s.current,'m/s')+control('width','Nehir genişliği',20,300,10,s.width,'m');
+   +control('current','Akıntı hızı (+sağ)',-12,12,.5,s.current,'m/s')+control('width','Nehir genişliği',20,300,10,s.width,'m')
+   +select('approx','37° / 53° trigonometrisi',[['yes','YKS 3–4–5 yaklaşımı'],['no','Gerçek sin/cos değerleri']],s.approx?'yes':'no');
  }else if(t==='wind'){
   html+=control('speed','Uçak havaya göre sürat',100,650,10,s.speed,'km/h')+control('heading','Uçuş açısı (+x ile)',5,175,1,s.heading,'°')
    +control('windX','Rüzgâr doğu-batı',-120,120,10,s.windX,'km/h')+control('windY','Rüzgâr kuzey-güney',-100,100,10,s.windY,'km/h')
-   +control('distance','Kuzey hedefi',100,1200,50,s.distance,'km');
+   +control('distance','Kuzey hedefi',100,1200,50,s.distance,'km')
+   +select('approx','37° / 53° trigonometrisi',[['yes','YKS 3–4–5 yaklaşımı'],['no','Gerçek sin/cos değerleri']],s.approx?'yes':'no');
  }else html='<p class="muted">Cevabı seçerek 2018 MEB düzeyinde pratik yap.</p>';
  $('controls').innerHTML=html;
 }
@@ -211,7 +213,8 @@ function change(id,val){
   if(id==='ref')s.ref=val;
   s.time=0;
  }else if(t==='meet'||t==='river'||t==='wind'){
-  if(id in s&&id!=='time'){s[id]=Number(val);s.time=0;}
+  if(id==='approx'&&'approx' in s){s.approx=val==='yes';s.time=0;}
+  else if(id in s&&id!=='time'){s[id]=Number(val);s.time=0;}
  }
  paint();
 }
@@ -295,7 +298,7 @@ function frame(now){
    s.time=Math.min(max,s.time+dt);if(s.time>=max)st.playing=false;
   }
   if(st.tab==='river'||st.tab==='wind'){
-   const r=st.tab==='river'?P.river({speed:s.speed,angleDeg:s.heading,current:s.current,width:s.width}):P.wind({speed:s.speed,angleDeg:s.heading,windX:s.windX,windY:s.windY,northDistance:s.distance});
+   const r=st.tab==='river'?P.river({speed:s.speed,angleDeg:s.heading,current:s.current,width:s.width,approx:s.approx}):P.wind({speed:s.speed,angleDeg:s.heading,windX:s.windX,windY:s.windY,northDistance:s.distance,approx:s.approx});
    s.time=Math.min(r.time||0,s.time+dt);if(r.time===null||s.time>=r.time)st.playing=false;
   }
   paint();
