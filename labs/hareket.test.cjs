@@ -97,6 +97,16 @@ test('incline: normal, downhill gravity, static friction direction, sliding',()=
  const below=M.incline({mass:5,angleDeg:30,force:0,g:10,muStatic:.4,muKinetic:.2});
  assert.ok(below.friction>0,'friction uphill when slipping downhill');
 });
+test('vertical wall: static friction adjusts to weight and kinetic friction opposes downward slip',()=>{
+ const stable=M.wall({mass:2,push:30,g:10,muStatic:.8,muKinetic:.5});
+ assert.equal(stable.state,'static');near(stable.N,30);near(stable.maxStatic,24);
+ near(stable.friction,20);near(stable.acceleration,0);
+ const moving=M.wall({mass:2,push:15,g:10,muStatic:.8,muKinetic:.5});
+ assert.equal(moving.state,'sliding');near(moving.friction,7.5);
+ near(moving.net,-12.5);near(moving.acceleration,-6.25);
+ const noPush=M.wall({mass:2,push:0,g:10,muStatic:.8,muKinetic:.5});
+ near(noPush.acceleration,-10);
+});
 test('elevator display normal force, acceleration versus velocity',()=>{
  const up=M.elevator({mass:60,acceleration:2,g:10});
  near(up.normal,720);near(up.weight,600);
@@ -176,7 +186,7 @@ test('relative DOM: observer switch, river correction, wind controls, quiz choic
 });
 test('Newton DOM: six experiments and sliders; quiz scoring',()=>{
  const h=harness('newton-lab.js','NewtonLabDebug');
- for(const tab of ['net','friction','incline','elevator','third','quiz']){
+ for(const tab of ['net','friction','incline','wall','elevator','third','quiz']){
   h.event('tabs','click','[data-tab]',{dataset:{tab}});
   assert.equal(h.inspect().tab,tab);
   assert.match(h.elements.get('scene').innerHTML,/<svg/);
@@ -191,4 +201,8 @@ test('Newton DOM: six experiments and sliders; quiz scoring',()=>{
  h.event('controls','input','input[data-range]',{dataset:{range:'force',unit:'N'},value:'40'});
  assert.equal(h.inspect().friction.force,40);
  assert.match(h.elements.get('results').innerHTML,/Kinetik/);
+ h.event('controls','input','input[data-range]',{dataset:{range:'muKinetic',unit:''},value:'0.9'});
+ assert.equal(h.inspect().friction.muStatic,0.9,'UI must make typical kinetic ≤ static friction explicit');
+ h.event('tabs','click','[data-tab]',{dataset:{tab:'wall'}});
+ assert.match(h.elements.get('results').innerHTML,/Normal N/);
 });
