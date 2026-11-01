@@ -130,7 +130,7 @@ function drawWall(){
  const s=st.wall,r=P.wall({mass:s.mass,push:s.push,muStatic:s.muStatic,muKinetic:s.muKinetic,g:s.g});
  const displacement=Math.min(125,Math.max(-60,-.5*r.acceleration*s.time*s.time*3));
  const x=450,y=225+displacement,scale=Math.min(3,125/Math.max(1,r.N,r.weight,Math.abs(r.friction)));
- let g='<rect x="500" y="40" width="82" height="410" rx="7" fill="#3c5160" stroke="#acc4d3" stroke-width="2"/>';
+ let g='<rect x="486" y="40" width="96" height="410" rx="7" fill="#3c5160" stroke="#acc4d3" stroke-width="2"/>';
  for(let i=0;i<9;i++)g+='<line x1="505" y1="'+(55+i*45)+'" x2="565" y2="'+(85+i*45)+'" stroke="#6c8496"/>';
  g+=box(x,y,s.mass+' kg');
  g+=vector(x,y,s.push,0,'#64bcff','blue','F basma',scale);
