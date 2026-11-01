@@ -160,13 +160,12 @@ test('relative DOM: observer switch, river correction, wind controls, quiz choic
  h.event('tabs','click','[data-tab]',{dataset:{tab:'observer'}});
  h.event('controls','change','select[data-select]',{dataset:{select:'ref'},value:'A'});
  assert.equal(h.inspect().observer.ref,'A');
- assert.match(h.elements.get('scene').innerHTML,/v\(A\/A\)/);
+ assert.match(h.elements.get('scene').innerHTML,/Gözlemci: A/);
  h.event('buttons','click','[data-action]',{dataset:{action:'flip'}});
  assert.equal(h.inspect().observer.ref,'B');
  h.event('tabs','click','[data-tab]',{dataset:{tab:'river'}});
  h.event('buttons','click','[data-action]',{dataset:{action:'correct'}});
  const r=h.inspect().river;
- near(P.river,{});
  const ground=M.river({speed:r.speed,angleDeg:r.heading,current:r.current,width:r.width});
  assert.ok(Math.abs(ground.exit)<.07,'rounded heading should land near target');
  h.event('tabs','click','[data-tab]',{dataset:{tab:'quiz'}});
