@@ -233,7 +233,7 @@ function drawAngle(){
  meter([['Fₓ = F cosθ',F(r.fx,'N')],['Fᵧ = F sinθ',F(r.fy,'N')],
  ['Normal kuvvet',F(r.normal,'N')],['Maksimum statik sürtünme',F(r.limit,'N')],
  ['Gerçek sürtünme',F(r.friction,'N')],['Yatay ivme',F(r.ax,'m/s²')],
- ['Düşey ivme',F(r.ay,'m/s²')],['Durum',r.state==='static'?'Denge':r.state==='sliding'?'Kayma başlar':'Yerden ayrılıyor']];
+ ['Düşey ivme',F(r.ay,'m/s²')],['Durum',r.state==='static'?'Denge':r.state==='sliding'?'Kayma başlar':'Yerden ayrılıyor']]);
  lesson('Fₓ = Fcosθ;  N = mg − Fsinθ (temas varsa)',
  'Yukarı doğru açılı çekmede normal azalır ve sürtünme de azalabilir; aşağı doğru itmede normal artar. Cisim ilk anda durgun kabul edilir, statik sürtünme gerektiği kadar oluşur.',
  'Fsinθ ağırlığı aştığında temas kaybolur: N=0, sürtünme=0 ve düşey ivme ayrıca hesaplanır. Bu durumda zemin teması varmış gibi N=mg−Fsinθ kullanılmaz.');
