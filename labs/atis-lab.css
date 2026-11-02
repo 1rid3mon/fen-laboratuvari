@@ -1,0 +1,40 @@
+/* Supplements existing hareket-lab.css; all visuals are scalable SVGs. */
+.projectile-scene{aspect-ratio:920/520;min-height:310px}
+.projectile-scene svg{width:100%;height:100%;display:block;touch-action:pan-y}
+.projectile-graphs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}
+.projectile-plot{min-width:0;border:1px solid #31546b;border-radius:12px;background:#091d30;padding:9px 10px}
+.projectile-plot h4{font-size:.81rem;font-weight:800;color:#d8eef9;letter-spacing:-.01em;margin:0 0 4px}
+.projectile-plot svg{display:block;width:100%;height:auto}
+.projectile-plot p{margin:4px 0 0;font-size:.73rem;color:#afd2df;line-height:1.5}
+.projectile-axis{stroke:#6d8fa6;stroke-width:1.2}
+.projectile-grid{stroke:#2c4759;stroke-width:1;stroke-dasharray:3 5}
+.projectile-plot .crosshair{stroke:#f4d18a;stroke-width:1.5;stroke-dasharray:5 4}
+.projectile-plot text{font-family:ui-sans-serif,system-ui;fill:#a9c6d5;font-size:11px}
+.projectile-plot .keypoint{fill:#f3d490;stroke:#17293e;stroke-width:1.8}
+.graph-summary{margin-top:10px;border:1px solid #36707a;background:#0b2931;padding:12px 13px;border-radius:12px;color:#c0eee5;line-height:1.58;font-size:.83rem}
+.projectile-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;color:#c1deed;font-size:.8rem}
+.projectile-legend b{margin-right:4px}
+.projectile-legend .key{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px}
+.projectile-micro{font-size:.8rem;color:#a9c6d8}
+.projectile-status{padding:11px;border-radius:11px;border:1px solid #2f6472;background:#0a3039;font-size:.83rem;color:#d2ece9;line-height:1.6}
+.projectile-status.hit{border-color:#4bd2aa;background:#103e34}
+.projectile-status.miss{border-color:#d68a9d;background:#3c2c3c}
+.projectile-status b{color:#ffe2a1}
+.projectile-scene .motion-label{font-size:16px;fill:#e7f3ff;font-family:system-ui,sans-serif;paint-order:stroke;stroke:#0b1b2a;stroke-width:3;stroke-linejoin:round}
+.projectile-scene .minor-label{font-size:13px;fill:#bbd0de;font-family:system-ui,sans-serif;paint-order:stroke;stroke:#0b1b2a;stroke-width:3}
+.projectile-scene .projection{stroke:#779cb4;stroke-width:1.7;stroke-dasharray:5 6}
+.projectile-scene .path-main{stroke:#57e0c0;stroke-width:3.7;fill:none}
+.projectile-scene .path-compare{stroke:#ffb77a;stroke-width:3.4;fill:none;stroke-dasharray:8 5}
+.projectile-scene .launch-path{stroke:#79a4bc;stroke-width:2;stroke-dasharray:3 6}
+.projectile-scene .targetzone{fill:#264e4b;stroke:#6ae5bf;stroke-width:2;stroke-dasharray:5 4}
+.projectile-scene .flightball{stroke:#e6f3f7;stroke-width:2.2}
+.projectile-scene .gridline{stroke:#233d52;stroke-width:1}
+.projectile-scene .groundline{stroke:#9bb5bc;stroke-width:4}
+.projectile-scene .arrow-axis{stroke:#78a7ba;stroke-width:1.8}
+.projectile-scene .fbd-arrow{stroke-width:3.5}
+.projectile-scene [data-drag-target]{cursor:ew-resize}
+.projectile-scene .focus-dot{outline:2px solid #f3d397}
+#buttons .btn[aria-pressed="true"]{background:#176b5d;border-color:#66e5bc}
+@media(max-width:900px){.projectile-graphs{grid-template-columns:1fr}}
+@media(max-width:700px){.projectile-scene{min-height:230px;aspect-ratio:920/590}.projectile-plot{padding:7px}.projectile-legend{gap:9px;font-size:.74rem}}
+@media(prefers-reduced-motion:reduce){.projectile-scene *{transition:none!important;animation:none!important}}
