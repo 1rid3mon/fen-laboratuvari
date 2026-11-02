@@ -1,4 +1,4 @@
-/* 2018 MEB AYT 11.1.6.1–3 · Seven interactive work/energy demonstrations. */
+/* 2018 MEB AYT 11.1.6.1–3 · Eight interactive work/energy demonstrations. */
 (function(w){'use strict';
 const M=w.FizikEnerjiMath,UI=w.MekanikUI;if(!M||!UI)return;
 const f=UI.U.fmt;
@@ -60,6 +60,18 @@ const sections=[
   formula:(p,r)=>'E_m = ½mv₀² + mgh₀ = '+f(r.total)+' J\nEₖ(t) = '+f(r.K)+' J · Eₚ(t) = '+f(r.U)+' J',
   metrics:(p,r)=>metric(['Geçen süre',f(r.at)+' s'],['Uçuş süresi',f(r.flight)+' s'],['Yükseklik',f(r.y)+' m'],['Eₖ',f(r.K)+' J'],['Eₚ',f(r.U)+' J'],['Eₘ',f(r.total)+' J']),
   note:'İdeal atış, hava direnci yok. Top yere indiğinde simülasyon durdurulur; yere çarpışmanın enerjisi modellenmez.'},
+ {id:'energygraphs',tab:'Enerji grafikleri',title:'Üç enerji türünü grafiklerden keşfet',intro:'Sürgüleri değiştir: kinetik enerji hızın karesiyle, yer çekimi potansiyel enerjisi yükseklikle, yay potansiyeli uzamanın karesiyle artar.',sceneTitle:'Eₖ–v², Eₚ–h, E_yay–x²',
+  defaults:{m:2,g:10,k:100},
+  controls:[{id:'m',label:'Cisim kütlesi',min:1,max:10,step:1,unit:'kg'},{id:'g',label:'Yerçekimi',min:5,max:15,step:1,unit:'m/s²'},{id:'k',label:'Yay sabiti',min:20,max:180,step:10,unit:'N/m'}],
+  model:p=>({K:.5*p.m*36,U:p.m*p.g*4,Us:.5*p.k*.16}),
+  scene:(p,r,U)=>'<div class="menergygraphs">'+
+    '<div><p class="mkey">Eₖ – v² <strong>(doğru)</strong></p>'+U.graph({points:[0,4,16,36,64,100].map(v2=>[v2,.5*p.m*v2]),xLabel:'v² (m²/s²)',yLabel:'Eₖ (J)'})+'</div>'+
+    '<div><p class="mkey">Eₚ – h <strong>(doğru)</strong></p>'+U.graph({points:[0,2,4,6,8,10].map(h=>[h,p.m*p.g*h]),xLabel:'h (m)',yLabel:'Eₚ (J)'})+'</div>'+
+    '<div><p class="mkey">E_yay – x² <strong>(doğru)</strong></p>'+U.graph({points:[0,.04,.16,.36,.64,1].map(x2=>[x2,.5*p.k*x2]),xLabel:'x² (m²)',yLabel:'E_yay (J)'})+'</div></div>',
+  interpret:(p,r)=>'Kütleyi artırınca Eₖ–v² doğrusunun eğimi artar. m veya g artarsa Eₚ–h doğrusunun eğimi artar. k artarsa E_yay–x² doğrusunun eğimi artar.',
+  formula:(p,r)=>'Eₖ = ½mv²; eğim (Eₖ–v²) = m/2\nEₚ = mgh; eğim (Eₚ–h) = mg\nE_yay = ½kx²; eğim (E_yay–x²) = k/2',
+  metrics:(p,r)=>metric(['Eₖ, v=6 m/s',f(r.K)+' J'],['Eₚ, h=4 m',f(r.U)+' J'],['E_yay, x=0,4 m',f(r.Us)+' J']),
+  note:'Grafikler yatay eksende v² veya x² kullanıldığında doğrudur. Eₖ–v ve E_yay–x grafikleri parabolik olur; farklı eksenleri karıştırma.'},
  {id:'friction',tab:'Sürtünme ve ısı',title:'Sürtünme mekanik enerjiyi termal enerjiye dönüştürür',intro:'Yatay zeminde hareket eden blok sürtünmeyle yavaşlar ve durur. Blok durduktan sonra ısı miktarı artmaz.',sceneTitle:'Eₖ(ilk) = Eₖ(son) + E_termal',
   defaults:{m:2,v0:12,mu:.3,g:10,distance:10},
   controls:[{id:'m',label:'Kütle',min:1,max:10,step:1,unit:'kg'},{id:'v0',label:'İlk sürat',min:2,max:20,step:1,unit:'m/s'},{id:'mu',label:'Kinetik sürtünme katsayısı',min:0,max:1,step:.05,unit:''},{id:'g',label:'Yerçekimi',min:5,max:15,step:1,unit:'m/s²'},{id:'distance',label:'İstenen yol',min:0,max:50,step:1,unit:'m'}],
