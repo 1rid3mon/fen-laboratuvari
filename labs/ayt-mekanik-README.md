@@ -12,7 +12,7 @@ https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik
 
 | Kazanım | Karşılık |
 |---|---|
-| **11.1.6.1** İş–enerji ilişkisi, F–x alanı, Hooke Yasası, kinetik / yer çekimi / yay enerjileri | F–x, açılı kuvvet/güç, Hooke, yay-enerji, yükseklik |
+| **11.1.6.1** İş–enerji ilişkisi, F–x alanı, Hooke Yasası, kinetik / yer çekimi / yay enerjileri | F–x, açılı kuvvet/güç, Hooke, üç enerji grafiği, yay-enerji, yükseklik |
 | **11.1.6.2** Mekanik enerjinin korunumu; düşme, atış, yay; Canan Dağdeviren | Yükseklik dönüşümü, eğik atışta enerji, yay/blok değişimi; kısa bilim insanı notu |
 | **11.1.6.3** Sürtünmeli yüzeylerde enerji korunumu ve dönüşümü | Yatay sürtünme, gerçek durma mesafesi, Eₖ → termal enerji |
 | **11.1.7.1** Momentum ve itme kavramları | Vektörel momentum, imzalı hız ve itme |
@@ -22,15 +22,16 @@ https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik
 
 Güç, iş ve süre ilişkisinde **ortalama güç** düzeyinde tutuldu; yüksek seviye dinamik veya grafik türevleri eklenmedi.
 
-### İş–Güç–Enerji: 7 deney + 18 özgün soru
+### İş–Güç–Enerji: 8 deney + 18 özgün soru
 
 1. **F–x grafiği**: pozitif ve negatif işaretli alanlar. Doğrusal değişen kuvvet için tam trapez hesabı.
 2. **Açılı kuvvet, net iş ve ortalama güç**: Fcosθ bileşeni, başlangıç/son kinetik enerji, **süre sabit ivmeli hareketten türetilir**, bağımsız seçilmez. Net iş enerjiyi sıfırın altına indirecekse belirtilen yol **ulaşılamaz** diye gösterilir; hayalî hız hesaplanmaz.
 3. **Hooke**: F=−kx; esneklik potansiyeli ½kx²; dış ve yay işaretleri ayrılır.
 4. **Yer çekimi**: 40 m'den düşme, Eₖ + Eₚ sabit ve yükseklik sürgüsü; Canan Dağdeviren'in piezoelektrik mekanik→elektrik enerji dönüşümü çalışmaları için kısa not.
 5. **Eğik atışta enerji**: x/y ve aynı matematiksel modelden Eₖ/Eₚ; zemin temasında hareket durur.
-6. **Sürtünme**: μₖmg, kinetik→termal dönüşüm; durduktan sonra ısı miktarı artmaz; μₖ=0 durma mesafesi ∞.
-7. **Yay + blok**: sürtünmesiz sistemde E_yay ↔ Eₖ; seçilen konum anlıktır, zaman veya yön simüle edilmez.
+6. **Enerji grafikleri**: Eₖ–v², Eₚ–h ve E_yay–x² doğruları; eğimleri m/2, mg, k/2.
+7. **Sürtünme**: μₖmg, kinetik→termal dönüşüm; durduktan sonra ısı miktarı artmaz; μₖ=0 durma mesafesi ∞.
+8. **Yay + blok**: sürtünmesiz sistemde E_yay ↔ Eₖ; seçilen konum anlıktır, zaman veya yön simüle edilmez.
 
 **Fizik varsayımları:** kütle sabit, enerji hesapları ideal koşullara göre. Yer çekimi sabit g. Sürtünme deneyinde yalnız yatay kinetik sürtünme vardır. Yay esneklik sınırları içinde idealdir. Atışta hava direnci yoktur. Güç deneyinde hareket +x yönünde ve uygulanan kuvvet tek net iş yapan kuvvettir.
 
