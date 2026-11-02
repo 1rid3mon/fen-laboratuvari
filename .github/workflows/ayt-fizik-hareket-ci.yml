@@ -1,4 +1,4 @@
-name: AYT Fizik Vektor Bagil Newton ve Bir Boyutta Hareket
+name: AYT Fizik 2018 MEB Hareket Enerji Momentum
 on:
   push:
     paths:
@@ -7,6 +7,11 @@ on:
       - 'labs/newton-lab.js'
       - 'labs/ivmeli-*'
       - 'labs/atis-*'
+      - 'labs/fizik-enerji*'
+      - 'labs/momentum*'
+      - 'labs/mekanik-*'
+      - 'labs/is-guc-enerji.html'
+      - 'labs/itme-cizgisel-momentum.html'
       - 'labs/iki-boyutta-hareket.html'
       - 'labs/bir-boyutta-sabit-ivmeli-hareket.html'
       - 'labs/vektorler-bagil-hareket.html'
@@ -45,6 +50,14 @@ jobs:
           node --check labs/atis-math.js
           node --check labs/atis-lab.js
           node --check labs/atis.test.cjs
+          node --check labs/fizik-enerji-math.js
+          node --check labs/fizik-enerji-lab.js
+          node --check labs/momentum-math.js
+          node --check labs/momentum-lab.js
+          node --check labs/mekanik-ui.js
+          node --check labs/fizik-enerji.test.cjs
+          node --check labs/momentum.test.cjs
+          node --check labs/mekanik-dom.test.cjs
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
-        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs
+        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs labs/fizik-enerji.test.cjs labs/momentum.test.cjs labs/mekanik-dom.test.cjs
