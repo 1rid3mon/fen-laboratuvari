@@ -33,3 +33,8 @@
 @media(max-width:1030px){.mlab-workspace{grid-template-columns:1fr}.mside{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.mside{grid-template-columns:1fr}.mmeasurements{grid-template-columns:repeat(2,minmax(0,1fr))}.mscene{min-height:190px}.mscene svg{min-height:190px}}
 @media(prefers-reduced-motion:reduce){.mbar-track>div{transition:none}}
+
+.menergygraphs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:9px}
+.menergygraphs>div{min-width:0;border:1px solid #36546a;background:#0b263b;border-radius:12px;padding:7px}
+.menergygraphs svg{min-height:0;height:auto;width:100%;display:block}
+@media(max-width:850px){.menergygraphs{grid-template-columns:1fr}}
