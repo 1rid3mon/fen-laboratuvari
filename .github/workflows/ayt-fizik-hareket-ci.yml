@@ -6,6 +6,8 @@ on:
       - 'labs/bagil-lab.js'
       - 'labs/newton-lab.js'
       - 'labs/ivmeli-*'
+      - 'labs/atis-*'
+      - 'labs/iki-boyutta-hareket.html'
       - 'labs/bir-boyutta-sabit-ivmeli-hareket.html'
       - 'labs/vektorler-bagil-hareket.html'
       - 'labs/newton-hareket-yasalari.html'
@@ -40,6 +42,9 @@ jobs:
           node --check labs/ivmeli-math.js
           node --check labs/ivmeli-lab.js
           node --check labs/ivmeli.test.cjs
+          node --check labs/atis-math.js
+          node --check labs/atis-lab.js
+          node --check labs/atis.test.cjs
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
-        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs
+        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs
