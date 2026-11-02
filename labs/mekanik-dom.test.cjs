@@ -18,8 +18,8 @@ function harness(type){
  }
  return {w,d,nodes,frameQueue,fire,docEvents,lab:w[type==='energy'?'FizikEnerjiLab':'MomentumLab']};
 }
-test('energy: seven experiments render SVG + simple explanations, 18 questions, no idle animation',()=>{
- const h=harness('energy'),labs=['work','power','spring','gravity','projectile','friction','exchange'];
+test('energy: eight experiments render SVG + simple explanations, 18 questions, no idle animation',()=>{
+ const h=harness('energy'),labs=['work','power','spring','gravity','projectile','energygraphs','friction','exchange'];
  assert.equal(h.lab.snapshot().questions,18);assert.equal(h.frameQueue.length,0);
  for(const id of labs){
  h.fire('tabs','click','[data-tab]',{tab:id});
