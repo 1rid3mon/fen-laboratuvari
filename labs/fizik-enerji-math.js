@@ -7,12 +7,15 @@ function forceArea({f0,f1,dx}){
  finite({f0,f1,dx},['f0','f1','dx']);if(dx<0)throw new RangeError('Displacement length must be nonnegative');
  return {work:(f0+f1)*dx/2,meanForce:(f0+f1)/2,dx};
 }
-function angled({force,angle,dx,m,v0,seconds}){
- nonnegative({force,dx,m,seconds},['force','dx','m','seconds']);finite({angle,v0},['angle','v0']);if(m===0)throw new RangeError('Mass zero');
+function angled({force,angle,dx,m,v0}){
+ nonnegative({force,dx,m,v0},['force','dx','m','v0']);finite({angle},['angle']);if(m===0)throw new RangeError('Mass zero');
  const parallel=force*Math.cos(angle*Math.PI/180),work=parallel*dx,initialK=.5*m*v0*v0,finalK=initialK+work;
- return {parallel,work,initialK,finalK,reachable:finalK>=-1e-10,
- finalSpeed:finalK>=-1e-10?Math.sqrt(2*Math.max(0,finalK)/m):null,
- averagePower:seconds>0?work/seconds:null};
+ const reachable=finalK>=-1e-10 && !(dx>0&&v0===0&&parallel<=0);
+ const finalSpeed=reachable?Math.sqrt(2*Math.max(0,finalK)/m):null;
+ // Work and time must describe the SAME constant-acceleration motion. Never ask for independent time.
+ const travelTime=reachable&&dx>0&&v0+finalSpeed>1e-12?2*dx/(v0+finalSpeed):dx===0?0:null;
+ return {parallel,work,initialK,finalK,reachable,finalSpeed,travelTime,
+ averagePower:travelTime>0?work/travelTime:null};
 }
 function gravity({m,h0,h,v0=0,g=10}){
  nonnegative({m,h0,h,g},['m','h0','h','g']);finite({v0},['v0']);
