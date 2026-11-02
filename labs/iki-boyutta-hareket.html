@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#06111e">
+<title>AYT Fizik · İki Boyutta Hareket — Yatay ve Eğik Atış Laboratuvarı</title>
+<meta name="description" content="2018 MEB AYT Fizik 11.1.5: yatay ve eğik atış, iki bileşenli hız vektörleri, tepe noktası, menzil, farklı yükseklikler, hedefe atış, x-y ve hız grafiklerini etkileşimli öğren.">
+<link rel="stylesheet" href="hareket-lab.css">
+<link rel="stylesheet" href="atis-lab.css">
+<script defer src="hareket-math.js"></script>
+<script defer src="atis-math.js"></script>
+<script defer src="atis-lab.js"></script>
+</head>
+<body>
+<div class="shell">
+<header class="intro">
+<a class="back" href="../index.html">← Fen Laboratuvarı</a>
+<div class="eyebrow">AYT FİZİK · 2018 MEB · 11.1.5.1–11.1.5.2</div>
+<h1>🎯 İki Boyutta <em>Hareket</em></h1>
+<p>Bir cisim tek yörüngede ilerlerken yatay ve düşey hareketler nasıl ayrı hesaplanır? <strong>Yatay atış, eğik atış, yüksekten atış, menzil ve hedefe isabet</strong> deneylerini kendin yönet. Hız bileşenleri ve yörünge her değişkende birlikte güncellenir.</p>
+<div class="chips"><span>Yatay atış</span><span>Eğik atış</span><span>İki bağımsız bileşen</span><span>3–4–5 YKS yaklaşımı</span><span>20 özgün soru</span><span>2018 MEB • Maarif değil</span></div>
+</header>
+<nav id="tabs" class="tabs" aria-label="İki boyutta hareket deney seçimi"></nav>
+<main class="workspace">
+<section class="card" aria-label="Atış simülasyonu">
+<div class="eyebrow" id="tagline">YATAY &amp; DÜŞEY KOMPONENTLER</div>
+<h2 id="heading">Atış laboratuvarı</h2>
+<p class="muted" id="intro"></p>
+<div class="scene projectile-scene" id="scene" role="group" aria-label="İki boyutta atış yörüngesi, hız vektörleri ve yer düzlemi"></div>
+<div class="toolbar" id="buttons"></div>
+<div class="hint" id="hint" role="status"></div>
+<div id="graphs-section">
+  <h3>📊 Aynı hareketin dört grafiği</h3>
+  <p class="tiny">Dört grafik de üstteki atışın anlık konumundan üretilir. Kesikli dikey çizgi seçtiğin zamanı gösterir.</p>
+  <div id="graphs" class="projectile-graphs"></div>
+  <div id="graph-summary" class="graph-summary" aria-live="polite"></div>
+</div>
+</section>
+<aside class="sidebar">
+<section class="card">
+<h2>🎛️ Deney değişkenleri</h2>
+<p class="tiny">Kaydırıcıyı sürüklediğinde sahne anında güncellenir. Parmağın kaydırıcıdan kopmaması için kontrol paneli yeniden kurulmaz.</p>
+<div class="controls" id="controls"></div>
+</section>
+<section class="card">
+<h2>📐 Hesaplanan sonuçlar</h2>
+<div id="results" class="results" aria-live="polite"></div>
+<h3>🧠 YKS mantığı</h3>
+<div id="lesson" class="lesson"></div>
+<div id="quiz" class="quiz" aria-live="polite"></div>
+</section>
+</aside>
+</main>
+<p class="footer"><strong>Kaynak ve sınır:</strong> 2018 MEB Fizik 11.1.5.1 ve 11.1.5.2. Hava direnci yoktur; ivme yalnız düşeyde −g'dir. Başlangıç y=0 zemin, +y yukarı, +x sağ yönüdür. Farklı yükseklik atışlarında <strong>R=v₀² sin(2θ)/g</strong> formülünü doğrudan kullanma: yalnız aynı seviyeye düşen eğik atışta geçerlidir. Bu konu 2018 müfredatına göre hazırlanmıştır, yeni Maarif Modeli kullanılmamıştır. <a href="bir-boyutta-sabit-ivmeli-hareket.html">← Önceki: Bir Boyutta Sabit İvmeli Hareket</a> · <a href="../index.html">Fen Laboratuvarı ana sayfa</a>.</p>
+</div>
+</body>
+</html>
