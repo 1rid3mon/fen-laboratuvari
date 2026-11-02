@@ -9,12 +9,12 @@ test('MEB 11.1.6.1: signed F-x trapezoid including negative and cancellation',()
  near(E.forceArea({f0:-10,f1:10,dx:4}).work,0);
 });
 test('angled work: perpendicular force zero, 120 degrees negative, average power signed',()=>{
- near(E.angled({force:20,angle:90,dx:3,m:2,v0:5,seconds:3}).work,0,1e-12);
- const r=E.angled({force:20,angle:120,dx:3,m:2,v0:10,seconds:3});
- near(r.work,-30);near(r.averagePower,-10);near(r.finalK,70);near(.5*2*r.finalSpeed*r.finalSpeed,70);
+ near(E.angled({force:20,angle:90,dx:3,m:2,v0:5}).work,0,1e-12);
+ const r=E.angled({force:20,angle:120,dx:3,m:2,v0:10});
+ near(r.work,-30);near(r.travelTime,6/(10+Math.sqrt(70)));near(r.averagePower,-30/r.travelTime);near(r.finalK,70);near(.5*2*r.finalSpeed*r.finalSpeed,70);
 });
 test('work-energy theorem rejects impossible travel instead of fake imaginary velocity',()=>{
- const r=E.angled({force:30,angle:180,dx:10,m:1,v0:1,seconds:2});
+ const r=E.angled({force:30,angle:180,dx:10,m:1,v0:1});
  assert.equal(r.reachable,false);assert.equal(r.finalSpeed,null);assert.ok(r.finalK<0);
 });
 test('Hooke spring force signed, stored energy always nonnegative, work signs correct',()=>{
