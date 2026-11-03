@@ -49,14 +49,22 @@ function create(config){
   el('interpret').textContent=s.interpret(p,o,U);el('formula').textContent=s.formula(p,o);
   el('measurements').innerHTML=s.metrics(p,o).map(m=>'<div class="mmetric"><small>'+esc(m[0])+'</small><strong>'+esc(m[1])+'</strong></div>').join('');
   el('note').textContent=s.note;el('quiz').innerHTML='';
-  el('actions').innerHTML='<button type="button" class="mbtn" data-action="reset">↺ Varsayılana dön</button>'+(s.animate?'<button type="button" class="mbtn primary" data-action="play">'+(state.playing?'Ⅱ Duraklat':'▶ Oynat')+'</button><button type="button" class="mbtn" data-action="step">+0,2 s</button>':'');
+  el('actions').innerHTML='<button type="button" class="mbtn" data-action="reset">↺ Varsayılana dön</button>'+(s.animate?'<button type="button" class="mbtn primary" data-action="play">'+(state.playing?'Ⅱ Duraklat':'▶ Oynat')+'</button><button type="button" class="mbtn" data-action="step">+0,2 s</button>':'')+(s.motion?'<button type="button" class="mbtn primary" data-action="motion-play">'+(state.playing?'Ⅱ Duraklat':'▶ Hareket ettir')+'</button><button type="button" class="mbtn" data-action="motion-step">+ Adım</button><button type="button" class="mbtn" data-action="motion-home">↶ Hareketi başa al</button>':'');
  }
  function change(tab){
   if((tab==='quiz'&&!Q.length)||(tab!=='quiz'&&!byId.has(tab)))return;stop();state.tab=tab;state.choice=null;state.checked=false;tabs();controlHTML();render();
  }
  function animateFrame(now){
   if(!state.playing)return;
-  const s=byId.get(state.tab);if(!s||!s.animate){stop();return;}
+  const s=byId.get(state.tab);if(!s||(!s.animate&&!s.motion)){stop();return;}
+  if(s.motion){const m=s.motion,p=values[state.tab],key=m.key;
+   if(!state.last)state.last=now;
+   const dt=Math.min(.08,Math.max(0,(now-state.last)/1000));state.last=now;
+   const next=Math.min(m.max,p[key]+dt*m.speed);p[key]=Number(next.toFixed(5));
+   const slider=el('ctl-'+key),out=el('out-'+key);
+   if(slider)slider.value=String(p[key]);if(out)out.textContent=fmt(p[key])+' '+(s.controls.find(c=>c.id===key)?.unit||'');
+   render();if(next>=m.max-1e-8){stop();render();return;}root.requestAnimationFrame(animateFrame);return;
+  }
   if(!state.last)state.last=now;
   const p=values[state.tab],key=s.animate.key,max=s.animate.max(p),dt=Math.min(.08,Math.max(0,(now-state.last)/1000)),next=Math.min(max,p[key]+dt);
   state.last=now;p[key]=next;
@@ -73,6 +81,9 @@ function create(config){
   }
   const s=byId.get(state.tab),p=values[state.tab];
   if(a==='reset'){stop();values[state.tab]={...s.defaults};controlHTML();render();}
+  if(s.motion&&a==='motion-home'){stop();p[s.motion.key]=s.motion.min;const x=el('ctl-'+s.motion.key);if(x)x.value=String(p[s.motion.key]);const out=el('out-'+s.motion.key);if(out)out.textContent=fmt(p[s.motion.key])+' '+(s.controls.find(c=>c.id===s.motion.key)?.unit||'');render();}
+  if(s.motion&&a==='motion-step'){stop();p[s.motion.key]=Number(Math.min(s.motion.max,p[s.motion.key]+s.motion.step).toFixed(5));const x=el('ctl-'+s.motion.key);if(x)x.value=String(p[s.motion.key]);const out=el('out-'+s.motion.key);if(out)out.textContent=fmt(p[s.motion.key])+' '+(s.controls.find(c=>c.id===s.motion.key)?.unit||'');render();}
+  if(s.motion&&a==='motion-play'){if(state.playing){stop();render();return;}if(p[s.motion.key]>=s.motion.max-1e-8)p[s.motion.key]=s.motion.min;state.playing=true;state.last=0;render();root.requestAnimationFrame(animateFrame);}
   if(a==='step'&&s.animate){stop();p[s.animate.key]=Math.min(s.animate.max(p),p[s.animate.key]+.2);const slider=el('ctl-'+s.animate.key),out=el('out-'+s.animate.key);if(slider)slider.value=String(p[s.animate.key]);if(out)out.textContent=fmt(p[s.animate.key])+' s';render();}
   if(a==='play'&&s.animate){if(state.playing){stop();render();return;}if(p[s.animate.key]>=s.animate.max(p))p[s.animate.key]=0;state.playing=true;state.last=0;render();root.requestAnimationFrame(animateFrame);}
  }
