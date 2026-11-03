@@ -137,7 +137,7 @@ const sections=[
   '<rect x="470" y="145" width="210" height="65" rx="14" fill="#285776" stroke="#9bdeec"/>'+
   U.text(495,184,'2. Makara','#dcecf3')+
   U.text(75,72,'İki makine; toplam verim: %'+f(r.eta*100),'#ffe2a4')+
-  U.text(75,284,'Giriş: '+f(r.workIn)+' J · Çıkış: '+f(r.workOut)+' J','#a7f0da'),
+  U.text(75,284,'Giriş: '+f(r.workIn)+' J · Çıkış: '+f(r.workOut)+' J','#a7f0da')),
   interpret:(p,r)=>explain(r)+' Bu iki aşamalı idealize sistem için gereken kuvvet '+f(r.effort)+' N. Güvenli tasarımda taşıyıcıların, ipin ve bağlantıların gerçek yük kapasitesi ayrıca doğrulanmalıdır.',
  formula:(p,r)=>'Toplam kazanç = (kaldıraç kol oranı)×(taşıyan ip) = '+f(r.ratio)+'\nToplam verim = η₁×η₂ = '+f(r.eta)+'\nGiriş kuvveti = '+f(r.effort)+' N',
  metrics:(p,r)=>summary(r),
