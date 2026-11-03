@@ -60,9 +60,9 @@ motion:motion('temp',-20,160,17,10)},
 intro:'Kürenin ve halkanın sıcaklığını ayrı ayrı ayarla. Küreyi parmağınla halkaya sürükle; geçişi gerçek çap karşılaştırması belirler.',
 defaults:{ballTemp:20,ringTemp:20,progress:0},controls:[BALLTEMP,RINGTEMP,c('progress','Küreyi halkaya yaklaştır',0,1,.01,'')],
 model:p=>M.ring({ballTemp:p.ballTemp,ringTemp:p.ringTemp}),
-scene:(p,o)=>{const ballR=44+clamp((o.diameter-50)*42,-13,23),holeR=46+clamp((o.opening-50.055)*42,-13,23);
+scene:(p,o)=>{const ballR=44+clamp((o.diameter-50)*42,-13,23),holeR=46+clamp((o.opening-50.055)*42,-13,23),outerR=94+clamp((o.opening-50.055)*42,-13,23);
 const travel=clamp(p.progress,0,1)*(o.passes?340:194),ballX=186+travel,centerX=526,y=175;
-const ringPath='<path fill-rule="evenodd" d="M'+(centerX-94)+' '+(y-95)+' H'+(centerX+94)+' V'+(y+95)+' H'+(centerX-94)+'Z M'+(centerX-holeR)+' '+y+' a'+holeR+' '+holeR+' 0 1 0 '+(2*holeR)+' 0 a'+holeR+' '+holeR+' 0 1 0 -'+(2*holeR)+' 0 Z" fill="#ceaa72" stroke="#ffe0a9" stroke-width="2"/>';
+const ringPath='<path fill-rule="evenodd" d="M'+(centerX-outerR)+' '+(y-outerR)+' H'+(centerX+outerR)+' V'+(y+outerR)+' H'+(centerX-outerR)+'Z M'+(centerX-holeR)+' '+y+' a'+holeR+' '+holeR+' 0 1 0 '+(2*holeR)+' 0 a'+holeR+' '+holeR+' 0 1 0 -'+(2*holeR)+' 0 Z" fill="#ceaa72" stroke="#ffe0a9" stroke-width="2"/>';
  const ball='<g data-drag="progress" aria-label="Küreyi halkaya götür">'+dot(ballX,y,ballR,'#8ed1e9','#ecf9ff')+txt(ballX-7,y+8,'●','#2d5a72',22)+'</g>';
  return svg(txt(70,52,'Küre: '+p.ballTemp+' °C', '#92d7f1')+txt(477,52,'Halka: '+p.ringTemp+' °C','#f9d79b')+
  ringPath+ball+(p.progress>.55?badge(392,288,o.passes?'GEÇTİ':'TAKILDI'):badge(392,288,'DENE'))+
