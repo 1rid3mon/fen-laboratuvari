@@ -6,7 +6,7 @@
 const PORTS=Object.freeze(['Bp','Bm','Sl','Sr','Rl','Rr','L1l','L1r','L2l','L2r','Al','Ar','Vl','Vr']);
 const K={serial:[['Bp','Sl'],['Sr','L1l'],['L1r','L2l'],['L2r','Bm']],
 parallel:[['Bp','Sl'],['Sr','L1l'],['Sr','L2l'],['L1r','Bm'],['L2r','Bm']],
-ohm:[['Bp','Sl'],['Sr','Rl'],['Rr','Bm'],['Al','Sr'],['Ar','Rl'],['Vl','Rl'],['Vr','Bm']],
+ohm:[['Bp','Sl'],['Sr','Al'],['Ar','Rl'],['Rr','Bm'],['Vl','Rl'],['Vr','Bm']],
 single:[['Bp','Sl'],['Sr','L1l'],['L1r','Bm']],
 meters:[['Bp','Sl'],['Sr','Al'],['Ar','L1l'],['L1r','Bm'],['Vl','L1l'],['Vr','L1r']],
 short:[['Bp','Sl'],['Sr','Bm']]};
