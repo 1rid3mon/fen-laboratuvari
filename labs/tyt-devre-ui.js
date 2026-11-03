@@ -61,7 +61,7 @@ function componentGraphics(result){
   if(active)b+=circle(512,y,94*glow+32,'url(#shine)','none',0);
   b+=circle(512,y,42,active?'#d3b16d':'#2d4c60',active?'#ffe7a5':'#8db9ca',4);
   b+=line(483,y-24,541,y+24,active?'#fff5c5':'#a2b7c6',5)+line(541,y-24,483,y+24,active?'#fff5c5':'#a2b7c6',5);
-  b+=text(486,y-58,key+' · '+fmt(state[key.toLowerCase()],1)+' Ω','#c7e1ed',16);
+  b+=text(486,y-58,key+' · '+fmt(state[key==='L1'?'lamp1':'lamp2'],1)+' Ω','#c7e1ed',16);
   if(active)b+=text(605,y+8,'IŞIK '+Math.round(glow*100)+'%','#ffe7a6',19);
  }
  // Meters
@@ -325,7 +325,8 @@ function events(){
   if(el.dataset.range&&Object.prototype.hasOwnProperty.call(state,el.dataset.range)){
    state[el.dataset.range]=Number(el.value);
    if(el.dataset.range==='cells'&&state.cells===1)state.reversed=false;
-   stop();render();
+   const out=$(el.dataset.range+'-out');if(out)out.textContent=fmt(Number(el.value),2);
+   stop();draw();
   }
   if(el.dataset.select&&Object.prototype.hasOwnProperty.call(state,el.dataset.select)){
    state[el.dataset.select]=el.value;if(el.dataset.select==='batteryMode'&&state.batteryMode==='parallel')state.reversed=false;stop();render();
