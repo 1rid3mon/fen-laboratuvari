@@ -85,18 +85,21 @@ function magCoil(p,o,u){
  return base(u,'Halka ve bobin: sarım ile alan ilişkisi',b,'Sarımlar artarsa alan artar; uzun bobin içi alan yaklaşık düzgündür.');
 }
 function magForce(p,o,u){
- const deg=p.angle,active=o.active;
- let b=dotsInField(21,'in');
- b+='<g transform="rotate('+deg+' 399 174)">'+line(272,174,523,174,'#ffcf95',12)+arrow(u,370,174,p.current>=0?93:-93,0,'#85f0cb','I')+'</g>';
- if(active)b+=arrow(u,399,175,0,p.current>=0?-98:98,'#f5dc9d','F');
- b+=txt(u,75,75,'I×B: kuvvet yönünü sağ el kuralı belirler','#e5e9ef',18);
- return base(u,'Manyetik kuvvet: tel ve yön değişiyor',b,'Ok, seçilen düzlemsel düzenin temsilidir; hesaplama yok.');
+ const deg=p.angle,active=o.active,sign=Math.sign(p.current*Math.sin(deg*PI/180));
+ let b='';
+ for(let y=108;y<=258;y+=50)b+=arrow(u,148,y,478,0,'#73bfd9','B');
+ b+='<g transform="rotate('+deg+' 399 174)">'+line(270,174,527,174,'#ffcf95',12)+arrow(u,367,174,p.current>=0?92:-92,0,'#85f0cb','I')+'</g>';
+ b+=circle(399,174,27,'#193d53','#ffe2a3',3);
+ b+=txt(u,386,183,active?(sign>0?'•':'×'):'0',active?'#ffe3ab':'#789baa',30);
+ b+=txt(u,480,177,active?(sign>0?'F: sayfadan dışarı':'F: sayfa içine'):'F = 0','#f3dcae',17);
+ b+=txt(u,75,75,'Alan → · tel açıyla döner · kuvvet sayfaya diktir','#e5e9ef',18);
+ return base(u,'Manyetik kuvvet: telin alanla yaptığı açı',b,'B alanı düzlemde sağa; kuvvet işareti sağ el kuralına göredir.');
 }
 function magParticle(p,o,u){
  let b=dotsInField(21,'in'),x,y;
  const phase=p.phase||0,sign=p.q>=0?1:-1;
  if(o.straight){x=170+440*phase;y=175;b+=path('M170 175 L610 175','#6ad6c3',3,'8 6');}
- else if(p.angle===90){x=404+94*Math.cos(TAU*phase*sign);y=176+94*Math.sin(TAU*phase*sign);b+='<circle cx="404" cy="176" r="94" fill="none" stroke="#7de3cc" stroke-dasharray="6 8" stroke-width="3"/>';}
+ else if(p.angle===90){x=404+94*Math.cos(TAU*phase*sign);y=176-94*Math.sin(TAU*phase*sign);b+='<circle cx="404" cy="176" r="94" fill="none" stroke="#7de3cc" stroke-dasharray="6 8" stroke-width="3"/>';}
  else{x=160+440*phase;y=176+45*Math.sin(TAU*phase*sign*3);b+=path('M160 176 Q260 77 360 176 T560 176','#6ad6c3',3,'8 6');}
  b+=circle(x,y,19,p.q>0?'#ffc78f':'#8dc9fd','#fff4d1',3)+txt(u,x-8,y+6,p.q>0?'+':'−','#173f50',22);
  return base(u,'Yüklü parçacık: yörünge hareket ediyor',b,'İşaret değişince sapma yönü tersine döner; yarıçap hesabı yok.');
