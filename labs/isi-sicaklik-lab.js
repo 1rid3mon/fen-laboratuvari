@@ -211,5 +211,31 @@ interpret:observations.thermometer,formula:()=> 'K = °C + 273,15\n°F = (9/5) �
 metrics:(p,o)=>[['Celsius',f(o.C)+' °C'],['Fahrenheit',f(o.F)+' °F'],['Kelvin',f(o.K)+' K']],
 note:'9.5.1.3: MEB sıcaklık birimi hesaplamalarına izin verir. Burada yalnız birim dönüşümleri sayısal gösterilir.'}
 ];
+// Other required 2018 MEB 9.5 outcomes: thermometer types, perceived temperature,
+// insulation design with budget, and individual global-warming mitigations.
+sections.push(
+{id:'devices',tab:'Termometre çeşitleri',title:'Hangi termometre nerede kullanılır?',intro:'Sıvılı, dijital temaslı veya kızılötesi temassız termometreyi seç; kullanım farklarını gör.',defaults:{device:0},controls:[c('device','0 Sıvılı · 1 Dijital · 2 Kızılötesi',0,2,1,'')],model:p=>({name:['Sıvılı termometre','Dijital temaslı termometre','Kızılötesi termometre'][p.device]}),scene:(p,o)=>{let b='';
+if(p.device===0){b=thermometer(391,22,-20,160,'noop')+txt(480,151,'Haznedeki sıvı genleşir','#dceeed',19);}
+else if(p.device===1){b=rect(268,111,236,118,'#285370','#badce4',18)+rect(298,135,178,54,'#b8e7cf','#e4fce7',8)+txt(323,171,'22 °C','#215352',29)+line(385,229,385,290,'#d8eaf0',10);}
+else{b=rect(270,131,194,86,'#36536f','#d0e6ed',15)+rect(449,148,55,37,'#f1c491','#f9e2b6',9)+
+ line(505,166,650,166,'#f6c99b',3)+dot(650,166,14,'#ffe7b5')+txt(142,95,'Temassız: yayılan ışımayı algılar','#d0edf3',18);}
+return svg(txt(60,53,o.name,'#a5eed9',23)+b,'Farklı kullanım amaçları için üç termometre tipi');},interpret:()=> 'Sıvılı termometreler genleşmeyle, dijital termometreler sıcaklığa duyarlı elektronik elemanlarla, kızılötesi termometreler yayılan ışımayla ölçüm yapar.',formula:()=> 'Kullanım amacına göre uygun termometre seçimi.',
+metrics:(p,o)=>[['Seçilen cihaz',o.name]],note:'9.5.1.2: termometre çeşitlerini kullanım amaçlarına göre karşılaştırma. Temsili cihaz çizimleridir.'},
+{id:'felt',tab:'Hissedilen sıcaklık',title:'Aynı sıcaklık neden farklı hissedilir?',intro:'Rüzgâr ve nemi değiştir: hava sıcaklığı aynı olsa da vücudun ısı alışverişi farklı hissedilir.',defaults:{air:32,wind:1,humidity:35},controls:[c('air','Hava sıcaklığı',-10,40,2,'°C'),c('wind','Rüzgâr',0,10,1,'kademe'),c('humidity','Bağıl nem',20,90,5,'%')],model:p=>({status:p.air>=26&&p.humidity>=65?'Nemli havada daha bunaltıcı':p.air<=15&&p.wind>=5?'Rüzgârla daha soğuk':p.air>=26?'Sıcak hava':'Hava sıcaklığına yakın his'}),scene:(p,o)=>{let b=dot(394,107,28,'#e2b98e')+rect(355,143,80,102,'#41789a')+line(375,241,363,301,'#a4cbe1',9)+line(413,241,430,301,'#a4cbe1',9);
+for(let i=0;i<p.wind;i++)b+=u.arrow(67+(i%5)*48,113+Math.floor(i/5)*76,47,0,'#85d8ed','');
+if(p.humidity>55)for(let i=0;i<5;i++)b+=dot(526+i*31,125+(i%2)*62,7,'#7bc8ed','#b7e5ef');
+b+=txt(95,63,'Hava: '+p.air+' °C','#deedf1')+txt(481,70,'Nem: '+p.humidity+'%','#8de0f0')+txt(73,329,o.status,'#f6dcad',19);
+return svg(b,'Rüzgâr ve nemin sıcaklık hissine etkisini gösteren kişi ve çevre');},interpret:(p,o)=>o.status+'. Rüzgâr konveksiyon ve buharlaşma etkisini, yüksek nem ise terin buharlaşmasını değiştirebilir.',formula:()=> 'Gerçek hava sıcaklığı ile hissedilen sıcaklık farklıdır.',
+metrics:(p,o)=>[['Hissedilen durum',o.status]],note:'9.5.4.4: nitel gösterim; meteorolojik ısı indeksi veya rüzgâr üşümesi hesabı değildir. Giyim ve etkinlik etkileri modellenmez.'},
+{id:'insulation',tab:'Yalıtım tasarımı',title:'Evini bütçeyle yalıt, enerji tasarrufu sağla',intro:'Yalıtım malzemesi, kalınlık ve enerji kaynağını seç. Temsili bütçeyi aşmadan ısı kaybını azalt.',defaults:{material:0,thickness:2,renewable:0,budget:12},controls:[c('material','0 Köpük · 1 Mineral yünü · 2 Tuğla',0,2,1,''),c('thickness','Yalıtım kalınlığı',1,4,1,'kademe'),c('renewable','0 Fosil yakıt · 1 Yenilenebilir',0,1,1,''),c('budget','Örnek bütçe',5,20,1,'puan')],model:p=>{const k=[.04,.045,.6][p.material],unitCost=[1,2,1][p.material],cost=2+unitCost*p.thickness+3*p.renewable,rate=k/p.thickness;return {cost,affordable:cost<=p.budget,level:rate<.04?'Az':rate<.2?'Orta':'Yüksek'};},scene:(p,o)=>{const wall=42+p.thickness*32,x=399-wall/2;
+let b=rect(80,129,x-80,150,'#9c593c','#edbb8a')+rect(x,129,wall,150,'#4b7594','#b9dfec')+
+rect(x+wall,129,700-x-wall,150,'#265b77','#a4daeb');
+for(let i=0;i<8;i++)b+=dot(x+wall+22+(i%4)*30,165+Math.floor(i/4)*67,6,'#f1bb8c');
+b+=txt(83,86,'İçerisi: sıcak','#f5cc9e')+txt(525,87,'Dışarısı: soğuk','#a4e6f9');
+b+=txt(84,318,'Bütçe: '+o.cost+' / '+p.budget+' örnek puan',o.affordable?'#a5efd1':'#ffb8ae',19);
+return svg(b,'Seçilen kalınlık ve malzemeye göre ev duvarındaki yalıtım çizimi');},interpret:(p,o)=>'Isı kaybı eğilimi: '+o.level+'. Bütçe '+(o.affordable?'içinde':'aşıldı')+'. '+(p.renewable?'Yenilenebilir enerji seçildi.':'Fosil yakıt seçildi.')+' Enerji tasarrufu için uygun yalıtım ve daha temiz enerji kaynakları değerlendirilebilir.',formula:()=> 'Yalıtım: kalınlık ve malzemenin iletkenliği önemlidir.\nKüresel ısınmayı azaltma: tasarruf ve enerji seçimi.',
+metrics:(p,o)=>[['Isı kaybı',o.level],['Temsili maliyet',o.cost+' puan'],['Bütçe',o.affordable?'Uygun':'Aşıldı'],['Enerji türü',p.renewable?'Yenilenebilir':'Fosil']],
+note:'9.5.4.3 ve 9.5.4.5: tasarım ve finans bilinci için örnek bütçe puanları kullanılır, gerçek fiyat/enerji faturası veya iklim tahmin modeli değildir. Yenilenebilir sistemlerin de yaşam döngüsü etkileri vardır.'}
+);
 w.IsiSicaklikLab=U.create({sections,questions:[]});
 })(window);
