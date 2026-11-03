@@ -19,6 +19,7 @@ on:
       - 'labs/touch-interaction.test.cjs'
       - 'labs/optik-*'
       - 'labs/kavramsal-hareket.js'
+      - 'labs/kavramsal-pointer.js'
       - 'labs/alternatif-akim*'
       - 'labs/meb-uyum.test.cjs'
       - 'labs/is-guc-enerji.html'
@@ -47,6 +48,7 @@ on:
       - 'labs/touch-interaction.test.cjs'
       - 'labs/optik-*'
       - 'labs/kavramsal-hareket.js'
+      - 'labs/kavramsal-pointer.js'
       - 'labs/alternatif-akim*'
       - 'labs/meb-uyum.test.cjs'
       - 'labs/is-guc-enerji.html'
@@ -107,6 +109,7 @@ jobs:
           node --check labs/manyetizma-lab.js
           node --check labs/manyetizma.test.cjs
           node --check labs/kavramsal-hareket.js
+          node --check labs/kavramsal-pointer.js
           node --check labs/gorsel-hareket.test.cjs
           node --check labs/elektrik-alan-pointer.js
           node --check labs/touch-interaction.test.cjs
