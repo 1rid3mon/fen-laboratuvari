@@ -33,7 +33,7 @@ function friction(p,o){
  return stage('Sürtünme: elektronlar bir cisimden diğerine geçer',b,'Çubuğu yüne sürükle. Toplam yük her adımda sıfır kalır.');
 }
 function contact(p,o){
- const x1=244,x2=600-250*p.progress,y=174;
+ const x1=244,x2=600-258*p.progress,y=174;
  let b=line(150,280,672,280,'#416075',4);
  b+='<g>'+bead(x1,y,o.first,49)+'</g><g data-drag="progress">'+bead(x2,y,o.second,49)+'</g>';
  b+=text(129,84,'A başlangıç: '+symbol(p.first)+Math.abs(p.first),hue(p.first),18);
@@ -81,7 +81,7 @@ function distribution(p,o){
  return stage('İletken: yüzeye dağılır · yalıtkan: yerel kalır',b,'Maddeyi değiştir veya iletkeni toprağa bağla; yük dağılımını izle.');
 }
 function grounding(p,o){
- const x=390,y=171;let b=circle(x,y,77,'#30586e','#b8dce7');
+ const x=390,y=171;let b='<g data-step="stage">'+circle(x,y,77,'#30586e','#b8dce7')+'</g>';
  const n=clamp(Math.abs(o.charge)*2,0,16);
  for(let i=0;i<n;i++){const a=i/n*2*Math.PI;b+=circle(x+64*Math.cos(a),y+64*Math.sin(a),8,hue(o.charge),'#e9f0e9');}
  if(o.connected)b+=line(390,248,390,293,'#74dfc5',5)+line(347,298,433,298,'#e2d8b1',5)+line(358,306,423,306,'#e2d8b1',3)+line(372,315,410,315,'#e2d8b1',3);
@@ -92,7 +92,7 @@ function grounding(p,o){
 }
 function cage(p,o){
  const x=415,y=174,r=119,rodX=149+clamp(p.approach,0,1)*120;
- let b='<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#143048" stroke="'+(p.closed?'#98e7dc':'#76919d')+'" stroke-width="13"'+(p.closed?'':' stroke-dasharray="12 25"')+'/>';
+ let b='<circle data-toggle="closed" cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#143048" stroke="'+(p.closed?'#98e7dc':'#76919d')+'" stroke-width="13"'+(p.closed?'':' stroke-dasharray="12 25"')+'/>';
  b+=circle(x,y,20,'#4b6173','#9fc6d8')+text(x-17,y+7,'TEST','#f2dca7',11);
  b+=bead(rodX,174,p.externalSign,35,'approach');
  const n=7;
@@ -136,7 +136,7 @@ function polarize(p,o){
  const rodX=122+175*p.near,paperX=527-(p.near*103);
  let b=rect(rodX,101,58,154,p.rodSign>0?'#996848':'#316f95','#daebed',15);
  b+=bead(rodX+29,172,p.rodSign,22,'near');
- b+='<g data-drag="near">'+rect(paperX-43,121,86,102,'#e6dfc8','#f5eed9',9)+scatter(paperX-28,147,4,o.nearSign,null,2)+scatter(paperX+11,147,4,o.farSign,null,2)+'</g>';
+ b+='<g data-drag="near" data-side="paper">'+rect(paperX-43,121,86,102,'#e6dfc8','#f5eed9',9)+scatter(paperX-28,147,4,o.nearSign,null,2)+scatter(paperX+11,147,4,o.farSign,null,2)+'</g>';
  b+=text(55,68,'Nötr kâğıt: toplam yük = 0','#e4ecf1',19);
  b+=text(403,287,o.attracted?'Kâğıt yaklaşıyor':'Çubuğu yaklaştır',mint,19);
  return stage('Nötr parçacıklar da yüklü çubuk tarafından çekilebilir',b,'Elektronlar yer değiştirir; nötr cismin yakın tarafı zıt yüklenir.');
