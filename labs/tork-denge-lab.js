@@ -16,6 +16,7 @@ const torqScene=(p,o,U,door)=>{
   stripe(U,cy)+'<rect x="114" y="205" width="576" height="20" fill="#1a5874" stroke="#94d5df"/>';
  b+=marker(U,cx,cy,'Dönme ekseni ⊙','#e2ce89');
  b+=marker(U,x,cy,'F uygulama noktası','#78d4e9');
+ b+='<circle data-drag="r" cx="'+x+'" cy="'+cy+'" r="22" fill="transparent" stroke="#77e0d0" stroke-width="2" stroke-dasharray="4 4"/>';
  const len=Math.min(135,p.F*1.5);
  b+=U.arrow(x,cy,-Math.cos(a)*0+Math.cos(a)*len,-Math.sin(a)*len,'#fcbe84','F');
  b+=U.text(45,46,'+ tork: ⟲ ve ⊙   |   − tork: ⟳ ve ⊗','#c9e7ed',16);
@@ -65,6 +66,7 @@ const sections=[
     +U.arrow(400,285,0,-Math.min(110,p.support*.5),'#7fe5c6','R');
    b+='<path d="M375 277 L400 232 L425 277 Z" fill="#546e85" stroke="#e1eff0" stroke-width="2"/>';
    b+=marker(U,l,221,'sol')+marker(U,r,221,'sağ');
+   b+='<circle data-drag="leftArm" cx="'+l+'" cy="221" r="22" fill="transparent" stroke="#8dcdf0" stroke-width="2"/><circle data-drag="rightArm" cx="'+r+'" cy="221" r="22" fill="transparent" stroke="#f6d28f" stroke-width="2"/>';
    b+=U.text(70,43,'ΣFᵧ = '+f(o.netFy)+' N','#d8eaf4')+U.text(70,73,'Στ = '+f(o.netTau)+' N·m','#9eecd6');
    return U.svg(b,'Sol ve sağ kuvvetler ile destek tepkisi');},
   interpret:(p,o)=>o.equilibrium?'✅ Tam dengeyi buldun! Hem ΣFᵧ = 0 hem Στ = 0.':
@@ -95,6 +97,9 @@ const sections=[
    if(!tol(o.RA))b+=U.arrow(A,272,0,o.RA>=0?-ra:ra,o.RA>=0?'#70e6c6':'#ff9b9d','R_A');
    if(!tol(o.RB))b+=U.arrow(B,272,0,o.RB>=0?-rb:rb,o.RB>=0?'#70e6c6':'#ff9b9d','R_B');
    b+='<path d="M'+(A-25)+' 289 L'+A+' 261 L'+(A+25)+' 289 Z M'+(B-25)+' 289 L'+B+' 261 L'+(B+25)+' 289 Z" fill="#42586e" stroke="#e0eff4" stroke-width="2"/>';
+   b+='<circle data-drag="loadX" cx="'+load+'" cy="175" r="21" fill="transparent" stroke="#ffcf83" stroke-width="2"/>';
+   b+='<circle data-drag="leftSupport" cx="'+A+'" cy="282" r="23" fill="transparent" stroke="#82e5d3" stroke-width="2"/>';
+   b+='<circle data-drag="rightSupport" cx="'+B+'" cy="282" r="23" fill="transparent" stroke="#82e5d3" stroke-width="2"/>';
    b+=U.text(52,34,'Yeşil: basan destek · Kırmızı: olamayacak negatif tepki','#cfe9ed',15);
    return U.svg(b,'Kirişin ağırlığı, yük ve iki destek tepkisi');},
   interpret:(p,o)=>!o.feasible?'⚠️ Bu konumda cebirsel olarak negatif destek kuvveti gerekiyor. Serbest destek aşağı çekemez; kiriş bir destekten ayrılır. Bu düzen 2 destekle fiziksel olarak dengede tutulamaz.':
@@ -119,6 +124,7 @@ const sections=[
    b+=U.arrow(390,122,0,70,'#ffb9a0','W_raf')+U.arrow(load,112,0,90,'#ffd085','W_yük');
    b+=U.arrow(135,200,Math.min(120,o.hingeRx),0,'#89baff','Rₓ');
    b+=U.arrow(135,256,0,-Math.sign(o.hingeRy)*Math.min(80,Math.abs(o.hingeRy)),'#c0a4ff','Rᵧ');
+   b+='<circle data-drag="loadFraction" cx="'+load+'" cy="231" r="20" fill="transparent" stroke="#ffe0a3" stroke-width="2"/>';
    b+=U.text(50,40,'Halat yönü: sola + yukarı, raf yatay','#cfe8ed',16);
    return U.svg(b,'Rafın üzerine etki eden kuvvetler; halat çekmesi ve menteşe');},
   interpret:(p,o)=>'Halat gerilmesi '+f(o.tension)+' N. Açı küçülürse aynı denge torku için daha yüksek gerilme gerekir. Menteşenin düşey tepkisi yukarı veya aşağı yönlü olabilir.',
@@ -141,7 +147,7 @@ const sections=[
   model:p=>M.center({masses:[p.m1,p.m2,p.m3],points:[[p.x1,p.y1],[p.x2,p.y2],[p.x3,p.y3]]}),
   scene:(p,o,U)=>{const xx=x=>74+x*80,yy=y=>300-y*49;let b=U.line(64,300,750,300,'#8fb4c8',2)+U.line(74,313,74,33,'#8fb4c8',2);
    const places=[[p.x1,p.y1,p.m1,'#72c6f0'],[p.x2,p.y2,p.m2,'#fac17e'],[p.x3,p.y3,p.m3,'#8ce7af']];
-   for(let i=0;i<3;i++){const [x,y,m,c]=places[i];b+='<circle cx="'+xx(x)+'" cy="'+yy(y)+'" r="'+(9+m*1.8)+'" fill="'+c+'" stroke="white" stroke-width="1.5"/>'+U.text(xx(x)+14,yy(y)-15,'m'+(i+1)+'='+m+' kg',c,14);}
+   for(let i=0;i<3;i++){const [x,y,m,c]=places[i];b+='<circle data-drag="point'+(i+1)+'" cx="'+xx(x)+'" cy="'+yy(y)+'" r="'+(9+m*1.8)+'" fill="'+c+'" stroke="white" stroke-width="1.5"/>'+U.text(xx(x)+14,yy(y)-15,'m'+(i+1)+'='+m+' kg',c,14);}
    b+=U.line(xx(o.x)-18,yy(o.y),xx(o.x)+18,yy(o.y),'#e5a5ff',4)+U.line(xx(o.x),yy(o.y)-18,xx(o.x),yy(o.y)+18,'#e5a5ff',4)+U.text(58,38,'✳ Mor: ortak kütle merkezi','#e5a5ff',17);
    return U.svg(b,'İki boyutta üç noktasal kütle ve ortak kütle merkezi');},
   interpret:(p,o)=>'Kütle merkezi: ('+f(o.x)+' m, '+f(o.y)+' m). Büyük kütleye yaklaşır, fakat konumu her noktanın hem kütlesi hem konumuna bağlıdır.',
@@ -162,6 +168,7 @@ const sections=[
   scene:(p,o,U)=>{const xx=x=>65+x*81;let b=stripe(U,232)+
    marker(U,xx(p.x1),232,'m₁='+p.m1+' kg','#81caff')+
    marker(U,xx(p.x2),232,'m₂='+p.m2+' kg','#9fe3aa');
+   b+='<circle data-drag="x1" cx="'+xx(p.x1)+'" cy="232" r="21" fill="transparent" stroke="#81caff" stroke-width="2"/><circle data-drag="x2" cx="'+xx(p.x2)+'" cy="232" r="21" fill="transparent" stroke="#9fe3aa" stroke-width="2"/>';
    b+=U.line(xx(o.massCenter),150,xx(o.massCenter),290,'#d7a9ff',3)+U.text(xx(o.massCenter)-35,136,'KM','#d7a9ff');
    b+=U.line(xx(o.weightCenter),185,xx(o.weightCenter),325,'#ffd17e',3)+U.text(xx(o.weightCenter)+5,180,'AM','#ffd17e');
    b+=U.text(55,43,'Farklı g: yer çekimi kuvvetleri farklı ağırlıklanır.','#cce7f0');
@@ -182,7 +189,7 @@ const sections=[
   scene:(p,o,U)=>{const xx=x=>400+x*53,lp=xx(o.left),rp=xx(o.right),c=xx(p.centerX);
    let b=U.line(48,284,752,284,'#627f96',3)+'<rect x="'+lp+'" y="268" width="'+(rp-lp)+'" height="18" rx="4" fill="#4b98a0" stroke="#a5f2e5"/>';
    b+=U.line(c,80,c,305,p.centerX<o.left||p.centerX>o.right?'#ff9a9e':'#79ecd2',3);
-   b+=U.arrow(c,95,0,125,'#f4c77c','mg')+'<circle cx="'+c+'" cy="80" r="12" fill="#d4a0f6"/>';
+   b+=U.arrow(c,95,0,125,'#f4c77c','mg')+'<circle data-drag="centerX" cx="'+c+'" cy="80" r="16" fill="#d4a0f6" stroke="#f2ddff" stroke-width="2"/>';
    b+=U.text(48,36,'Yeşil: destek tabanı · Mor: kütle merkezi · Sarı: ağırlık','#c9e9ef',15);
    b+=U.text(48,332,'Ağırlık doğrusu: x='+f(p.centerX)+' m · taban: '+f(o.left)+' … '+f(o.right)+' m','#d1e6f0',16);
    return U.svg(b,'Ağırlık doğrusu ile destek tabanının izdüşümü');},
