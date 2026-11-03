@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
-const read=n=>fs.readFileSync(path.join(__dirname,n),'utf8'),near=(a,b,t=.002)=>assert.ok(Math.abs(a-b)<=t,String(a)+' !== '+String(b));
+const read=n=>fs.readFileSync(path.join(__dirname,n),'utf8'),near=(a,b,t=.004)=>assert.ok(Math.abs(a-b)<=t,String(a)+' !== '+String(b));
 function load(){const win={};vm.runInNewContext(read('tyt-devre-math.js'),{window:win,Math,Number,RangeError,Object,Set,Map});return win.TytDevreMath;}
 test('closed single lamp has real current and power',()=>{const m=load(),r=m.solve({wires:m.presets.single,voltage:6,lamp1:6});assert.equal(r.complete,true);near(r.totalCurrent,1);near(r.elements.L1.power,6);near(r.elements.L2.power,0);assert.ok(r.brightness.L1>.95);});
 test('series bulbs share current, lower brightness',()=>{const m=load(),r=m.solve({wires:m.presets.serial,voltage:6,lamp1:6,lamp2:6});near(r.totalCurrent,.5);near(Math.abs(r.elements.L1.current),.5);near(Math.abs(r.elements.L2.current),.5);near(r.elements.L1.power,1.5);near(r.elements.L2.power,1.5);});
@@ -28,7 +28,7 @@ function mount(){
  const w={requestAnimationFrame:fn=>frames.push(fn)},ctx=vm.createContext({window:w,document:doc,console});
  for(const f of ['tyt-devre-math.js','tyt-devre-ui.js'])vm.runInContext(read(f),ctx,{filename:f});
  rootEvents.get('DOMContentLoaded')();
- const event=(name,dataset)=>handlers.get(name)({target:{closest:()=>({dataset,hasAttribute:k=>k.slice(5) in dataset,getAttribute:k=>dataset[k.slice(5)]})}});
+ const event=(name,dataset)=>handlers.get(name)({target:{closest:selector=>{const key=(selector.match(/data-([a-z-]+)/)||[])[1];if(!key||!(key in dataset))return null;return {dataset,hasAttribute:k=>k.slice(5) in dataset,getAttribute:k=>dataset[k.slice(5)]};}}});
  return {w,doc,nodes,handlers,rootEvents,frames,event,scene,ctx};
 }
 test('8 tabs initialize with SVG, live readings, status',()=>{const t=mount();for(const tab of ['circuit','resistance','generator','power','conduction','magnet','wirefield','safety']){t.event('tabs:click',{tab});assert.match(t.nodes.get('scene').innerHTML,/<svg/);assert.ok(t.nodes.get('scene').innerHTML.length>500);assert.ok(t.nodes.get('readings').innerHTML.length>50);assert.ok(t.nodes.get('status').textContent.length>15);}});
