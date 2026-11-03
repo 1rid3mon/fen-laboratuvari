@@ -26,54 +26,15 @@ function connectionScene(p,o,mode){const parallel=mode==='parallel',s1=parallel?
  s+=parallel?u.line(180,75,630,75,'#70d7c9',5)+u.line(180,225,630,225,'#70d7c9',5)+u.line(298,75,298,104,'#70d7c9',4)+u.line(525,75,525,104,'#70d7c9',4)+u.line(298,179,298,225,'#70d7c9',4)+u.line(525,179,525,225,'#70d7c9',4):u.line(358,143,465,143,'#70d7c9',5);
  s+=u.text(90,39,parallel?'Paralel: V₁ = V₂ = V':'Seri: Q₁ = Q₂ = Q','#d8edf2');
  return u.svg(s,parallel?'Paralel kondansatör şeması':'Seri kondansatör şeması');}
+const qualitative=(name,lines)=>u.svg(u.text(70,52,name,'#c9e9f3',22)+lines.map((x,i)=>u.text(70,117+i*51,x,i%2?'#eecb91':'#8de0ce',20)).join(''),'Kavramsal sığa karşılaştırması');
+const level=x=>x>1.4?'Artar':x<.7?'Azalır':'Değişmez';
 const sections=[
-{id:'plate',tab:'Paralel levhalar',title:'Levha alanı ve uzaklık sığayı nasıl değiştirir?',
-intro:'Plaka alanını, uzaklığını ve aradaki yalıtkanın bağıl dielektrik katsayısını değiştir. Pil bağlı kabul edilir.',
-defaults:{area:100,distance:2,dielectric:1,voltage:12},
-controls:[c('area','Levha alanı',20,300,10,'cm²'),c('distance','Levha aralığı',.5,6,.5,'mm'),c('dielectric','Bağıl dielektrik katsayısı',1,5,.5,''),voltage],
-model:M.plate,scene:plates,
-interpret:(p,o)=>'Alan büyüdükçe sığa artar; aralık büyüdükçe sığa azalır. C = '+f(o.Cmicro,6)+' µF, Q = '+f(o.Qmicro,6)+' µC.',
-formula:()=> 'C = ε₀ εᵣ A / d\nQ = CV\nU = ½ CV²\nE = V/d',
-metrics:(p,o)=>[...meters(o),['Elektrik alan',f(o.E)+' V/m']],
-note:'İdeal geniş paralel levhalar, düzgün alan; kenar/saçak etkileri ihmal edilir. εᵣ≥1 sabit, lineer yalıtkan. Pil bağlı olduğu için V sabittir.'},
-{id:'battery',tab:'Pil bağlı',title:'Gerilim sabitken sığayı değiştir',
-intro:'Pilin gerilimi sabit tuttuğu durumda sığayı artırınca kondansatördeki yük ve enerji ne olur?',
-defaults:{cap:4,voltage:12},controls:[cap,voltage],model:M.battery,scene:batteryScene,
-interpret:(p,o)=>'Pil bağlı: V = '+f(p.voltage)+' V sabit. Sığa büyürse Q = CV ve U = ½CV² büyür; ek enerji pil tarafından sağlanır.',
-formula:()=> 'Q = C·V\nU = ½ C V²\nV sabit tutulur.',
-metrics:(p,o)=>meters(o),note:'İdeal pil ve kondansatör; enerji hesabı yalnız kondansatörde depolanan enerjidir, pilin toplam enerji bilançosu değildir.'},
-{id:'isolated',tab:'Pil ayrılmış',title:'Yük sabitken sığayı değiştir',
-intro:'Pilden ayrılmış kondansatörde yük sabit kalır. Sığa değişirse gerilim ve depolanan enerji değişir.',
-defaults:{cap:4,charge:40},controls:[cap,charge],model:M.isolated,scene:isolatedScene,
-interpret:(p,o)=>'Pil ayrılmış: Q = '+f(p.charge)+' µC sabit. Sığa büyüdükçe V = Q/C ve U = Q²/(2C) küçülür.',
-formula:()=> 'V = Q/C\nU = Q²/(2C)\nQ sabit tutulur.',
-metrics:(p,o)=>meters(o).concat([['Gerilim',f(o.voltage)+' V']]),
-note:'Yük kaçağı yoktur; mekanik iş ve dielektrik üzerindeki kuvvetler ayrı hesaplanmaz.'},
-{id:'series',tab:'Seri bağlama',title:'Seri bağlanan kondansatörlerde yük neden eşit?',
-intro:'İki kondansatörün sığasını değiştir. Eşdeğer sığa her birinden küçüktür; gerilim paylaşılır.',
-defaults:{c1:3,c2:6,voltage:12},controls:[C1,C2,voltage],model:M.series,scene:(p,o)=>connectionScene(p,o,'series'),
-interpret:(p,o)=>'Seride iki kondansatörün yük büyüklüğü aynı: '+f(o.Qmicro)+' µC. Gerilimler '+f(o.V1)+' V ve '+f(o.V2)+' V; toplamları pil gerilimidir.',
-formula:()=> '1/Ceş = 1/C₁ + 1/C₂\nQ₁ = Q₂ = Q\nV = V₁ + V₂',
-metrics:(p,o)=>meters(o).concat([['V₁',f(o.V1)+' V'],['V₂',f(o.V2)+' V']]),
-note:'Başlangıçta yüksüz, ideal iki kondansatör ve ideal pil; bağlantıdaki kaçak kapasite ihmal edilir.'},
-{id:'parallel',tab:'Paralel bağlama',title:'Paralelde gerilim neden eşit?',
-intro:'İki kondansatörün sığasını değiştir. Eşdeğer sığa artar; her iki uçta aynı gerilim vardır.',
-defaults:{c1:3,c2:6,voltage:12},controls:[C1,C2,voltage],model:M.parallel,scene:(p,o)=>connectionScene(p,o,'parallel'),
-interpret:(p,o)=>'Paralelde V₁ = V₂ = '+f(p.voltage)+' V. Toplam yük Q₁+Q₂ = '+f(o.Qmicro)+' µC.',
-formula:()=> 'Ceş = C₁ + C₂\nV₁ = V₂ = V\nQtoplam = Q₁ + Q₂',
-metrics:(p,o)=>meters(o).concat([['Q₁',f(o.Q1)+' µC'],['Q₂',f(o.Q2)+' µC']]),
-note:'İdeal pil ve iki kondansatör; aynı iki düğüme bağlanmışlardır.'},
-{id:'compare',tab:'Karşılaştır',title:'Aynı iki kondansatör: seri mi paralel mi?',
-intro:'Aynı kondansatörleri aynı pile seri ve paralel bağlayınca eşdeğer sığa ve enerji nasıl değişir?',
-defaults:{c1:3,c2:6,voltage:12},controls:[C1,C2,voltage],model:M.comparison,
-scene:(p,o)=>u.svg(u.text(85,75,'SERİ','#bfe3f0',24)+u.text(440,75,'PARALEL','#bfe3f0',24)+
- u.text(85,145,'Ceş = '+f(o.series.Cmicro)+' µF','#f6c98a',22)+u.text(440,145,'Ceş = '+f(o.parallel.Cmicro)+' µF','#82dfcc',22)+
- u.text(85,220,'U = '+f(o.series.U_microJ)+' µJ','#f6c98a',20)+u.text(440,220,'U = '+f(o.parallel.U_microJ)+' µJ','#82dfcc',20),
- 'Seri ve paralel sığa ve enerji karşılaştırması'),
-interpret:(p,o)=>'Aynı pil geriliminde paralel eşdeğer sığa '+f(o.parallel.Cmicro)+' µF, seri eşdeğer sığa '+f(o.series.Cmicro)+' µF. Daha büyük sığa aynı V altında daha fazla enerji depolar.',
-formula:()=> 'Seri: Ceş = C₁C₂/(C₁+C₂)\nParalel: Ceş = C₁+C₂\nU = ½ Ceş V²',
-metrics:(p,o)=>[['Seri sığa',f(o.series.Cmicro)+' µF'],['Paralel sığa',f(o.parallel.Cmicro)+' µF'],['Seri enerji',f(o.series.U_microJ)+' µJ'],['Paralel enerji',f(o.parallel.U_microJ)+' µJ']],
-note:'İki kondansatör, başlangıçta yüksüz ve aynı ideal pil gerilimine bağlanır. Birinden diğerine geçişte anahtarlama kayıpları modellenmez.'}
+{id:'plate',tab:'Levha değişkenleri',title:'Sığa hangi değişkenlere bağlı?',intro:'Alanı, levhalar arası uzaklığı ve yalıtkan türünü değiştir. Sayısal sığa hesabı yerine oransal değişimi keşfet.',defaults:{area:100,distance:2,dielectric:1},controls:[c('area','Levha alanı',20,300,10,'cm²'),c('distance','Levha aralığı',.5,6,.5,'mm'),c('dielectric','Bağıl dielektrik katsayısı',1,5,.5,'')],model:p=>({ratio:(p.area/100)*(2/p.distance)*p.dielectric}),scene:(p,o)=>qualitative('Paralel levhalar',['Alan: '+f(p.area)+' cm²','Aralık: '+f(p.distance)+' mm','Sığa (başlangıca göre): '+level(o.ratio)]),interpret:(p,o)=>'Alan büyürse sığa artar, aralık büyürse azalır; yalıtkanın etkisi bağıl dielektrik katsayısına bağlıdır.',formula:()=> 'C ∝ εᵣ·A/d (matematiksel model; hesaplama yok)',metrics:(p,o)=>[['Başlangıca göre sığa',level(o.ratio)]],note:'11.2.3.4–5: Sığanın bağlı olduğu değişkenler ve matematiksel model; sayısal hesaplama yapılmaz.'},
+{id:'battery',tab:'Pil bağlı',title:'Pil bağlıyken yük depolama',intro:'Sığayı ve pil gerilimini değiştir; depolanan yükün artış/azalış yönünü incele.',defaults:{cap:4,voltage:12},controls:[cap,voltage],model:p=>({more:p.cap*p.voltage/48}),scene:(p,o)=>qualitative('Pil bağlı',['Gerilim pil tarafından sabit tutulur','Daha büyük sığa → daha fazla yük','Pil, yük alışverişi sağlar']),interpret:()=> 'Pil bağlıyken gerilim sabittir. Sığa arttığında depolanabilen yük artar.',formula:()=> 'Kondansatör elektrik yükü ve enerji depolar.',metrics:(p,o)=>[['Yük eğilimi',level(o.more)]],note:'Kavramsal enerji ve yük depolama; sayısal Q, U ve sığa hesabı yok.'},
+{id:'isolated',tab:'Pil ayrılmış',title:'Pil ayrılınca yük korunur',intro:'Bağlantı kesilince yük sabit kalır. Sığayı değiştirerek gerilim eğilimini gözlemle.',defaults:{cap:4,charge:40},controls:[cap,charge],model:p=>({ratio:(p.charge/40)*(4/p.cap)}),scene:(p,o)=>qualitative('Pil ayrılmış',['Yük kaçışı yoksa toplam yük korunur','Sığa artınca gerilim azalır','Sığa azalınca gerilim artar']),interpret:()=> 'Pil ayrıldığında yük sabit kabul edilir. Aynı yük daha büyük sığada daha düşük gerilim oluşturur.',formula:()=> 'Yük korunumu ve enerji depolama (nitel).',metrics:(p,o)=>[['Gerilim eğilimi',level(o.ratio)]],note:'İdeal yalıtılmış kondansatör; sayısal gerilim ve enerji hesabı yapılmaz.'},
+{id:'series',tab:'Seri bağlama',title:'Seri bağlamada ne korunur?',intro:'İki sığacı seri bağla; yük ve gerilim ilişkisini kavramsal olarak incele.',defaults:{c1:3,c2:6},controls:[C1,C2],model:p=>({}),scene:(p,o)=>qualitative('Seri bağlı sığaçlar',['Her iki sığaçtaki yük büyüklüğü aynıdır','Toplam gerilim paylaşılır','Eşdeğer sığa tek tek sığalardan küçüktür']),interpret:()=> 'Başlangıçta yüksüz iki sığaç seri bağlandığında yük büyüklükleri eşittir.',formula:()=> 'Seri: yük büyüklükleri eşit (kavramsal).',metrics:()=>[['Eşdeğer sığa','Her birinden daha küçük']],note:'2018 MEB sığa bölümünün zorunlu sayısal hesaplamaları dışında, yalnız kavramsal karşılaştırma.'},
+{id:'parallel',tab:'Paralel bağlama',title:'Paralelde ne eşittir?',intro:'Paralel sığaçlarda gerilimlerin eşitliğini ve toplam yükü gözlemle.',defaults:{c1:3,c2:6},controls:[C1,C2],model:p=>({}),scene:()=>qualitative('Paralel bağlı sığaçlar',['Her iki sığaçta gerilim aynıdır','Yükler toplanır','Eşdeğer sığa artar']),interpret:()=> 'Paralel bağlamada iki sığacın uçları aynı noktalara bağlıdır; gerilimleri eşittir.',formula:()=> 'Paralel: gerilimler eşit (kavramsal).',metrics:()=>[['Eşdeğer sığa','Her birinden daha büyük']],note:'Sayısal eşdeğer sığa, yük ve enerji hesapları kaldırılmıştır.'},
+{id:'compare',tab:'Günlük kullanım',title:'Sığaçlar nerelerde kullanılır?',intro:'Kondansatörün yük ve enerji depolama işlevini günlük örneklerle karşılaştır.',defaults:{cap:4},controls:[cap],model:p=>({}),scene:()=>qualitative('Kondansatör ne işe yarar?',['Kamera flaşı: kısa süreli enerji aktarımı','Güç kaynağı: gerilim dalgalanmasını azaltma','Elektronik devre: yük depolama']),interpret:()=> 'Kondansatörler elektrik enerjisini elektrik alanda depolar; kullanım amacı devreye göre değişir.',formula:()=> 'Sığaç = yük ve elektriksel enerji depolama',metrics:()=>[['Kazanım','11.2.3.6']],note:'Günlük kullanım örnekleri idealize edilmiştir; gerçek devrelerin ayrıntılı analizi yapılmaz.'}
 ];
 w.SigaLab=U.create({sections,questions:[]});
 })(window);
