@@ -13,6 +13,7 @@ on:
       - 'labs/tork-denge*'
       - 'labs/basit-makineler*'
       - 'labs/elektrik-alan*'
+      - 'labs/siga*'
       - 'labs/is-guc-enerji.html'
       - 'labs/itme-cizgisel-momentum.html'
       - 'labs/iki-boyutta-hareket.html'
@@ -33,6 +34,7 @@ on:
       - 'labs/tork-denge*'
       - 'labs/basit-makineler*'
       - 'labs/elektrik-alan*'
+      - 'labs/siga*'
       - 'labs/is-guc-enerji.html'
       - 'labs/itme-cizgisel-momentum.html'
       - 'labs/iki-boyutta-hareket.html'
@@ -80,7 +82,10 @@ jobs:
           node --check labs/basit-makineler.test.cjs
           node --check labs/elektrik-alan-math.js
           node --check labs/elektrik-alan-lab.js
-          node --check labs/elektrik-alan.test.cjs
+          node --check labs/elektrik-alan.test.cjs labs/siga.test.cjs
+          node --check labs/siga-math.js
+          node --check labs/siga-lab.js
+          node --check labs/siga.test.cjs
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
         run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs labs/fizik-enerji.test.cjs labs/momentum.test.cjs labs/mekanik-dom.test.cjs labs/tork-denge.test.cjs labs/basit-makineler.test.cjs labs/elektrik-alan.test.cjs
