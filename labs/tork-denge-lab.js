@@ -92,8 +92,8 @@ const sections=[
    b+=U.arrow(xx(3),100,0,Math.min(80,o.beamWeight),'#ffa6b1','W_kiriş');
    b+=U.arrow(load,104,0,Math.min(80,o.loadWeight*1.3),'#ffd084','W_yük');
    const ra=Math.max(12,Math.min(105,Math.abs(o.RA))),rb=Math.max(12,Math.min(105,Math.abs(o.RB)));
-   b+=U.arrow(A,272,0,o.RA>=0?-ra:ra,o.RA>=0?'#70e6c6':'#ff9b9d','R_A');
-   b+=U.arrow(B,272,0,o.RB>=0?-rb:rb,o.RB>=0?'#70e6c6':'#ff9b9d','R_B');
+   if(!tol(o.RA))b+=U.arrow(A,272,0,o.RA>=0?-ra:ra,o.RA>=0?'#70e6c6':'#ff9b9d','R_A');
+   if(!tol(o.RB))b+=U.arrow(B,272,0,o.RB>=0?-rb:rb,o.RB>=0?'#70e6c6':'#ff9b9d','R_B');
    b+='<path d="M'+(A-25)+' 289 L'+A+' 261 L'+(A+25)+' 289 Z M'+(B-25)+' 289 L'+B+' 261 L'+(B+25)+' 289 Z" fill="#42586e" stroke="#e0eff4" stroke-width="2"/>';
    b+=U.text(52,34,'Yeşil: basan destek · Kırmızı: olamayacak negatif tepki','#cfe9ed',15);
    return U.svg(b,'Kirişin ağırlığı, yük ve iki destek tepkisi');},
