@@ -22,6 +22,7 @@ function dotsInField(n,kind){let b='';for(let i=0;i<n;i++){const x=165+(i%7)*77,
 function capPlate(p,o,u){
  const spacing=clamp(p.distance*30,40,178),h=clamp(110*Math.sqrt(p.area/100),65,216),cx=405;
  let b=capacitor(cx,179,spacing,h);
+ b+='<rect data-drag="distance" data-mode="plate" x="'+(cx+spacing/2-19)+'" y="'+(179-h/2)+'" width="38" height="'+h+'" fill="transparent" stroke="none"/>';
  if(p.dielectric>1)b+=rect(cx-spacing/2+15,179-h/2,spacing-30,h,'#598d8a55','#79d9c4',2);
  const plus=clamp(Math.round(o.ratio*3),1,12);
  b+=spark(cx-spacing/2-88,174,plus,1)+spark(cx+spacing/2+35,174,plus,-1);
@@ -101,14 +102,14 @@ function magParticle(p,o,u){
  if(o.straight){x=170+440*phase;y=175;b+=path('M170 175 L610 175','#6ad6c3',3,'8 6');}
  else if(p.angle===90){x=404+94*Math.cos(TAU*phase*sign);y=176-94*Math.sin(TAU*phase*sign);b+='<circle cx="404" cy="176" r="94" fill="none" stroke="#7de3cc" stroke-dasharray="6 8" stroke-width="3"/>';}
  else{x=160+440*phase;y=176+45*Math.sin(TAU*phase*sign*3);b+=path('M160 176 Q260 77 360 176 T560 176','#6ad6c3',3,'8 6');}
- b+=circle(x,y,19,p.q>0?'#ffc78f':'#8dc9fd','#fff4d1',3)+txt(u,x-8,y+6,p.q>0?'+':'−','#173f50',22);
+ b+='<g data-drag="phase" data-mode="'+(o.straight?'linear':p.angle===90?'orbit':'linear')+'">'+circle(x,y,19,p.q>0?'#ffc78f':'#8dc9fd','#fff4d1',3)+txt(u,x-8,y+6,p.q>0?'+':'−','#173f50',22)+'</g>';
  return base(u,'Yüklü parçacık: yörünge hareket ediyor',b,'İşaret değişince sapma yönü tersine döner; yarıçap hesabı yok.');
 }
 function magFlux(p,o,u){
  const cosine=Math.cos(p.angle*PI/180),sz=Math.sqrt(p.area/100),visible=clamp(Math.abs(cosine)*118*sz,4,173);
  let b='';
  if(p.B>0)for(let x=165;x<=630;x+=clamp(120-p.B/10,42,120))b+=arrow(u,x,75,0,198,'#78c6e6','');
- b+='<ellipse cx="401" cy="178" rx="'+visible+'" ry="'+clamp(95*sz,26,135)+'" fill="#78dbc922" stroke="#f4d197" stroke-width="5"/>';
+ b+='<ellipse cx="401" cy="178" rx="'+visible+'" ry="'+clamp(95*sz,26,135)+'" fill="#78dbc922" stroke="#f4d197" stroke-width="5" data-drag="angle" data-mode="flux"/>';
  b+=arrow(u,401,179,105*cosine,-100,'#ffd0a5','n');
  b+=txt(u,75,86,'Alan × yüzey yönelimi','#f5dfbf');
  return base(u,'Manyetik akı: halkayı eğ → geçen alan değişsin',b,'Açı yüzey normaline göre ölçülür; şema alan çizgilerini temsili gösterir.');
@@ -126,7 +127,7 @@ function magFaraday(p,o,u){
 function magRod(p,o,u){
  const x=175+360*(p.phase||0),half=clamp(p.length*1.08,50,132);
  let b=line(90,185-half,706,185-half,'#9bc8d6',6)+line(90,185+half,706,185+half,'#9bc8d6',6);
- b+=line(x,185-half,x,185+half,'#f9c88d',12)+arrow(u,x+15,185,92,0,'#85f0cd','v');
+ b+=line(x,185-half,x,185+half,'#f9c88d',12)+'<rect data-drag="phase" data-mode="rod" x="'+(x-22)+'" y="'+(185-half)+'" width="44" height="'+(half*2)+'" fill="transparent"/>'+arrow(u,x+15,185,92,0,'#85f0cd','v');
  b+=rect(91,151,72,68,'#344f68')+txt(u,104,190,'R','#e1f6fb',28);
  if(p.B>0)b+=dotsInField(14,'in');
  return base(u,'Hareketli çubuk: indüksiyon kaynağı',b,'Çubuk ray üzerinde giderken hareket EMK’sı oluşur.');
@@ -177,7 +178,7 @@ function acCircuit(p,o,u,type){
   b+=txt(u,260,78,p.type?'frekans ↑ → etki ↓':'DC kararlı: akım geçmez','#daecf2',17);
  }else b+=rect(320,103,157,34,'#21546e');
  const z=clamp(Math.round((phase*11)%11),0,10),x=175+z*43;
- if(type!=='capacitor'||ac)b+=circle(x,254,9,'#a0f7ce','#ddf4e6',1);
+ if(type!=='capacitor'||ac)b+='<g data-drag="phase" data-mode="track">'+circle(x,254,12,'#a0f7ce','#ddf4e6',1)+'</g>';
  b+=arrow(u,462,253,sign*70,0,'#a6f4ca',ac?'yön değişir':'sabit yön');
  return base(u,type==='resistor'?'Direnç: hareketli akım yönü':type==='inductor'?'Bobin: akım değişimine karşı koyar':'Sığaç: levhalarda yük birikimi',b,'AC devresi için sayısal hesap veya akım-zaman grafiği yok.');
 }
