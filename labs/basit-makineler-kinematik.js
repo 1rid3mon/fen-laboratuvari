@@ -67,7 +67,7 @@ function incline(p,r,u){
 function wheel(p,r,u){
  const cx=327,cy=160,R=112,axle=clamp(R*p.axleRadius/p.wheelRadius,15,95),angle=p.turns;
  let b=group(wheelBody(R,axle),angle,cx,cy,'turns','rotating-wheel');
- const loadY=clamp(285-(p.turns*.37)*R*(p.axleRadius/p.wheelRadius),86,285);
+ const loadY=clamp(285-r.loadTravel*36,86,285);
  b+=line(cx+axle,cy,cx+axle,loadY,'#ffd89e',5);
  b+='<rect x="'+(cx+axle-21)+'" y="'+loadY+'" width="43" height="38" rx="6" fill="#bd8a57" stroke="#f8e5cb"/>';
  b+=circle(cx+R,cy,15,'#a2f3d9')+u.arrow(590,120,0,95,'#8be6c7','F');
