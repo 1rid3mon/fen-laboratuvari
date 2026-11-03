@@ -1,4 +1,4 @@
-name: AYT Fizik Vektor Bagil Newton ve Bir Boyutta Hareket
+name: AYT Fizik 2018 MEB Hareket Enerji Momentum Tork Denge
 on:
   push:
     paths:
@@ -7,6 +7,18 @@ on:
       - 'labs/newton-lab.js'
       - 'labs/ivmeli-*'
       - 'labs/atis-*'
+      - 'labs/fizik-enerji*'
+      - 'labs/momentum*'
+      - 'labs/mekanik-*'
+      - 'labs/tork-denge*'
+      - 'labs/basit-makineler*'
+      - 'labs/elektrik-alan*'
+      - 'labs/siga*'
+      - 'labs/manyetizma*'
+      - 'labs/alternatif-akim*'
+      - 'labs/meb-uyum.test.cjs'
+      - 'labs/is-guc-enerji.html'
+      - 'labs/itme-cizgisel-momentum.html'
       - 'labs/iki-boyutta-hareket.html'
       - 'labs/bir-boyutta-sabit-ivmeli-hareket.html'
       - 'labs/vektorler-bagil-hareket.html'
@@ -18,6 +30,20 @@ on:
       - 'labs/bagil-lab.js'
       - 'labs/newton-lab.js'
       - 'labs/ivmeli-*'
+      - 'labs/atis-*'
+      - 'labs/fizik-enerji*'
+      - 'labs/momentum*'
+      - 'labs/mekanik-*'
+      - 'labs/tork-denge*'
+      - 'labs/basit-makineler*'
+      - 'labs/elektrik-alan*'
+      - 'labs/siga*'
+      - 'labs/manyetizma*'
+      - 'labs/alternatif-akim*'
+      - 'labs/meb-uyum.test.cjs'
+      - 'labs/is-guc-enerji.html'
+      - 'labs/itme-cizgisel-momentum.html'
+      - 'labs/iki-boyutta-hareket.html'
       - 'labs/bir-boyutta-sabit-ivmeli-hareket.html'
       - 'labs/vektorler-bagil-hareket.html'
       - 'labs/newton-hareket-yasalari.html'
@@ -45,6 +71,32 @@ jobs:
           node --check labs/atis-math.js
           node --check labs/atis-lab.js
           node --check labs/atis.test.cjs
+          node --check labs/fizik-enerji-math.js
+          node --check labs/fizik-enerji-lab.js
+          node --check labs/momentum-math.js
+          node --check labs/momentum-lab.js
+          node --check labs/mekanik-ui.js
+          node --check labs/fizik-enerji.test.cjs
+          node --check labs/momentum.test.cjs
+          node --check labs/mekanik-dom.test.cjs
+          node --check labs/tork-denge-math.js
+          node --check labs/tork-denge-lab.js
+          node --check labs/tork-denge-pointer.js
+          node --check labs/tork-denge.test.cjs
+          node --check labs/basit-makineler-math.js
+          node --check labs/basit-makineler-lab.js
+          node --check labs/basit-makineler.test.cjs
+          node --check labs/elektrik-alan-math.js
+          node --check labs/elektrik-alan-lab.js
+          node --check labs/elektrik-alan.test.cjs
+          node --check labs/siga-math.js
+          node --check labs/siga-lab.js
+          node --check labs/siga.test.cjs
+          node --check labs/manyetizma-math.js
+          node --check labs/manyetizma-lab.js
+          node --check labs/manyetizma.test.cjs
+          node --check labs/alternatif-akim-lab.js
+          node --check labs/meb-uyum.test.cjs
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
-        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs
+        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs labs/fizik-enerji.test.cjs labs/momentum.test.cjs labs/mekanik-dom.test.cjs labs/tork-denge.test.cjs labs/basit-makineler.test.cjs labs/elektrik-alan.test.cjs labs/siga.test.cjs labs/manyetizma.test.cjs labs/meb-uyum.test.cjs

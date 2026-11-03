@@ -1,0 +1,44 @@
+/* Compact mobile-first style shared by mechanics laboratories. */
+.mscene{min-height:240px;aspect-ratio:auto;padding:0;overflow:hidden}
+.mscene svg{width:100%;height:auto;min-height:235px;max-height:420px;display:block;touch-action:auto}
+.mside{display:grid;gap:12px}.mcontrols{display:grid;gap:10px}
+.mcontrol{background:#0c2033;border:1px solid #305268;border-radius:12px;padding:12px}
+.mcontrol label{display:flex;align-items:center;justify-content:space-between;gap:9px;color:#dbeaf2;font-size:.8rem;font-weight:740}
+.mcontrol output{color:#f7d18e;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mcontrol input{width:100%;accent-color:#66e4c5;min-height:32px;margin-top:8px;touch-action:pan-x}
+.mmeasurements{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mmetric{border:1px solid #315269;background:#0a2234;border-radius:10px;padding:11px;min-width:0}
+.mmetric small{display:block;color:#adc8d9;line-height:1.4;font-size:.72rem}
+.mmetric strong{display:block;color:#ffe0a0;font-size:1.05rem;margin-top:4px;overflow-wrap:anywhere}
+.mnote{padding:12px 14px;background:#0c3340;border-left:3px solid #62e6c2;border-radius:10px;color:#dcf1f5;font-size:.86rem;line-height:1.65}
+.mnote.good{border-left-color:#42d9ab;background:#113d34}.mnote.bad{border-left-color:#ff94a4;background:#422b38}
+.msmall{color:#a9c5d6;font-size:.8rem;line-height:1.6}
+.mformula{padding:12px 14px;border:1px solid #385f70;background:#0c1d31;color:#a8f3d8;border-radius:11px;white-space:pre-wrap;overflow-wrap:anywhere;font:650 .84rem/1.8 ui-monospace,monospace}
+.mbtn{background:#173e52;border:1px solid #47748a;color:#edfaff;border-radius:11px;min-height:43px;padding:10px 13px;font-weight:750}
+.mbtn.primary{background:#146f66;border-color:#43beab}.mbtn:active{transform:scale(.99)}
+.mchoice{display:block;width:100%;text-align:left;border:1px solid #47687d;border-radius:11px;background:#132c43;color:#ebf5fc;padding:13px 12px;min-height:45px;margin:7px 0}
+.mchoice.selected{border-color:#6ee7c7;background:#1c4f54}
+.mquiz-question{font-weight:760;color:#edf8ff;line-height:1.65}
+.mbars{display:grid;gap:12px;padding:15px;background:#10283b;border-radius:12px}
+.mbar-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:5px;font-size:.82rem;color:#cde5f1}
+.mbar-head b{font-variant-numeric:tabular-nums;white-space:nowrap;color:#ffe0a0}
+.mbar-track{height:13px;border-radius:999px;background:#284357;overflow:hidden}
+.mbar-track>div{height:100%;border-radius:999px;transition:width .12s}
+.mkey{margin:10px 0;font-size:.82rem;color:#afc9d8}
+.mkey strong{color:#91ead6}
+.mlab-workspace{grid-template-columns:minmax(0,1.5fr) minmax(285px,.85fr)}
+.mlab-footer{padding:12px 0 30px;color:#a9c2d4;font-size:.8rem;line-height:1.6}
+.mlab-footer a{color:#8be7cf}
+.mlabel{color:#9fdccf;font-size:.76rem;letter-spacing:.04em;text-transform:uppercase;font-weight:800}
+@media(max-width:1030px){.mlab-workspace{grid-template-columns:1fr}.mside{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.mside{grid-template-columns:1fr}.mmeasurements{grid-template-columns:repeat(2,minmax(0,1fr))}.mscene{min-height:190px}.mscene svg{min-height:190px}}
+@media(prefers-reduced-motion:reduce){.mbar-track>div{transition:none}}
+
+.menergygraphs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:9px}
+.menergygraphs>div{min-width:0;border:1px solid #36546a;background:#0b263b;border-radius:12px;padding:7px}
+.menergygraphs svg{min-height:0;height:auto;width:100%;display:block}
+@media(max-width:850px){.menergygraphs{grid-template-columns:1fr}}
+
+/* Direct manipulation handles; only handle targets block touch panning, not the entire page. */
+.mscene [data-drag]{cursor:grab;touch-action:none;pointer-events:all}
+.mscene [data-drag]:active{cursor:grabbing}
