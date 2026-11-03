@@ -12,13 +12,13 @@ function friction({electrons=4}={}){
 }
 function contact({first=8,second=0,progress=1}={}){
  finite(first,second,progress);if(progress<0||progress>1)throw RangeError('progress');
- const total=first+second,touched=progress>=.6,after=total/2;
+ const total=first+second,touched=progress>=1-1e-9,after=total/2;
  return {first:touched?after:first,second:touched?after:second,total,touched,initialTotal:total};
 }
 function induction({rodSign=-1,stage=0}={}){
  finite(rodSign,stage);if(![-1,1].includes(rodSign)||!Number.isInteger(stage)||stage<0||stage>4)throw RangeError('stage or sign');
  const rodPresent=stage>=1&&stage<=3,groundConnected=stage===2;
- const netSign=stage>=2?-rodSign:0,polarized=rodPresent,nearSign=polarized?-rodSign:netSign,farSign=polarized?rodSign:netSign;
+ const netSign=stage>=2?-rodSign:0,polarized=rodPresent,nearSign=polarized?-rodSign:netSign,farSign=stage===1?rodSign:stage===2?0:netSign;
  return {rodPresent,groundConnected,netSign,polarized,nearSign,farSign,step:stage,chargeAcquired:stage>=2};
 }
 function electroscope({known=0,rod=-1,approach=0}={}){
