@@ -24,6 +24,8 @@
 7. **Kütle merkezi / ağırlık merkezi:** paralel ama değişken şiddetli yerçekimi için kavramsal ayrım. *Uniform g* kullanılırsa merkezler çakışır. Bu değişken g, sınavda ileri hesap zorunluluğu gibi sunulmaz.
 8. **Destek ve devrilme sınırı:** ağırlık doğrusunun taban içinde kalmasının fiziksel önemi; gerçek dönme animasyonu değil, bir denge uygulaması.
 
+**Doğrudan dokun–sürükle:** Tork ve kapı deneyinde kuvvet noktası, tahterevallide iki yükün kolu, kirişte yük/destekler, rafta ek yük, kütle merkezi deneyinde üç kütle, ağırlık merkezi deneyinde iki nokta, taban deneyinde ağırlık doğrusunun x konumu SVG üzerinde sürüklenebilir. Parmağını kaldırınca sürükleme biter; iPad için pointer capture sabit sahne kapsayıcısında tutulur. Kaydırıcılar tüm değişkenler için kullanılabilir ve klavye erişimini sağlar.
+
 **Soru sayısı: 0 (bilerek).** Kullanıcının isteği doğrultusunda zorunlu, doğruluğu tartışmalı soru bankası yerine etkileşimli deney ve anlık açıklama önceliklidir. Paylaşılan mekanik arayüzünde test soruları bulunmayan laboratuvarlarda boş test sekmesi gösterilmez; diğer fizik laboratuvarlarının soru bankaları korunur.
 
 ## Bilimsel sınırlar
@@ -43,6 +45,7 @@
 ```bash
 node --check labs/tork-denge-math.js
 node --check labs/tork-denge-lab.js
+node --check labs/tork-denge-pointer.js
 node --test labs/tork-denge.test.cjs labs/mekanik-dom.test.cjs
 ```
 
