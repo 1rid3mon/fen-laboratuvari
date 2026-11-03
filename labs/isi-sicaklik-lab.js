@@ -86,7 +86,7 @@ note:'Görsel boyut değişimi özellikle büyütülmüştür; hesaplama yok.'},
 {id:'liquid',tab:'Sıvı termometresi',title:'Isıttıkça sıvının seviyesi yükseliyor',intro:'Farklı sıvıları seçip termometrenin haznesine sıcaklık uygula. Sıvının yükselmesini canlı gözlemle.',
 defaults:{temp:20,liquid:0},controls:[c('temp','Sıvı sıcaklığı',0,60,2,'°C'),c('liquid','0 Alkol · 1 Yağ · 2 Cıva',0,2,1,'')],
 model:p=>M.liquid({substance:liquidName(p.liquid),temperature:p.temp}),
-scene:(p,o)=>{const height=78+clamp((o.fraction-1)*10500,-48,165),base=269,top=base-height,liquidColor=p.liquid===2?'#c8d5d9':p.liquid===1?'#dfba7b':'#ec8d8f';
+scene:(p,o)=>{const height=78+clamp((o.fraction-1)*10500,-48,125),base=269,top=base-height,liquidColor=p.liquid===2?'#c8d5d9':p.liquid===1?'#dfba7b':'#ec8d8f';
 const b=rect(364,46,71,265,'#142a42','#b5dbe7',24)+rect(380,top,38,height,liquidColor,liquidColor,13)+dot(399,276,36,liquidColor)+
  '<rect x="366" y="40" width="65" height="286" fill="transparent" data-drag="temp"/>'+
  Array.from({length:9},(_,i)=>line(446,60+i*28,468,60+i*28,'#a2bed2',2)).join('')+
@@ -101,8 +101,8 @@ motion:motion('temp',0,60,8,4)},
 {id:'water',tab:'Suyun özel durumu',title:'Su neden 4 °C’de en yoğundur?',intro:'0–10 °C arasında suyu ısıt. Önce hacim azalacak, 4 °C sonrasında artacak. Buzun neden yüzdüğünü de gör.',
 defaults:{temp:0,ice:1},controls:[c('temp','Sıvı suyun sıcaklığı',0,10,.5,'°C'),c('ice','0 Buz yok · 1 Buz ekle',0,1,1,'')],
 model:p=>M.water({temperature:p.temp}),
-scene:(p,o)=>{const change=(o.relativeVolume-1)*21000,level=156+clamp(change,0,16);
- const b=rect(186,92,400,201,'#0c273f','#c4e7ed',11)+rect(196,101+level*.15,380,183-level*.15,'#3c98c3','#8cdaeb',4)+
+scene:(p,o)=>{const rise=clamp((o.relativeVolume-1)*180000,0,30),top=145-rise;
+ const b=rect(186,92,400,201,'#0c273f','#c4e7ed',11)+rect(196,top,380,284-top,'#3c98c3','#8cdaeb',4)+
  (p.ice?'<g transform="rotate(-15 316 113)">'+rect(279,99,76,56,'#d2f6f4','#fff',3)+'</g>':'')+
  txt(59,56,'Sıvı su: '+p.temp+' °C','#daf0f9')+
  txt(58,320,'Sıvı su: en büyük yoğunluk yaklaşık 4 °C','#8ff0d6')+
@@ -114,7 +114,7 @@ note:'Su 0–10 °C aralığında sıvı kabul edilir; buz ayrı bir katı cisim
 motion:motion('temp',0,10,1.7,.5)},
 {id:'rail',tab:'Ray ve köprü',title:'Tren rayında neden genleşme boşluğu var?',intro:'Havayı ısıtıp soğut, ray parçalarının uçlarının birbirine yaklaşmasını veya ayrılmasını gözlemle.',
 defaults:{temp:20},controls:[TEMP],model:p=>M.rail({temperature:p.temp}),
-scene:(p,o)=>{const grow=clamp((o.fraction-1)*1100,-35,160),gap=62-grow;
+scene:(p,o)=>{const grow=clamp((o.fraction-1)*26000,-32,76),gap=62-grow;
 let b=line(106,128,695,128,'#8297ac',9)+line(106,252,695,252,'#8297ac',9);
 const leftRight=385-gap/2,rightLeft=385+gap/2;
 b+=rect(95,167,leftRight-95,42,'#889ba9','#d0e4ec',5)+rect(rightLeft,167,704-rightLeft,42,'#889ba9','#d0e4ec',5);
@@ -132,7 +132,7 @@ const b=rect(75,131,75,110,'#364c61')+
  '<path d="M150 '+(y0-13)+' Q352 '+(y0-13+bend/4)+' 571 '+(y0+bend-13)+'" fill="none" stroke="#ffe2a0" stroke-width="16"/>'+
  '<path d="M150 '+(y0+4)+' Q352 '+(y0+4+bend/4)+' 571 '+(y0+bend+4)+'" fill="none" stroke="#85d9ed" stroke-width="16"/>'+
  dot(570,y0+bend-5,15,'#cef2d7')+rect(619,113,22,67,'#b9e1e6','#c5f2ee',3)+
- txt(236,68,'Pirinç/Alüminyum (çok genleşen)','#ffe2a0',16)+
+ txt(236,68,'Alüminyum (çok genleşen)','#ffe2a0',16)+
  txt(236,98,'Çelik (az genleşen)','#8dd9ef',17)+
  thermometer(713,p.temp,-20,160,'temp');
 return svg(b,'Isıtılınca eğilen iki metalli şerit ve termostat kontağı');},
