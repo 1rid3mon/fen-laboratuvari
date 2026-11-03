@@ -154,3 +154,30 @@ test('DOM: independent translation/rotation equilibrium and impossible support s
  assert.match(h.nodes.get('interpret').textContent,/farklı/);
  assert.equal(h.frames.length,0);
 });
+
+test('direct drag: pointer movement updates existing torque and 2D center sliders with snapping',()=>{
+ const listeners=new Map(),events=[],inputs=new Map();let tab='torque';
+ function input(id,min,max,step,val){const t={min:String(min),max:String(max),step:String(step),value:String(val),
+ dispatchEvent(evt){events.push({id,value:Number(this.value),type:evt.type,bubbles:evt.bubbles});}};inputs.set(id,t);return t;}
+ const r=input('r',-3,3,.25,2),x1=input('x1',0,8,.5,1),y1=input('y1',0,5,.5,1);
+ const svg={getBoundingClientRect(){return {left:0,top:0,width:800,height:360};}};
+ const scene={addEventListener(type,cb){listeners.set(type,cb);},querySelector(q){assert.equal(q,'svg');return svg;},
+ setPointerCapture(){},hasPointerCapture(){return false;}};
+ const controls={querySelector(q){return inputs.get(q.match(/data-control="([^"]+)"/)?.[1])||null;}};
+ const d={getElementById(id){return id==='scene'?scene:id==='controls'?controls:null;}};
+ const w={TorkDengeLab:{snapshot(){return {state:{tab}};}},Event:class Event{constructor(type,opts){this.type=type;this.bubbles=opts.bubbles;}}};
+ vm.runInNewContext(read('tork-denge-pointer.js'),{window:w,document:d,Math,Number},{filename:'tork-denge-pointer.js'});
+ const pointer=(handle,x,y=215,id=42)=>({pointerId:id,clientX:x,clientY:y,preventDefault(){},
+ target:{closest(sel){return sel==='[data-drag]'?{dataset:{drag:handle}}:null;}}});
+ listeners.get('pointerdown')(pointer('r',400));
+ near(Number(r.value),0);
+ listeners.get('pointermove')(pointer('r',570));near(Number(r.value),2);
+ listeners.get('pointerup')(pointer('r',570));
+ tab='center';
+ listeners.get('pointerdown')(pointer('point1',314,202));
+ near(Number(x1.value),3);near(Number(y1.value),2);
+ listeners.get('pointercancel')(pointer('point1',314,202));
+ assert.ok(events.length>=4);
+ assert.ok(events.every(e=>e.type==='input'&&e.bubbles));
+ assert.equal(listeners.has('pointermove'),true);
+});
