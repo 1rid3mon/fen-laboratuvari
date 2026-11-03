@@ -31,9 +31,19 @@ function mount(){
  const event=(name,dataset)=>handlers.get(name)({target:{closest:selector=>{const key=(selector.match(/data-([a-z-]+)/)||[])[1];if(!key||!(key in dataset))return null;return {dataset,hasAttribute:k=>k.slice(5) in dataset,getAttribute:k=>dataset[k.slice(5)]};}}});
  return {w,doc,nodes,handlers,rootEvents,frames,event,scene,ctx};
 }
-test('8 tabs initialize with SVG, live readings, status',()=>{const t=mount();for(const tab of ['circuit','resistance','generator','power','conduction','magnet','wirefield','safety']){t.event('tabs:click',{tab});assert.match(t.nodes.get('scene').innerHTML,/<svg/);assert.ok(t.nodes.get('scene').innerHTML.length>500);assert.ok(t.nodes.get('readings').innerHTML.length>50);assert.ok(t.nodes.get('status').textContent.length>15);}});
+test('10 tabs initialize with SVG, live readings, status',()=>{const t=mount();for(const tab of ['circuit','resistance','generator','power','conduction','magnet','poles','electromagnet','wirefield','safety']){t.event('tabs:click',{tab});assert.match(t.nodes.get('scene').innerHTML,/<svg/);assert.ok(t.nodes.get('scene').innerHTML.length>500);assert.ok(t.nodes.get('readings').innerHTML.length>50);assert.ok(t.nodes.get('status').textContent.length>15);}});
 test('series/parallel presets and switch alter actual circuit',()=>{const t=mount();t.w.TytDevreApp.preset('serial');const a=t.w.TytDevreApp.snapshot();t.w.TytDevreApp.preset('parallel');const b=t.w.TytDevreApp.snapshot();assert.ok(a.model.totalCurrent<b.model.totalCurrent);t.event('settings:click',{command:'switch'});assert.equal(t.w.TytDevreApp.snapshot().model.complete,false);});
 test('tap two port terminals adds physical wire and rerenders SVG',()=>{const t=mount();t.event('settings:click',{command:'clear'});assert.equal(t.w.TytDevreApp.snapshot().state.wires.length,0);const e=key=>({pointerId:2,clientX:100,clientY:100,preventDefault(){},target:{closest:()=>({dataset:{port:key},getAttribute:k=>k==='data-port'?key:null,hasAttribute:k=>k==='data-port'})}});t.handlers.get('scene:pointerdown')(e('Bp'));t.handlers.get('scene:pointerdown')(e('Sl'));const s=t.w.TytDevreApp.snapshot();assert.equal(s.state.wires.length,1);assert.deepEqual(Array.from(s.state.wires[0]),['Bp','Sl']);assert.match(t.nodes.get('scene').innerHTML,/data-wire="0"/);});
 test('pointer capture connects port to endpoint by finger drag',()=>{const t=mount();t.event('settings:click',{command:'clear'});const start={clientX:88,clientY:147,pointerId:3,preventDefault(){},target:{closest:()=>({dataset:{port:'Bp'},getAttribute:()=> 'Bp',hasAttribute:k=>k==='data-port'})}};const move={clientX:232,clientY:108,pointerId:3,preventDefault(){}};t.handlers.get('scene:pointerdown')(start);assert.equal(t.scene.capture,3);t.handlers.get('scene:pointermove')(move);t.handlers.get('scene:pointerup')(move);assert.equal(t.w.TytDevreApp.snapshot().state.wires.length,1);assert.equal(t.scene.capture,undefined);});
 test('animation is opt in and stale frame stops',()=>{const t=mount();assert.equal(t.frames.length,0);t.handlers.get('play:click')();assert.equal(t.frames.length,1);t.handlers.get('play:click')();t.frames.shift()(1000);assert.equal(t.frames.length,0);});
 test('TYT navigation and MEB scope',()=>{const h=read('tyt-devre.html'),index=read('../index.html');for(const f of ['tyt-devre-math.js','tyt-devre-ui.js','tyt-devre.css'])assert.ok(h.includes(f));assert.match(h,/TYT FİZİK/);assert.ok(index.includes('labs/tyt-devre.html'));assert.ok(index.includes('data-level="tyt"')&&index.includes('data-level="ayt"'));});
+
+test('bar magnets attract for unlike poles and repel for like poles; geometry responds',()=>{
+ const t=mount();t.event('tabs:click',{tab:'poles'});const a=t.nodes.get('scene').innerHTML;assert.match(t.nodes.get('status').textContent,/ÇEKER/i);
+ const state=t.w.TytDevreApp.snapshot().state;
+ assert.equal(state.polesFlip,0);
+ // A large part of the scene really consists of two separately positioned bar magnets.
+ assert.match(a,/data-tab|rect/);
+ t.event('tabs:click',{tab:'electromagnet'});assert.match(t.nodes.get('status').textContent,/10\.1\.4\.1/);
+ assert.match(t.nodes.get('scene').innerHTML,/<ellipse/);
+});
