@@ -4,8 +4,8 @@ const M=w.ElektrikAlanMath,U=w.MekanikUI;if(!M||!U)return;
 const f=(v,d=2)=>U.U.fmt(v,d),c=(id,label,min,max,step,unit)=>({id,label,min,max,step,unit});
 const q=(id,label)=>c(id,label,-8,8,1,'nC'),coord=(id,label)=>c(id,label,-6,6,.5,'cm');
 const cx=x=>400+x*42,cy=y=>178-y*23;
-const particle=(x,y,charge,label)=>'<circle cx="'+cx(x)+'" cy="'+cy(y)+'" r="17" fill="'+(charge>=0?'#bd5e58':'#487cb5')+'" stroke="#f1e5d2" stroke-width="2"/>'+U.U.text(cx(x)-7,cy(y)+6,charge>0?'+':charge<0?'−':'0','#fff',20)+U.U.text(cx(x)+22,cy(y)-20,label,'#cde4f2',14);
-const point=(x,y)=>'<circle cx="'+cx(x)+'" cy="'+cy(y)+'" r="7" fill="#e8d29b" stroke="#fff"/>';
+const particle=(x,y,charge,label)=>'<circle data-drag="'+(label==='q1'?'source1':label==='q2'?'source2':'static')+'" cx="'+cx(x)+'" cy="'+cy(y)+'" r="17" fill="'+(charge>=0?'#bd5e58':'#487cb5')+'" stroke="#f1e5d2" stroke-width="2"/>'+U.U.text(cx(x)-7,cy(y)+6,charge>0?'+':charge<0?'−':'0','#fff',20)+U.U.text(cx(x)+22,cy(y)-20,label,'#cde4f2',14);
+const point=(x,y)=>'<circle data-drag="probe" cx="'+cx(x)+'" cy="'+cy(y)+'" r="7" fill="#e8d29b" stroke="#fff"/>';
 function arrows(charges){
  let s='';for(let x=-6;x<=6;x+=2)for(let y=-6;y<=6;y+=2){
  const e=M.field(charges,x,y);if(!e.valid||e.mag<1e-10)continue;
