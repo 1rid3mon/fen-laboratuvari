@@ -105,12 +105,12 @@ scene:(p,o)=>{const rise=clamp((o.relativeVolume-1)*180000,0,30),top=145-rise;
  const b=rect(186,92,400,201,'#0c273f','#c4e7ed',11)+rect(196,top,380,284-top,'#3c98c3','#8cdaeb',4)+
  (p.ice?'<g transform="rotate(-15 316 113)">'+rect(279,99,76,56,'#d2f6f4','#fff',3)+'</g>':'')+
  txt(59,56,'Sıvı su: '+p.temp+' °C','#daf0f9')+
- txt(58,320,'Sıvı su: en büyük yoğunluk yaklaşık 4 °C','#8ff0d6')+
+ txt(58,305,'En büyük yoğunluk: yaklaşık 4 °C','#8ff0d6',17)+txt(58,333,'Buzun öz ısısı ve yoğunluğu sudan daha küçüktür','#d7e9f3',15)+
  txt(610,165,p.temp<4?'Isıtınca':'4 °C üstü','#e2eef1',16)+txt(610,194,p.temp<4?'büzülür':'genleşir','#ffd89e',18);
  return svg(b,'Sıvı suyun sıfır ile on derece arasındaki anormal genleşmesi ve yüzebilen buz');},
 interpret:observations.water,formula:()=> '0–4 °C: su ısındıkça hacim azalır.\n4 °C sonrası: su ısındıkça hacim artar.\nBuzun yoğunluğu sıvı sudan düşüktür.',
 metrics:(p,o)=>[['Suyun davranışı',p.temp===4?'En yoğun':p.temp<4?'Büzülme yönü':'Genleşme yönü'],['Buz',p.ice?'Yüzer':'Eklenmedi']],
-note:'Su 0–10 °C aralığında sıvı kabul edilir; buz ayrı bir katı cisim olarak gösterilir. Hacim değişimi nitel gösterim için abartılmıştır. Su ve buzun özgül ısıları farklıdır.',
+note:'9.5.5.1(b): Buzun öz ısısı (yaklaşık 2,1 kJ/kg·K) sıvı suyun öz ısısından (yaklaşık 4,18 kJ/kg·K) küçüktür; buzun yoğunluğu da sudan küçüktür. 0–10 °C su sıvı kabul edilir. Genleşme hacmi çizimde abartılmıştır.',
 motion:motion('temp',0,10,1.7,.5)},
 {id:'rail',tab:'Ray ve köprü',title:'Tren rayında neden genleşme boşluğu var?',intro:'Havayı ısıtıp soğut, ray parçalarının uçlarının birbirine yaklaşmasını veya ayrılmasını gözlemle.',
 defaults:{temp:20},controls:[TEMP],model:p=>M.rail({temperature:p.temp}),
