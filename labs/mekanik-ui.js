@@ -60,7 +60,7 @@ function create(config){
   if(s.motion){const m=s.motion,p=values[state.tab],key=m.key;
    if(!state.last)state.last=now;
    const dt=Math.min(.08,Math.max(0,(now-state.last)/1000));state.last=now;
-   const next=Math.min(m.max,p[key]+dt*m.speed);p[key]=Number(next.toFixed(5));
+   const next=Math.min(m.max,p[key]+dt*(typeof m.speed==='function'?m.speed(p):m.speed));p[key]=Number(next.toFixed(5));
    const slider=el('ctl-'+key),out=el('out-'+key);
    if(slider)slider.value=String(p[key]);if(out)out.textContent=fmt(p[key])+' '+(s.controls.find(c=>c.id===key)?.unit||'');
    render();if(next>=m.max-1e-8){stop();render();return;}root.requestAnimationFrame(animateFrame);return;
