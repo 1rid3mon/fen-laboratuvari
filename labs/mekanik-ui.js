@@ -31,7 +31,7 @@ function create(config){
  for(const s of config.sections)values[s.id]={...s.defaults};
  const state={tab:config.sections[0].id,quizIndex:0,choice:null,checked:false,score:0,playing:false,last:0};
  function stop(){state.playing=false;state.last=0;}
- function tabs(){el('tabs').innerHTML=config.sections.map(s=>'<button type="button" class="'+(state.tab===s.id?'active':'')+'" data-tab="'+esc(s.id)+'" aria-current="'+(state.tab===s.id?'page':'false')+'">'+esc(s.tab)+'</button>').join('')+'<button type="button" data-tab="quiz" class="'+(state.tab==='quiz'?'active':'')+'" aria-current="'+(state.tab==='quiz'?'page':'false')+'">🧠 AYT mini test</button>';}
+ function tabs(){el('tabs').innerHTML=config.sections.map(s=>'<button type="button" class="'+(state.tab===s.id?'active':'')+'" data-tab="'+esc(s.id)+'" aria-current="'+(state.tab===s.id?'page':'false')+'">'+esc(s.tab)+'</button>').join('')+(Q.length?'<button type="button" data-tab="quiz" class="'+(state.tab==='quiz'?'active':'')+'" aria-current="'+(state.tab==='quiz'?'page':'false')+'">🧠 AYT mini test</button>':'');}
  function controlHTML(){const s=byId.get(state.tab);if(!s){el('controls').innerHTML='';return;}let h='';for(const c of s.controls){const val=values[state.tab][c.id];h+='<div class="mcontrol"><label for="ctl-'+esc(c.id)+'">'+esc(c.label)+' <output id="out-'+esc(c.id)+'">'+fmt(val)+' '+esc(c.unit||'')+'</output></label><input id="ctl-'+esc(c.id)+'" type="range" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'" value="'+val+'" data-control="'+esc(c.id)+'"></div>';}el('controls').innerHTML=h;}
  function quiz(){
   const q=Q[state.quizIndex];if(!q){el('quiz').textContent='Soru yok.';return;}
@@ -52,7 +52,7 @@ function create(config){
   el('actions').innerHTML='<button type="button" class="mbtn" data-action="reset">↺ Varsayılana dön</button>'+(s.animate?'<button type="button" class="mbtn primary" data-action="play">'+(state.playing?'Ⅱ Duraklat':'▶ Oynat')+'</button><button type="button" class="mbtn" data-action="step">+0,2 s</button>':'');
  }
  function change(tab){
-  if(tab!=='quiz'&&!byId.has(tab))return;stop();state.tab=tab;state.choice=null;state.checked=false;tabs();controlHTML();render();
+  if((tab==='quiz'&&!Q.length)||(tab!=='quiz'&&!byId.has(tab)))return;stop();state.tab=tab;state.choice=null;state.checked=false;tabs();controlHTML();render();
  }
  function animateFrame(now){
   if(!state.playing)return;
