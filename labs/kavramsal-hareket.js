@@ -69,9 +69,9 @@ function capUses(p,o,u){
 }
 function magWire(p,o,u){
  const x=403,y=174,r=clamp(p.distance*9,28,160),dir=p.current>=0?1:-1;
- let b='';for(const rr of [54,98,143])b+='<circle cx="'+x+'" cy="'+y+'" r="'+rr+'" fill="none" stroke="#35627b" stroke-width="2" stroke-dasharray="6 7"/>';
+ let b='';for(let i=0;i<Math.round(Math.abs(p.current)/3);i++){const rr=48+i*38;b+='<circle cx="'+x+'" cy="'+y+'" r="'+rr+'" fill="none" stroke="#35627b" stroke-width="2" stroke-dasharray="6 7"/>';}
  b+=circle(x,y,25,'#183751','#d0e5ed',3)+txt(u,x-9,y+8,p.current>=0?'•':'×','#8af0d2',30);
- b+=circle(x+r,y,12,'#f7d19b','#fff5d4')+arrow(u,x+r, y,0,-dir*45,'#8cf4c9','B');
+ b+=circle(x+r,y,12,'#f7d19b','#fff5d4');if(p.current!==0)b+=arrow(u,x+r,y,0,-dir*45,'#8cf4c9','B');
  b+=txt(u,63,104,'I yönü: '+(p.current>=0?'sayfadan dışarı':'sayfa içine'));
  b+=txt(u,63,145,'Ölçüm noktası: '+p.distance+' cm','#f1ce98');
  return base(u,'Düz tel: manyetik alan daireseldir',b,'Akımı ters çevir → alanın dönüş yönü tersine döner.');
@@ -87,7 +87,7 @@ function magCoil(p,o,u){
 function magForce(p,o,u){
  const deg=p.angle,active=o.active,sign=Math.sign(p.current*Math.sin(deg*PI/180));
  let b='';
- for(let y=108;y<=258;y+=50)b+=arrow(u,148,y,478,0,'#73bfd9','B');
+ if(p.B>0)for(let y=108;y<=258;y+=clamp(110-p.B/12,36,110))b+=arrow(u,148,y,478,0,'#73bfd9','B');
  b+='<g transform="rotate('+deg+' 399 174)">'+line(270,174,527,174,'#ffcf95',12)+arrow(u,367,174,p.current>=0?92:-92,0,'#85f0cb','I')+'</g>';
  b+=circle(399,174,27,'#193d53','#ffe2a3',3);
  b+=txt(u,386,183,active?(sign>0?'•':'×'):'0',active?'#ffe3ab':'#789baa',30);
@@ -96,7 +96,7 @@ function magForce(p,o,u){
  return base(u,'Manyetik kuvvet: telin alanla yaptığı açı',b,'B alanı düzlemde sağa; kuvvet işareti sağ el kuralına göredir.');
 }
 function magParticle(p,o,u){
- let b=dotsInField(21,'in'),x,y;
+ let b=p.B>0?dotsInField(21,'in'):'';let x,y;
  const phase=p.phase||0,sign=p.q>=0?1:-1;
  if(o.straight){x=170+440*phase;y=175;b+=path('M170 175 L610 175','#6ad6c3',3,'8 6');}
  else if(p.angle===90){x=404+94*Math.cos(TAU*phase*sign);y=176-94*Math.sin(TAU*phase*sign);b+='<circle cx="404" cy="176" r="94" fill="none" stroke="#7de3cc" stroke-dasharray="6 8" stroke-width="3"/>';}
@@ -105,10 +105,10 @@ function magParticle(p,o,u){
  return base(u,'Yüklü parçacık: yörünge hareket ediyor',b,'İşaret değişince sapma yönü tersine döner; yarıçap hesabı yok.');
 }
 function magFlux(p,o,u){
- const cosine=Math.cos(p.angle*PI/180),visible=clamp(Math.abs(cosine)*118,4,118);
+ const cosine=Math.cos(p.angle*PI/180),sz=Math.sqrt(p.area/100),visible=clamp(Math.abs(cosine)*118*sz,4,173);
  let b='';
- for(let x=165;x<=630;x+=60)b+=arrow(u,x,75,0,198,'#78c6e6','');
- b+='<ellipse cx="401" cy="178" rx="'+visible+'" ry="95" fill="#78dbc922" stroke="#f4d197" stroke-width="5"/>';
+ if(p.B>0)for(let x=165;x<=630;x+=clamp(120-p.B/10,42,120))b+=arrow(u,x,75,0,198,'#78c6e6','');
+ b+='<ellipse cx="401" cy="178" rx="'+visible+'" ry="'+clamp(95*sz,26,135)+'" fill="#78dbc922" stroke="#f4d197" stroke-width="5"/>';
  b+=arrow(u,401,179,105*cosine,-100,'#ffd0a5','n');
  b+=txt(u,75,86,'Alan × yüzey yönelimi','#f5dfbf');
  return base(u,'Manyetik akı: halkayı eğ → geçen alan değişsin',b,'Açı yüzey normaline göre ölçülür; şema alan çizgilerini temsili gösterir.');
@@ -116,7 +116,7 @@ function magFlux(p,o,u){
 function magFaraday(p,o,u){
  const phase=p.phase||0,B=p.B1+(p.B2-p.B1)*phase,sign=Math.sign(o.emf);
  let b=coil(470,185,7,'#f4bf83');
- for(let i=0;i<clamp(Math.round(Math.abs(B)/120),1,7);i++){
+ for(let i=0;i<clamp(Math.round(Math.abs(B)/120),0,7);i++){
   const yy=100+i*29;b+=arrow(u,165,yy,225*(B>=0?1:-1),0,'#85d5ec','');
  }
  b+=txt(u,62,79,'Başlangıç B → son B','#e1eeed');
@@ -124,11 +124,11 @@ function magFaraday(p,o,u){
  return base(u,'Faraday–Lenz: alan değişirse EMK oluşur',b,'Zıt yön oku, seçilmiş pozitif dolaşım yönüne göre Lenz tepkisidir.');
 }
 function magRod(p,o,u){
- const x=175+360*(p.phase||0);
- let b=line(90,104,706,104,'#9bc8d6',6)+line(90,265,706,265,'#9bc8d6',6);
- b+=line(x,104,x,265,'#f9c88d',12)+arrow(u,x+15,185,92,0,'#85f0cd','v');
+ const x=175+360*(p.phase||0),half=clamp(p.length*1.08,50,132);
+ let b=line(90,185-half,706,185-half,'#9bc8d6',6)+line(90,185+half,706,185+half,'#9bc8d6',6);
+ b+=line(x,185-half,x,185+half,'#f9c88d',12)+arrow(u,x+15,185,92,0,'#85f0cd','v');
  b+=rect(91,151,72,68,'#344f68')+txt(u,104,190,'R','#e1f6fb',28);
- b+=dotsInField(14,'in');
+ if(p.B>0)b+=dotsInField(14,'in');
  return base(u,'Hareketli çubuk: indüksiyon kaynağı',b,'Çubuk ray üzerinde giderken hareket EMK’sı oluşur.');
 }
 function magTransformer(p,o,u){
