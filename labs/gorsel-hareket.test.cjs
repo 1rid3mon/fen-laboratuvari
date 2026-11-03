@@ -42,3 +42,17 @@ test('opt-in magnetism motion progresses and stops after tab change',()=>{
 test('visual scripts load in three HTML entrypoints',()=>{
  for(const h of ['siga.html','alternatif-akim.html','manyetizma.html'])assert.ok(read(h).includes('kavramsal-hareket.js'));
 });
+
+test('direct touch targets are present on capacitor plate, charged particle, rod and AC carrier',()=>{
+ const cap=mount('siga');cap.tab('plate');assert.match(cap.nodes.get('scene').innerHTML,/data-drag="distance"/);
+ const mag=mount('magnetic');for(const [tab,drag] of [['particle','phase'],['rod','phase'],['flux','angle']]){mag.tab(tab);assert.ok(mag.nodes.get('scene').innerHTML.includes('data-drag="'+drag+'"'));}
+ const ac=mount('ac');ac.tab('resistor');assert.match(ac.nodes.get('scene').innerHTML,/data-drag="phase"/);
+ for(const html of ['siga.html','manyetizma.html','alternatif-akim.html'])assert.ok(read(html).includes('kavramsal-pointer.js'));
+ new vm.Script(read('kavramsal-pointer.js'));
+});
+test('magnetic diagrams visibly respond to current magnitude, flux area and magnetic field zero',()=>{
+ const m=mount('magnetic');m.tab('wire');const initial=m.nodes.get('scene').innerHTML;m.input('current',9);assert.notEqual(initial,m.nodes.get('scene').innerHTML);
+ m.input('current',0);assert.doesNotMatch(m.nodes.get('scene').innerHTML,/>B<\/text>/);
+ m.tab('flux');const f=m.nodes.get('scene').innerHTML;m.input('area',300);assert.notEqual(f,m.nodes.get('scene').innerHTML);
+ m.tab('particle');m.input('B',0);assert.doesNotMatch(m.nodes.get('scene').innerHTML,/>×<\/text>/);
+});
