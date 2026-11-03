@@ -159,7 +159,7 @@ function drawResistance(){
  const o=M.wireResistanceTrend({length:state.length,area:state.area,material:state.material});
  const width=clamp(state.length*54,58,546),height=clamp(state.area*9+10,19,94),x=80,y=235-height/2;
  let b=rect(x,y,width,height,'#35748e','#b9dce8',Math.min(10,height/2));
- b+=line(x+width+15,115,x+width+15,354,'#ebd498',2)+text(80,107,'Telin uzunluğu', '#f4d4a3',25)+text(80,412,'KALINLIK ↑ → DİRENÇ ↓','#92ead7',21);
+ b+=circle(x+width,235,27,'transparent','#f5c990',3,'data-exp-drag="length"')+line(x+width+15,115,x+width+15,354,'#ebd498',2)+text(80,107,'Telin uzunluğu', '#f4d4a3',25)+text(80,412,'KALINLIK ↑ → DİRENÇ ↓','#92ead7',21);
  b+=text(80,452,'UZUNLUK ↑ → DİRENÇ ↑','#f3d49a',21);
  b+=text(80,494,'Malzeme: '+({copper:'Bakır',iron:'Demir',nichrome:'Nikel-krom'})[state.material],'#daeaf5',20);
  for(let i=0;i<9;i++){const xx=x+20+(i*37+state.clock*48)%Math.max(25,width-25);b+=circle(xx,235,7,'#92e7d5','#e4faf1',1);}
@@ -218,11 +218,11 @@ function drawMagnet(){
   if(mag<.0001)continue;const l=clamp(12+Math.sqrt(mag)*2.2,12,32);
   b+=arrow(x,y,fx/mag*l,fy/mag*l,'#3e8794','');
  }
- b+='<g transform="rotate('+p.magnetAngle+' '+cx+' '+cy+')">'+rect(cx-135,cy-46,135,92,'#386f94','#9cd5ec',0)+rect(cx,cy-46,135,92,'#af6049','#f7c2ad',0)+text(cx-88,cy+9,'S','#fff',32)+text(cx+52,cy+9,'N','#fff',32)+'</g>';
+ b+='<g data-exp-drag="magnetAngle" transform="rotate('+p.magnetAngle+' '+cx+' '+cy+')">'+rect(cx-135,cy-46,135,92,'#386f94','#9cd5ec',0)+rect(cx,cy-46,135,92,'#af6049','#f7c2ad',0)+text(cx-88,cy+9,'S','#fff',32)+text(cx+52,cy+9,'N','#fff',32)+'</g>';
  // Idealised Earth field points to diagram north. The compass responds to both fields.
  const [bx,by]=magnetic(px,py),fieldX=bx,fieldY=by-1.3;
  const heading=Math.atan2(fieldX,-fieldY)*180/Math.PI;
- b+=circle(px,py,57,'#153449','#b2d5e5',4);
+ b+=circle(px,py,57,'#153449','#b2d5e5',4,'data-exp-drag="compassDistance"');
  b+='<g transform="rotate('+heading+' '+px+' '+py+')">'+arrow(px,py,0,-42,'#ffbd90','N')+arrow(px,py,0,29,'#84d2ef','S')+'</g>';
  b+=text(70,60,'Dış alanda manyetik oklar: N → S','#dfedf2',22);
  b+=text(63,523,'Pusula mıknatıs + Dünya alanının yönüne döner','#9ee6d5',18);
@@ -236,6 +236,7 @@ function drawPoles(){
  b+=rect(x2,207,129,112,attract?'#356b92':'#b06650','#d4dce4',3);
  b+=rect(x2+129,207,129,112,attract?'#b06650':'#356b92','#d4dce4',3);
  b+=text(x2+47,275,attract?'S':'N','#fff',33)+text(x2+179,275,attract?'N':'S','#fff',33);
+ b+='<rect x="'+(x2-4)+'" y="200" width="267" height="125" fill="transparent" data-exp-drag="polesDistance"/>';
  b+=arrow(455,271,attract?force:-force,0,attract?'#80edc7':'#f4b892','F');
  b+=arrow(x2-17,270,attract?-force:force,0,attract?'#80edc7':'#f4b892','F');
  b+=text(75,81,attract?'Zıt kutuplar birbirini ÇEKER':'Aynı kutuplar birbirini İTER',attract?'#a7efdb':'#ffc89e',25);
@@ -248,7 +249,8 @@ function drawElectromagnet(){
  let b='';
  b+=rect(131,174,559,138,core?'#576a76':'#203f54',core?'#e0e7e5':'#9ecbdc',14);
  for(let i=0;i<count;i++){const x=163+i*500/(count-1);b+='<ellipse cx="'+x+'" cy="242" rx="12" ry="93" fill="none" stroke="'+(sign>=0?'#9de6df':'#f1bd98')+'" stroke-width="6"/>';}
- if(sign!==0)for(let y=193;y<=304;y+=40)b+=arrow(198,y,sign*408*strength,0,'#8de4d8','');
+ if(sign!==0)for(let y=193;y<=304;y+=40)b+=arrow(sign>0?198:610,y,sign*408*strength,0,'#8de4d8','');
+ b+='<rect x="151" y="147" width="526" height="200" fill="transparent" data-exp-drag="coilCurrent"/>';
  const compassX=797; b+=circle(compassX,236,61,'#193b51','#b4dbe5',4);
  b+='<g transform="rotate('+(sign*84*strength)+' '+compassX+' 236)">'+arrow(compassX,236,0,-47,'#f3ba92','N')+'</g>';
  b+=text(72,86,sign===0?'Akım yok: bobin alanı yok':sign>0?'Akım sağ el kuralına göre alan oluşturur':'Akım ters: kutupların yönü ters',sign===0?'#bbd4df':'#abe9dd',21);
@@ -262,7 +264,7 @@ function drawWireField(){
  for(let r=50;r<=190;r+=47)b+='<circle cx="390" cy="260" r="'+r+'" stroke="#407888" stroke-width="3" fill="none" stroke-dasharray="8 8"/>';
  b+=circle(390,260,34,'#1f546a','#cbe6e8',4)+text(375,274,p.current>0?'•':p.current<0?'×':'0',p.current?'#f9d6a2':'#91b3c0',40);
  const x=390+p.wireDistance*45,y=260;
- b+=circle(x,y,35,'#243e51','#bbdce3',4)+arrow(x,y,0,p.current>0?-31:p.current<0?31:0,'#96edcd','B');
+ b+=circle(x,y,35,'#243e51','#bbdce3',4,'data-exp-drag="wireDistance"')+arrow(x,y,0,p.current>0?-31:p.current<0?31:0,'#96edcd','B');
  b+=text(55,85,'Sağ el kuralı: akımı ters çevir','#dbebf2',24)+text(55,118,'Manyetik alanın dolanım yönü değişsin','#a1e3d4',17);
  presentScene(b,'Akım taşıyan düz telin çevresindeki dairesel manyetik alan',[['Akım yönü',p.current>0?'Sayfadan dışarı':p.current<0?'Sayfa içine':'Akım yok'],['Alan eğilimi',p.current===0?'Yok':o.fieldTrend],['Tel uzaklığı',fmt(p.wireDistance)+' kademe']],'10.1.4.1: Akım ve tele uzaklık manyetik alanı etkiler; sağ el kuralı kullanılır. Sayısal alan veya kuvvet hesabı yoktur. Yüksek gerilim hatlarının yakınında risk vardır.');
  $('help').textContent='Akımı ters çevir veya pusulayı telden uzaklaştır. Elektromıknatıslar, geri dönüşümlü mıknatıslanma ile birçok cihazda kullanılabilir.';
@@ -291,6 +293,7 @@ function draw(){
  else if(state.tab==='wirefield')drawWireField();
  else if(state.tab==='safety')drawSafety();
  $('play').textContent=state.playing?'Ⅱ Hareketi durdur':'▶ Yük akışını hareket ettir';
+ $('play').hidden=!['circuit','resistance','conduction'].includes(state.tab);
 }
 function render(){controls();draw();}
 function changeTab(tab){if(!tabs.some(t=>t[0]===tab))return;state.tab=tab;state.picked=null;state.gesture=null;state.ghost=null;stop();render();}
@@ -303,7 +306,14 @@ function pointFromEvent(e){
 }
 function nearPort(p,limit=33){if(!p)return null;let best=null,dist=Infinity;for(const [key,xy]of Object.entries(pt)){const d=Math.hypot(xy[0]-p[0],xy[1]-p[1]);if(d<dist){best=key;dist=d;}}return dist<=limit?best:null;}
 function handleDown(e){
- if(state.tab!=='circuit')return;
+ if(state.tab!=='circuit'){
+  const exp=e.target.closest?.('[data-exp-drag],[data-exp-tap]');if(!exp)return;
+  if(exp.hasAttribute('data-exp-tap')){const key=exp.getAttribute('data-exp-tap');if(Object.prototype.hasOwnProperty.call(state,key)){state[key]=state[key]?0:1;stop();render();}return;}
+  const key=exp.getAttribute('data-exp-drag');const input=$(key);
+  const pos=pointFromEvent(e);if(!input||!pos)return;
+  state.gesture={id:e.pointerId,experiment:true,key,started:pos,base:state[key]};
+  e.preventDefault();try{$('scene').setPointerCapture?.(e.pointerId)}catch(_){}return;
+ }
  const hit=e.target.closest?.('[data-switch],[data-port],[data-wire]');
  if(!hit)return;
  if(hit.hasAttribute('data-switch')){state.closed=!state.closed;state.picked=null;stop();draw();return;}
@@ -317,7 +327,13 @@ function handleDown(e){
 function handleMove(e){
  if(!state.gesture||state.gesture.id!==e.pointerId)return;
  const pos=pointFromEvent(e);if(!pos)return;
- const a=state.gesture;if(Math.hypot(pos[0]-a.started[0],pos[1]-a.started[1])>12)a.moved=true;
+ const a=state.gesture;
+ if(a.experiment){const slider=$(a.key),scales={magnetAngle:.48,compassDistance:1/29,polesDistance:1/53,coilCurrent:1/19,wireDistance:1/45,length:1/54};const gain=scales[a.key];if(!slider||!gain)return;
+  const min=Number(slider.min),max=Number(slider.max),step=Number(slider.step)||1,next=clamp(min+Math.round((a.base+(pos[0]-a.started[0])*gain-min)/step)*step,min,max);
+  state[a.key]=Number(next.toFixed(4));slider.value=String(next);const out=$(a.key+'-out');if(out)out.textContent=fmt(next,2);
+  stop();draw();e.preventDefault();return;
+ }
+ if(Math.hypot(pos[0]-a.started[0],pos[1]-a.started[1])>12)a.moved=true;
  state.ghost={from:a.from,x:pos[0],y:pos[1]};
  const preview=$('preview-wire');if(preview)preview.setAttribute('d','M '+pt[a.from][0]+' '+pt[a.from][1]+' L '+pos[0]+' '+pos[1]);
  else draw();
@@ -325,9 +341,10 @@ function handleMove(e){
 }
 function handleUp(e){
  if(!state.gesture||state.gesture.id!==e.pointerId)return;
- const a=state.gesture,pos=pointFromEvent(e),end=nearPort(pos);
+ const a=state.gesture,pos=pointFromEvent(e),end=a.experiment?null:nearPort(pos);
  state.gesture=null;state.ghost=null;
  try{if($('scene').hasPointerCapture?.(e.pointerId))$('scene').releasePointerCapture(e.pointerId);}catch(_){}
+ if(a.experiment)return;
  if(a.moved&&end&&end!==a.from){addWire(a.from,end);return;}
  state.picked=a.from;draw();
 }
