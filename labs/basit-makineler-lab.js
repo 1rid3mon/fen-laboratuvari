@@ -143,5 +143,25 @@ const sections=[
  metrics:(p,r)=>summary(r),
  note:'11.1.10.3 tasarım gözlemi. En fazla iki makine; üç veya daha fazla makinenin birleşik hesaplaması yapılmaz. Gerçek kullanım için halat, bağlantı ve devrilme güvenliği mühendislik kontrolü gerektirir; bu model güvenlik sertifikası değildir.'}
 ];
+// Every machine now has a visible, physically linked state, with touch/pencil/mouse dragging.
+// The shared controller keeps sliders as an accessible alternative.
+if(w.BasitKinematik){
+ for(const section of sections){
+  section.scene=w.BasitKinematik.scenes[section.id]||section.scene;
+  section.motion=w.BasitKinematik.motion[section.id];
+  if(section.id==='incline'){
+   section.defaults.progress=.25;
+   section.controls.push(c('progress','Bloğun eğik düzlemdeki konumu',0,1,.01,'×L'));
+  }
+  const key=section.motion?.key;
+  const input=section.controls.find(x=>x.id===key);
+  if(section.id==='gears'||section.id==='belts'){
+   section.defaults[key]=0;if(input){input.min=-8;input.max=8;input.step=.05;}
+  }
+  if(section.id==='wheel'||section.id==='screw'){
+   if(input){input.min=section.motion.min;input.step=.05;}
+  }
+ }
+}
 w.BasitMakineLab=U.create({sections,questions:[]});
 })(window);
