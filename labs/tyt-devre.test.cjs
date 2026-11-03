@@ -47,3 +47,22 @@ test('bar magnets attract for unlike poles and repel for like poles; geometry re
  t.event('tabs:click',{tab:'electromagnet'});assert.match(t.nodes.get('status').textContent,/10\.1\.4\.1/);
  assert.match(t.nodes.get('scene').innerHTML,/<ellipse/);
 });
+
+test('direct iPad drag moves second magnet and updates force geometry without rebuilding slider',()=>{
+ const t=mount();t.event('tabs:click',{tab:'poles'});
+ const old=t.nodes.get('scene').innerHTML;
+ t.nodes.set('polesDistance',{min:'1',max:'6',step:'.5',value:'3'});
+ t.nodes.set('polesDistance-out',{textContent:''});
+ const target={closest:()=>({hasAttribute:k=>k==='data-exp-drag',getAttribute:k=>k==='data-exp-drag'?'polesDistance':null})};
+ const event=x=>({clientX:x,clientY:263,pointerId:55,target,preventDefault(){}});
+ t.handlers.get('scene:pointerdown')(event(683));assert.equal(t.scene.capture,55);
+ t.handlers.get('scene:pointermove')(event(789));
+ const next=t.w.TytDevreApp.snapshot().state;
+ assert.equal(next.polesDistance,5);
+ assert.notEqual(t.nodes.get('scene').innerHTML,old);
+ t.handlers.get('scene:pointerup')(event(789));assert.equal(t.scene.capture,undefined);
+});
+test('play control is absent in non-animated modes rather than an inert fake',()=>{
+ const t=mount();for(const tab of ['generator','magnet','poles','electromagnet','wirefield','safety']){t.event('tabs:click',{tab});assert.equal(t.nodes.get('play').hidden,true);}
+ t.event('tabs:click',{tab:'circuit'});assert.equal(t.nodes.get('play').hidden,false);
+});
