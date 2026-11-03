@@ -12,7 +12,7 @@ const pt={
  Vl:[738,291],Vr:[850,291]
 };
 const labels={Bp:'Pil +',Bm:'Pil −',Sl:'Anahtar giriş',Sr:'Anahtar çıkış',Rl:'Direnç giriş',Rr:'Direnç çıkış',L1l:'Ampul 1 giriş',L1r:'Ampul 1 çıkış',L2l:'Ampul 2 giriş',L2r:'Ampul 2 çıkış',Al:'Ampermetre +',Ar:'Ampermetre −',Vl:'Voltmetre +',Vr:'Voltmetre −'};
-const tabs=[['circuit','Kablo bağla · Devre Tahtası'],['resistance','İletkenin direnci'],['generator','Üreteçler'],['power','Güç ve parlaklık'],['conduction','İletim ortamları'],['magnet','Mıknatıs ve pusula'],['wirefield','Akımın manyetik alanı'],['safety','Elektrik güvenliği']];
+const tabs=[['circuit','Kablo bağla · Devre Tahtası'],['resistance','İletkenin direnci'],['generator','Üreteçler'],['power','Güç ve parlaklık'],['conduction','İletim ortamları'],['magnet','Mıknatıs ve pusula'],['poles','Mıknatıs kutupları'],['electromagnet','Elektromıknatıs'],['wirefield','Akımın manyetik alanı'],['safety','Elektrik güvenliği']];
 const state={
  tab:'circuit',preset:'single',wires:M.normalizeWires(M.presets.single),voltage:6,r:8,lamp1:6,lamp2:6,closed:true,
  picked:null,gesture:null,ghost:null,playing:false,frame:0,clock:0,
@@ -20,7 +20,7 @@ const state={
  cells:2,batteryMode:'series',reversed:false,
  deviceVoltage:6,deviceR:6,elapsed:0,
  medium:0,
- magnetAngle:0,magnetStrength:5,compassDistance:2,
+ magnetAngle:0,magnetStrength:5,compassDistance:2,polesDistance:3,polesFlip:0,coilTurns:7,coilCurrent:4,coilCore:1,
  current:4,wireDistance:2,earth:true,
  wet:false,frayed:false,grounded:true,fuse:true
 };
@@ -127,7 +127,7 @@ function bools(pairs){return pairs.map(([id,name])=>'<div class="group"><label><
 function controls(){
  const s=state;
  $('tabs').innerHTML=tabs.map(([key,name])=>'<button data-tab="'+key+'" type="button" class="'+(s.tab===key?'active':'')+'" aria-current="'+(s.tab===key?'page':'false')+'">'+name+'</button>').join('');
- $('title').textContent=({circuit:'Devre Tahtası · Kabloları sen bağla',resistance:'İletken direnci neye bağlı?',generator:'Pilleri seri ve paralel bağla',power:'Ampulün gücü ve enerji dönüşümü',conduction:'Katı, sıvı, gaz ve plazmada iletim',magnet:'Mıknatıs ve pusula',wirefield:'Akımın oluşturduğu manyetik alan',safety:'Elektrikle güvenli çalışma'})[s.tab];
+ $('title').textContent=({circuit:'Devre Tahtası · Kabloları sen bağla',resistance:'İletken direnci neye bağlı?',generator:'Pilleri seri ve paralel bağla',power:'Ampulün gücü ve enerji dönüşümü',conduction:'Katı, sıvı, gaz ve plazmada iletim',magnet:'Mıknatıs ve pusula',poles:'Mıknatısların itme–çekmesi',electromagnet:'Elektromıknatıs: bobin ve akım',wirefield:'Akımın oluşturduğu manyetik alan',safety:'Elektrikle güvenli çalışma'})[s.tab];
  let pane='';
  if(s.tab==='circuit'){
   pane+='<h3>Örnek devreyi yükle</h3><div class="preset">'+[['single','Tek ampul'],['serial','İki ampul seri'],['parallel','İki ampul paralel'],['meters','A–V ölçü aletleri'],['ohm','Ohm deneyi'],['short','Kısa devreyi göster']].map(([key,name])=>'<button data-preset="'+key+'" class="'+(s.preset===key?'active':'')+'">'+name+'</button>').join('')+'</div>';
@@ -144,6 +144,8 @@ function controls(){
   pane+=range('deviceVoltage','Direnç üzerindeki gerilim',1,12,.5,s.deviceVoltage,'V')+range('deviceR','Direnç',2,24,1,s.deviceR,'Ω')+range('elapsed','Gözlem süresi',0,10,.5,s.elapsed,'adım');
  }else if(s.tab==='conduction'){pane+=range('medium','Ortam: 0 katı · 1 sıvı · 2 gaz · 3 plazma',0,3,1,s.medium,'');}
  else if(s.tab==='magnet'){pane+=range('magnetAngle','Mıknatıs yönü',-180,180,15,s.magnetAngle,'°')+range('magnetStrength','Mıknatısın etkisi',1,10,1,s.magnetStrength,'kademe')+range('compassDistance','Pusula uzaklığı',1,6,.5,s.compassDistance,'birim');}
+ else if(s.tab==='poles'){pane+=range('polesDistance','Mıknatısların uzaklığı',1,6,.5,s.polesDistance,'kademe')+range('polesFlip','0 Zıt kutup · 1 Aynı kutup',0,1,1,s.polesFlip,'');}
+ else if(s.tab==='electromagnet'){pane+=range('coilTurns','Bobin sarım sayısı',2,12,1,s.coilTurns,'tur')+range('coilCurrent','Akım yönü ve şiddeti',-10,10,1,s.coilCurrent,'kademe')+range('coilCore','0 Hava · 1 Demir çekirdek',0,1,1,s.coilCore,'');}
  else if(s.tab==='wirefield'){pane+=range('current','Akımın yönü/şiddeti',-10,10,1,s.current,'kademe')+range('wireDistance','Telden uzaklık',1,6,.5,s.wireDistance,'birim')+bools([['earth','Dünya alanını göster']]);}
  else if(s.tab==='safety'){pane+=bools([['wet','Islak ortam'],['frayed','Kablo yalıtımı hasarlı'],['grounded','Topraklama var'],['fuse','Sigorta var']]);}
  $('settings').innerHTML=pane;
@@ -178,7 +180,7 @@ function drawGenerator(){
  b+=text(70,447,'Seri: gerilim artabilir · Paralel: kapasite artar','#a2ecd4',18);
  const batteryLife=o.E===0?'Akım yok':o.runtime>7?'Görece uzun':'Görece kısa';
  presentScene(b,'Özdeş pillerin seri, paralel ve ters bağlantılarının görünür karşılaştırması',[['Toplam gerilim',fmt(o.E,2)+' V'],['Akım eğilimi',o.currentTrend],['Tükenme süresi',batteryLife],['İç direnç','Hesaplanmıyor']],o.E===0?'Zıt piller eşit ve seri olduğunda toplam elektromotor kuvvet sıfıra inebilir.':p.batteryMode==='parallel'?'Özdeş piller paralelde aynı gerilimi, daha yüksek toplam kapasiteyi sağlar.':'Seri piller gerilimlerini toplar. Sabit dirençte akım artar ve pillerin tüketim süresi kısalabilir.');
- $('help').textContent='10.1.2.2: Aynı 1,5 V piller; yalnız eş elektromotor kuvvetli üreteçler paralel. İç direnç sayısal hesaba girmez. Galvani ve Volta denemelerinde elektrik kaynaklarının açıklanışı tarihsel olarak farklıydı.';
+ $('help').textContent='10.1.2.2: Aynı 1,5 V piller; yalnız eş elektromotor kuvvetli üreteçler paralel. İç direnç sayısal hesaba girmez. Galvani, hayvan dokusunun elektrik kaynağı olabileceğini savunurken Volta, farklı metaller ve iletken ortamların oluşturduğu etkiye odaklandı.';
 }
 function drawPower(){
  const p=state,I=p.deviceVoltage/p.deviceR,P=I*I*p.deviceR,glow=clamp(Math.sqrt(P/12),0,1);
@@ -227,6 +229,33 @@ function drawMagnet(){
  presentScene(b,'Dönen çubuk mıknatısın dipol alanına tepki veren gerçek pusula yönü',[['Mıknatıs yönü',fmt(p.magnetAngle)+'°'],['Pusula açısı',fmt(heading)+'°'],['Uzaklık',fmt(p.compassDistance)+' kademe']],'10.1.3.1 ve 10.1.4.2: Pusula bileşke manyetik alan yönüne döner. Dipol modeli temsili, kuvvet hesabı yoktur.');
  $('help').textContent='Mıknatısın açısını değiştir veya pusulayı uzaklaştır. Alan okları ve pusula gerçekten birlikte yön değiştirir; bu 2B şema, gerçek mıknatısın tam 3B alanı değildir.';
 }
+function drawPoles(){
+ const p=state,x2=524+p.polesDistance*53,gap=x2-439,attract=p.polesFlip===0,force=clamp(106/p.polesDistance,14,89);
+ let b=rect(179,207,131,112,'#356b92','#bce1f0',3)+rect(310,207,129,112,'#b06650','#f4c7b9',3);
+ b+=text(234,275,'S','#eaf5fa',33)+text(356,275,'N','#fff1e4',33);
+ b+=rect(x2,207,129,112,attract?'#356b92':'#b06650','#d4dce4',3);
+ b+=rect(x2+129,207,129,112,attract?'#b06650':'#356b92','#d4dce4',3);
+ b+=text(x2+47,275,attract?'S':'N','#fff',33)+text(x2+179,275,attract?'N':'S','#fff',33);
+ b+=arrow(455,271,attract?force:-force,0,attract?'#80edc7':'#f4b892','F');
+ b+=arrow(x2-17,270,attract?-force:force,0,attract?'#80edc7':'#f4b892','F');
+ b+=text(75,81,attract?'Zıt kutuplar birbirini ÇEKER':'Aynı kutuplar birbirini İTER',attract?'#a7efdb':'#ffc89e',25);
+ b+=text(78,113,'Uzaklık arttıkça kuvvetin etkisi zayıflar','#d1e4ed',18);
+ presentScene(b,'İki mıknatıs kutuplarının itmesi veya çekmesi görsel tepki verir',[['Etkileşim',attract?'Çekme':'İtme'],['Kutuplar',attract?'N–S':'N–N'],['Uzaklık',fmt(p.polesDistance)+' kademe']],'10.1.3.1: Aynı kutuplar birbirini iter, zıt kutuplar birbirini çeker. Kuvvetin sayısal modeli ve büyüklüğü hesaplanmaz.');
+ $('help').textContent='İkinci mıknatısın kutbunu ters çevir veya uzaklığını değiştir. Kuvvet oklarının yönü ve iki mıknatısın konumu gerçek kurala göre değişir; çizim ölçekli kuvvet ölçümü değildir.';
+}
+function drawElectromagnet(){
+ const p=state,sign=Math.sign(p.coilCurrent),count=p.coilTurns,core=p.coilCore!==0,force=count*Math.abs(p.coilCurrent)*(core?1.8:1),strength=clamp(force/90,0,1);
+ let b='';
+ b+=rect(131,174,559,138,core?'#576a76':'#203f54',core?'#e0e7e5':'#9ecbdc',14);
+ for(let i=0;i<count;i++){const x=163+i*500/(count-1);b+='<ellipse cx="'+x+'" cy="242" rx="12" ry="93" fill="none" stroke="'+(sign>=0?'#9de6df':'#f1bd98')+'" stroke-width="6"/>';}
+ if(sign!==0)for(let y=193;y<=304;y+=40)b+=arrow(198,y,sign*408*strength,0,'#8de4d8','');
+ const compassX=797; b+=circle(compassX,236,61,'#193b51','#b4dbe5',4);
+ b+='<g transform="rotate('+(sign*84*strength)+' '+compassX+' 236)">'+arrow(compassX,236,0,-47,'#f3ba92','N')+'</g>';
+ b+=text(72,86,sign===0?'Akım yok: bobin alanı yok':sign>0?'Akım sağ el kuralına göre alan oluşturur':'Akım ters: kutupların yönü ters',sign===0?'#bbd4df':'#abe9dd',21);
+ b+=text(80,426,'Tur ↑ · akım ↑ · demir çekirdek → etki güçlenir','#e5d7aa',21);
+ presentScene(b,'Sarımı, akımı ve çekirdeği değiştirilebilen elektromıknatıs',[['Sarım',fmt(count)+' tur'],['Akım',sign===0?'Yok':sign>0?'İleri yön':'Ters yön'],['Çekirdek',core?'Demir':'Hava'],['Alan eğilimi',sign===0?'Yok':strength>.6?'Güçlü':'Zayıf']],'10.1.4.1: Akımın şiddeti ve yönü, sarım ve demir çekirdek elektromıknatısın etkisini değiştirir. Sayısal B/kuvvet hesabı yoktur.');
+ $('help').textContent='Sarım sayısını ve akımı değiştir. İbre ve alan okları yön değiştirir. Akım kesilince bobin alanı kaybolur; çekirdeğin kalıcı mıknatıslanması modellenmemiştir. Kullanım: röle, vinç, elektrikli zil.';
+}
 function drawWireField(){
  const p=state,o=M.compass({current:p.current,distance:p.wireDistance,earth:p.earth});
  let b='';
@@ -257,6 +286,8 @@ function draw(){
  else if(state.tab==='power')drawPower();
  else if(state.tab==='conduction')drawConduction();
  else if(state.tab==='magnet')drawMagnet();
+ else if(state.tab==='poles')drawPoles();
+ else if(state.tab==='electromagnet')drawElectromagnet();
  else if(state.tab==='wirefield')drawWireField();
  else if(state.tab==='safety')drawSafety();
  $('play').textContent=state.playing?'Ⅱ Hareketi durdur':'▶ Yük akışını hareket ettir';
