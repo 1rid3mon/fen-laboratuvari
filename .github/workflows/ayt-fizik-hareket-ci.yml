@@ -16,6 +16,8 @@ on:
       - 'labs/siga*'
       - 'labs/manyetizma*'
       - 'labs/gorsel-hareket.test.cjs'
+      - 'labs/touch-interaction.test.cjs'
+      - 'labs/optik-*'
       - 'labs/kavramsal-hareket.js'
       - 'labs/alternatif-akim*'
       - 'labs/meb-uyum.test.cjs'
@@ -42,6 +44,8 @@ on:
       - 'labs/siga*'
       - 'labs/manyetizma*'
       - 'labs/gorsel-hareket.test.cjs'
+      - 'labs/touch-interaction.test.cjs'
+      - 'labs/optik-*'
       - 'labs/kavramsal-hareket.js'
       - 'labs/alternatif-akim*'
       - 'labs/meb-uyum.test.cjs'
@@ -104,6 +108,8 @@ jobs:
           node --check labs/manyetizma.test.cjs
           node --check labs/kavramsal-hareket.js
           node --check labs/gorsel-hareket.test.cjs
+          node --check labs/elektrik-alan-pointer.js
+          node --check labs/touch-interaction.test.cjs
           node --check labs/alternatif-akim-lab.js
           node --check labs/meb-uyum.test.cjs
           node --check labs/hareket.test.cjs
