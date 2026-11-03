@@ -48,3 +48,22 @@ test('HTML includes pointer engine and iPad-friendly motion style',()=>{
  const h=read('basit-makineler.html');for(const f of ['basit-makineler-kinematik.js','basit-makineler-pointer.js'])assert.ok(h.includes(f));
  assert.match(h,/motion-scene/);assert.match(read('mekanik-lab.css'),/touch-action:none/);
 });
+
+test('every machine visibly changes its scene when the physically relevant displacement changes',()=>{
+ const {win}=setup();const U=win.MekanikUI.U,M=win.BasitMakineMath,K=win.BasitKinematik.scenes;
+ const cases=[
+ ['lever',{load:100,effortArm:2,loadArm:1,travel:.5,eta:1},'travel',1],
+ ['pulley',{load:120,moving:1,n:2,travel:1,eta:1},'travel',2],
+ ['incline',{load:100,height:1,length:4,eta:1,progress:.2},'progress',.8],
+ ['wheel',{load:100,wheelRadius:1,axleRadius:.25,turns:1,eta:1},'turns',2],
+ ['screw',{load:100,pitch:.01,turns:1,handleRadius:.2,eta:.8},'turns',3],
+ ['gears',{inputTeeth:20,outputTeeth:40,inputTurns:1,eta:1},'inputTurns',1.25],
+ ['belts',{driveRadius:.3,drivenRadius:.6,driveTurns:1,crossed:0,eta:1},'driveTurns',1.25],
+ ['design',{load:160,armEffort:2,armLoad:1,ropeCount:2,travel:2,eta1:.9,eta2:.85},'travel',3]
+ ];
+ for(const [id,p,key,next] of cases){
+ const calc=x=>id==='wheel'?M.wheelAxle(x):id==='pulley'?M.pulley(x):id==='gears'?M.gears(x):id==='belts'?M.belts({...x,crossed:!!x.crossed}):M[id](x);
+ const before=K[id](p,calc(p),U),modified={...p,[key]:next},after=K[id](modified,calc(modified),U);
+ assert.notEqual(before,after,id+' displacement did not affect physical drawing');
+ }
+});
