@@ -1,4 +1,4 @@
-name: AYT Fizik 2018 MEB Hareket Enerji Momentum
+name: AYT Fizik 2018 MEB Hareket Enerji Momentum Tork Denge
 on:
   push:
     paths:
@@ -24,6 +24,14 @@ on:
       - 'labs/bagil-lab.js'
       - 'labs/newton-lab.js'
       - 'labs/ivmeli-*'
+      - 'labs/atis-*'
+      - 'labs/fizik-enerji*'
+      - 'labs/momentum*'
+      - 'labs/mekanik-*'
+      - 'labs/tork-denge*'
+      - 'labs/is-guc-enerji.html'
+      - 'labs/itme-cizgisel-momentum.html'
+      - 'labs/iki-boyutta-hareket.html'
       - 'labs/bir-boyutta-sabit-ivmeli-hareket.html'
       - 'labs/vektorler-bagil-hareket.html'
       - 'labs/newton-hareket-yasalari.html'
@@ -61,6 +69,7 @@ jobs:
           node --check labs/mekanik-dom.test.cjs
           node --check labs/tork-denge-math.js
           node --check labs/tork-denge-lab.js
+          node --check labs/tork-denge-pointer.js
           node --check labs/tork-denge.test.cjs
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
