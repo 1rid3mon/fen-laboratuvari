@@ -195,29 +195,37 @@ function drawConduction(){
  const names=['Metal: hareketli elektronlar','İyonlu sıvı: zıt iyonlar','Gaz: iyonlaşma gerekebilir','Plazma: iyonlar ve elektronlar'],p=state.medium;
  let b=rect(110,141,744,231,p===0?'#315c73':p===1?'#24576b':p===2?'#263e54':'#5b3d60','#9cbfce',16);
  for(let i=0;i<21;i++){
-  const x=140+(i%7)*102,y=173+Math.floor(i/7)*71,xx=x+((state.clock*34)%(p===0?46:67));
+  const x=140+(i%7)*102,y=173+Math.floor(i/7)*71;
   const sign=p===0?-1:p===1?(i%2?-1:1):i%3?-1:1;
+  const drift=(state.clock*34)%(p===0?46:67),xx=x+(sign<0?-drift:drift);
   const col=sign>0?'#f5c095':'#87c6eb';
-  b+=circle(Math.min(827,xx),y,p===0?9:11,col,'#ecf7f8',1)+text(x+10,y-20,sign>0?'+':'−','#d1dce2',14);
+  b+=circle(clamp(xx,120,827),y,p===0?9:11,col,'#ecf7f8',1)+text(x+10,y-20,sign>0?'+':'−','#d1dce2',14);
  }
  b+=text(100,92,names[p],'#edf3f5',26)+arrow(110,404,250,0,'#8ef0ca','Geleneksel akım yönü');
  presentScene(b,'Farklı maddelerde elektron ve iyon hareketinin temsili görselleştirmesi',[['Ortam',['Katı','Sıvı','Gaz','Plazma'][p]],['Taşıyıcı',p===0?'Elektronlar':p===1?'İyonlar':'Elektron + iyon'],['Enerji aktarımı','Elektriksel']],'10.1.1.1: Metallerde serbest elektronlar, elektrolitlerde iyonlar, iyonlaşmış gazlarda ve plazmada çeşitli yüklü taşıyıcılar akımı oluşturur.');
  $('help').textContent='Dört ortamı değiştir, temsili yük taşıyıcılarını karşılaştır. Gerçek iyonlaşma koşulları ve kimyasal süreçler bu basit çizimde çözülmez.';
 }
 function drawMagnet(){
- const p=state,comp=M.compass({current:p.magnetStrength,distance:p.compassDistance});
- const angle=p.magnetAngle*Math.PI/180,rot=p.magnetAngle;
+ const p=state,angle=p.magnetAngle*Math.PI/180,mx=Math.cos(angle),my=Math.sin(angle),cx=418,cy=262;
+ const magnetic=(x,y)=>{const dx=x-cx,dy=y-cy,r2=dx*dx+dy*dy,r=Math.sqrt(r2)||1,rx=dx/r,ry=dy/r,md=mx*rx+my*ry;return [3*rx*md-mx,3*ry*md-my].map(v=>v*p.magnetStrength/(r2*r)*1e6);};
+ const px=635+p.compassDistance*29,py=263;
  let b='';
- for(let i=0;i<5;i++){const ry=70+i*33;b+='<ellipse cx="422" cy="265" rx="'+(165+ry)+'" ry="'+(79+ry*.42)+'" fill="none" stroke="#3b7a8b" stroke-width="3" stroke-dasharray="8 8"/>';}
- b+='<g transform="rotate('+rot+' 421 260)">'+rect(284,214,137,92,'#386f94','#9cd5ec',0)+rect(421,214,137,92,'#af6049','#f7c2ad',0)+text(341,268,'S','#fff',32)+text(479,268,'N','#fff',32)+'</g>';
- const px=775,py=269,ca=(angle+comp.turn);
- b+=circle(px,py,79,'#153449','#b2d5e5',4);
- b+='<g transform="rotate('+(ca*180/Math.PI)+' '+px+' '+py+')">'+path('M'+px+' '+(py+56)+' L'+(px-20)+' '+py+' L'+(px+20)+' '+py+' Z','#8de7ce',8)+
- arrow(px,py,0,-53,'#ffbd90','K')+'</g>';
- b+=text(70,79,'N: kuzey kutbu · S: güney kutbu','#dfedf2',21);
- b+=text(656,397,'Pusula → alan yönü','#9ee6d5',19);
- presentScene(b,'Mıknatıs çevresindeki alan çizgileri ve dönen pusula',[['Mıknatıs yönü',fmt(p.magnetAngle)+'°'],['Uzaklık',fmt(p.compassDistance)+' kademe'],['Pusula','Alan yönünü izler']],'10.1.3.1 ve 10.1.4.2: Mıknatıs alan çizgileri kuzeyden güneye dış uzayda yönelir; pusula alan doğrultusunu gösterir. Manyetik kuvvet hesabı yoktur.');
- $('help').textContent='Mıknatısı yönlendir veya pusulayı uzaklaştır. Pusula bir alan yönü göstergesidir; çizim ölçekli manyetik alan çözücüsü değildir.';
+ for(let x=75;x<914;x+=76)for(let y=78;y<494;y+=69){
+  if(Math.abs(x-cx)<155&&Math.abs(y-cy)<95)continue;
+  const [fx,fy]=magnetic(x,y),mag=Math.hypot(fx,fy);
+  if(mag<.0001)continue;const l=clamp(12+Math.sqrt(mag)*2.2,12,32);
+  b+=arrow(x,y,fx/mag*l,fy/mag*l,'#3e8794','');
+ }
+ b+='<g transform="rotate('+p.magnetAngle+' '+cx+' '+cy+')">'+rect(cx-135,cy-46,135,92,'#386f94','#9cd5ec',0)+rect(cx,cy-46,135,92,'#af6049','#f7c2ad',0)+text(cx-88,cy+9,'S','#fff',32)+text(cx+52,cy+9,'N','#fff',32)+'</g>';
+ // Idealised Earth field points to diagram north. The compass responds to both fields.
+ const [bx,by]=magnetic(px,py),fieldX=bx,fieldY=by-1.3;
+ const heading=Math.atan2(fieldX,-fieldY)*180/Math.PI;
+ b+=circle(px,py,57,'#153449','#b2d5e5',4);
+ b+='<g transform="rotate('+heading+' '+px+' '+py+')">'+arrow(px,py,0,-42,'#ffbd90','N')+arrow(px,py,0,29,'#84d2ef','S')+'</g>';
+ b+=text(70,60,'Dış alanda manyetik oklar: N → S','#dfedf2',22);
+ b+=text(63,523,'Pusula mıknatıs + Dünya alanının yönüne döner','#9ee6d5',18);
+ presentScene(b,'Dönen çubuk mıknatısın dipol alanına tepki veren gerçek pusula yönü',[['Mıknatıs yönü',fmt(p.magnetAngle)+'°'],['Pusula açısı',fmt(heading)+'°'],['Uzaklık',fmt(p.compassDistance)+' kademe']],'10.1.3.1 ve 10.1.4.2: Pusula bileşke manyetik alan yönüne döner. Dipol modeli temsili, kuvvet hesabı yoktur.');
+ $('help').textContent='Mıknatısın açısını değiştir veya pusulayı uzaklaştır. Alan okları ve pusula gerçekten birlikte yön değiştirir; bu 2B şema, gerçek mıknatısın tam 3B alanı değildir.';
 }
 function drawWireField(){
  const p=state,o=M.compass({current:p.current,distance:p.wireDistance,earth:p.earth});
