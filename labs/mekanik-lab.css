@@ -38,3 +38,7 @@
 .menergygraphs>div{min-width:0;border:1px solid #36546a;background:#0b263b;border-radius:12px;padding:7px}
 .menergygraphs svg{min-height:0;height:auto;width:100%;display:block}
 @media(max-width:850px){.menergygraphs{grid-template-columns:1fr}}
+
+/* Direct manipulation handles; only handle targets block touch panning, not the entire page. */
+.mscene [data-drag]{cursor:grab;touch-action:none;pointer-events:all}
+.mscene [data-drag]:active{cursor:grabbing}
