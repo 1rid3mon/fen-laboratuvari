@@ -128,7 +128,7 @@ function design(p,r,u){
  b+=u.text(75,309,'Verim: %'+fmt(r.eta*100)+' · kayıp iş '+fmt(r.loss)+' J','#f3d8b4',16);
  return u.svg(b+hint(u),'Kaldıraç ve makara birleşiminde çekme ve yükselme yolları farklıdır');
 }
-const scenes={lever,pulley,incline,wheel,screw,gears,belts,design};
+const scenes={lever,pulley,incline,wheel,screw,gears,belts:belt,design};
 const motion={
  lever:{key:'travel',min:.25,max:3,speed:.6,step:.25},
  pulley:{key:'travel',min:.5,max:6,speed:1,step:.5},
