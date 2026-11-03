@@ -93,7 +93,7 @@ test('invalid physical masses, gravity and positions rejected',()=>{
 });
 test('new lab page serves local assets and exact 2018 MEB gain labels, without mandatory quiz',()=>{
  const html=read('tork-denge.html');
- for(const x of ['11.1.8.1–3','11.1.9.1–3','tork-denge-math.js','mekanik-ui.js','tork-denge-lab.js'])assert.ok(html.includes(x),x);
+ for(const x of ['11.1.8.1–3','11.1.9.1–3','tork-denge-math.js','mekanik-ui.js','tork-denge-lab.js','tork-denge-pointer.js'])assert.ok(html.includes(x),x);
  assert.ok(read('../index.html').includes('labs/tork-denge.html'));
 });
 function domHarness(){
