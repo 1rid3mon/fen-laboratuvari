@@ -36,3 +36,10 @@ Altı yeni sahne: özkütle, yoğunluk karşılaştırmasıyla yüzme/batma, ben
 ## CI olay kaydı — 4 Kasım
 
 GitHub Actions 41788276375 (commit 371242e) başarısız: `tyt-basinc-dalgalar.test.cjs` eski ve fiziksel olarak yanlış `s.density*G*s.volume/1000` ifadesini bekliyordu. Üretim kodunda yer değiştiren hacim hesabı `s.density*G*immersedVolume/1000` olarak düzeltilmişti; test beklentisi geride kalmış. Test yeni doğru ifadeye güncellendi (commit 110317e). **Yeni commitin CI sonucu doğrulanmadan yeşil kabul edilmez.** Ayrıca testin geçmesi, görselin gerçek iPad'de doğrulandığı anlamına gelmez.
+
+## Madde ve Özellikleri — sahne düzeltmeleri
+
+- Yüzen cismin su yüzeyinin altında kalan kısmı özkütle oranına göre çizilir; batan cisim kabın tabanına iner.
+- Islatmayan sıvıda kılcal borudaki sıvı seviyesi haznenin altına çekilir (önceki çizimde boru içinde seviye aynı kalıyordu).
+- Islatan yüzeyde sıvı ince tabaka halinde gösterilir (önceki kalın dikdörtgen ıslanmayı yanlış temsil ediyordu).
+- Yüzey gerilimi hâlâ **nitel**, sıcaklık kontrolünde eşik temsili mevcut: kesintisiz fiziksel nicel değişim olarak **kabul edilmedi**. Dayanıklılık da benzer cisimler dışında sayısal çıkarım için **kabul edilmedi**. Resmî MEB kazanım metni ve gerçek iPad testi bekliyor.
