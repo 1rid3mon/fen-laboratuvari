@@ -70,3 +70,7 @@ Kaynak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fret
 ## 9.2.1.1 kazanım ilerlemesi — 4 Kasım
 
 Özkütle için **etkileşimli kütle–hacim grafiği** eklendi: sabit özkütle ile orijinden geçen doğru, doğrunun eğimi ρ=m/V, hacim değişince noktanın ve kütlenin değişmesi. Uç değer ve eğim regresyon testleri eklendi. Bu kazanım **henüz tam değil**: düzensiz cisim hacmi, birim dönüşümleri, özkütle-hacim grafiği, karışımların nitel yorumu ve günlük hayat uygulamaları bekliyor. Görsel SVG testleri gerçek Safari etkileşim testi değildir.
+
+## 9.2.1.1 — su yer değiştirme deneyi
+
+Dereceli silindirle **tam batırılmış, çözünmeyen ve su emmeyen** düzensiz katının hacmi için ilk/son su seviyesi farkı gösterimi eklendi. 1 mL = 1 cm³ dönüşümü ve regresyon testi eklendi. Bu model yalnız su seviyesi değişimini öğretir; taşırma kabı, menisküs okuma ve gerçek cihaz Safari doğrulaması henüz yok. Kazanım tam olarak onaylanmadı.
