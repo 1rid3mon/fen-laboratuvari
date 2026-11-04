@@ -17,7 +17,7 @@ const probeY=120+s.depth*54;b+=rect(175,120,565,290,'#166b91','fill-opacity=".78
 let rows=[];for(const o of s.objects){const q=object(o);b+=q.svg;rows.push('#'+(o.id+1)+' Fg='+fmt(q.weight)+' N; Fk='+fmt(q.buoy)+' N (konuma göre)');}
 out='Sıvı basıncı (gösterge) = ρgh = '+fmt(s.rho*g*s.depth)+' Pa. '+rows.join(' | ');
 note='Cisimleri parmağınla sürükle, dokunarak seç. Cisimlerin konumları ayrı, basınç probu ayrı hareket eder. Fk = ρsıvı·g·Vbatan; cisimlerin konumları elle belirlenir, otomatik denge/çarpışma simülasyonu yoktur. Gösterilen batmış hacim, çizimdeki dik prizma kesitinin yaklaşık oranıdır; kabın su seviyesi sabittir. Üst üste binme ve kap duvarına temas kuvvetleri modellenmez.';
-if(s.selected!==null){const o=s.objects.find(x=>x.id===s.selected);if(o)controls+=range('selectedRho','Seçili cisim özkütlesi (kg/m³)',300,1600,50).replace('s[key]','').replace('value="undefined"','value="'+o.rho+'"').replace('>undefined<','>'+fmt(o.rho)+'<');}
+if(s.selected!==null){const o=s.objects.find(x=>x.id===s.selected);if(o)controls+='<label>Seçili cisim özkütlesi (kg/m³): <strong>'+fmt(o.rho)+'</strong><input type="range" data-key="selectedRho" min="300" max="1600" step="50" value="'+o.rho+'"></label>';}
 }else if(s.tab==='solid'){
 controls=range('solidForce','Yüzeye dik kuvvet (N)',10,200,5)+range('solidArea','Temas alanı (m²)',.5,5,.5);
 b+=rect(130,340,650,18,'#8597a4')+rect(360,210,120+s.solidArea*30,130,'#5aa6cf','rx="7"');out='P = F/A = '+fmt(s.solidForce/s.solidArea)+' Pa';
