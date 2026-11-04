@@ -1,0 +1,15 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b192a"><title>TYT Optik · Prizma ve Renkler</title>
+<style>:root{color-scheme:dark;background:#091827;color:#e8f6fc;font:16px/1.5 system-ui,-apple-system,sans-serif}*{box-sizing:border-box}body{margin:0;padding:clamp(12px,3vw,28px)}main{max-width:1150px;margin:auto}
+a{color:#9af5e4}h1{font-size:clamp(1.5rem,3.5vw,2.2rem)}.layout{display:grid;grid-template-columns:minmax(250px,310px) minmax(0,1fr);gap:14px}
+.card{background:#142b42;border:1px solid #355b73;border-radius:15px;padding:15px}
+button,select{font:inherit;background:#224966;border:1px solid #8fc7ca;border-radius:10px;padding:10px;color:white;min-height:44px}
+label{display:block;margin:14px 0}input{width:100%;accent-color:#93efdf;display:block;min-height:38px;touch-action:pan-y}select{display:block;width:100%}svg{width:100%;height:auto;display:block;touch-action:none;user-select:none;border-radius:11px}
+svg text{pointer-events:none}#stats{font-weight:bold;color:#a9f2d8}#explain{border-left:3px solid #91e7e1;padding-left:12px}strong{color:#a9f2d8}
+.warn{padding:12px;border:1px solid #c5a878;border-radius:10px;background:#33291b;color:#ffebc8}
+@media(max-width:720px){.layout{grid-template-columns:1fr}}</style></head><body><main>
+<a href="../index.html">← Fen Laboratuvarı</a><h1>TYT Optik · Prizmalar ve Işığın Renklere Ayrılması</h1>
+<p>2018 MEB 10.4.8.1: Beyaz ışığı veya tek renkli ışığı bir cam prizmaya yönlendir. Kaynağı ve prizmayı parmakla hareket ettir; ışınların nasıl saptığını gözlemle.</p>
+<p class="warn"><strong>Ön izleme:</strong> Işınlar ideal, düz prizma yüzeylerinde geometrik optik kurallarıyla çizilir. Cam türünün dalga boyuna göre ayrıştırma etkisi öğretim amaçlı yaklaşık değerlerdir. TYT'de prizma ile sayısal hesap yapılmaz. Gerçek iPad/Safari kabulü henüz yapılmadı.</p>
+<div class="layout"><aside class="card" id="controls" aria-label="Prizma deney kontrolleri"></aside><section class="card"><svg id="scene" viewBox="0 0 900 500" role="img" aria-label="Sürüklenebilen cam prizma ve renkli ışınlar"></svg><p id="stats" aria-live="polite"></p><p id="explain"></p></section></div>
+<p><a href="optik-ayna-mercek.html">Ayna ve mercek laboratuvarı</a> · <a href="optik-kirilma.html">Kırılma laboratuvarı</a> · <a href="optik-renkler.html">Renkler</a></p>
+</main><script src="tyt-optik-prizma-model.js"></script><script src="tyt-optik-prizma.js"></script></body></html>
