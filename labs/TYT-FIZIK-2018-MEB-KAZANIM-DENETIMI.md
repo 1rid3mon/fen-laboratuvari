@@ -27,7 +27,7 @@ Her konu için ayrı ayrı: (1) resmî 2018 MEB kazanım kodu ve metni, (2) ilgi
 - TYT'de AYT'ye ait hesaplama ve kazanımlar soru diye sunulmaz.
 - Fiziksel olarak yanlış bir gösterim, eksik bir gösterimden daha öncelikli hatadır.
 - Gerçek iPad Safari testini cihaz olmadan **başarılı** işaretleme.
-- PR #9 taslak; **Vercel deploy ve main merge yasak**, kullanıcı açık onay verene kadar.
+- PR #9, 4 Kasım 2026'da main'e aktarıldı (cf2ea96f617be406f15df47d5e595fa81ec4b383). Devam çalışması PR #10 taslak dalında; CI ve denetimler doğrulanmadan main'e alma veya Vercel yayını yapma.
 
 ## Aşama 2 — Madde ve Özellikleri
 
@@ -88,3 +88,13 @@ Dereceli silindirle **tam batırılmış, çözünmeyen ve su emmeyen** düzensi
 ### Kılcallık ve su yer değiştirme — ek doğruluk düzeltmesi
 
 Önceki kılcallık modelinde dar boru için hesaplanan sıvı seviyesi SVG sınırına kırpılıyordu. Bu, gerçek modelin yarıçapla değişimini bozduğu için kaldırıldı; temsili 100/r ölçeğiyle tüm kontrol aralığında kırpılmadan gösteriliyor. **100/r bir gerçek yükseklik formülü değildir.** Dereceli silindir deneyinde başlangıç seviyesi çizgisi etiketlendi ve cismin geometrisinin şematik olduğu belirtildi. Gerçek cihaz ve MEB kazanım kabulü bekliyor.
+
+## 9.2 — 4 Kasım ek MEB denetimi ve regresyon kapsamı
+
+**Resmî dayanak:** 2018 MEB Fizik Öğretim Programı sayfa 16, `9.2.1.1` ve `9.2.2.1` (https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf).
+
+- `9.2.1.1(a)`: Kütle için mg, g, kg, ton; hacim için mL, L, cm³, dm³, m³ dönüşüm kontrolleri eklendi. Çok küçük ton/m³ değerlerinin 0'a yuvarlanmaması için dönüşümlerde sekiz ondalık basamak hassasiyeti sınırı kullanılıyor. Örnek: 600 g = 0,0006 ton; 1000 mL = 0,001 m³. Birim çubukları aynı tür miktarlardır; kütle ile hacmin bar boyları karşılaştırılmaz.
+- `9.2.1.1(ç)`: Sabit sıcaklık ve basınçta **aynı homojen saf madde** için kütle–özkütle ve hacim–özkütle yatay grafiklerinin her ikisi eklendi; yoğunluk ve işaretli x değerleri değişince hesaplar ve SVG değişiyor. Farklı maddeler için yatay grafik genellenemez.
+- `9.2.2.1`: Önceki bağımsız yarıçap/uzunluk sliderları benzer şekil kıyasını garanti etmiyordu. Küp, dikdörtgenler prizması, silindir ve küre için benzerlik ölçeği `k` eklendi. Her şeklin uygun kesit alanı-hacim oranı gösteriliyor; şekiller benzer büyütülünce `A→k²A`, `V→k³V`, `A/V→(A/V)/k`. Kürede en büyük kesit alanı kullanılır. Görsel iki boyutlu **siluettir**, 3B mekaniği veya kırılma simülasyonu değildir. MEB'in ötesinde kuvvet/akma gerilimi hesaplarına gidilmedi.
+
+**Henüz eksik veya doğrulanmamış:** 9.2.1.1(b) küp/prizma/silindir/küre hacmini bağımsız kontrollü deney; 9.2.1.1(e) karışımların özkütlesinin **hesapsız nitel yorumu**; 9.2.1.1(f) Archimedes ve el-Hazini'nin çalışmaları; 9.2.1.2 günlük yaşam uygulamaları; 9.2.3.1 günlük yaşam örnekleri ve iPad Safari/Apple Pencil üzerinde manuel doğrulama. Yeşil CI, tek başına öğretim doğruluğu onayı değildir.
