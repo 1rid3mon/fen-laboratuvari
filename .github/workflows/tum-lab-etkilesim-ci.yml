@@ -39,3 +39,12 @@ jobs:
       - name: Pressure V3 2018 MEB geometry and interaction regression
         run: |
           node --test labs/tyt-basinc-v3.test.cjs labs/tyt-basinc-v3-ui.test.cjs
+
+      - name: Four touch-first TYT topic physics and gesture regression
+        run: |
+          node --check labs/tyt-dort-atolye-model.js
+          node --check labs/tyt-dort-atolye.js
+          node --check labs/tyt-dort-atolye-model.test.cjs
+          node --check labs/tyt-dort-atolye-ui.test.cjs
+          test -f labs/tyt-dort-atolye.html
+          node --test labs/tyt-dort-atolye-model.test.cjs labs/tyt-dort-atolye-ui.test.cjs
