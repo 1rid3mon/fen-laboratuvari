@@ -4,7 +4,7 @@ const s={tab:'liquid',rho:1000,depth:2,gasP:100,gasVolume:4,solidForce:60,solidA
 const rect=(x,y,w,h,fill,extra='')=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'" '+extra+'/>';
 const txt=(x,y,v)=>'<text x="'+x+'" y="'+y+'" fill="#f0f9fc" font-size="19" font-family="system-ui">'+v+'</text>';
 function add(){if(s.objects.length>=6)return;const i=serial++;s.objects.push({id:i,x:255+i%3*150,y:180+Math.floor(i/3)*75,rho:[500,1000,1500][i%3],volume:2});s.selected=i;render();}
-function settle(){for(const o of s.objects){const side=50+o.volume*8,ratio=o.rho/s.rho;const target=ratio<1?120-side*ratio:ratio===1?190:405-side;o.y=clamp(target,95,405-side);}}
+function settle(){for(const o of s.objects){const side=50+o.volume*8,ratio=o.rho/s.rho;const target=ratio<1?120-side*(1-ratio):ratio===1?190:405-side;o.y=clamp(target,95,405-side);}}
 function object(o){const side=50+o.volume*8,x=clamp(o.x,190,700-side),y=clamp(o.y,95,405-side);o.x=x;o.y=y;
 const immersed=clamp((y+side-120)/side,0,1),weight=o.rho*g*o.volume/1000,buoy=s.rho*g*o.volume*immersed/1000;
 return {svg:rect(x,y,side,side,['#ffd28c','#93d5ec','#f2a6b6'][o.id%3], 'rx="8" stroke="'+(s.selected===o.id?'#fff':'#31566a')+'" stroke-width="4" data-object="'+o.id+'"')+txt(x+8,y+27,'#'+(o.id+1)),weight,buoy,immersed};}
