@@ -37,10 +37,10 @@ test('solid blocks can be moved between load-bearing columns',()=>{
  assert.match(v.nodes.stats.textContent,/Sütun 1: F=30 N/);
  assert.match(v.nodes.stats.textContent,/Sütun 3: F=40 N/);
 });
-test('gas piston drag changes the calculated pressure',()=>{
- const v=boot();v.tab('gas');assert.match(v.nodes.stats.textContent,/P = 100 kPa/);
+test('gas piston drag changes qualitative pressure trend within 2018 MEB',()=>{
+ const v=boot();v.tab('gas');assert.match(v.nodes.stats.textContent,/referans düzeyine yakın/);
  v.pointer('piston',0);v.move(305,240);v.up();
- assert.match(v.nodes.stats.textContent,/P = 200 kPa/);
+ assert.match(v.nodes.stats.textContent,/referans durumdan yüksek/);
 });
 test('ice melt and balloon inputs remain independent in closed vessel demonstration',()=>{
  const v=boot();v.tab('ice');assert.match(v.nodes.stats.textContent,/ip gerilmesi=19,7 N/);
