@@ -8,8 +8,8 @@ Her konu için ayrı ayrı: (1) resmî 2018 MEB kazanım kodu ve metni, (2) ilgi
 
 | Sıra | TYT konu | Mevcut kaynak | Kritik kontrol | Durum |
 |---|---|---|---|---|
-| 1 | Fizik Bilimine Giriş | `tyt-fizige-giris.html` | SI temel/türetilmiş, skaler-vektörel, ölçme, alt alanlar ve fiziksel model sınırları | İlk 3 deney eklendi; **tam kazanım eşleştirmesi bekliyor** |
-| 2 | Madde ve Özellikleri | `tyt-madde-ozellikleri.html` (6 ilk sürüm sahne) | Özkütle, dayanıklılık, adezyon-kohezyon, yüzey gerilimi, kılcallık; hangi kazanımların dahil olduğunun resmî kontrolü | İlk sürüm eklendi; kazanım, nicel model ve gerçek iPad doğrulaması bekliyor |
+| 1 | Fizik Bilimine Giriş | `tyt-fizige-giris.html` | SI temel/türetilmiş, skaler-vektörel, ölçme, alt alanlar ve fiziksel model sınırları | Dört deney: 1B işaretli vektör toplama eklendi; alt dallar/kurumlar ve iPad kabulü eksik |
+| 2 | Madde ve Özellikleri | `tyt-madde-ozellikleri.html` (6 ilk sürüm sahne) | Özkütle, dayanıklılık, adezyon-kohezyon, yüzey gerilimi, kılcallık; hangi kazanımların dahil olduğunun resmî kontrolü | Özkütle + yeni tamamlayıcı hacim/karışım/günlük yaşam atölyeleri var; tüm kazanım ve iPad kabulü bekliyor |
 | 3 | Hareket ve Kuvvet | `newton-hareket-yasalari.html`, hareket sayfaları | TYT–AYT kazanım ayrımı; yol–yer değiştirme, sürat–hız, grafikler, net kuvvet | Ayrıntılı denetim bekliyor |
 | 4 | İş, Güç ve Enerji | `is-guc-enerji.html`, `enerji-lab.html` | Enerji korunumu, işaretler, sürtünme, verim ve TYT–AYT ayrımı | Ayrıntılı denetim bekliyor |
 | 5 | Isı ve Sıcaklık | `isi-sicaklik.html` | Isı–sıcaklık ayrımı, termometre, hâl değişimi, suyun 4 °C özelliği ve genleşme | 15 deney mevcut; bağımsız fizik denetimi bekliyor |
@@ -58,11 +58,11 @@ Kaynak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fret
 |---|---|---|
 | 9.1.1.1 | Fizik biliminin önemi | Eksik |
 | 9.1.2.1 | Fiziğin alt dalları ve disiplinlerle ilişkisi | Eksik |
-| 9.1.3.1 | Temel/türetilmiş, skaler/vektörel, **tek boyutta** vektör toplama | Kısmi: sınıflandırma var; tek boyutta toplama eksik. 2B vektör çizimi yalnız ek kavram gösterimi olarak etiketlendi |
+| 9.1.3.1 | Temel/türetilmiş, skaler/vektörel, **tek boyutta** vektör toplama | Kısmi: tek boyutta işaretli toplama ve sıfır bileşke sahnesi eklendi. 2B vektör çizimi yalnız yön/büyüklük gösterimi; diğer sınıflandırma kapsamı ve Safari testi bekliyor |
 | 9.1.4.1 | Bilim araştırma merkezleri ve etik | Eksik |
-| 9.2.1.1 | Özkütle, kütle/hacim birimleri, geometrik/düzensiz hacim, kütle–hacim ve özkütle grafikleri, nitel karışımlar | Kısmi: yalnız özkütle hesaplama var; grafik, birim, şekil ve karışım eksik |
-| 9.2.1.2 | Günlük yaşamda saf madde/karışım özkütlesi | Eksik |
-| 9.2.2.1 | Dayanıklılık, yalnız küp/prizma/silindir/küre kesit alanı-hacim oranı hesabı | Kısmi: silindir modeli var; diğer şekiller eksik |
+| 9.2.1.1 | Özkütle, kütle/hacim birimleri, geometrik/düzensiz hacim, kütle–hacim ve özkütle grafikleri, nitel karışımlar | Kısmi: birimler, üç grafik, dört geometrik hacim formülü, düzensiz cismin su yer değiştirmesi ve nitel karışım sahneleri eklendi; fiziksel/cihaz kabulü bekliyor |
+| 9.2.1.2 | Günlük yaşamda saf madde/karışım özkütlesi | Kısmi: kuyumculuk, porselen ve ebru örnekleri eklendi; gerçek Safari kabulü bekliyor |
+| 9.2.2.1 | Dayanıklılık, yalnız küp/prizma/silindir/küre kesit alanı-hacim oranı hesabı | Kısmi: küp, prizma, silindir, küre benzerlik/kesit–hacim modelleri var; gerçek yükleme/simetri doğrulaması ve Safari kabulü bekliyor |
 | 9.2.3.1 | Adezyon, kohezyon, yüzey gerilimi, kılcallık; **matematiksel hesaplama yok** | Nitel modeller var; örnekler ve fiziksel sahne doğrulaması eksik |
 
 **Önemli kapsam düzeltmesi:** Yüzme/batma, 9.2 Madde ve Özellikleri kazanımlarından biri değildir; ayrı TYT Basınç ve Kaldırma Kuvveti ünitesinin ön izlemesidir. Öğrenci arayüzüne uyarı eklendi. **2B vektör işlemleri** de 9.1'in tek boyutta toplama sınırını aşar; mevcut 2B sahneye kapsam uyarısı eklendi. Bu tabloda hiçbir 'kısmi' satır tamamlanmış değildir.
@@ -102,3 +102,21 @@ Dereceli silindirle **tam batırılmış, çözünmeyen ve su emmeyen** düzensi
 ### Su seviyesi–cisim kesiti tutarlılık testi
 
 Dereceli silindir SVG'si artık 2B modelde **alan korunumu** sağlar: `A_cisim kesiti = A_kap kesiti × Δh`, ayrıca tam batmış cismin üst noktası son sıvı seviyesinin altında kalır. Örnek sınır değerlerde regresyon testi eklenmiştir. Gerçek 3B düzensiz cismin şekli ve silindir menisküsünün okunması hâlâ modellenmiyor; **bu deney gerçek laboratuvar kalibrasyonu değildir**. 9.2.1.1(b) tümüyle tamamlanmış sayılmaz.
+
+## 4 Kasım — yeni denetlenebilir kazanım aşaması (PR #10)
+
+**Değişiklikler yalnız `feature/tyt-density-measurement-20261104` dalında.** PR hâlâ taslak. `main` ve üretim sitesi değiştirilmedi.
+
+| 2018 MEB sınırı | Eklenen çalışma | Denetimin sınırı |
+|---|---|---|
+| 9.2.1.1(b) | `tyt-madde-tamamlayici.html`: küp a³, prizma a·b·h, silindir πr²h, küre 4πr³/3; boyut değişince hacim ve 2B şekil beraber güncellenir | Çizimler şematiktir, 3B hacim tarama cihazı değildir; düzensiz cismin su taşırma modeli ayrı sayfadadır; kum–su hesabı yok |
+| 9.2.1.1(e) | Tuz-su çözeltisi ve ayrı tabaka oluşturan su–yağ karışımı karşılaştırması | Tuzun çözünme/doyma ve hacim değişimi nicel modellenmez; **karışım özkütlesi hesabı yapılmaz** |
+| 9.2.1.1(f) | Arşimet ve el-Hazinî hakkında kısa metin | Tarihçe, simülasyonun bilimsel doğruluğunu tek başına kanıtlamaz |
+| 9.2.1.2 | Kuyumculuk, porselen, ebru örnekleri, tek parametreye indirgemeye karşı uyarılar | Ebru yalnızca özkütle ile açıklanmaz; takının gerçekliği yalnızca özkütle ile belirlenemez |
+| 9.1.3.1(ç) | `tyt-fizige-giris.js`: tek boyutta A+B, ters yön, sıfır ve negatif bileşke; | 2B vektör kavram çizimi 1B işlemden ayrı ve yalnız kavramsaldır |
+
+**Yeni testler:** `tyt-madde-tamamlayici.test.cjs` (dört hacim formülü, örnekler, nitel kapsam ve parametre sınırları), `tyt-fizige-giris.test.cjs` (sıfır/negatif/ters yön bileşke). `tum-lab-etkilesim-ci.yml` bu iki testi, eski Madde ve Özellikleri ve Fizik Bilimine Giriş testleriyle birlikte çalıştıracak biçimde güncellendi. **CI sonucu güncel commit için yeşil görülmeden başarılı denmez.**
+
+**Bir sonraki kalan işler:** 9.1 alt dallar ve bilim araştırma merkezleri; 9.2 adezyon/kohezyon için günlük örneklerin tam eşleştirmesi ve şemaların gerçek cihaz kontrolü; ardından 9.3 Hareket ve Kuvvet, 9.4 Enerji, 9.5 Isı/Sıcaklık, Elektrostatik, Devre/Manyetizma, Basınç/Kaldırma, Dalgalar ve Optik'in her kazanımı ayrı fizik denetiminden geçirilecek. Yeni sayfa eklemek veya CI geçmesi tek başına MEB doğruluk onayı değildir.
+
+Resmî dayanak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf (2018 Fizik programı, s. 15–16).
