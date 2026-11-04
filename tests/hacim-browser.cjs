@@ -8,7 +8,7 @@ await p.selectOption('#task-mode','all');await click('clear-shapes');await p.sel
 await p.selectOption('#shape','cylinder');await p.selectOption('#task-mode','one');await p.selectOption('#hypothesis','4');await click('save-hypothesis');await click('start-task');await p.locator('#shape-scene').scrollIntoViewIfNeeded();
 async function dragHandle(key,dx,dy){const handle=p.locator(`[data-dimension="${key}"]`),box=await handle.boundingBox(),scene=await p.locator('#shape-scene').boundingBox(),start={x:box.x+box.width/2,y:box.y+box.height/2};const before=Number(await p.locator('#dim-'+key).inputValue());await p.mouse.move(start.x,start.y);await p.mouse.down();await p.mouse.move(start.x+dx*scene.width/800,start.y+dy*scene.height/460,{steps:10});await p.mouse.up();assert.notEqual(Number(await p.locator('#dim-'+key).inputValue()),before);}
 await dragHandle('r',26,0);assert.equal(Number(await p.locator('#dim-r').inputValue()),3);await dragHandle('h',0,-35);assert.equal(Number(await p.locator('#dim-h').inputValue()),4);
-await p.selectOption('#shape','prism');await dragHandle('a',35,0);await dragHandle('b',25,0);
+await p.selectOption('#shape','prism');await dragHandle('a',35,0);await dragHandle('b',-25,0);
 // A changed shape invalidates the old hypothesis rather than silently accepting it.
 await click('record-shape');assert.match(await text('shape-feedback'),/hipotez/);
 await p.selectOption('#shape','cube');await p.selectOption('#hypothesis','8');await click('save-hypothesis');await click('start-task');await p.selectOption('#volume-unit','dm3');assert.match(await text('volume-result'),/0,008 dm³ = 0,008 L/);await p.selectOption('#volume-unit','m3');assert.match(await text('volume-result'),/m³/);
