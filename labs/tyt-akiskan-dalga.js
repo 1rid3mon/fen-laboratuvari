@@ -1,6 +1,6 @@
 (function(d,M){'use strict';const $=id=>d.getElementById(id),clamp=M.clamp,fmt=n=>Number(n).toLocaleString('tr-TR',{maximumFractionDigits:2});
-const modes=[['flow','Daralan boruda akış'],['torricelli','Torricelli / atmosfer'],['waves','Su dalgası engeli'],['earthquake','Deprem ve güvenlik'],['research','Fizik ve araştırma']];
-const s={tab:'flow',constriction:.65,flowSpeed:2,altitude:0,angleDeg:90,impactOffset:0,sourceX:175,sourceY:280,tremor:20,anchored:false,phase:0,playing:true,research:'particle'};
+const modes=[['flow','Daralan boruda akış'],['torricelli','Torricelli / atmosfer'],['waves','Düz engelde yansıma'],['parabola','Parabolik engelde odaklanma'],['earthquake','Deprem ve güvenlik'],['research','Fizik ve araştırma']];
+const s={tab:'flow',constriction:.65,flowSpeed:2,altitude:0,angleDeg:90,impactOffset:0,focal:110,sourceX:175,sourceY:280,tremor:20,anchored:false,phase:0,playing:true,research:'particle'};
 let pointer=null,prev=0;
 const rect=(x,y,w,h,fill,other='')=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'" '+other+'/>';
 const txt=(x,y,t,size=18,color='#ecf8fe')=>'<text x="'+x+'" y="'+y+'" font-size="'+size+'" font-family="system-ui" fill="'+color+'">'+t+'</text>';
@@ -17,6 +17,7 @@ function controls(){
  if(s.tab==='flow')out=slider('constriction','Dar bölüm kesit oranı',.3,1,.05)+slider('flowSpeed','Akış hızı (şematik)',.5,4,.5)+button('reset-flow','Boruyu yeniden genişlet');
  if(s.tab==='torricelli')out=slider('altitude','Yükseklik (göreli etki)',0,3000,250,'m');
  if(s.tab==='waves')out=slider('angleDeg','Düz engelin açısı',50,130,5,'°')+slider('impactOffset','Temas noktası (engelde)',-110,110,10)+button('reset-wave','Engeli ve kaynağı sıfırla');
+ if(s.tab==='parabola')out=slider('focal','Parabolik engelin odak uzaklığı (çizim)',70,155,5,'görsel birim')+button('reset-parabola','Parabolik engeli sıfırla');
  if(s.tab==='earthquake')out=slider('tremor','Şematik sallanma düzeyi',0,40,5)+button('anchor',s.anchored?'Dolabın sabitlemesini kaldır':'Dolabı duvara sabitle');
  if(s.tab==='research')out=sel('research','Araştırma örneği',[['particle','Parçacık fiziği / CERN'],['space','Uzay araştırmaları / NASA ve ESA'],['national','Türkiye / TÜBİTAK']]);
  $('controls').innerHTML=out;
@@ -53,6 +54,21 @@ function reflectionScene(){
  return{b,stats:'Geliş açısı ve yansıma açısı, engele dik çizilen normale göre birbirine eşittir.',
  note:'2018 MEB 10.3.3.2: Doğrusal su dalgasının düz engelden yansıması. Kaynağı, çarpma noktasını veya engelin ucunu parmakla taşı. İdeal düzgün engelde normal doğrultusuna göre geliş ve yansıma açıları eşittir; dalganın bulunduğu ortamdaki yayılma hızı değişmez. Kaynak/engel boyutları ve yaygın yüzey dağılması modellenmez.'};
 }
+function parabolicScene(){
+ const vertex={x:650,y:250},f=s.focal;
+ let b=arrowHeads+'<path d="';
+ const points=[];for(let y=100;y<=400;y+=5)points.push([650-(y-250)*(y-250)/(4*f),y]);
+ b+='M'+points.map(p=>p.join(' ')).join(' L')+'" fill="none" stroke="#ffe1ae" stroke-width="9"/>';
+ for(const offsetY of [-105,-50,0,50,105]){
+ const r=M.parabolicReflection({vertexX:vertex.x,vertexY:vertex.y,focal:f,offsetY});
+ const q=r.impact,to={x:q.x+260*r.reflected.x,y:q.y+260*r.reflected.y};
+ b+=line(105,q.y,q.x,q.y,'#92e7d9',4)+line(q.x,q.y,to.x,to.y,'#ffb58c',4);
+ }
+ const focus={x:650-f,y:250};b+=circle(focus.x,focus.y,16,'#aaf6db','data-drag="focus"')+txt(focus.x-52,220,'Odak',17);
+ b+=circle(650,250,13,'#ffe4b9','data-drag="vertex"')+txt(110,73,'Doğrusal dalgalar parabolik engelden yansıyıp odakta birleşir.');
+ return{b,stats:'Parabolik engel gelen doğrusal dalgaları yansıtır; yansıyan dalgalar odakta toplanır.',
+ note:'2018 MEB 10.3.3.2: Bu ideal 2B parabolik engelde gelen doğrusal dalga cephesi eş yönlü ışınlarla temsil edilir. Her noktadaki yansıma açısı yerel normale göre geliş açısına eşittir. Engelin odak konumunu parmağınla değiştir. Gerçek su dalgasında kırınım, kayıplar, sonlu dalga boyu ve dalga cephesinin odakta yayılması modellenmemiştir.'};
+}
 function quakeScene(){
  const waveX=Math.sin(s.phase*7)*s.tremor*.9,baseX=230+waveX;
  const angle=s.anchored?0:Math.sin(s.phase*4)*s.tremor*.43;
@@ -67,20 +83,21 @@ function researchScene(){
  return{b,stats:q[2],note:'2018 MEB 9.1.1–9.1.4: Fiziğin alt dalları ve araştırma merkezleri örneklerle tanıtılır; bilimsel etik, araştırmanın tekrarlanabilirliği ve güvenilir ölçüm önemlidir. Araştırma merkezi seçim alanı bir kavram keşfi etkinliğidir, fiziksel hareket simülasyonu değildir.'};
 }
 function scene(){
- const scenes={flow:flowScene,torricelli:torricelliScene,waves:reflectionScene,earthquake:quakeScene,research:researchScene};
+ const scenes={flow:flowScene,torricelli:torricelliScene,waves:reflectionScene,parabola:parabolicScene,earthquake:quakeScene,research:researchScene};
  const q=scenes[s.tab]();$('scene').innerHTML=rect(0,0,900,500,'#0c273a')+q.b;$('stats').textContent=q.stats;$('explain').textContent=q.note;
 }
 function render(){controls();scene();}
 $('tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t){s.tab=t.dataset.tab;render();}});
 $('controls').addEventListener('input',e=>{const key=e.target.dataset.key;if(!Object.hasOwn(s,key))return;const v=e.target.type==='range'?Number(e.target.value):e.target.value;s[key]=v;const label=e.target.parentNode?.querySelector('strong');if(label)label.textContent=fmt(v);scene();});
 $('controls').addEventListener('change',e=>{if(e.target.dataset.key==='research'){s.research=e.target.value;scene();}});
-$('controls').addEventListener('click',e=>{const a=e.target.dataset.action;if(a==='anchor'){s.anchored=!s.anchored;render();}if(a==='reset-wave'){s.sourceX=175;s.sourceY=280;s.angleDeg=90;s.impactOffset=0;render();}if(a==='reset-flow'){s.constriction=1;render();}});
+$('controls').addEventListener('click',e=>{const a=e.target.dataset.action;if(a==='anchor'){s.anchored=!s.anchored;render();}if(a==='reset-wave'){s.sourceX=175;s.sourceY=280;s.angleDeg=90;s.impactOffset=0;render();}if(a==='reset-flow'){s.constriction=1;render();}if(a==='reset-parabola'){s.focal=110;render();}});
 function pos(e){const r=$('scene').getBoundingClientRect();return{x:(e.clientX-r.left)*900/r.width,y:(e.clientY-r.top)*500/r.height};}
 $('scene').addEventListener('pointerdown',e=>{const t=e.target.closest('[data-drag]');if(!t)return;pointer={name:t.dataset.drag,id:e.pointerId};$('scene').setPointerCapture?.(e.pointerId);e.preventDefault();});
 $('scene').addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;const p=pos(e);
  if(pointer.name==='neck')s.constriction=clamp(Math.round((245-p.y)/60*20)/20,.3,1);
  if(pointer.name==='source'){s.sourceX=clamp(p.x,100,380);s.sourceY=clamp(p.y,110,420);}
  if(pointer.name==='impact'){const a=s.angleDeg*Math.PI/180;s.impactOffset=clamp(Math.round(((p.x-585)*Math.cos(a)+(p.y-252)*Math.sin(a))/10)*10,-110,110);}
+ if(pointer.name==='focus')s.focal=clamp(Math.round((650-p.x)/5)*5,70,155);
  if(pointer.name==='barrier'){const a=Math.atan2(p.y-252,p.x-585)*180/Math.PI;s.angleDeg=clamp(Math.round(a/5)*5,50,130);}
  scene();e.preventDefault();});
 for(const e of ['pointerup','pointercancel','lostpointercapture'])$('scene').addEventListener(e,v=>{if(pointer&&pointer.id===v.pointerId){pointer=null;render();}});
