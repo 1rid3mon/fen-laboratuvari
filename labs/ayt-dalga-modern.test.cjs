@@ -3,7 +3,14 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const src=fs.readFileSync(path.join(__dirname,'ayt-dalga-modern.js'),'utf8'),html=fs.readFileSync(path.join(__dirname,'ayt-dalga-modern.html'),'utf8');
 function mount(){const ids=['tabs','controls','scene','readout','note'],nodes=new Map(),handlers=new Map();for(const id of ids)nodes.set(id,{innerHTML:'',textContent:'',addEventListener(type,fn){handlers.set(id+':'+type,fn)}});vm.runInNewContext(src,{document:{getElementById:id=>{if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',addEventListener(){}});return nodes.get(id)}}});return {nodes,handlers};}
 test('ten modern and wave scenes are navigable and render diagrams',()=>{const t=mount();for(const tab of ['interference','diffraction','doppler','em','photo','compton','matter','relativity','blackbody','semiconductor']){t.handlers.get('tabs:click')({target:{closest:()=>({dataset:{tab}})}});assert.ok(t.nodes.get('scene').innerHTML.length>150);assert.ok(t.nodes.get('readout').textContent.length>15);}});
-test('MEB content: all ten required visual relationships are present',()=>{for(const e of ['wave*dist/spacing','photon>=s.work','1-Math.cos(theta)','240/s.momentum','1/Math.sqrt(1-s.beta*s.beta)','2.898e6/s.temp','s.bias>0'])assert.ok(src.includes(e),e);});
+test('MEB content: all ten required visual relationships are present',()=>{for(const e of ['wave*dist/spacing','photon>s.work','1-Math.cos(theta)','240/s.momentum','1/Math.sqrt(1-s.beta*s.beta)','2.898e6/s.temp','s.bias>0'])assert.ok(src.includes(e),e);});
 test('inputs update values and redraw',()=>{const t=mount();t.handlers.get('controls:input')({target:{dataset:{key:'lambda'},value:'700'}});assert.ok(t.nodes.get('readout').textContent.includes('Saçak'));});
 test('no external scripts or Maarif content; linked from AYT homepage',()=>{assert.match(html,/src="ayt-dalga-modern.js"/);assert.doesNotMatch(html,/Maarif Modeli/);assert.ok(fs.readFileSync(path.join(__dirname,'../index.html'),'utf8').includes('labs/ayt-dalga-modern.html'));});
 test('JavaScript syntax parses',()=>assert.doesNotThrow(()=>new vm.Script(src)));
+
+test('scientific regressions: EM fields in phase, Planck shape, and single-slit minima',()=>{
+ assert.ok(src.includes('235-55*Math.sin(t)'),'EM B field must be in phase with E');
+ assert.ok(src.includes('Math.expm1(z)'),'blackbody curve must follow Planck wavelength distribution');
+ assert.ok(src.includes('n===0?1:0.015'),'single-slit minima must be dark');
+ assert.ok(src.includes("photon===s.work"),'threshold photon has zero kinetic energy');
+});
