@@ -66,3 +66,7 @@ Kaynak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fret
 | 9.2.3.1 | Adezyon, kohezyon, yüzey gerilimi, kılcallık; **matematiksel hesaplama yok** | Nitel modeller var; örnekler ve fiziksel sahne doğrulaması eksik |
 
 **Önemli kapsam düzeltmesi:** Yüzme/batma, 9.2 Madde ve Özellikleri kazanımlarından biri değildir; ayrı TYT Basınç ve Kaldırma Kuvveti ünitesinin ön izlemesidir. Öğrenci arayüzüne uyarı eklendi. **2B vektör işlemleri** de 9.1'in tek boyutta toplama sınırını aşar; mevcut 2B sahneye kapsam uyarısı eklendi. Bu tabloda hiçbir 'kısmi' satır tamamlanmış değildir.
+
+## 9.2.1.1 kazanım ilerlemesi — 4 Kasım
+
+Özkütle için **etkileşimli kütle–hacim grafiği** eklendi: sabit özkütle ile orijinden geçen doğru, doğrunun eğimi ρ=m/V, hacim değişince noktanın ve kütlenin değişmesi. Uç değer ve eğim regresyon testleri eklendi. Bu kazanım **henüz tam değil**: düzensiz cisim hacmi, birim dönüşümleri, özkütle-hacim grafiği, karışımların nitel yorumu ve günlük hayat uygulamaları bekliyor. Görsel SVG testleri gerçek Safari etkileşim testi değildir.
