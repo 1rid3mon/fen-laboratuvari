@@ -84,3 +84,7 @@ Dereceli silindirle **tam batırılmış, çözünmeyen ve su emmeyen** düzensi
 - **Yüzme-batma:** 9.2 dışı ön izleme olarak kalır.
 
 **Kalan kritik işler:** su taşırma sahnesinde cisim geometrisi ve ölçek fiziksel olarak doğrulanmalı; kılcallıkta sınır kırpılması gerçek eğri olarak yorumlanmamalı; özkütle-hacim grafiği, birim dönüşümü, karışımlar ve diğer geometrik dayanıklılık örnekleri eksik. Kod testleri gerçek iPad/Safari gözleminin yerini tutmaz.
+
+### Kılcallık ve su yer değiştirme — ek doğruluk düzeltmesi
+
+Önceki kılcallık modelinde dar boru için hesaplanan sıvı seviyesi SVG sınırına kırpılıyordu. Bu, gerçek modelin yarıçapla değişimini bozduğu için kaldırıldı; temsili 100/r ölçeğiyle tüm kontrol aralığında kırpılmadan gösteriliyor. **100/r bir gerçek yükseklik formülü değildir.** Dereceli silindir deneyinde başlangıç seviyesi çizgisi etiketlendi ve cismin geometrisinin şematik olduğu belirtildi. Gerçek cihaz ve MEB kazanım kabulü bekliyor.
