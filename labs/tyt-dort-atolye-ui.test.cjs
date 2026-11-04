@@ -37,6 +37,11 @@ test('wave source drag changes shape while fixed end remains constrained',()=>{
  assert.notEqual(x.nodes.scene.innerHTML,prior);
  assert.match(x.nodes.explain.textContent,/Sabit uçta/);
 });
+test('two opposing wave sources are independently draggable',()=>{
+ const x=boot('waves');x.mode('collision');
+ const before=x.nodes.scene.innerHTML;x.drag('collision-b',755,180);
+ assert.notEqual(x.nodes.scene.innerHTML,before);assert.match(x.nodes.result.textContent,/toplam:/);
+});
 test('water source and interface depth can be dragged without disappearing',()=>{
  const x=boot('waves');x.mode('water');
  x.drag('water-source',350,110);assert.match(x.nodes.scene.innerHTML,/cx="350" cy="115"/);
