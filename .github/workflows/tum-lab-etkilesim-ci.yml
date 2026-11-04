@@ -26,3 +26,6 @@ jobs:
         run: |
           node --check labs/tum-laboratuvar-etkilesim.test.cjs
           node --test labs/tum-laboratuvar-etkilesim.test.cjs
+      - name: 2018 MEB TYT matter and entry regression
+        run: |
+          node --test labs/tyt-madde-ozellikleri.test.cjs labs/tyt-madde-tamamlayici.test.cjs labs/tyt-fizige-giris.test.cjs
