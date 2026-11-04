@@ -36,4 +36,4 @@ jobs:
           node --check labs/ayt-dalga-modern.js
           node --check labs/ayt-dalga-modern.test.cjs
       - name: Physics and iPad drag regression
-        run: node --test labs/tyt-devre.test.cjs labs/tyt-basinc-dalgalar.test.cjs labs/ayt-dalga-modern.test.cjs
+        run: node --test labs/tyt-devre.test.cjs labs/tyt-basinc-dalgalar.test.cjs labs/ayt-dalga-modern.test.cjs labs/tyt-fizige-giris.test.cjs
