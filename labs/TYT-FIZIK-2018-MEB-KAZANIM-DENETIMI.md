@@ -43,3 +43,9 @@ GitHub Actions 41788276375 (commit 371242e) başarısız: `tyt-basinc-dalgalar.t
 - Islatmayan sıvıda kılcal borudaki sıvı seviyesi haznenin altına çekilir (önceki çizimde boru içinde seviye aynı kalıyordu).
 - Islatan yüzeyde sıvı ince tabaka halinde gösterilir (önceki kalın dikdörtgen ıslanmayı yanlış temsil ediyordu).
 - Yüzey gerilimi hâlâ **nitel**, sıcaklık kontrolünde eşik temsili mevcut: kesintisiz fiziksel nicel değişim olarak **kabul edilmedi**. Dayanıklılık da benzer cisimler dışında sayısal çıkarım için **kabul edilmedi**. Resmî MEB kazanım metni ve gerçek iPad testi bekliyor.
+
+## Aşama 2 devam — nitel model güvenliği
+
+- Yüzey gerilimi görselindeki 50 °C eşiği kaldırıldı; sıcaklıkla sürekli değişen **temsili** görsel gösterge kullanılıyor. Sayısal gösterge fiziksel yüzey gerilimi ölçümü **değildir** ve öğrenciye böyle belirtiliyor. Sabun etkisi de nicel fizik verisi değildir.
+- Dayanıklılık sahnesinde silindir geometrisinin kesit alanı πr², hacmi πr²L ve oranı 1/L açıkça gösteriliyor; evrensel kopma dayanıklılığı iddiası kaldırıldı. Bu hâlâ fiziksel kırılma/çökme simülasyonu değildir.
+- Her iki sahne için regresyon testleri eklendi. Resmî MEB kazanım kodu ve gerçek Safari testi hâlâ beklemede.
