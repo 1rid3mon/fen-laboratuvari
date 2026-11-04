@@ -68,3 +68,11 @@ jobs:
       - name: Existing TYT physical laboratories cross-regression
         run: |
           node --test labs/tyt-devre.test.cjs labs/tyt-elektro.test.cjs labs/isi-sicaklik.test.cjs labs/tyt-basinc-dalgalar.test.cjs
+
+      - name: TYT 10.4.8 prism optics physics and pointer regression
+        run: |
+          node --check labs/tyt-optik-prizma-model.js
+          node --check labs/tyt-optik-prizma.js
+          node --check labs/tyt-optik-prizma-model.test.cjs
+          node --check labs/tyt-optik-prizma-ui.test.cjs
+          node --test labs/tyt-optik-prizma-model.test.cjs labs/tyt-optik-prizma-ui.test.cjs
