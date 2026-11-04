@@ -15,7 +15,7 @@ Proje tamamlanmadı. Hedef altı alan ve bütün ilgili kazanımlardır.
 
 Özkütle ölçüm atölyesi: 9.2.1.1 b/c/ç'nin bir bölümü. Tam kazanım statüsü yükseltilmeyecek. Yeni numuneyi sürükleme, boyut seçimi, tartım, kısmi/tam batırma, su korunumu, hipotez, ölçüm defteri, kütle–hacim ve özkütle grafikleri, kontrollü karşılaştırma, açıklama öz değerlendirmesi, gerekçeli özgün soru ve CSV.
 
-Bu ilk kaydın yazıldığı anda geliştirme kodu henüz GitHub'a aktarılmadı, PR/merge yok. Önce müfredat envanterini küçük bağımsız paket olarak kaydet; sonra özkütle kodunu ayrı PR'da doğrula.
+Envanter PR #15, bütün HEAD kontrolleri başarılı ve clean durumda doğrulanıp main'e birleştirildi. HEAD: fa7799b70b86806053b45a2f6fba65d8cdacbd43; merge: bcea32904f35001e17575d3770557e690d37dd8e. Özkütle paketi feature/density-learning-cycle-20261105 dalında ayrı PR olarak doğrulanıyor. Yerel 419/419 test geçti. Chromium/WebKit CI sonucu alınmadan birleştirme yapılmayacak.
 
 ## Devam sırası
 

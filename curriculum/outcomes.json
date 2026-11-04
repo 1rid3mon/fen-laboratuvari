@@ -131,8 +131,8 @@
       "title": "Özkütleyi, kütle ve hacimle ilişkilendirerek açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 302,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Özkütle ölçüm atölyesi b/c/ç kısmi uygulaması; diğer şekiller, birimler, nitel karışımlar ve tarihçe ayrı kabul bekliyor. Tarayıcı CI ve gerçek iPad bekliyor.",
       "clauses": [
         {
           "part": "a",
@@ -177,7 +177,11 @@
           "evidence": []
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/DENSITY-REVIEW.md",
+        "labs/ozkutle-olcum.test.cjs",
+        "tests/ozkutle-browser.cjs"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
