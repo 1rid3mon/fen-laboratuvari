@@ -98,3 +98,7 @@ Dereceli silindirle **tam batırılmış, çözünmeyen ve su emmeyen** düzensi
 - `9.2.2.1`: Önceki bağımsız yarıçap/uzunluk sliderları benzer şekil kıyasını garanti etmiyordu. Küp, dikdörtgenler prizması, silindir ve küre için benzerlik ölçeği `k` eklendi. Her şeklin uygun kesit alanı-hacim oranı gösteriliyor; şekiller benzer büyütülünce `A→k²A`, `V→k³V`, `A/V→(A/V)/k`. Kürede en büyük kesit alanı kullanılır. Görsel iki boyutlu **siluettir**, 3B mekaniği veya kırılma simülasyonu değildir. MEB'in ötesinde kuvvet/akma gerilimi hesaplarına gidilmedi.
 
 **Henüz eksik veya doğrulanmamış:** 9.2.1.1(b) küp/prizma/silindir/küre hacmini bağımsız kontrollü deney; 9.2.1.1(e) karışımların özkütlesinin **hesapsız nitel yorumu**; 9.2.1.1(f) Archimedes ve el-Hazini'nin çalışmaları; 9.2.1.2 günlük yaşam uygulamaları; 9.2.3.1 günlük yaşam örnekleri ve iPad Safari/Apple Pencil üzerinde manuel doğrulama. Yeşil CI, tek başına öğretim doğruluğu onayı değildir.
+
+### Su seviyesi–cisim kesiti tutarlılık testi
+
+Dereceli silindir SVG'si artık 2B modelde **alan korunumu** sağlar: `A_cisim kesiti = A_kap kesiti × Δh`, ayrıca tam batmış cismin üst noktası son sıvı seviyesinin altında kalır. Örnek sınır değerlerde regresyon testi eklenmiştir. Gerçek 3B düzensiz cismin şekli ve silindir menisküsünün okunması hâlâ modellenmiyor; **bu deney gerçek laboratuvar kalibrasyonu değildir**. 9.2.1.1(b) tümüyle tamamlanmış sayılmaz.
