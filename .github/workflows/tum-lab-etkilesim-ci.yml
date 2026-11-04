@@ -76,3 +76,8 @@ jobs:
           node --check labs/tyt-optik-prizma-model.test.cjs
           node --check labs/tyt-optik-prizma-ui.test.cjs
           node --test labs/tyt-optik-prizma-model.test.cjs labs/tyt-optik-prizma-ui.test.cjs
+
+      - name: Ten-unit TYT MEB coverage and AYT separation gate
+        run: |
+          node --check labs/tyt-kapsam-2018.test.cjs
+          node --test labs/tyt-kapsam-2018.test.cjs
