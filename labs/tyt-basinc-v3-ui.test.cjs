@@ -25,6 +25,9 @@ test('liquid view permits up to four probes and displays separate readings',()=>
  v.action('add-probe');assert.doesNotMatch(v.nodes.scene.innerHTML,/data-probe="5"/);
  assert.match(v.nodes.stats.textContent,/S1:/);assert.match(v.nodes.stats.textContent,/S4:/);
 });
+test('submerged tank floor and both side walls show normal-force arrows',()=>{
+ const v=boot();assert.equal((v.nodes.scene.innerHTML.match(/marker-end="url\\(#pa\\)"/g)||[]).length,3);
+});
 test('touch dragging of an individual liquid probe updates its geometry',()=>{
  const v=boot();v.pointer('probe',1);v.move(470,340);assert.match(v.nodes.scene.innerHTML,/data-probe="1" cx="470" cy="340"/);v.up();assert.match(v.nodes.stats.textContent,/S1:/);
 });
