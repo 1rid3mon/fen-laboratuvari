@@ -77,6 +77,11 @@ test('heat: contact from drag triggers energy-conserving temperature exchange',(
  assert.doesNotMatch(x.nodes.result.textContent,/A: 80°C · B: 20°C/);
  assert.match(x.nodes.result.textContent,/İdeal denge: 50°C/);
 });
+test('heat: reverse temperature gradient reverses the heat-flow arrow',()=>{
+ const x=boot('heat');x.change('aInitial',20);x.change('bInitial',80);
+ x.drag('heat-a',505,250);assert.match(x.nodes.scene.innerHTML,/Termal temas · B → A/);
+ x.frame(1000);x.frame(2000);assert.match(x.nodes.result.textContent,/Q\\(A→B\\)=-/);
+});
 test('heat: expansion illustration labels exaggerated scale',()=>{
  const x=boot('heat');x.mode('rod');x.change('rodTemp',120);
  assert.match(x.nodes.result.textContent,/uzama/i);
