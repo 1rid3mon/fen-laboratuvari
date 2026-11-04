@@ -20,3 +20,6 @@
 .lab-load-error h3{margin:0 0 8px;color:#ffe4b8}.lab-load-error button{padding:10px 15px;border-radius:10px;background:#296b62;color:#fff;border:1px solid #aaf0dd}
 @media(max-width:730px){.bio-stage{padding:7px}.bio-stage-heading strong{font-size:.64rem}.bio-stage-heading small{font-size:.66rem}.bio-stage-caption{font-size:.64rem}}
 @media(prefers-reduced-motion:reduce){.bio-particle{animation:none!important}}
+
+.lab-visual-fallback{padding:14px;margin:8px 0;border-radius:12px;border:1px solid #dcad79;color:#ffe4bd;background:#3d3027}
+@media(max-width:730px){.bio-stage{overflow-x:auto;overscroll-behavior-inline:contain}.bio-stage-svg{min-width:600px}.bio-stage-heading{min-width:320px}}
