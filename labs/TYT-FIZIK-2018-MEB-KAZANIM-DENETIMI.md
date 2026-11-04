@@ -74,3 +74,13 @@ Kaynak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fret
 ## 9.2.1.1 — su yer değiştirme deneyi
 
 Dereceli silindirle **tam batırılmış, çözünmeyen ve su emmeyen** düzensiz katının hacmi için ilk/son su seviyesi farkı gösterimi eklendi. 1 mL = 1 cm³ dönüşümü ve regresyon testi eklendi. Bu model yalnız su seviyesi değişimini öğretir; taşırma kabı, menisküs okuma ve gerçek cihaz Safari doğrulaması henüz yok. Kazanım tam olarak onaylanmadı.
+
+## Fiziksel yanıltıcılık denetimi — Madde ve Özellikleri
+
+- **Yüzey gerilimi:** Önceki yüzde göstergesi ve doğrulanmamış 72,8−0,15(T−20) sayısal yaklaşımı kaldırıldı. Çizim yalnız nitel eğilim gösterir; sabun etkisi ve damla biçimi ölçüm olarak sunulmaz.
+- **Dayanıklılık:** Silindirin kesit alanı ve hacmi sonuçları π ortak çarpanı ayrılarak etiketlendi. Kesit/hacim oranı kırılma yükünün evrensel formülü değildir.
+- **Kılcallık:** Temsili sıvı seviyesi çizim sınırları içinde tutuldu; gerçek yükseklik hesabı değildir.
+- **Özkütle:** Bağımsız m/V kontrolleri aynı maddenin boyut değiştirmesi şeklinde yorumlanamaz; grafik sabit özkütle varsayımıyla ayrıldı.
+- **Yüzme-batma:** 9.2 dışı ön izleme olarak kalır.
+
+**Kalan kritik işler:** su taşırma sahnesinde cisim geometrisi ve ölçek fiziksel olarak doğrulanmalı; kılcallıkta sınır kırpılması gerçek eğri olarak yorumlanmamalı; özkütle-hacim grafiği, birim dönüşümü, karışımlar ve diğer geometrik dayanıklılık örnekleri eksik. Kod testleri gerçek iPad/Safari gözleminin yerini tutmaz.
