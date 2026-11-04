@@ -4,12 +4,14 @@ on:
     paths:
       - 'labs/tyt-devre*'
       - 'labs/tyt-basinc-dalgalar*'
+      - 'labs/ayt-dalga-modern*'
       - 'index.html'
       - '.github/workflows/tyt-devre-ci.yml'
   pull_request:
     paths:
       - 'labs/tyt-devre*'
       - 'labs/tyt-basinc-dalgalar*'
+      - 'labs/ayt-dalga-modern*'
       - 'index.html'
       - '.github/workflows/tyt-devre-ci.yml'
 jobs:
@@ -31,5 +33,7 @@ jobs:
           node --check labs/tyt-devre.test.cjs
           node --check labs/tyt-basinc-dalgalar.js
           node --check labs/tyt-basinc-dalgalar.test.cjs
+          node --check labs/ayt-dalga-modern.js
+          node --check labs/ayt-dalga-modern.test.cjs
       - name: Physics and iPad drag regression
-        run: node --test labs/tyt-devre.test.cjs labs/tyt-basinc-dalgalar.test.cjs
+        run: node --test labs/tyt-devre.test.cjs labs/tyt-basinc-dalgalar.test.cjs labs/ayt-dalga-modern.test.cjs
