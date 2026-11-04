@@ -68,7 +68,7 @@ function waveSound(){
  return{b,result:'Genlik: '+fmt(state.soundA)+' görsel birim · Frekans: '+fmt(state.soundF)+' göreli',note:'Ses mekanik ve boyuna dalgadır. İşaretlenen noktalar ortamın titreşen tanecikleridir; tanecikler kaynaktan alıcıya taşınmaz. Boşlukta ses yayılamaz. Temsilî genlik ve frekans değerleri gerçek dB/Hz ölçümü değildir.'};
 }
 function matterCylinder(){
- const items=state.objects.map(o=>({...o,inside:o.x>525&&o.x<748&&o.y>100&&o.y<415}));
+ const items=state.objects.map(o=>({...o,inside:o.x>=506&&o.x+(44+o.volumeMl*.28)<=758&&o.y>=78&&o.y+o.height<=418}));
  const v=M.displacement(items,{waterMl:state.waterMl});
  let b=arrowDef+rect(502,78,260,340,'#254a59','rx="15" stroke="#acd6e8" stroke-width="4"')+rect(506,v.level,252,415-v.level,'#2084ad','opacity=".82"')+line(506,v.level,758,v.level,'#b2efff',4);
  for(let ml=0;ml<=500;ml+=50){const y=408-ml*318/500;b+=line(510,y,532,y,'#e3eef8',2)+text(452,y+5,ml,14);}
@@ -155,7 +155,7 @@ el('scene').addEventListener('pointermove',e=>{if(!moving||moving.pointer!==e.po
  if(key==='water-source'){state.sourceX=clamp(p.x,115,430);}
  if(key==='water-boundary'){state.waterY=clamp(p.y,205,345);}
  if(key==='sound-amplitude'){state.soundA=clamp(Math.round((p.x-80)/5)*5,0,35);}
- if(key.startsWith('matter-')){const o=state.objects.find(o=>o.id===Number(key.slice(7)));if(o){o.x=clamp(p.x-26,80,810);o.y=clamp(p.y-25,90,420);}}
+ if(key.startsWith('matter-')){const o=state.objects.find(o=>o.id===Number(key.slice(7)));if(o){const w=44+o.volumeMl*.28;if(p.x>=506&&p.x<=758){o.x=clamp(p.x-w/2,506,758-w);o.y=clamp(p.y-o.height/2,90,408-o.height);}else{o.x=clamp(p.x-26,80,810);o.y=clamp(p.y-25,90,420);}}}
  if(key==='cap-1')state.radius1=clamp(Math.round((p.x-315-7.5)/7.5*2)/2,1,6);
  if(key==='cap-2')state.radius2=clamp(Math.round((p.x-575-7.5)/7.5*2)/2,1,6);
  if(key==='vector-a')state.a=clamp(Math.round((p.x-450)/33),-5,5);
