@@ -13,6 +13,13 @@ test('wave reflection sends a reflected pulse in the opposite direction',()=>{
  const p=M.pulse(580,6.5,{length:680,start:100,speed:120,end:'fixed',amplitude:30,width:50});
  assert.ok(p.reflected<0);
 });
+test('two equal opposite traveling pulses cancel only while overlapped',()=>{
+ const t=(755-160)/(2*120),x=(160+755)/2;
+ const v=M.collide(x,t,{leftX:160,rightX:755,a:35,b:-35});
+ near(v.left,35);near(v.right,-35);near(v.displacement,0);
+ const before=M.collide(160,0,{leftX:160,rightX:755,a:35,b:-35});
+ assert.ok(before.displacement>34);
+});
 test('shallow-water refraction approaches normal when entering shallower water',()=>{
  const r=M.refract(30,4,1);near(r.speedRatio,.5);near(r.theta2,Math.asin(.25)*180/Math.PI);
  const same=M.refract(37,2,2);near(same.theta2,37);
