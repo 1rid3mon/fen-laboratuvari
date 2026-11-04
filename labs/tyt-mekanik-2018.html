@@ -1,0 +1,24 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a29"><title>TYT 2018 MEB · Hareket, Kuvvet ve Enerji Atölyesi</title>
+<style>:root{font:16px/1.5 system-ui,-apple-system,sans-serif;color-scheme:dark;background:#081a2a;color:#eff9fc}*{box-sizing:border-box}
+body{margin:0;padding:clamp(12px,3vw,28px)}main{max-width:1240px;margin:auto}a{color:#91e8d9}h1{font-size:clamp(1.5rem,3vw,2.2rem)}
+button,select{font:inherit;color:white;background:#1c4b61;border:1px solid #83aebc;border-radius:10px;padding:11px;min-height:44px}
+button[aria-pressed=true]{background:#137b77}button:focus-visible,input:focus-visible{outline:3px solid #ffe1a4;outline-offset:2px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.layout{display:grid;grid-template-columns:minmax(260px,320px) minmax(0,1fr);gap:14px;align-items:start}
+.panel{background:#112d41;border:1px solid #345b70;border-radius:15px;padding:16px}
+.panel label{display:block;margin:13px 0}.panel input[type=range]{display:block;width:100%;accent-color:#8eedde;min-height:40px;touch-action:pan-y}
+.panel strong{color:#a2f4dd}svg{display:block;width:100%;height:auto;border-radius:10px;touch-action:none;user-select:none;background:#0b2539}
+svg text{pointer-events:none}#stats{color:#a7f2db;font-weight:700;overflow-wrap:anywhere}#note{padding-left:12px;border-left:3px solid #87d4d5;line-height:1.6}
+.warn{background:#30271b;border:1px solid #b4955c;border-radius:12px;padding:12px;color:#f9ecd0}
+@media(max-width:730px){.layout{grid-template-columns:1fr}.panel{padding:12px}}
+</style></head><body><main>
+<a href="../index.html">← Fen Laboratuvarı</a><h1>TYT Fizik · Hareket, Kuvvet ve Enerji</h1>
+<p>2018 MEB 9.3–9.4 kazanımlarına göre. Araçları, kuvvet oklarını ve enerji durumlarını parmakla değiştir; sonuçları anında gözlemle. AYT eğik düzlem, makara ve açılı kuvvet hesapları bu atölyede yok.</p>
+<p class="warn"><strong>Geliştirme ön izlemesi:</strong> Yalnız doğrulanmış ideal fizik modelleriyle hazırlanmıştır. CI geçmesi gerçek iPad/Safari kullanıcı kabulünün tamamlandığı anlamına gelmez. Model sınırları her sahnenin altında yazılıdır.</p>
+<nav class="tabs" id="tabs" aria-label="TYT mekanik deneyleri"></nav>
+<div class="layout"><aside id="controls" class="panel" aria-label="Değişkenler"></aside>
+<section class="panel"><svg id="scene" viewBox="0 0 900 500" role="img" aria-label="Parmakla etkileşimli hareket, kuvvet ve enerji sahnesi"></svg><p id="stats" aria-live="polite"></p><p id="note"></p></section></div>
+<p>Kaynak: 2018 MEB Fizik, 9.3.1–9.3.4 ve 9.4.1–9.4.5. Matematiksel hesaplamaya girilmemesi istenen kazanımlarda açıklamalar ve enerji grafikleri kavramsaldır.</p>
+</main><script src="tyt-mekanik-2018-model.js"></script><script src="tyt-mekanik-2018.js"></script>
+</body></html>

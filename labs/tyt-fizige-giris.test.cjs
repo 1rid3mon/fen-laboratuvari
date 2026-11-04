@@ -1,1 +1,16 @@
 'use strict';const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');const js=fs.readFileSync(path.join(__dirname,'tyt-fizige-giris.js'),'utf8'),html=fs.readFileSync(path.join(__dirname,'tyt-fizige-giris.html'),'utf8');function mount(){const nodes=new Map(),handlers=new Map();const get=id=>{if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',addEventListener(type,fn){handlers.set(id+':'+type,fn)}});return nodes.get(id)};vm.runInNewContext(js,{document:{getElementById:get,querySelector:()=>null}});return {get,handlers};}test('all introductory scenes render',()=>{const m=mount();for(const tab of ['units','vector','measurement']){m.handlers.get('tabs:click')({target:{closest:()=>({dataset:{tab}})}});assert.match(m.get('scene').innerHTML,/<(rect|line)/);assert.ok(m.get('result').textContent.length>12);}});test('units conversion is correct at sample input',()=>{const m=mount();m.handlers.get('tabs:click')({target:{closest:()=>({dataset:{tab:'measurement'}})}});m.handlers.get('controls:input')({target:{dataset:{key:'length'},value:'2'}});assert.match(m.get('result').textContent,/200 cm/);assert.match(m.get('result').textContent,/2\.000 mm/);});test('vector magnitude and direction react to controls',()=>{const m=mount();m.handlers.get('tabs:click')({target:{closest:()=>({dataset:{tab:'vector'}})}});assert.match(m.get('result').textContent,/5 birim/);m.handlers.get('controls:input')({target:{dataset:{key:'x'},value:'0'}});assert.match(m.get('result').textContent,/4 birim/);});test('local assets and homepage link',()=>{assert.match(html,/src="tyt-fizige-giris.js"/);assert.ok(fs.readFileSync(path.join(__dirname,'../index.html'),'utf8').includes('labs/tyt-fizige-giris.html'));assert.doesNotThrow(()=>new vm.Script(js));});
+test('2018 MEB one-dimensional vector sum handles signed and opposing arrows',()=>{
+ const m=mount();m.handlers.get('tabs:click')({target:{closest:()=>({dataset:{tab:'vector1d'}})}});
+ assert.match(m.get('result').textContent,/R = \+1 birim/);
+ assert.match(m.get('result').textContent,/\|R\| = 1 birim/);
+ assert.match(m.get('explanation').textContent,/yalnız tek boyutta/);
+ assert.match(m.get('scene').innerHTML,/R = A \+ B/);
+ m.handlers.get('controls:input')({target:{dataset:{key:'ax'},value:'-5'}});
+ m.handlers.get('controls:input')({target:{dataset:{key:'bx'},value:'5'}});
+ assert.match(m.get('result').textContent,/R = 0 birim/);
+ assert.match(m.get('result').textContent,/\|R\| = 0 birim/);
+ m.handlers.get('controls:input')({target:{dataset:{key:'bx'},value:'-5'}});
+ assert.match(m.get('result').textContent,/R = -10 birim/);
+ assert.match(m.get('result').textContent,/\|R\| = 10 birim/);
+ assert.match(m.get('scene').innerHTML,/x2="120"/);
+});

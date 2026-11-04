@@ -1,0 +1,32 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081c2a"><title>TYT 2018 MEB — Dört Dokunmatik Fizik Atölyesi</title>
+<style>
+:root{font:16px/1.5 system-ui,-apple-system,sans-serif;background:#071929;color:#e9f6fc;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;padding:clamp(10px,2.8vw,30px)}main{max-width:1200px;margin:auto}
+a{color:#9af0dc}header h1{font-size:clamp(1.5rem,4vw,2.4rem);margin:10px 0}
+button,select{font:inherit;border:1px solid #78a5b9;background:#20495f;color:#f7feff;border-radius:11px;min-height:44px;padding:9px 14px;cursor:pointer}
+button[aria-pressed=true]{background:#197971;border-color:#8ae5ce}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #fcd590;outline-offset:3px}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}#modes{margin-bottom:17px}
+.layout{display:grid;grid-template-columns:minmax(250px,315px) minmax(0,1fr);gap:16px;align-items:start}
+.card{background:#122e44;border:1px solid #34576b;border-radius:16px;padding:16px}
+aside label{display:block;margin:12px 0}
+aside output{color:#9aefde;font-weight:700}
+aside input[type=range]{display:block;accent-color:#86ebda;width:100%;min-height:40px;touch-action:pan-y}
+aside select{display:block;width:100%;margin-top:6px}
+aside button{margin:4px}
+#scene{width:100%;height:auto;display:block;touch-action:none;user-select:none;border-radius:11px;background:#0b2538}
+#scene text{pointer-events:none}
+#result{color:#a5f1db;font-weight:700;overflow-wrap:anywhere;line-height:1.6}
+#explain{border-left:3px solid #7ad4ce;padding-left:13px;color:#d6e6ee}
+.warn{background:#322b22;color:#ffe9b8;border:1px solid #bd9969;border-radius:11px;padding:12px 15px}
+small{color:#b9d0da}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.card{padding:12px}}
+</style></head><body><main>
+<header><a href="../index.html">← Fen Laboratuvarı</a><h1>TYT Fizik · Dokunmatik Deney Atölyeleri</h1><p><a href="tyt-akiskan-dalga.html">🌊 Su dalgasında düz engelden yansıma ve deprem deneyi (taslak)</a></p><p>Optik laboratuvarındaki gibi parmağınla deneyi değiştir. 2018 MEB TYT kazanımlarına yönelik dört konu, tek etkileşimli sahne.</p></header>
+<p class="warn"><strong>Deneysel sürüm:</strong> Bu bağlantı yalnız geliştirme dalındaki ön izlemedir; iPad/Safari kabulü ve tüm kazanım denetimi tamamlanmadı. Çizimlerde kullanılan ideal modellerin sınırları deney açıklamalarında yazılıdır. Tek başına doğrulanmış sınav kaynağı değildir.</p>
+<nav id="topics" aria-label="TYT fizik konuları"></nav>
+<nav id="modes" aria-label="Deney türleri"></nav>
+<h2 id="heading">Deney</h2>
+<div class="layout"><aside class="card" id="controls" aria-label="Deney kontrolleri"></aside><section class="card"><svg id="scene" viewBox="0 0 900 500" role="img" aria-label="Parmakla sürüklenen fizik deneyi"></svg><p id="result" aria-live="polite"></p><p id="explain"></p></section></div>
+<p><small>Fiziksel varsayımlar: Yayda ideal küçük genlik, su dalgalarında sığ-su uzun dalga yaklaşımı, maddede kısmi batma ölçümü, ısıda dış ortamdan yalıtılmış iki cisim. YKS 2027 hazırlığında Maarif Modeli kazanımları eklenmedi.</small></p>
+</main><script src="tyt-dort-atolye-model.js"></script><script src="tyt-dort-atolye.js"></script></body></html>
