@@ -20,6 +20,15 @@ test('10.3.3.2: a planar barrier reverses the incident normal component and pres
  near(Math.hypot(r.reflected.x,r.reflected.y),1);
  }
 });
+test('10.3.3.2: parallel wavefronts reflect into the parabola focus',()=>{
+ for(const f of [75,110,155])for(const offsetY of [-130,-70,0,70,130]){
+ const p=M.parabolicReflection({focal:f,offsetY}),difference={x:p.focus.x-p.impact.x,y:p.focus.y-p.impact.y};
+ const cross=difference.x*p.reflected.y-difference.y*p.reflected.x;
+ near(cross,0,1e-6);
+ assert.ok(difference.x*p.reflected.x+difference.y*p.reflected.y>0);
+ near(Math.hypot(p.reflected.x,p.reflected.y),1);
+ }
+});
 test('normal incidence on vertical barrier reflects horizontally back to source',()=>{
  const r=M.reflect({source:{x:200,y:250},center:{x:585,y:250},angleDeg:90});
  near(r.incident.x,1);near(r.reflected.x,-1);near(r.reflected.y,0);
