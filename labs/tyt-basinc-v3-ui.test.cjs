@@ -15,7 +15,7 @@ function boot(){
  const tab=name=>nodes.tabs.handlers.click({target:{closest:sel=>sel==='[data-tab]'?{dataset:{tab:name}}:null}});
  const action=name=>nodes.controls.handlers.click({target:{dataset:{action:name}}});
  const input=(field,value,type='range')=>nodes.controls.handlers.input({target:{dataset:{field},value:String(value),type}});
- const pointer=(type,key,id,x,y)=>nodes.scene.handlers.pointerdown({target:{closest:sel=>sel==='[data-'+type+']'?{dataset:{[type]:String(id)}}:null},pointerId:3,preventDefault(){}});
+ const pointer=(type,id)=>nodes.scene.handlers.pointerdown({target:{closest:sel=>sel==='[data-'+type+']'?{dataset:{[type]:String(id)}}:null},pointerId:3,preventDefault(){}});
  const move=(x,y)=>nodes.scene.handlers.pointermove({clientX:x,clientY:y,pointerId:3,preventDefault(){}});
  const up=()=>nodes.scene.handlers.pointerup({pointerId:3});
  return{nodes,tab,action,input,pointer,move,up};
