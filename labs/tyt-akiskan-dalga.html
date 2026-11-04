@@ -1,0 +1,22 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071b29"><title>TYT Akışkanlar, Dalga Yansıması ve Deprem Atölyesi</title><style>
+:root{color-scheme:dark;font:16px/1.5 system-ui,-apple-system,sans-serif;background:#081c2b;color:#edf7fb}
+*{box-sizing:border-box}body{margin:0;padding:clamp(12px,3vw,28px)}main{max-width:1190px;margin:auto}a{color:#8df2e0}
+h1{font-size:clamp(1.5rem,3.4vw,2.2rem)}button,select{background:#214c60;color:#f4ffff;border:1px solid #78b3bd;border-radius:10px;min-height:44px;padding:10px 13px;font:inherit;cursor:pointer}
+button[aria-pressed=true]{background:#177d78}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffe3aa;outline-offset:2px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.layout{display:grid;grid-template-columns:minmax(245px,310px) minmax(0,1fr);gap:16px}
+.panel{background:#122f42;border:1px solid #31576c;border-radius:14px;padding:17px}
+label{display:block;margin:14px 0}input[type=range]{display:block;width:100%;min-height:40px;accent-color:#9ae9d7;touch-action:pan-y}
+select{display:block;width:100%}strong{color:#a7f4df}svg{width:100%;height:auto;display:block;background:#0c273a;border-radius:10px;touch-action:none;user-select:none}svg text{pointer-events:none}
+#stats{font-weight:700;color:#b1f0dd}#explain{border-left:3px solid #8be4d1;padding-left:12px}
+.warn{background:#30291e;color:#fff0d1;border:1px solid #c5a576;border-radius:11px;padding:12px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.panel{padding:12px}}
+</style></head><body><main>
+<a href="../index.html">← Fen Laboratuvarı</a><h1>TYT · Akışkanlar, Su Dalgaları ve Deprem</h1>
+<p>2018 MEB 10.2–10.3'teki eksik kalan gözlem deneyleri: daralan boru, atmosfer basıncı, doğrusal su dalgasının engelden yansıması, deprem güvenliği. Fiziğin araştırma merkezlerini de keşfet.</p>
+<p class="warn"><strong>Ön izleme:</strong> Bunlar ideal, eğitim amaçlı modellerdir; gerçek iPad/Safari kullanıcı kabulünden geçmediler. Müfredatta sayısal hesap istenmeyen konularda fiziksel ilişkiler yalnız nitel gösterilir. Gerçek cıva, basınçlı kap veya deprem deneyi yapma.</p>
+<nav id="tabs" aria-label="Deney türleri"></nav><div class="layout">
+<aside class="panel" id="controls" aria-label="Deney değişkenleri"></aside>
+<section class="panel"><svg id="scene" viewBox="0 0 900 500" role="img" aria-label="Etkileşimli TYT akışkan ve dalga sahnesi"></svg><p id="stats" aria-live="polite"></p><p id="explain"></p></section>
+</div>
+<p>Not: Su dalgasında düz engele ait yansıma örneği işlendi; parabolik engellerin tüm geometrisi ve su dalgalarının tam dalga dinamiği bu ön izlemenin kapsamı dışındadır.</p>
+</main><script src="tyt-akiskan-dalga-model.js"></script><script src="tyt-akiskan-dalga.js"></script></body></html>
