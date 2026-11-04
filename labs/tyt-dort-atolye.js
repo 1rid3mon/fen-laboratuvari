@@ -2,7 +2,7 @@
 const el=id=>d.getElementById(id),fmt=(n,digits=2)=>Number(n).toLocaleString('tr-TR',{maximumFractionDigits:digits}),clamp=M.clamp;
 const topicNames={waves:'Dalgalar',matter:'Madde ve Özellikleri',intro:'Fizik Bilimine Giriş',heat:'Isı–Sıcaklık'};
 const modes={waves:[['spring','Yayda atma ve yansıma'],['water','Su dalgasında kırılma'],['sound','Ses ve tanecikler']],matter:[['cylinder','Özkütle ve suyla hacim ölçümü'],['capillary','Kılcallık karşılaştırması']],intro:[['vectors','Tek boyutta vektör'],['ruler','Cetvelle ölçüm']],heat:[['exchange','Temasla ısı alışverişi'],['rod','Genleşme gözlemi']]};
-const state={topic:d.body.dataset.topic||'waves',mode:'',playing:false,time:0,amplitude:36,end:'fixed',
+const state={topic:(new URLSearchParams(window.location.search).get('topic')||d.body.dataset.topic||'waves'),mode:'',playing:false,time:0,amplitude:36,end:'fixed',
 water1:3,water2:1.5,waterY:280,sourceX:250,theta:30,soundA:20,soundF:2,soundMedium:'air',
 waterMl:150,selectedObject:1,objects:[{id:1,x:120,y:350,volumeMl:50,massG:100,height:50,inside:false},{id:2,x:235,y:350,volumeMl:80,massG:120,height:50,inside:false},{id:3,x:345,y:350,volumeMl:30,massG:90,height:50,inside:false}],
 radius1:2,radius2:5,wetting:'yes',a:3,b:-2,rulerA:2,rulerB:7,
@@ -101,10 +101,10 @@ function heatExchange(){
  return{b:arrowDef+b,result:'A: '+fmt(state.aTemp)+'°C · B: '+fmt(state.bTemp)+'°C · İdeal denge: '+fmt(final)+'°C · Q(A→B)='+fmt(state.heatQ)+' temsilî J'+(contact?' · Temas var':' · Temas yok'),note:'İki cisim dış ortamdan yalıtılmış, hâl değişimi olmayan ve sıcaklık başına sabit ısı sığaları eşit örnek maddelerdir. Temas ettiğinde ısı sıcak olandan soğuk olana akar; iç enerji aktarımı eşittir, son sıcaklıklar dengeye yaklaşır. Q işaretlidir: A soğursa pozitif, A ısınırsa negatif. Sürükleme ya da başlangıç ayarları deneyi değiştirir.'};
 }
 function heatRod(){
- const alpha={steel:12,aluminum:23,brass:19}[state.rodMaterial],ratio=1+alpha*1e-6*(state.rodTemp-20),exaggerated=1+(ratio-1)*1500;
+ const alpha={steel:12,aluminum:23,brass:19}[state.rodMaterial],ratio=1+alpha*1e-6*(state.rodTemp-20),exaggerated=1+(ratio-1)*100;
  let b=rect(160,215,570*exaggerated,75,'#b5af9c','rx="12" stroke="#eff5f2" stroke-width="3"')+rect(160,195,5,120,'#f9d2a6');
  b+=line(730,120,730,355,'#8ce8e2',3,'stroke-dasharray="8 7"')+text(165,80,'Başlangıç boyu: 570 görsel birim · referans 20 °C');
- return{b,result:'Sıcaklık '+fmt(state.rodTemp)+'°C · Uzama eğilimi: '+(ratio>1?'uzama':ratio<1?'kısalma':'değişim yok')+' · Ölçek büyütmesi 1500×',note:'Metal çubuğun gerçek boy değişimi çok küçüktür, bu yüzden görsel fark 1500 kat büyütülür. Çizilen uzunluk doğrudan gerçek boy değildir. Katsayılar yalnız eğilim ve karşılaştırma için iç hesapta kullanılır; 2018 TYT genleşme kapsamında sayısal soru amaçlanmaz.'};
+ return{b,result:'Sıcaklık '+fmt(state.rodTemp)+'°C · Uzama eğilimi: '+(ratio>1?'uzama':ratio<1?'kısalma':'değişim yok')+' · Ölçek büyütmesi 100×',note:'Metal çubuğun gerçek boy değişimi çok küçüktür, bu yüzden görsel fark 100 kat büyütülür. Çizilen uzunluk doğrudan gerçek boy değildir. Katsayılar yalnız eğilim ve karşılaştırma için iç hesapta kullanılır; 2018 TYT genleşme kapsamında sayısal soru amaçlanmaz.'};
 }
 function scene(){
  const data=state.topic==='waves'?(state.mode==='spring'?waveSpring():state.mode==='water'?waveWater():waveSound()):
