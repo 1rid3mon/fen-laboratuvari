@@ -132,7 +132,7 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 302,
       "status": "Geliştiriliyor",
-      "audit": "Özkütle ölçüm paketi PR #16 main; geometrik hacim paketi geliştiriliyor. Düzensiz cisim, kütle birimleri, nitel karışımlar ve tarihçe ayrı kabul bekliyor. Gerçek iPad/canlı bekliyor.",
+      "audit": "PR #16 özkütle ve PR #17 geometrik hacimler main; düzensiz profil paketi bütünleşik CI bekliyor. Kütle birimleri, nitel karışımlar, tarihçe ve gerçek iPad/canlı kabulü eksik.",
       "clauses": [
         {
           "part": "a",
@@ -145,6 +145,7 @@
           "sourceLine": 306,
           "status": "Geliştiriliyor",
           "evidence": [
+            "curriculum/IRREGULAR-REVIEW.md",
             "curriculum/VOLUME-REVIEW.md"
           ]
         },
@@ -191,8 +192,10 @@
       ],
       "evidence": [
         "curriculum/DENSITY-REVIEW.md",
+        "curriculum/IRREGULAR-REVIEW.md",
         "labs/ozkutle-olcum.test.cjs",
-        "tests/ozkutle-browser.cjs"
+        "tests/ozkutle-browser.cjs",
+        "curriculum/VOLUME-REVIEW.md"
       ],
       "pr": null,
       "commit": null,
