@@ -49,3 +49,20 @@ GitHub Actions 41788276375 (commit 371242e) başarısız: `tyt-basinc-dalgalar.t
 - Yüzey gerilimi görselindeki 50 °C eşiği kaldırıldı; sıcaklıkla sürekli değişen **temsili** görsel gösterge kullanılıyor. Sayısal gösterge fiziksel yüzey gerilimi ölçümü **değildir** ve öğrenciye böyle belirtiliyor. Sabun etkisi de nicel fizik verisi değildir.
 - Dayanıklılık sahnesinde silindir geometrisinin kesit alanı πr², hacmi πr²L ve oranı 1/L açıkça gösteriliyor; evrensel kopma dayanıklılığı iddiası kaldırıldı. Bu hâlâ fiziksel kırılma/çökme simülasyonu değildir.
 - Her iki sahne için regresyon testleri eklendi. Resmî MEB kazanım kodu ve gerçek Safari testi hâlâ beklemede.
+
+## Resmî kaynakla ilk kazanım eşleştirmesi (2018 MEB PDF, s. 15–16)
+
+Kaynak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf
+
+| Kazanım | Resmî kapsam/sınır | Kodda durum |
+|---|---|---|
+| 9.1.1.1 | Fizik biliminin önemi | Eksik |
+| 9.1.2.1 | Fiziğin alt dalları ve disiplinlerle ilişkisi | Eksik |
+| 9.1.3.1 | Temel/türetilmiş, skaler/vektörel, **tek boyutta** vektör toplama | Kısmi: sınıflandırma var; tek boyutta toplama eksik. 2B vektör çizimi yalnız ek kavram gösterimi olarak etiketlendi |
+| 9.1.4.1 | Bilim araştırma merkezleri ve etik | Eksik |
+| 9.2.1.1 | Özkütle, kütle/hacim birimleri, geometrik/düzensiz hacim, kütle–hacim ve özkütle grafikleri, nitel karışımlar | Kısmi: yalnız özkütle hesaplama var; grafik, birim, şekil ve karışım eksik |
+| 9.2.1.2 | Günlük yaşamda saf madde/karışım özkütlesi | Eksik |
+| 9.2.2.1 | Dayanıklılık, yalnız küp/prizma/silindir/küre kesit alanı-hacim oranı hesabı | Kısmi: silindir modeli var; diğer şekiller eksik |
+| 9.2.3.1 | Adezyon, kohezyon, yüzey gerilimi, kılcallık; **matematiksel hesaplama yok** | Nitel modeller var; örnekler ve fiziksel sahne doğrulaması eksik |
+
+**Önemli kapsam düzeltmesi:** Yüzme/batma, 9.2 Madde ve Özellikleri kazanımlarından biri değildir; ayrı TYT Basınç ve Kaldırma Kuvveti ünitesinin ön izlemesidir. Öğrenci arayüzüne uyarı eklendi. **2B vektör işlemleri** de 9.1'in tek boyutta toplama sınırını aşar; mevcut 2B sahneye kapsam uyarısı eklendi. Bu tabloda hiçbir 'kısmi' satır tamamlanmış değildir.
