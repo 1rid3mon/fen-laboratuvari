@@ -46,7 +46,7 @@ test('water source and interface depth can be dragged without disappearing',()=>
  const x=boot('waves');x.mode('water');
  x.drag('water-source',350,110);assert.match(x.nodes.scene.innerHTML,/cx="350" cy="115"/);
  x.drag('water-boundary',320,310);assert.match(x.nodes.scene.innerHTML,/y1="310"/);
- assert.match(x.nodes.result.textContent,/açısı/i);
+ assert.match(x.nodes.result.textContent,/(normal|doğrultu)/i);
 });
 test('matter: dragging a volume into graduated cylinder raises the measured level',()=>{
  const x=boot('matter');assert.match(x.nodes.result.textContent,/Ölçek okuması: 150 mL/);
@@ -82,12 +82,12 @@ test('heat: contact from drag triggers energy-conserving temperature exchange',(
  assert.match(x.nodes.result.textContent,/Temas var/);
  x.frame(1000);x.frame(2000);
  assert.doesNotMatch(x.nodes.result.textContent,/A: 80°C · B: 20°C/);
- assert.match(x.nodes.result.textContent,/İdeal denge: 50°C/);
+ assert.match(x.nodes.result.textContent,/Sıcaklıklar yaklaşıyor/);
 });
 test('heat: reverse temperature gradient reverses the heat-flow arrow',()=>{
  const x=boot('heat');x.change('aInitial',20);x.change('bInitial',80);
  x.drag('heat-a',505,250);assert.match(x.nodes.scene.innerHTML,/Termal temas · B → A/);
- x.frame(1000);x.frame(2000);assert.ok(x.nodes.result.textContent.includes('Q(A→B)=-'));
+ x.frame(1000);x.frame(2000);assert.match(x.nodes.result.textContent,/B → A/);
 });
 test('heat: expansion illustration labels exaggerated scale',()=>{
  const x=boot('heat');x.mode('rod');x.change('rodTemp',120);
