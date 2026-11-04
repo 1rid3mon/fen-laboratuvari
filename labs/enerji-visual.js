@@ -5,6 +5,7 @@ const clamp=(x,min,max)=>Math.max(min,Math.min(max,Number(x)||0));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
 const transfer=(sx,sy,ex,ey,color,title)=>'<g class="bio-transfer" aria-label="'+esc(title)+'"><path d="M'+sx+' '+sy+' L'+ex+' '+ey+'" stroke="'+color+'" stroke-width="4" fill="none" stroke-dasharray="10 8"/><circle cx="'+sx+'" cy="'+sy+'" r="9" fill="'+color+'" opacity=".85"><animateMotion dur="2.8s" repeatCount="indefinite" path="M0 0 L'+(ex-sx)+' '+(ey-sy)+'"/></circle></g>';
 const circles=(x,y,n,color)=>Array.from({length:clamp(n,0,12)},(_,i)=>'<circle class="bio-particle" cx="'+(x+(i%5)*25)+'" cy="'+(y-Math.floor(i/5)*23)+'" r="'+(5+i%3)+'" fill="'+color+'" style="animation-delay:-'+(i*.25)+'s"/>').join('');
+const circle=(x,y,r,color,attrs='')=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+color+'" '+attrs+'/>';
 const rect=(x,y,w,h,color,attrs='')=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12" fill="'+color+'" '+attrs+'/>';
 const text=(x,y,label,size=17,color='#e6f7fb',attrs='')=>'<text x="'+x+'" y="'+y+'" font-family="system-ui" font-size="'+size+'" fill="'+color+'" '+attrs+'>'+esc(label)+'</text>';
 const path=(d,stroke,w=3,extra='')=>'<path d="'+d+'" fill="none" stroke="'+stroke+'" stroke-width="'+w+'" stroke-linecap="round" '+extra+'/>';
