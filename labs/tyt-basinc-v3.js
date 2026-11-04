@@ -59,7 +59,7 @@ function drawGas(){
  let b=rect(x0,y0,right-x0,h,'#153d60','stroke="#9bd6e7" stroke-width="3"')+rect(right-8,y0,16,h,'#e4c08a','data-piston="true" rx="5"');
  const count=Math.round(s.gasCount/2);for(let i=0;i<count;i++){let u=((i*0.61803398875+Math.sin(s.phase+i)*0.015)%1+1)%1,v=((i*0.41421356237+Math.cos(s.phase*1.3+i)*0.015)%1+1)%1;b+='<circle cx="'+(x0+15+u*(right-x0-40))+'" cy="'+(y0+15+v*(h-30))+'" r="4.5" fill="#97e9e5"/>';}
  b+=text(570,150,'← Pistonu sürükle')+text(570,184,'Sabit gaz miktarı yoksa')+text(570,208,'basınç da değişir.');
- return{b,stats:'İdeal model: P = '+fmt(p)+' kPa · V='+fmt(vol)+' L · T='+fmt(s.gasTemp)+' K · göreli N='+fmt(s.gasCount),note:'Bu nitel/örnek hesap, ideal gazın sabit sayıda tanecik varsayımı altındaki P ∝ N·T/V ilişkisini kullanır. Her sürgü ayrı bir değişkeni kontrol eder. Tanecik hareketi şematiktir, gerçek çarpışma çözümü değildir; TYT kapsamına ileri gaz yasası hesabı eklenmez.'};
+ return{b,stats:'Gaz basıncı: '+(p>105?'referans durumdan yüksek':p<95?'referans durumdan düşük':'referans düzeyine yakın')+' · Pistonu, sıcaklığı ve tanecik sayısını değiştir',note:'2018 MEB 10.2.1.1: Gaz basıncının nitel etkenlerini incele; gaz yasalarına ait matematiksel model ve sayısal hesaplama yoktur. Şemadaki gaz taneciklerinin hareketi gösterim amaçlıdır, moleküler çarpışmaların fiziksel çözümü değildir. Değişkenleri tek tek değiştirip karşılaştır.'};
 }
 function drawFloat(){
  let b=rect(160,160,590,270,'#167aa0','opacity=".85"')+line(160,160,750,160,'#a5ecff',4),rows=[];
