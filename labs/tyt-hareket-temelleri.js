@@ -1,9 +1,9 @@
 (function(document){
 'use strict';
-const el=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString('tr-TR',{maximumFractionDigits:2});
+const el=id=>document.getElementById(id),fmt=n=>(Object.is(Number(n),-0)?0:Number(n)).toLocaleString('tr-TR',{maximumFractionDigits:2});
 const s={tab:'journey',out:50,back:20,tOut:10,tBack:10,velocity:3,time:10};
 const tabs=[['journey','Yol, yer değiştirme ve ortalamalar'],['uniform','Sabit hızlı hareket ve grafikler']];
-const controls={out:['Doğu yönüne gidilen yol (m)',0,80,5],back:['Batıya geri gidilen yol (m)',0,80,5],tOut:['İlk bölüm süresi (s)',5,30,5],tBack:['Dönüş süresi (s)',5,30,5],velocity:['Sabit hız (+ doğu, − batı) (m/s)',-6,6,1],time:['Geçen süre (s)',0,20,1]};
+const controls={out:['Doğu yönüne gidilen yol (m)',0,80,5],back:['Batıya gidilen yol (m)',0,80,5],tOut:['İlk bölüm süresi (s)',5,30,5],tBack:['Dönüş süresi (s)',5,30,5],velocity:['Sabit hız (+ doğu, − batı) (m/s)',-6,6,1],time:['Geçen süre (s)',0,20,1]};
 const names={journey:['out','back','tOut','tBack'],uniform:['velocity','time']};
 function arrow(x1,x2,y,color){const d=Math.sign(x2-x1),back=x2-12*d;return '<line x1="'+x1+'" y1="'+y+'" x2="'+x2+'" y2="'+y+'" stroke="'+color+'" stroke-width="5"/>'+(d===0?'<circle cx="'+x2+'" cy="'+y+'" r="6" fill="'+color+'"/>':'<polygon points="'+x2+','+y+' '+back+','+(y-9)+' '+back+','+(y+9)+'" fill="'+color+'"/>');}
 function label(x,y,v){return '<text x="'+x+'" y="'+y+'" fill="#edf9fc" font-family="system-ui" font-size="18">'+v+'</text>';}
