@@ -1,5 +1,8 @@
 # TYT Fizik — 2018 MEB kazanım ve etkileşim denetimi
 
+> **GÜNCELLEME — 4 Kasım 2026:** Bu dosyanın aşağıdaki bölümleri aşama aşama tutulan **tarihsel denetim kayıtlarıdır**; “gaz basıncı eksik”, “dalgalar eksik” gibi ifadeler önceki commit durumunu anlatabilir. **Güncel 10 konu ve 203 test durumunun doğru kaydı:** [TYT-2018-MEB-TAM-KAPSAM-DENETIMI.md](TYT-2018-MEB-TAM-KAPSAM-DENETIMI.md). Yeni laboratuvarlar eklenmiş olsa bile gerçek iPad/Safari ve kazanım bazlı fiziksel kabul hâlâ açık; PR #10 taslaktır. Hiçbir eski “eksik” notu tek başına son durum olarak alıntılanmamalıdır.
+
+
 **Kapsam:** 2027 YKS'ye mezun olarak hazırlanan kullanıcı; 2018 MEB öğretim programı. Maarif Modeli veya sınıf seviyesi temelli yeni program **eklenmez**. Bu dosya bir **denetim kuyruğudur**, resmî kazanım eşleştirmesi tamamlanmış bir sertifika değildir.
 
 ## Kabul ölçütü
