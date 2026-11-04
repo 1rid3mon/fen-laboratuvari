@@ -48,3 +48,12 @@ jobs:
           node --check labs/tyt-dort-atolye-ui.test.cjs
           test -f labs/tyt-dort-atolye.html
           node --test labs/tyt-dort-atolye-model.test.cjs labs/tyt-dort-atolye-ui.test.cjs
+
+      - name: Dedicated TYT 9.3 and 9.4 mechanics and energy
+        run: |
+          node --check labs/tyt-mekanik-2018-model.js
+          node --check labs/tyt-mekanik-2018.js
+          node --check labs/tyt-mekanik-2018-model.test.cjs
+          node --check labs/tyt-mekanik-2018-ui.test.cjs
+          test -f labs/tyt-mekanik-2018.html
+          node --test labs/tyt-mekanik-2018-model.test.cjs labs/tyt-mekanik-2018-ui.test.cjs
