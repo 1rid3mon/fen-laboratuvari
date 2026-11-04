@@ -1,6 +1,6 @@
 (function(d,M){'use strict';const $=id=>d.getElementById(id),fmt=n=>Number(n).toLocaleString('tr-TR',{maximumFractionDigits:2}),clamp=M.clamp;
-const topics=[['relative','Hareket / referans'],['accel','İvme / grafikler'],['newton','Newton ve net kuvvet'],['friction','Sürtünme'],['third','Etki–tepki'],['work','İş ve güç'],['energy','Enerji korunumu'],['efficiency','Verim ve kaynaklar']];
-const s={tab:'relative',time:2,x0:10,velocity:3,observerX0:1,observerVelocity:1,
+const topics=[['types','Hareket türleri'],['forceKinds','Kuvvet türleri'],['relative','Hareket / referans'],['accel','İvme / grafikler'],['newton','Newton ve net kuvvet'],['friction','Sürtünme'],['third','Etki–tepki'],['work','İş ve güç'],['energy','Enerji korunumu'],['efficiency','Verim ve kaynaklar']];
+const s={tab:'types',time:2,modeSpeed:2,forceExample:'magnet',handX:180,x0:10,velocity:3,observerX0:1,observerVelocity:1,
 v0:3,a:-1,forceRight:20,forceLeft:6,mass:4,
 applied:22,muStatic:.5,muKinetic:.3,thirdX:185,
 workForce:20,workDisplacement:4,workTime:4,
@@ -17,6 +17,8 @@ function button(action,caption){return'<button type="button" data-action="'+acti
 function buildControls(){
  $('tabs').innerHTML=topics.map(([key,name])=>'<button type="button" aria-pressed="'+(key===s.tab)+'" data-tab="'+key+'">'+name+'</button>').join('');
  let out='';
+ if(s.tab==='types')out=slider('time','Gözlem zamanı',0,6,.25,'s')+slider('modeSpeed','Hareket hızı (temsilî)',.5,3,.5)+button('play',s.playing?'Durdur':'▶ Hareketi oynat');
+ if(s.tab==='forceKinds')out='<label>Kuvvet örneği<select data-key="forceExample">'+[['magnet','Mıknatıs – çelik (uzaktan)'],['hand','Elle itme (temas)'],['gravity','Yer çekimi (uzaktan)'],['strong','Güçlü nükleer kuvvet'],['weak','Zayıf nükleer kuvvet']].map(([id,label])=>'<option value="'+id+'" '+(s.forceExample===id?'selected':'')+'>'+label+'</option>').join('')+'</select></label>';
  if(s.tab==='relative')out=slider('x0','Aracın ilk konumu',-10,20,1,'m')+slider('velocity','Araç hızı (+ doğu)',-5,5,.5,'m/s')+slider('observerX0','Gözlemcinin ilk konumu',-10,20,1,'m')+slider('observerVelocity','Gözlemcinin hızı',-5,5,.5,'m/s')+slider('time','Süre',0,6,.25,'s');
  if(s.tab==='accel')out=slider('v0','Başlangıç hızı (işaretli)',-8,8,.5,'m/s')+slider('a','Sabit ivme (işaretli)',-4,4,.5,'m/s²')+slider('time','Geçen süre',0,6,.25,'s');
  if(s.tab==='newton')out=slider('forceRight','Sağa kuvvet',0,40,2,'N')+slider('forceLeft','Sola kuvvet',0,40,2,'N')+slider('mass','Kütle',1,10,1,'kg')+slider('time','Başlangıçtan geçen süre',0,6,.25,'s');
@@ -27,6 +29,45 @@ function buildControls(){
  if(s.tab==='efficiency')out=slider('useful','Yararlı çıkış (100 birim girdi)',0,100,5,'%')+'<label>Enerji kaynağı<select data-key="energySource">'+[['solar','Güneş'],['wind','Rüzgâr'],['hydro','Hidroelektrik'],['coal','Kömür']].map(([k,n])=>'<option value="'+k+'" '+(k===s.energySource?'selected':'')+'>'+n+'</option>').join('')+'</select></label>';
  if(['accel','newton','relative','friction'].includes(s.tab))out+=button('play',s.playing?'Durdur':'▶ Hareketi oynat');
  $('controls').innerHTML=out;
+}
+function typesScene(){
+ const t=s.time,rate=s.modeSpeed;
+ let b=arrows+rect(55,100,245,285,'#143b50','rx="13"')+rect(327,100,245,285,'#143b50','rx="13"')+rect(600,100,245,285,'#143b50','rx="13"');
+ b+=txt(75,145,'Öteleme')+txt(360,145,'Dönme')+txt(620,145,'Titreşim');
+ b+=line(74,295,284,295,'#b2ced9',3)+rect(82+Math.min(160,rate*t*11),241,59,53,'#94dccd','rx="7"');
+ const ang=rate*t*.9,xx=448+49*Math.cos(ang),yy=248+49*Math.sin(ang);
+ b+=dot(448,248,54,'#31566c')+line(448,248,xx,yy,'#f7c58f',5)+dot(448,248,9,'#d0f3ef');
+ const vibY=250+52*Math.sin(t*rate),spokes=[];
+ for(let i=0;i<6;i++){const x=695+i*18;spokes.push(x+','+(145+i%2*15));}
+ b+=line(724,160,724,350,'#84c8d5',3,'stroke-dasharray="7 6"')+rect(690,vibY-28,68,58,'#f3ba8b','rx="9"');
+ return{b,stats:'Üç hareket türü: öteleme, dönme, titreşim',
+ note:'2018 MEB 9.3.1.1: Ötelemede cismin bütün noktaları aynı yer değiştirmeyi yapar; dönmede cisim bir eksen çevresinde, titreşimde denge konumu çevresinde hareket eder. Bu üç çizim aynı anda ve temsili hızla değişir; bir cismin birden fazla hareket türünü birlikte yapabilmesi mümkündür.'};
+}
+function forcesKindsScene(){
+ let b=arrows+line(85,363,807,363,'#8da9b9',3),message='',note='';
+ if(s.forceExample==='magnet'||s.forceExample==='hand'){
+ const touch=s.handX+95>=530;
+ if(s.forceExample==='magnet'){
+ b+=rect(s.handX,268,94,79,'#e7a778','rx="7" data-drag="source"')+rect(s.handX+48,268,46,79,'#6ba3c6')+txt(s.handX+18,309,'N')+txt(s.handX+66,309,'S');
+ b+=rect(530,268,90,79,'#a2b7c8','rx="8"')+arrow(530,251,-Math.max(0,75-(530-s.handX-95)*.1),'#f3c584');
+ message='Mıknatıs çelik cismi temas olmadan çekebilir.';
+ note='Elektromanyetik etkileşim bir temas kuvveti gerektirmez. Ok cismin mıknatısa doğru çekilme yönüdür; büyüklüğü temsilîdir, gerçek manyetik alan/mesafe bağıntısı değildir. Mıknatısı sürükle.';
+ }else{
+ b+=rect(s.handX,268,94,79,'#e3b38f','rx="10" data-drag="source"')+rect(530,268,90,79,'#a2b7c8','rx="8"');
+ if(touch)b+=arrow(535,251,90,'#f3c584');
+ message=touch?'El ve kutu temas ediyor; itme kuvveti oluşabilir.':'Temas yoksa elin kutuyu itme kuvveti yoktur.';
+ note='Temas kuvveti, iki yüzeyin etkileşmesini gerektirir. Burada elle sağa itme örneği gösterilir; cismin kütlesi, sürtünme ve ivmesi modellenmez. Eli sürükle.';
+ }
+ }else if(s.forceExample==='gravity'){
+ b+=dot(460,322,82,'#267a83')+dot(465,185,30,'#dbad75')+line(465,210,465,284,'#f3c584',5,'marker-end="url(#marr)"');
+ message='Yer çekimi, temas olmadan cisme etki eder.';
+ note='Kütle çekim kuvvetinin yönü Dünya’nın merkezine doğrudur. Kütleler arası çekimin nicel hesabı bu kazanımda yapılmaz.';
+ }else{
+ b+=dot(455,273,74,'#36678a')+dot(430,256,21,'#f2c394')+dot(481,289,21,'#8bd6e5');
+ message=s.forceExample==='strong'?'Güçlü nükleer etkileşim çekirdeğin bağlanmasında rol oynar.':'Zayıf nükleer etkileşim bazı radyoaktif dönüşümlerde rol oynar.';
+ note='2018 MEB 9.3.2.1 dört temel kuvveti örneklerle tanıtır: kütle çekimi, elektromanyetik, güçlü nükleer ve zayıf nükleer. Bu atom çekirdeği çizimi gerçek parçacık etkileşim simülasyonu değildir.';
+ }
+ return{b,stats:message,note};
 }
 function relativeScene(){
  const p=M.reference({x0:s.x0,velocity:s.velocity,observerX0:s.observerX0,observerVelocity:s.observerVelocity,time:s.time}),scale=13;
@@ -101,7 +142,7 @@ function efficiencyScene(){
  return{b,stats:'Verim = %'+fmt(p.ratio*100)+' · Yararlı = '+fmt(s.useful)+' · Kayıp = '+fmt(p.loss),note:'9.4.4 ve 9.4.5: Verim, yararlı enerji çıktısının toplam girdiye oranıdır; kayıp enerji yok olmaz, çevreye farklı biçimde aktarılır. '+sources[s.energySource]+' Kaynakları maliyet, süreklilik, çevre ve erişilebilirlik açısından birlikte değerlendir.'};
 }
 function draw(){
- const which={relative:relativeScene,accel:accelScene,newton:newtonScene,friction:frictionScene,third:thirdScene,work:workScene,energy:energyScene,efficiency:efficiencyScene}[s.tab];
+ const which={types:typesScene,forceKinds:forcesKindsScene,relative:relativeScene,accel:accelScene,newton:newtonScene,friction:frictionScene,third:thirdScene,work:workScene,energy:energyScene,efficiency:efficiencyScene}[s.tab];
  const q=which();$('scene').innerHTML=rect(0,0,900,500,'#0b2539')+q.b;$('stats').textContent=q.stats;$('note').textContent=q.note;
 }
 function render(){buildControls();draw();}
@@ -114,11 +155,12 @@ $('controls').addEventListener('input',e=>{const key=e.target.dataset.key;if(!Ob
  if(key==='height')s.height=clamp(v,0,s.initialHeight);
  if(['muStatic','muKinetic','initialHeight'].includes(key))render();else{let out=$('controls').querySelector('[data-out="'+key+'"]');if(out)out.textContent=fmt(s[key]);draw();}
 });
-$('controls').addEventListener('change',e=>{if(e.target.tagName==='SELECT'){s.energySource=e.target.value;draw();}});
+$('controls').addEventListener('change',e=>{if(e.target.tagName==='SELECT'){if(e.target.dataset.key==='forceExample')s.forceExample=e.target.value;else s.energySource=e.target.value;draw();}});
 $('controls').addEventListener('click',e=>{const a=e.target.dataset.action;if(a==='reset-third'){s.thirdX=185;draw();}if(a==='reset-energy'){s.height=s.initialHeight;render();}if(a==='play'){s.playing=!s.playing;previousTime=0;render();if(s.playing)requestAnimationFrame(tick);}});
 function xy(e){const b=$('scene').getBoundingClientRect();return{x:(e.clientX-b.left)*900/b.width,y:(e.clientY-b.top)*500/b.height};}
 $('scene').addEventListener('pointerdown',e=>{const target=e.target.closest('[data-drag]');if(!target)return;drag={name:target.dataset.drag,id:e.pointerId};$('scene').setPointerCapture?.(e.pointerId);e.preventDefault();});
 $('scene').addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const p=xy(e);
+ if(drag.name==='source')s.handX=clamp(p.x-45,105,470);
  if(drag.name==='vehicle')s.x0=Math.round((p.x-425)/13-s.velocity*s.time);
  if(drag.name==='observer')s.observerX0=Math.round((p.x-425)/13-s.observerVelocity*s.time);
  if(drag.name==='vpoint')s.v0=clamp(Math.round((305-p.y)/5)/2-s.a*s.time,-8,8);
@@ -130,7 +172,7 @@ $('scene').addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)re
  if(drag.name==='energy-height')s.height=clamp(Math.round((390-p.y)/34*4)/4,0,s.initialHeight);
  draw();e.preventDefault();});
 for(const event of ['pointerup','pointercancel','lostpointercapture'])$('scene').addEventListener(event,e=>{if(drag&&drag.id===e.pointerId){drag=null;render();}});
-function tick(now){if(!s.playing||!['relative','accel','newton','friction'].includes(s.tab))return;
+function tick(now){if(!s.playing||!['types','relative','accel','newton','friction'].includes(s.tab))return;
  if(previousTime)s.time=Math.min(6,s.time+(now-previousTime)/1000);
  previousTime=now;
  const slider=$('controls').querySelector('[data-key="time"]');if(slider)slider.value=s.time;
