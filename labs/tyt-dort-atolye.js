@@ -94,11 +94,11 @@ function introRuler(){
  return{b,result:'İşaretler: '+fmt(state.rulerA)+' ve '+fmt(state.rulerB)+' cm · Uzunluk: '+fmt(len)+' cm = '+fmt(len/100,4)+' m = '+fmt(len*10)+' mm',note:'Birimi cm olan cetvelde uzunluk iki işaretin farkının mutlak değeridir. SI uzunluk birimi metredir. Ölçümde sıfır noktası mutlak olarak gerekli değildir; başlangıç ve bitiş okumasının farkı gerekir. Cetveldeki görsel ölçek sabittir.'};
 }
 function heatExchange(){
- const x=state.blockX,contact=x+175>=590;let b=rect(85,340,735,24,'#758fa0')+rect(x,165,175,175,'#bf7853','rx="12" stroke="#ffd8b1" stroke-width="4" data-drag="heat-a"')+rect(590,165,175,175,'#509cb1','rx="12" stroke="#cff1ff" stroke-width="4"');
+ const x=state.blockX,contact=x+175>=590;const tint=t=>{const k=clamp(t/100,0,1);return'rgb('+Math.round(60+174*k)+','+Math.round(155-72*k)+','+Math.round(215-125*k)+')';};let b=rect(85,340,735,24,'#758fa0')+rect(x,165,175,175,tint(state.aTemp),'rx="12" stroke="#ffd8b1" stroke-width="4" data-drag="heat-a"')+rect(590,165,175,175,tint(state.bTemp),'rx="12" stroke="#cff1ff" stroke-width="4"');
  b+=text(x+24,222,'A: '+fmt(state.aTemp)+'°C')+text(614,222,'B: '+fmt(state.bTemp)+'°C')+text(160,83,'A bloğunu B’ye sürükleyerek temas ettir');
- if(contact)b+=line(540,130,588,130,'#ffe4a0',5,'marker-end="url(#arr)"')+text(350,117,'Termal temas');
+ const flow=state.aTemp>state.bTemp?'A → B':state.aTemp<state.bTemp?'B → A':'denge';if(contact){if(flow==='A → B')b+=line(540,130,588,130,'#ffe4a0',5,'marker-end="url(#arr)"');else if(flow==='B → A')b+=line(588,130,540,130,'#ffe4a0',5,'marker-end="url(#arr)"');b+=text(350,117,'Termal temas · '+flow);}
  const final=M.equilibrium({aTemp:state.aInitial,bTemp:state.bInitial,aMass:state.aMass,bMass:state.bMass});
- return{b:arrowDef+b,result:'A: '+fmt(state.aTemp)+'°C · B: '+fmt(state.bTemp)+'°C · İdeal denge: '+fmt(final)+'°C · Q(A→B)='+fmt(state.heatQ)+' temsilî J'+(contact?' · Temas var':' · Temas yok'),note:'İki cisim dış ortamdan yalıtılmış, hâl değişimi olmayan ve sıcaklık başına sabit ısı sığaları eşit örnek maddelerdir. Temas ettiğinde ısı sıcak olandan soğuk olana akar; iç enerji aktarımı eşittir, son sıcaklıklar dengeye yaklaşır. Q işaretlidir: A soğursa pozitif, A ısınırsa negatif. Sürükleme ya da başlangıç ayarları deneyi değiştirir.'};
+ return{b:arrowDef+b,result:'A: '+fmt(state.aTemp)+'°C · B: '+fmt(state.bTemp)+'°C · İdeal denge: '+fmt(final)+'°C · Q(A→B)='+fmt(state.heatQ)+' J'+(contact?' · Temas var':' · Temas yok'),note:'İki cisim dış ortamdan yalıtılmış, hâl değişimi olmayan ve öz ısıları eşit, c=1 J/(kg·°C) kabul edilen ideal örnek maddelerdir. Temas ettiğinde ısı sıcak olandan soğuk olana akar; iç enerji aktarımı eşittir, son sıcaklıklar dengeye yaklaşır. Q işaretlidir: A soğursa pozitif, A ısınırsa negatif. Sürükleme ya da başlangıç ayarları deneyi değiştirir.'};
 }
 function heatRod(){
  const alpha={steel:12,aluminum:23,brass:19}[state.rodMaterial],ratio=1+alpha*1e-6*(state.rodTemp-20),exaggerated=1+(ratio-1)*100;
@@ -129,6 +129,7 @@ el('controls').addEventListener('click',e=>{const action=e.target.dataset.action
 function applyInput(e){const key=e.target.dataset.key;if(!key)return;const value=e.target.type==='range'?Number(e.target.value):e.target.value;
  if(key==='massG'||key==='volumeMl'){const o=state.objects.find(o=>o.id===state.selectedObject);if(o)o[key]=value;}
  else state[key]=value;
+ if(['aInitial','bInitial','aMass','bMass'].includes(key))resetHeat();
  const output=el('controls').querySelector('[data-output="'+key+'"]');if(output)output.textContent=fmt(value);
  scene();}
 el('controls').addEventListener('input',applyInput);el('controls').addEventListener('change',applyInput);
