@@ -46,7 +46,7 @@ $('controls').addEventListener('click',e=>{const a=e.target.dataset.action;if(a=
 $('controls').addEventListener('input',e=>{const k=e.target.dataset.key,v=Number(e.target.value);if(!Number.isFinite(v))return;if(k==='selectedRho'){const o=s.objects.find(o=>o.id===s.selected);if(o)o.rho=v;}else if(Object.hasOwn(s,k))s[k]=v;render();});
 function position(e){const r=$('scene').getBoundingClientRect();return{x:(e.clientX-r.left)*900/r.width,y:(e.clientY-r.top)*470/r.height};}
 $('scene').addEventListener('pointerdown',e=>{const id=e.target.getAttribute('data-object');if(id!==null){s.selected=Number(id);pointer={id:s.selected,p:e.pointerId};e.preventDefault();render();}else if(e.target.hasAttribute('data-probe')){pointer={probe:true,p:e.pointerId};e.preventDefault();}});
-$('scene').addEventListener('pointermove',e=>{if(!pointer||pointer.p!==e.pointerId)return;const p=position(e);if(pointer.probe)s.depth=clamp((p.y-120)/54,0,5);else{const o=s.objects.find(o=>o.id===pointer.id);if(o){o.x=p.x-30;o.y=p.y-30;}}render();e.preventDefault();});
+$('scene').addEventListener('pointermove',e=>{if(!pointer||pointer.p!==e.pointerId)return;const p=position(e);if(pointer.probe)s.depth=Math.round(clamp((p.y-120)/54,0,5)*4)/4;else{const o=s.objects.find(o=>o.id===pointer.id);if(o){o.x=p.x-30;o.y=p.y-30;}}render();e.preventDefault();});
 for(const event of ['pointerup','pointercancel'])$('scene').addEventListener(event,e=>{if(pointer&&pointer.p===e.pointerId)pointer=null;});
 function tick(t){if(!s.playing)return;if(last)s.phase+=(t-last)/1000;last=t;render();requestAnimationFrame(tick);}
 render();
