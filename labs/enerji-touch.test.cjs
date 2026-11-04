@@ -87,3 +87,12 @@ test('touch target keyboard works for accessible non-pointer operation',()=>{
  x.els.scene.events.keydown({key:'Enter',preventDefault(){},target:{closest:q=>q==='[data-zone],[data-vtoggle],[data-vcontrol]'?{dataset:{zone:'tilakoit'}}:null}});
  assert.match(x.els.metrics.innerHTML,/1 \/ 5/);
 });
+
+
+test('fallback keeps original experiment usable when optional living-scene renderer throws',()=>{
+ const x=setup();x.window.EnerjiVisual={render(){throw Error('test drawing failure');}};
+ x.tab('exp2');
+ assert.match(x.els.scene.innerHTML,/Canlı sahne gösterilemedi/);
+ assert.match(x.els.scene.innerHTML,/data-zone="inputs"/);
+ x.touch('LIGHT','inputs');assert.match(x.els.metrics.innerHTML,/1 \/ 7/);
+});
