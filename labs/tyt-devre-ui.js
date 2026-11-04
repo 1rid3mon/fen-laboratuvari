@@ -264,7 +264,7 @@ function drawWireField(){
  for(let r=50;r<=190;r+=47)b+='<circle cx="390" cy="260" r="'+r+'" stroke="#407888" stroke-width="3" fill="none" stroke-dasharray="8 8"/>';
  b+=circle(390,260,34,'#1f546a','#cbe6e8',4)+text(375,274,p.current>0?'•':p.current<0?'×':'0',p.current?'#f9d6a2':'#91b3c0',40);
  const x=390+p.wireDistance*45,y=260;
- b+=circle(x,y,35,'#243e51','#bbdce3',4,'data-exp-drag="wireDistance"')+arrow(x,y,0,p.current>0?-31:p.current<0?31:0,'#96edcd','B');
+ b+=circle(x,y,35,'#243e51','#bbdce3',4,'data-exp-drag="wireDistance"')+arrow(x,y,0,p.current>0?31:p.current<0?-31:0,'#96edcd','B');
  b+=text(55,85,'Sağ el kuralı: akımı ters çevir','#dbebf2',24)+text(55,118,'Manyetik alanın dolanım yönü değişsin','#a1e3d4',17);
  presentScene(b,'Akım taşıyan düz telin çevresindeki dairesel manyetik alan',[['Akım yönü',p.current>0?'Sayfadan dışarı':p.current<0?'Sayfa içine':'Akım yok'],['Alan eğilimi',p.current===0?'Yok':o.fieldTrend],['Tel uzaklığı',fmt(p.wireDistance)+' kademe']],'10.1.4.1: Akım ve tele uzaklık manyetik alanı etkiler; sağ el kuralı kullanılır. Sayısal alan veya kuvvet hesabı yoktur. Yüksek gerilim hatlarının yakınında risk vardır.');
  $('help').textContent='Akımı ters çevir veya pusulayı telden uzaklaştır. Elektromıknatıslar, geri dönüşümlü mıknatıslanma ile birçok cihazda kullanılabilir.';
