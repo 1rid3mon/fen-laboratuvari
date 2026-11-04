@@ -11,17 +11,21 @@
 | #17 | Küp/prizma/silindir/küre, bağımsız ölçü uçları, ölçek hipotezleri; b düzgün şekiller | 2e26e5c0e86a80758a3198b1ea67e6e65b4e1cb2 | 155aa6d8f169971f34006da96112794a54af0df9 | 424 model/regresyon; Chromium/WebKit başarılı; run 41919512287 |
 | #18 | Düzensiz cismin gerçek batmış profili, su korunumu ve ölçümü; b düzensiz şekiller | 6c054c00cb670c3fa44de677e4936ebaa3fc7f9a | 245a14b57ce5fee09ff491445ac748a2c24f0e2f | Birleşik 429 model/regresyon; Chromium/WebKit başarılı; run 41920126437 |
 
-Main son gözlenen: 84fe93695603ab365d721d435de47dc4ed5e8ccf. a/b/c/ç/d/f alt açıklamalarının main kanıtları JSON'a işlendi. Ana 9.2.1.1 henüz tamamlanmadı. Bilimsel kayıtlar DENSITY-REVIEW.md, VOLUME-REVIEW.md, IRREGULAR-REVIEW.md.
+Main son gözlenen: d15519f727a26c88b2cd5b4a5655fac4c31933ac. a/b/c/ç/d/e/f alt açıklamalarının main kanıtları JSON'a işlendi. 9.2.1.1 main'de; gerçek cihaz/canlı ayrıca bekliyor. Bilimsel kayıtlar DENSITY-REVIEW.md, VOLUME-REVIEW.md, IRREGULAR-REVIEW.md.
 
 PR #19 da tamamlandı: HEAD `124e5b38f18b23959b09e814ddb17865378efc4e`, merge `feff0c8278a01e4027fc0e8f7713f535bb8a0148`. Birim ve özkütle Chromium/WebKit senaryoları başarılı; 436 test geçti. 9.2.1.1(a) main olarak kaydedildi.
 
 PR #21 tarihçe tamamlandı: HEAD `1f529e952b24f381db03e4787692b995bc73ee12`, merge `84fe93695603ab365d721d435de47dc4ed5e8ccf`. 438 model/regresyon ve Chromium/WebKit başarılı; run 41924828360.
 
-## Güncel paket — PR #20
+PR #20 tamamlandı: HEAD e499bc68ed67a6118fba92716ccee758627bf04f, merge d15519f727a26c88b2cd5b4a5655fac4c31933ac. Birleşik 445 test ve tüm Chromium/WebKit/regresyon kontrolleri başarılı. Run 41925482204. Main son gözlenen d15519f727a26c88b2cd5b4a5655fac4c31933ac. 9.2.1.1 a/b/c/ç/d/e/f denetimleri main'e alındı; üst kazanım main statüsüne yükseltildi. Gerçek cihaz ve canlı ayrı bekler.
 
-Dal feature/qualitative-mixtures-20261105, nitel karışım (e). Tarihçe main'i 84fe936 ile birleştirilmiş son HEAD hazırlanıyor; HEAD'i GitHub'dan oku. A/B kaynakları, yeni hazırlama kimliği, karıştırıcı ve örnek ucu doğrudan sürüklenir; aynı oran/farklı miktar, kontrollü hipotez, tabakalı örnekleme, defter ve soru. Bilimsel kayıt MIXTURE-REVIEW.md.
+## Güncel paket — 9.2.1.2 ilk iki örnek
 
-İlk karışım Chromium testi geçti; WebKit bağımlılık kurulumu uzadığı için browser işi resmî Playwright 1.62.1 noble imajına taşındı. Sistem/browser kurulumu hazır gelir; npm paketi aynı sürümdür ve executable varlığı kontrol edilir. Gerçek Chromium/WebKit deney testleri aynen çalışır, atlanmaz. Yeni HEAD için tüm sonuçları bekle. Yerel birleşik 445/445 model/regresyon testi geçti (443 + 2 tarihçe).
+Dal feature/material-inference-20261105, güncel main d15519f üzerinden. Kuyumculukta bilinmeyen X/Y numunelerini ölç, aynı gövde özkütlesine rağmen farklı malzeme/kapalı boşlukları gör. Porselenle ilişkili sabit bileşimli sanal seramikte kapalı boşluk ve dış hacmi değiştir; kütle/dış hacim, gövde özkütlesi ve kesin kalite çıkarımının sınırını öğren. Numune/boşluk sürükleme, tartım, tam batırma, defter, hipotez, ölçüm sonrası iç yapı ve soru. Bilimsel kayıt MATERIAL-REVIEW.md.
+
+5 yeni model testi, toplam 450 yerel test geçti. Chromium/WebKit gerçek pointer senaryosu hazır; PR/HEAD aktarımı ve CI sıradaki iş. Browser işi sürümü eşleşen resmî Playwright 1.62.1 noble imajını kullanır; gerçek testler atlanmaz.
+
+Kapsamda üç örnek ayrı kabul maddesi: kuyumculuk, porselen, ebru. İlk ikisi geliştirmede; ebru eksik. Üst kazanım bu iki örnekle tamamlanmaz. CI kanıt kapısı ek kabul maddelerinin tümü tamamlanmadan üst statünün yükseltilmesini engeller.
 
 ## Kabul ve yayın sınırları
 
@@ -33,9 +37,9 @@ Vercel proje prj_IGbHMZd4pfzBH1X3t2auBqbUMe17 / fen-laboratuvari-github, takım 
 
 ## Sıradaki işler
 
-1. #20 son HEAD'in bütün CI (model, envanter, karışım Chromium/WebKit, gerekli regresyonlar) başarılı ve çakışmasızsa main'e al. e durumunu gerçek HEAD/merge/run kanıtıyla yükselt; 9.2.1.1(a/b/c/ç/d/e/f) bütünlüğünü tekrar incele. Tam ana kazanımı ancak bundan sonra main statüsüne çıkar. Canlı/gerçek cihaz ayrı bekler.
-2. 9.2.1.2 kuyumculuk/porselen/ebru: örneği tek özkütle parametresine indirgeme. Kuyumculukta yalnız özkütle saflık kanıtı değildir. Sabit bileşimli kapalı gözenek modeli porselende kütle/dış hacim ilişkisini anlatabilir; gerçek kalite/fırınlama tahmini yapmaz. Ebruda aynı özkütlede yüzey/viskozite farkıyla farklı davranışı kontrollü incele; ölçülmüş veri uydurma.
-3. Araştırılmış birincil ek kaynaklar: APS Gallery of Fluid Motion 2023 marbling (https://gfm.aps.org/meetings/dfd-2023/649b3ad8199e4c137897831b), Physical Review Fluids 9,110506 (2024), üniversite PDF https://people.math.wisc.edu/~spagnolie/Papers/sbsr24.pdf ; porselen gözenek/bulk density araştırması https://pmc.ncbi.nlm.nih.gov/articles/PMC9821833/ . Bunlar iç model doğrulaması içindir; öğrenciye müfredat dışı akışkan denklemleri yükleme.
-4. 9.2.2 dayanıklılık, 9.2.3 adezyon/kohezyon/kılcallık/yüzey gerilimi; sonra TYT Fizik, AYT Fizik, TYT Kimya, AYT Kimya, TYT Biyoloji, AYT Biyoloji'nin tüm kapsam satırları. Konu veya ders bitince durma; sonunda bütün alanları tekrar tara.
+1. Malzeme inceleme PR'sini aç/son HEAD CI'ını oku. 450 model/regresyon, yeni material Chromium/WebKit ve gerekli hacim/diğer regresyonlar başarılıysa main'e al. Yalnız kuyumculuk/porselen alt kabul maddelerini yükselt; ebru eksik kalır.
+2. Ebru atölyesi: birincil kaynak paint slightly denser than bath but interfacial tensions prevent sinking; yüzey etkin madde boyanın yüzey gerilimini azaltıp yayılmayı artırabilir; alet hareketi yüksek viskoziteli ortamda deseni değiştirir. Yoğunluk tek parametre diye sahte model kurma. Kaynak: https://people.math.wisc.edu/~spagnolie/Papers/sbsr24.pdf ve https://gfm.aps.org/meetings/dfd-2023/649b3ad8199e4c137897831b . Bunlar iç model doğrulaması içindir; TYT dışı akışkan denklemleri öğretilmez. Ebru için kontrollü yüzey taşınma/alet hareketi modeli, sabit özkütlede farklı desen gözlemi anlamlı olabilir; gerçek Navier–Stokes/renk yayılma tahmini diye sunma.
+3. Porselen birincil araştırma: https://www.mdpi.com/1996-1944/16/1/171 ve https://www.sciencedirect.com/science/article/pii/S095522191000333X . Katı/gövde özkütlesi, kapalı/açık gözenek ve kalite çok etkenliliği ayrılmalı. Sanal numune verisini gerçek ölçüm diye sunma.
+4. Sonra 9.2.2 dayanıklılık, 9.2.3 adezyon/kohezyon/kılcallık/yüzey gerilimi; tüm TYT Fizik ve diğer beş alanın her kapsam satırına devam. Hiçbir alan veya konunun tek sayfayla bittiğini varsayma. Altı alan sonunda yeniden taranır.
 
-Komutlar: node --test labs/*.test.cjs tests/*.test.js; node curriculum/render.cjs; node tests/karisim-browser.cjs chromium / webkit; ozkutle-browser.cjs, hacim-browser.cjs, birim-browser.cjs regresyonları.
+Komutlar: node --test labs/*.test.cjs tests/*.test.js; node curriculum/render.cjs; node tests/malzeme-browser.cjs chromium / webkit; hacim-browser.cjs, ozkutle-browser.cjs, birim-browser.cjs, karisim-browser.cjs regresyonları.

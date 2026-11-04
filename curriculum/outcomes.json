@@ -131,8 +131,8 @@
       "title": "Özkütleyi, kütle ve hacimle ilişkilendirerek açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 302,
-      "status": "Geliştiriliyor",
-      "audit": "a/b/c/ç/d/f alt açıklamaları main; nitel karışım (e) tarihçe main'i ile birleşik tarayıcı CI bekliyor. Gerçek iPad/canlı kabulü bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "a/b/c/ç/d/e/f için ölçüm, model, MEB sınırı ve son HEAD tarayıcı kanıtları main'de. Gerçek iPad/Safari ve canlı üretim doğrulaması ayrıca bekliyor.",
       "clauses": [
         {
           "part": "a",
@@ -204,11 +204,13 @@
         {
           "part": "e",
           "sourceLine": 313,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/MIXTURE-REVIEW.md",
-            "https://github.com/1rid3mon/fen-laboratuvari/pull/20"
-          ]
+            "https://github.com/1rid3mon/fen-laboratuvari/actions/runs/41925482204"
+          ],
+          "pr": 20,
+          "commit": "d15519f727a26c88b2cd5b4a5655fac4c31933ac"
         },
         {
           "part": "f",
@@ -233,8 +235,8 @@
         "https://github.com/1rid3mon/fen-laboratuvari/pull/20",
         "curriculum/MIXTURE-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 20,
+      "commit": "d15519f727a26c88b2cd5b4a5655fac4c31933ac",
       "realIPad": false,
       "live": false
     },
@@ -246,14 +248,37 @@
       "title": "Günlük hayatta saf maddelerin ve karışımların özkütlelerinden faydalanılan durumlara örnekler verir.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 315,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Kuyumculuk ve porselen için ölçüm/kanıt atölyesi geliştiriliyor; ebru için ayrı bilimsel ve etkileşim kabulü eksik. Tek örnek tüm kazanım sayılmaz.",
       "clauses": [],
-      "evidence": [],
+      "evidence": [
+        "curriculum/MATERIAL-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Kuyumculuk: ölçüm, saflık çıkarımının sınırı",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/MATERIAL-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Porselen: bileşim sabitken kapalı boşluk ve gövde özkütlesi",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/MATERIAL-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Ebru: özkütle, yüzey etkileşimi ve alet hareketinin ayrılması",
+          "status": "Eksik",
+          "evidence": []
+        }
+      ]
     },
     {
       "key": "physics:9.2.2.1",
