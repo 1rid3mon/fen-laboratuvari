@@ -66,7 +66,7 @@ function matterCylinder(){
  for(const o of state.objects){const selected=o.id===state.selectedObject;const volScale=44+o.volumeMl*.28;
  b+=rect(o.x,o.y,volScale,o.height,'#eec28d','rx="6" stroke="'+(selected?'#fff':'#425f7c')+'" stroke-width="4" data-drag="matter-'+o.id+'"')+text(o.x+5,o.y+24,'#'+o.id+' '+fmt(o.volumeMl,0),15);}
  b+=text(108,78,'Cisimleri silindire taşı, sonra geri çıkar');
- return{b,result:'Başlangıç: '+fmt(state.waterMl)+' mL · Ölçek okuması: '+fmt(v.readingMl)+' mL · Yer değiştiren sıvı: '+fmt(v.displacedMl)+' mL',note:'Mavi seviye, silindirdeki sıvı hacmi ile cisimlerin batmış hacminden hesaplanır. Her cisim, seçilen hacmi olan dik prizma gibi ve elle tutuluyor kabul edilir; kendiliğinden yüzme/batma modellenmez. Tam batmış bir cismin hacmi, mL artışıyla cm³ cinsinden aynıdır (1 mL = 1 cm³). Kısmen batırmada yalnız batmış kısmın hacmi ölçülür.'};
+ return{b,result:'Başlangıç: '+fmt(state.waterMl)+' mL · Ölçek okuması: '+fmt(v.readingMl)+' mL · Yer değiştiren sıvı: '+fmt(v.displacedMl)+' mL · '+state.objects.map(o=>'Cisim '+o.id+': ρ='+fmt(M.density(o.massG,o.volumeMl))+' g/cm³').join(' | '),note:'Mavi seviye, silindirdeki sıvı hacmi ile cisimlerin batmış hacminden hesaplanır. Her cisim, seçilen hacmi olan dik prizma gibi ve elle tutuluyor kabul edilir; kendiliğinden yüzme/batma modellenmez. Tam batmış bir cismin hacmi, mL artışıyla cm³ cinsinden aynıdır (1 mL = 1 cm³). Kısmen batırmada yalnız batmış kısmın hacmi ölçülür.'};
 }
 function matterCapillary(){
  const wet=state.wetting==='yes';let b=rect(145,320,615,105,'#146c93','opacity=".8"')+line(145,320,760,320,'#a9e4ff',4);
@@ -140,12 +140,12 @@ el('scene').addEventListener('pointerdown',e=>{
  el('scene').setPointerCapture?.(e.pointerId);e.preventDefault();});
 el('scene').addEventListener('pointermove',e=>{if(!moving||moving.pointer!==e.pointerId)return;const p=coords(e),key=moving.key;
  if(key==='wave-amplitude'){state.amplitude=Math.round(clamp((235-p.y)/5,-13,13))*5;state.time=0;}
- if(key==='water-source'){state.sourceX=clamp(p.x,115,540);}
+ if(key==='water-source'){state.sourceX=clamp(p.x,115,430);}
  if(key==='water-boundary'){state.waterY=clamp(p.y,205,345);}
  if(key==='sound-amplitude'){state.soundA=clamp(Math.round((p.x-80)/5)*5,0,35);}
  if(key.startsWith('matter-')){const o=state.objects.find(o=>o.id===Number(key.slice(7)));if(o){o.x=clamp(p.x-26,80,810);o.y=clamp(p.y-25,90,420);}}
- if(key==='cap-1')state.radius1=clamp(Math.round((p.x-315+60)/15)*.5,1,6);
- if(key==='cap-2')state.radius2=clamp(Math.round((p.x-575+60)/15)*.5,1,6);
+ if(key==='cap-1')state.radius1=clamp(Math.round((p.x-315-7.5)/7.5*2)/2,1,6);
+ if(key==='cap-2')state.radius2=clamp(Math.round((p.x-575-7.5)/7.5*2)/2,1,6);
  if(key==='vector-a')state.a=clamp(Math.round((p.x-450)/33),-5,5);
  if(key==='vector-b')state.b=clamp(Math.round((p.x-450)/33),-5,5);
  if(key==='vector-result')state.b=clamp(Math.round((p.x-450)/33)-state.a,-5,5);
