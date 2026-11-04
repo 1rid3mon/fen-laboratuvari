@@ -80,7 +80,7 @@ test('heat: contact from drag triggers energy-conserving temperature exchange',(
 test('heat: reverse temperature gradient reverses the heat-flow arrow',()=>{
  const x=boot('heat');x.change('aInitial',20);x.change('bInitial',80);
  x.drag('heat-a',505,250);assert.match(x.nodes.scene.innerHTML,/Termal temas · B → A/);
- x.frame(1000);x.frame(2000);assert.match(x.nodes.result.textContent,/Q\\(A→B\\)=-/);
+ x.frame(1000);x.frame(2000);assert.ok(x.nodes.result.textContent.includes('Q(A→B)=-'));
 });
 test('heat: expansion illustration labels exaggerated scale',()=>{
  const x=boot('heat');x.mode('rod');x.change('rodTemp',120);
