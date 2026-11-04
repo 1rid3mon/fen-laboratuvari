@@ -41,7 +41,7 @@ function drawLiquid(){
  let b='<defs><clipPath id="tankClip">'+polygon(poly,'')+'</clipPath><marker id="pa" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L0 6 L7 3z" fill="#ffc285"/></marker></defs>';
  b+=polygon(poly,'fill="#1c4258" stroke="#b0d3e2" stroke-width="3"');
  b+=rect(90,wl,725,500-wl,'#187fa6','clip-path="url(#tankClip)" opacity=".78"')+polygon(poly,'fill="none" stroke="#b0d3e2" stroke-width="4"');
- for(let i=1;i<4;i++){const a=poly[i],z=poly[(i+1)%4],p={x:a.x*.38+z.x*.62,y:a.y*.38+z.y*.62};if(p.y>wl+20){const dx=z.y-a.y,dy=-(z.x-a.x),length=Math.hypot(dx,dy);b+=line(p.x,p.y,p.x+dx/length*36,p.y+dy/length*36,'#ffc285',4,'marker-end="url(#pa)"');}}
+ for(let i=1;i<4;i++){const a=poly[i],z=poly[(i+1)%4],f=i===3?0.3:0.62,p={x:a.x*(1-f)+z.x*f,y:a.y*(1-f)+z.y*f};if(p.y>wl+20){const dx=z.y-a.y,dy=-(z.x-a.x),length=Math.hypot(dx,dy);b+=line(p.x,p.y,p.x+dx/length*36,p.y+dy/length*36,'#ffc285',4,'marker-end="url(#pa)"');}}
  let report=[];for(const p of s.probes){const value=m.probe(poly,wl,p,rho);b+='<circle data-probe="'+p.id+'" cx="'+p.x+'" cy="'+p.y+'" r="19" fill="'+(value.region==='liquid'?'#ffe1a8':'#b4bfc9')+'" stroke="#213b51" stroke-width="4"/>'+text(p.x+23,p.y-11,'S'+p.id);
  report.push('S'+p.id+': '+(value.region==='liquid'?fmt(value.depth)+' m · '+fmt(value.gaugePa)+' Pa (sıvının gösterge basıncı)':value.region==='air'?'Su üstünde':'Kap dışında'));}
  return{b,note:'Durgun sıvıda basınç yalnız düşey derinliğe ve sıvının özkütlesine bağlıdır. Kap döndüğünde serbest yüzey yatay kalır; çizim, sıvı alanını sabit tutan ideal durağan son durumu gösterir. Oklar basınç vektörü değil, yüzeye dik basınç kuvveti yönüdür. Tanecik hareketi ve dökülme modellenmez.',stats:report.join(' | ')+' · ρ='+fmt(rho)+' kg/m³'};
@@ -113,7 +113,7 @@ $('scene').addEventListener('pointerdown',e=>{
 });
 $('scene').addEventListener('pointermove',e=>{if(!drag||drag.pointer!==e.pointerId)return;const p=pointerPos(e);
  if(drag.kind==='probe'){const b=s.probes.find(b=>b.id===drag.id);if(b){b.x=clamp(p.x,90,810);b.y=clamp(p.y,35,470);}}
- if(drag.kind==='block'){const b=s.blocks.find(b=>b.id===drag.id);if(b)b.column=p.x<350?0:p.x<550?1:2;}
+ if(drag.kind==='block'){const b=s.blocks.find(b=>b.id===drag.id);if(b){const dest=p.x<350?0:p.x<550?1:2;if(dest===b.column||s.blocks.filter(other=>other.column===dest).length<5)b.column=dest;}}
  if(drag.kind==='body'){const b=s.bodies.find(b=>b.id===drag.id);if(b){b.x=p.x-35;b.y=p.y-35;}}
  if(drag.kind==='piston'){s.gasVolume=Math.round(clamp((p.x-195)/55,2,8)*2)/2;const a=$('controls').querySelector('[data-field="gasVolume"]');if(a)a.value=s.gasVolume;const out=$('controls').querySelector('[data-output="gasVolume"]');if(out)out.textContent=fmt(s.gasVolume);}
  scene();e.preventDefault();
