@@ -2,9 +2,9 @@
 
 Kaynak ve sınırlar: [SOURCES.md](SOURCES.md). Otomatik kaynak: outcomes.json; yenileme: node curriculum/render.cjs.
 
-61 kazanım. Durumlar bütün kazanımı anlatır; bir laboratuvarın bulunması tam kabul değildir. Alt açıklamaların durumları JSON kaydında ayrı tutulur. Şu başlangıç envanterinde mevcut sayfaların kazanım bazında kabul eşlemesi bekleniyor.
+61 kazanım. Durumlar bütün kazanımı anlatır; bir laboratuvarın bulunması tam kabul değildir. MEB alt açıklamaları ve ek deney kabul maddeleri JSON kaydında ayrı tutulur. Durumlar kanıta göre güncellenir; eski sayfaların varlığını tam kabul sayma.
 
-| MEB kimliği | Kazanım | Durum | Alt açıklama | Kalan iş / kanıt |
+| MEB kimliği | Kazanım | Durum | Alt kabul maddesi | Kalan iş / kanıt |
 |---|---|---|---:|---|
 | 9.1.1.1 | Kimyanın bilim olma sürecini açıklar. | Eksik | 3 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.1.2.1 | Kimyanın ve kimyacıların başlıca çalışma alanlarını açıklar. | Eksik | 3 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |

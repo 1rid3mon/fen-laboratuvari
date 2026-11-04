@@ -2,16 +2,16 @@
 
 Kaynak ve sınırlar: [SOURCES.md](SOURCES.md). Otomatik kaynak: outcomes.json; yenileme: node curriculum/render.cjs.
 
-83 kazanım. Durumlar bütün kazanımı anlatır; bir laboratuvarın bulunması tam kabul değildir. Alt açıklamaların durumları JSON kaydında ayrı tutulur. Şu başlangıç envanterinde mevcut sayfaların kazanım bazında kabul eşlemesi bekleniyor.
+83 kazanım. Durumlar bütün kazanımı anlatır; bir laboratuvarın bulunması tam kabul değildir. MEB alt açıklamaları ve ek deney kabul maddeleri JSON kaydında ayrı tutulur. Durumlar kanıta göre güncellenir; eski sayfaların varlığını tam kabul sayma.
 
-| MEB kimliği | Kazanım | Durum | Alt açıklama | Kalan iş / kanıt |
+| MEB kimliği | Kazanım | Durum | Alt kabul maddesi | Kalan iş / kanıt |
 |---|---|---|---:|---|
 | 9.1.1.1 | Evrendeki olayların anlaşılmasında fizik biliminin önemini açıklar. | Eksik | 0 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.1.2.1 | Fiziğin uygulama alanlarını, alt dalları ve diğer disiplinlerle ilişkilendirir. | Eksik | 2 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.1.3.1 | Fiziksel nicelikleri sınıflandırır. | Eksik | 4 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.1.4.1 | Bilim araştırma merkezlerinin fizik bilimi için önemini açıklar. | Eksik | 2 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
-| 9.2.1.1 | Özkütleyi, kütle ve hacimle ilişkilendirerek açıklar. | Geliştiriliyor | 7 | a/b/c/ç/d/f alt açıklamaları main; nitel karışım (e) tarihçe main'i ile birleşik tarayıcı CI bekliyor. Gerçek iPad/canlı kabulü bekliyor. |
-| 9.2.1.2 | Günlük hayatta saf maddelerin ve karışımların özkütlelerinden faydalanılan durumlara örnekler verir. | Eksik | 0 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
+| 9.2.1.1 | Özkütleyi, kütle ve hacimle ilişkilendirerek açıklar. | maine birleştirildi | 7 | a/b/c/ç/d/e/f için ölçüm, model, MEB sınırı ve son HEAD tarayıcı kanıtları main'de. Gerçek iPad/Safari ve canlı üretim doğrulaması ayrıca bekliyor. |
+| 9.2.1.2 | Günlük hayatta saf maddelerin ve karışımların özkütlelerinden faydalanılan durumlara örnekler verir. | Geliştiriliyor | 3 | Kuyumculuk ve porselen için ölçüm/kanıt atölyesi geliştiriliyor; ebru için ayrı bilimsel ve etkileşim kabulü eksik. Tek örnek tüm kazanım sayılmaz. |
 | 9.2.2.1 | Dayanıklılık kavramını açıklar. | Eksik | 0 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.2.3.1 | Yapışma (adezyon) ve birbirini tutma (kohezyon) olaylarını örneklerle açıklar. | Eksik | 3 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.3.1.1 | Cisimlerin hareketlerini sınıflandırır. | Eksik | 0 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
