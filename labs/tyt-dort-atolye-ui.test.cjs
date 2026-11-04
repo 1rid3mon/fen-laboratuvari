@@ -28,7 +28,7 @@ function boot(topic='waves'){
 }
 test('all four requested topics open their own physical scenes',()=>{
  for(const [topic,fragment] of [['waves','Atma genliği'],['matter','İlk sıvı hacmi'],['intro','A vektörü'],['heat','başlangıç sıcaklığı']]){
- const x=boot(topic);assert.ok(x.nodes.controls.innerHTML.includes(fragment),topic);assert.ok(x.nodes.scene.innerHTML.length>1000,topic);
+ const x=boot(topic);assert.ok(x.nodes.controls.innerHTML.includes(fragment),topic);assert.ok(x.nodes.scene.innerHTML.includes('data-drag='),topic);
  }
 });
 test('wave source drag changes shape while fixed end remains constrained',()=>{
