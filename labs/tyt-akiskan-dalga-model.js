@@ -22,6 +22,16 @@ function reflect({source={x:175,y:280},center={x:585,y:250},angleDeg=90,impactOf
  const reflected={x:incident.x-2*scalar*normal.x,y:incident.y-2*scalar*normal.y};
  return{source,center,impact,tangent,normal,incident,reflected,incidenceNormal:Math.abs(scalar)};
 }
+function parabolicReflection({vertexX=650,vertexY=250,focal=110,offsetY=0}={}){
+ if(![vertexX,vertexY,focal,offsetY].every(Number.isFinite)||focal<=0||Math.abs(offsetY)>220)throw RangeError('parabolic parameters');
+ // Parabola opens left: x = vertexX - (y - vertexY)^2/(4f).
+ // Incoming waves travel right, reflect back through the focus (vertexX - f, vertexY).
+ const impact={x:vertexX-offsetY*offsetY/(4*focal),y:vertexY+offsetY};
+ const dxdy=-offsetY/(2*focal),normal={x:1/Math.hypot(1,dxdy),y:-dxdy/Math.hypot(1,dxdy)};
+ const incoming={x:1,y:0},projection=incoming.x*normal.x+incoming.y*normal.y;
+ const reflected={x:incoming.x-2*projection*normal.x,y:incoming.y-2*projection*normal.y};
+ return{impact,normal,incoming,reflected,focus:{x:vertexX-focal,y:vertexY}};
+}
 function distanceToLine(point,origin,dir){const dx=point.x-origin.x,dy=point.y-origin.y;return Math.abs(dx*dir.y-dy*dir.x);}
-return{clamp,venturi,barometer,reflect,distanceToLine};
+return{clamp,venturi,barometer,reflect,parabolicReflection,distanceToLine};
 });
