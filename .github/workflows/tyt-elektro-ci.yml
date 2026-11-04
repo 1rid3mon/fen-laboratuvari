@@ -1,0 +1,32 @@
+name: TYT 2018 MEB Electrostatics Lab
+on:
+  push:
+    paths:
+      - 'labs/tyt-elektro*'
+      - '.github/workflows/tyt-elektro-ci.yml'
+      - 'index.html'
+  pull_request:
+    paths:
+      - 'labs/tyt-elektro*'
+      - '.github/workflows/tyt-elektro-ci.yml'
+      - 'index.html'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate TYT 2018 scripts
+        run: |
+          node --check labs/tyt-elektro-math.js
+          node --check labs/tyt-elektro-lab.js
+          node --check labs/tyt-elektro-pointer.js
+          node --check labs/tyt-elektro.test.cjs
+      - name: Verify electric charge physics, gestures and MEB compliance
+        run: node --test labs/tyt-elektro.test.cjs

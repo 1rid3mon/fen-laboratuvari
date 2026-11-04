@@ -1,0 +1,28 @@
+name: All Labs Visual Interaction Audit
+on:
+  push:
+    paths:
+      - 'labs/**'
+      - 'index.html'
+      - '.github/workflows/tum-lab-etkilesim-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/**'
+      - 'index.html'
+      - '.github/workflows/tum-lab-etkilesim-ci.yml'
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and interactivity inventory
+        run: |
+          node --check labs/tum-laboratuvar-etkilesim.test.cjs
+          node --test labs/tum-laboratuvar-etkilesim.test.cjs

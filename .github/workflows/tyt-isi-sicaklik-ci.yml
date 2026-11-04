@@ -1,0 +1,32 @@
+name: TYT 2018 MEB Heat and Temperature Lab
+on:
+  push:
+    paths:
+      - 'labs/isi-sicaklik*'
+      - '.github/workflows/tyt-isi-sicaklik-ci.yml'
+      - 'index.html'
+  pull_request:
+    paths:
+      - 'labs/isi-sicaklik*'
+      - '.github/workflows/tyt-isi-sicaklik-ci.yml'
+      - 'index.html'
+jobs:
+  tyt-heat:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and simulation validation
+        run: |
+          node --check labs/isi-sicaklik-math.js
+          node --check labs/isi-sicaklik-lab.js
+          node --check labs/isi-sicaklik-pointer.js
+          node --check labs/isi-sicaklik.test.cjs
+      - name: MEB 2018 TYT heat and touch regression
+        run: node --test labs/isi-sicaklik.test.cjs

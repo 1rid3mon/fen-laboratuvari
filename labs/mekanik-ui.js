@@ -29,8 +29,8 @@ const U={el,esc,fmt,svg,line,text,arrow,cart,graph,energyBars};
 function create(config){
  const byId=new Map(config.sections.map(s=>[s.id,s])),values={},Q=config.questions||[];
  for(const s of config.sections)values[s.id]={...s.defaults};
- const state={tab:config.sections[0].id,quizIndex:0,choice:null,checked:false,score:0,playing:false,last:0};
- function stop(){state.playing=false;state.last=0;}
+ const state={tab:config.sections[0].id,quizIndex:0,choice:null,checked:false,score:0,playing:false,last:0,generation:0};
+ function stop(){state.playing=false;state.last=0;state.generation++;}
  function tabs(){el('tabs').innerHTML=config.sections.map(s=>'<button type="button" class="'+(state.tab===s.id?'active':'')+'" data-tab="'+esc(s.id)+'" aria-current="'+(state.tab===s.id?'page':'false')+'">'+esc(s.tab)+'</button>').join('')+(Q.length?'<button type="button" data-tab="quiz" class="'+(state.tab==='quiz'?'active':'')+'" aria-current="'+(state.tab==='quiz'?'page':'false')+'">🧠 AYT mini test</button>':'');}
  function controlHTML(){const s=byId.get(state.tab);if(!s){el('controls').innerHTML='';return;}let h='';for(const c of s.controls){const val=values[state.tab][c.id];h+='<div class="mcontrol"><label for="ctl-'+esc(c.id)+'">'+esc(c.label)+' <output id="out-'+esc(c.id)+'">'+fmt(val)+' '+esc(c.unit||'')+'</output></label><input id="ctl-'+esc(c.id)+'" type="range" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'" value="'+val+'" data-control="'+esc(c.id)+'"></div>';}el('controls').innerHTML=h;}
  function quiz(){
@@ -49,20 +49,28 @@ function create(config){
   el('interpret').textContent=s.interpret(p,o,U);el('formula').textContent=s.formula(p,o);
   el('measurements').innerHTML=s.metrics(p,o).map(m=>'<div class="mmetric"><small>'+esc(m[0])+'</small><strong>'+esc(m[1])+'</strong></div>').join('');
   el('note').textContent=s.note;el('quiz').innerHTML='';
-  el('actions').innerHTML='<button type="button" class="mbtn" data-action="reset">↺ Varsayılana dön</button>'+(s.animate?'<button type="button" class="mbtn primary" data-action="play">'+(state.playing?'Ⅱ Duraklat':'▶ Oynat')+'</button><button type="button" class="mbtn" data-action="step">+0,2 s</button>':'');
+  el('actions').innerHTML='<button type="button" class="mbtn" data-action="reset">↺ Varsayılana dön</button>'+(s.animate?'<button type="button" class="mbtn primary" data-action="play">'+(state.playing?'Ⅱ Duraklat':'▶ Oynat')+'</button><button type="button" class="mbtn" data-action="step">+0,2 s</button>':'')+(s.motion?'<button type="button" class="mbtn primary" data-action="motion-play">'+(state.playing?'Ⅱ Duraklat':'▶ Hareket ettir')+'</button><button type="button" class="mbtn" data-action="motion-step">+ Adım</button><button type="button" class="mbtn" data-action="motion-home">↶ Hareketi başa al</button>':'');
  }
  function change(tab){
   if((tab==='quiz'&&!Q.length)||(tab!=='quiz'&&!byId.has(tab)))return;stop();state.tab=tab;state.choice=null;state.checked=false;tabs();controlHTML();render();
  }
- function animateFrame(now){
-  if(!state.playing)return;
-  const s=byId.get(state.tab);if(!s||!s.animate){stop();return;}
+ function animateFrame(now,generation){
+  if(!state.playing||generation!==state.generation)return;
+  const s=byId.get(state.tab);if(!s||(!s.animate&&!s.motion)){stop();return;}
+  if(s.motion){const m=s.motion,p=values[state.tab],key=m.key;
+   if(!state.last)state.last=now;
+   const dt=Math.min(.08,Math.max(0,(now-state.last)/1000));state.last=now;
+   const next=Math.min(m.max,p[key]+dt*(typeof m.speed==='function'?m.speed(p):m.speed));p[key]=Number(next.toFixed(5));
+   const slider=el('ctl-'+key),out=el('out-'+key);
+   if(slider)slider.value=String(p[key]);if(out)out.textContent=fmt(p[key])+' '+(s.controls.find(c=>c.id===key)?.unit||'');
+   render();if(next>=m.max-1e-8){stop();render();return;}root.requestAnimationFrame(t=>animateFrame(t,generation));return;
+  }
   if(!state.last)state.last=now;
   const p=values[state.tab],key=s.animate.key,max=s.animate.max(p),dt=Math.min(.08,Math.max(0,(now-state.last)/1000)),next=Math.min(max,p[key]+dt);
   state.last=now;p[key]=next;
   const slider=el('ctl-'+key),out=el('out-'+key);if(slider)slider.value=String(next);if(out)out.textContent=fmt(next)+' '+(s.controls.find(c=>c.id===key)?.unit||'');
   render();if(next>=max-1e-9){stop();render();return;}
-  root.requestAnimationFrame(animateFrame);
+  root.requestAnimationFrame(t=>animateFrame(t,generation));
  }
  function click(a){
   if(state.tab==='quiz'){
@@ -73,8 +81,11 @@ function create(config){
   }
   const s=byId.get(state.tab),p=values[state.tab];
   if(a==='reset'){stop();values[state.tab]={...s.defaults};controlHTML();render();}
+  if(s.motion&&a==='motion-home'){stop();p[s.motion.key]=s.motion.min;const x=el('ctl-'+s.motion.key);if(x)x.value=String(p[s.motion.key]);const out=el('out-'+s.motion.key);if(out)out.textContent=fmt(p[s.motion.key])+' '+(s.controls.find(c=>c.id===s.motion.key)?.unit||'');render();}
+  if(s.motion&&a==='motion-step'){stop();p[s.motion.key]=Number(Math.min(s.motion.max,p[s.motion.key]+s.motion.step).toFixed(5));const x=el('ctl-'+s.motion.key);if(x)x.value=String(p[s.motion.key]);const out=el('out-'+s.motion.key);if(out)out.textContent=fmt(p[s.motion.key])+' '+(s.controls.find(c=>c.id===s.motion.key)?.unit||'');render();}
+  if(s.motion&&a==='motion-play'){if(state.playing){stop();render();return;}if(p[s.motion.key]>=s.motion.max-1e-8)p[s.motion.key]=s.motion.min;state.playing=true;state.last=0;const generation=++state.generation;render();root.requestAnimationFrame(t=>animateFrame(t,generation));}
   if(a==='step'&&s.animate){stop();p[s.animate.key]=Math.min(s.animate.max(p),p[s.animate.key]+.2);const slider=el('ctl-'+s.animate.key),out=el('out-'+s.animate.key);if(slider)slider.value=String(p[s.animate.key]);if(out)out.textContent=fmt(p[s.animate.key])+' s';render();}
-  if(a==='play'&&s.animate){if(state.playing){stop();render();return;}if(p[s.animate.key]>=s.animate.max(p))p[s.animate.key]=0;state.playing=true;state.last=0;render();root.requestAnimationFrame(animateFrame);}
+  if(a==='play'&&s.animate){if(state.playing){stop();render();return;}if(p[s.animate.key]>=s.animate.max(p))p[s.animate.key]=0;state.playing=true;state.last=0;const generation=++state.generation;render();root.requestAnimationFrame(t=>animateFrame(t,generation));}
  }
  function init(){
   el('tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t)change(t.dataset.tab);});

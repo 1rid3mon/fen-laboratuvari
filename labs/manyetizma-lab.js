@@ -14,5 +14,6 @@ const sections=[
 {id:'motor',tab:'Motor ve dinamo',title:'Elektrik motoru ile dinamo arasındaki fark',intro:'Enerji dönüşüm yönünü değiştir; iki aygıtın çalışma prensibini karşılaştır.',defaults:{mode:0},controls:[c('mode','0 motor / 1 dinamo',0,1,1,'')],model:p=>({name:p.mode?'Dinamo / jeneratör':'Elektrik motoru'}),scene:(p,o)=>render(o.name,p.mode?['Mekanik hareket → elektrik enerjisi','Manyetik akı değişimi → indüksiyon']:['Elektrik enerjisi → mekanik hareket','Akım geçen çerçeve → döndürme etkisi']),interpret:(p,o)=>p.mode?'Dinamo, mekanik hareketi elektromanyetik indüksiyon yoluyla elektrik enerjisine dönüştürür.':'Motor, manyetik alanda akım taşıyan iletkenin kuvvetinden yararlanır.',formula:()=> 'Enerji dönüşümü (nitel karşılaştırma)',metrics:(p,o)=>[['Aygıt',o.name]],note:'11.2.4.11: ideal kavramsal karşılaştırma; kayıplar ve gerçek devre ayrıntıları dahil değil.'},
 
 ];
+w.KavramsalHareket?.enhance(sections,'manyetizma');
 w.ManyetizmaLab=U.create({sections,questions:[]});
 })(window);

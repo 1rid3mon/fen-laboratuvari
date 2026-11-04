@@ -1,0 +1,47 @@
+name: TYT 2018 MEB Electric Circuits and Interaction
+on:
+  push:
+    paths:
+      - 'labs/tyt-devre*'
+      - 'labs/tyt-basinc-dalgalar*'
+      - 'labs/ayt-dalga-modern*'
+      - 'labs/tyt-fizige-giris*'
+      - 'labs/tyt-madde-ozellikleri*'
+      - 'index.html'
+      - '.github/workflows/tyt-devre-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/tyt-devre*'
+      - 'labs/tyt-basinc-dalgalar*'
+      - 'labs/ayt-dalga-modern*'
+      - 'labs/tyt-fizige-giris*'
+      - 'labs/tyt-madde-ozellikleri*'
+      - 'index.html'
+      - '.github/workflows/tyt-devre-ci.yml'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: |
+          node --check labs/tyt-devre-math.js
+          node --check labs/tyt-devre-ui.js
+          node --check labs/tyt-devre.test.cjs
+          node --check labs/tyt-basinc-dalgalar.js
+          node --check labs/tyt-basinc-dalgalar.test.cjs
+          node --check labs/ayt-dalga-modern.js
+          node --check labs/ayt-dalga-modern.test.cjs
+          node --check labs/tyt-fizige-giris.js
+          node --check labs/tyt-fizige-giris.test.cjs
+          node --check labs/tyt-madde-ozellikleri.js
+          node --check labs/tyt-madde-ozellikleri.test.cjs
+      - name: Physics and iPad drag regression
+        run: node --test labs/tyt-devre.test.cjs labs/tyt-basinc-dalgalar.test.cjs labs/ayt-dalga-modern.test.cjs labs/tyt-fizige-giris.test.cjs labs/tyt-madde-ozellikleri.test.cjs labs/tyt-fizige-giris.test.cjs

@@ -15,6 +15,11 @@ on:
       - 'labs/elektrik-alan*'
       - 'labs/siga*'
       - 'labs/manyetizma*'
+      - 'labs/gorsel-hareket.test.cjs'
+      - 'labs/touch-interaction.test.cjs'
+      - 'labs/optik-*'
+      - 'labs/kavramsal-hareket.js'
+      - 'labs/kavramsal-pointer.js'
       - 'labs/alternatif-akim*'
       - 'labs/meb-uyum.test.cjs'
       - 'labs/is-guc-enerji.html'
@@ -39,6 +44,11 @@ on:
       - 'labs/elektrik-alan*'
       - 'labs/siga*'
       - 'labs/manyetizma*'
+      - 'labs/gorsel-hareket.test.cjs'
+      - 'labs/touch-interaction.test.cjs'
+      - 'labs/optik-*'
+      - 'labs/kavramsal-hareket.js'
+      - 'labs/kavramsal-pointer.js'
       - 'labs/alternatif-akim*'
       - 'labs/meb-uyum.test.cjs'
       - 'labs/is-guc-enerji.html'
@@ -85,6 +95,9 @@ jobs:
           node --check labs/tork-denge.test.cjs
           node --check labs/basit-makineler-math.js
           node --check labs/basit-makineler-lab.js
+          node --check labs/basit-makineler-kinematik.js
+          node --check labs/basit-makineler-pointer.js
+          node --check labs/basit-makineler-motion.test.cjs
           node --check labs/basit-makineler.test.cjs
           node --check labs/elektrik-alan-math.js
           node --check labs/elektrik-alan-lab.js
@@ -95,8 +108,13 @@ jobs:
           node --check labs/manyetizma-math.js
           node --check labs/manyetizma-lab.js
           node --check labs/manyetizma.test.cjs
+          node --check labs/kavramsal-hareket.js
+          node --check labs/kavramsal-pointer.js
+          node --check labs/gorsel-hareket.test.cjs
+          node --check labs/elektrik-alan-pointer.js
+          node --check labs/touch-interaction.test.cjs
           node --check labs/alternatif-akim-lab.js
           node --check labs/meb-uyum.test.cjs
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
-        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs labs/fizik-enerji.test.cjs labs/momentum.test.cjs labs/mekanik-dom.test.cjs labs/tork-denge.test.cjs labs/basit-makineler.test.cjs labs/elektrik-alan.test.cjs labs/siga.test.cjs labs/manyetizma.test.cjs labs/meb-uyum.test.cjs
+        run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs labs/fizik-enerji.test.cjs labs/momentum.test.cjs labs/mekanik-dom.test.cjs labs/tork-denge.test.cjs labs/basit-makineler.test.cjs labs/basit-makineler-motion.test.cjs labs/elektrik-alan.test.cjs labs/siga.test.cjs labs/manyetizma.test.cjs labs/meb-uyum.test.cjs labs/gorsel-hareket.test.cjs

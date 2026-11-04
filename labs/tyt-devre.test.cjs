@@ -1,0 +1,68 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const read=n=>fs.readFileSync(path.join(__dirname,n),'utf8'),near=(a,b,t=.004)=>assert.ok(Math.abs(a-b)<=t,String(a)+' !== '+String(b));
+function load(){const win={};vm.runInNewContext(read('tyt-devre-math.js'),{window:win,Math,Number,RangeError,Object,Set,Map});return win.TytDevreMath;}
+test('closed single lamp has real current and power',()=>{const m=load(),r=m.solve({wires:m.presets.single,voltage:6,lamp1:6});assert.equal(r.complete,true);near(r.totalCurrent,1);near(r.elements.L1.power,6);near(r.elements.L2.power,0);assert.ok(r.brightness.L1>.95);});
+test('series bulbs share current, lower brightness',()=>{const m=load(),r=m.solve({wires:m.presets.serial,voltage:6,lamp1:6,lamp2:6});near(r.totalCurrent,.5);near(Math.abs(r.elements.L1.current),.5);near(Math.abs(r.elements.L2.current),.5);near(r.elements.L1.power,1.5);near(r.elements.L2.power,1.5);});
+test('parallel bulbs have equal voltage and more current',()=>{const m=load(),r=m.solve({wires:m.presets.parallel,voltage:6,lamp1:6,lamp2:6});near(r.totalCurrent,2);near(r.elements.L1.voltage,6);near(r.elements.L2.voltage,6);near(r.elements.L1.power,6);near(r.elements.L2.power,6);});
+test('ammeter in series and voltmeter in parallel',()=>{const m=load(),r=m.solve({wires:m.presets.meters,voltage:6,lamp1:6});near(r.totalCurrent,1);near(Math.abs(r.readings.A),1);near(Math.abs(r.readings.V),6);assert.ok(Math.abs(r.elements.V.current)<.0001);});
+test('ohm experiment measures resistor current, not bypass',()=>{const m=load(),r=m.solve({wires:m.presets.ohm,voltage:6,r:12});near(r.totalCurrent,.5);near(Math.abs(r.readings.A),.5);near(Math.abs(r.readings.V),6);});
+test('open switch interrupts current and lamps go dark',()=>{const m=load(),r=m.solve({wires:m.presets.parallel,closed:false});assert.equal(r.complete,false);near(r.totalCurrent,0);near(r.brightness.L1,0);near(r.readings.A,0);});
+test('direct battery short and ampere-only branch trigger overload',()=>{const m=load(),r=m.solve({wires:m.presets.short});assert.equal(r.short,false);assert.equal(r.overload,true);near(r.brightness.L1,0);const direct=m.solve({wires:[['Bp','Bm']]});assert.equal(direct.short,true);const meter=m.solve({wires:[['Bp','Al'],['Ar','Bm']]});assert.equal(meter.overload,true);});
+test('removing a parallel wire changes topology and current',()=>{const m=load(),w=m.presets.parallel.slice(),a=m.solve({wires:w});w.pop();const b=m.solve({wires:w});assert.ok(a.totalCurrent>b.totalCurrent);near(b.brightness.L2,0);});
+test('wires validated, deduplicated and unknown terminals rejected',()=>{const m=load();assert.equal(m.normalizeWires([['Bp','Sl'],['Sl','Bp']]).length,1);assert.throws(()=>m.normalizeWires([['Bp','unknown']]));assert.throws(()=>m.normalizeWires([['Bp','Bp']]));});
+test('series and parallel equivalent resistance',()=>{const m=load();near(m.equivalent({r1:6,r2:6,mode:'series'}),12);near(m.equivalent({r1:6,r2:6,mode:'parallel'}),3);});
+test('wire length increases resistance, larger cross-section reduces it',()=>{const m=load(),x=m.wireResistanceTrend({length:10,area:1}),y=m.wireResistanceTrend({length:2,area:10});assert.ok(x.relative>y.relative);assert.equal(x.formula,'R ∝ ρ·L/A');});
+test('identical cells series parallel and reversed series',()=>{const m=load();near(m.generators({count:2,mode:'series'}).E,3);near(m.generators({count:2,mode:'parallel'}).E,1.5);near(m.generators({count:2,mode:'series',reversed:true}).E,0);assert.throws(()=>m.generators({count:2,mode:'parallel',reversed:true}));});
+test('reversing current reverses wire magnetic field direction',()=>{const m=load(),a=m.compass({current:3,distance:2,earth:true}),b=m.compass({current:-3,distance:2,earth:true});near(a.turn,-b.turn);});
+test('hazardous environment flags are triggered',()=>{const m=load();assert.equal(m.safety({wet:false,frayed:false,grounded:true,fuse:true}).danger,false);for(const p of [{wet:true},{frayed:true},{grounded:false},{fuse:false}])assert.equal(m.safety(p).danger,true);});
+function mount(){
+ const ids=['tabs','scene','title','readings','status','help','settings','controls-title','play'];
+ const nodes=new Map(),handlers=new Map(),frames=[],rootEvents=new Map();
+ for(const id of ids)nodes.set(id,{innerHTML:'',textContent:'',className:'',value:'',dataset:{},addEventListener(type,fn){handlers.set(id+':'+type,fn)},setAttribute(name,value){this[name]=value;}});
+ const scene=nodes.get('scene');
+ scene.querySelector=q=>q==='svg'?{getBoundingClientRect:()=>({left:0,top:0,width:980,height:560})}:null;
+ scene.querySelectorAll=()=>[];
+ scene.setPointerCapture=id=>scene.capture=id;scene.hasPointerCapture=id=>scene.capture===id;scene.releasePointerCapture=()=>scene.capture=undefined;
+ const doc={readyState:'loading',hidden:false,getElementById:id=>nodes.get(id),addEventListener(type,fn){rootEvents.set(type,fn)}};
+ const w={requestAnimationFrame:fn=>frames.push(fn)},ctx=vm.createContext({window:w,document:doc,console});
+ for(const f of ['tyt-devre-math.js','tyt-devre-ui.js'])vm.runInContext(read(f),ctx,{filename:f});
+ rootEvents.get('DOMContentLoaded')();
+ const event=(name,dataset)=>handlers.get(name)({target:{closest:selector=>{const key=(selector.match(/data-([a-z-]+)/)||[])[1];if(!key||!(key in dataset))return null;return {dataset,hasAttribute:k=>k.slice(5) in dataset,getAttribute:k=>dataset[k.slice(5)]};}}});
+ return {w,doc,nodes,handlers,rootEvents,frames,event,scene,ctx};
+}
+test('10 tabs initialize with SVG, live readings, status',()=>{const t=mount();for(const tab of ['circuit','resistance','generator','power','conduction','magnet','poles','electromagnet','wirefield','safety']){t.event('tabs:click',{tab});assert.match(t.nodes.get('scene').innerHTML,/<svg/);assert.ok(t.nodes.get('scene').innerHTML.length>500);assert.ok(t.nodes.get('readings').innerHTML.length>50);assert.ok(t.nodes.get('status').textContent.length>15);}});
+test('series/parallel presets and switch alter actual circuit',()=>{const t=mount();t.w.TytDevreApp.preset('serial');const a=t.w.TytDevreApp.snapshot();t.w.TytDevreApp.preset('parallel');const b=t.w.TytDevreApp.snapshot();assert.ok(a.model.totalCurrent<b.model.totalCurrent);t.event('settings:click',{command:'switch'});assert.equal(t.w.TytDevreApp.snapshot().model.complete,false);});
+test('tap two port terminals adds physical wire and rerenders SVG',()=>{const t=mount();t.event('settings:click',{command:'clear'});assert.equal(t.w.TytDevreApp.snapshot().state.wires.length,0);const e=key=>({pointerId:2,clientX:100,clientY:100,preventDefault(){},target:{closest:()=>({dataset:{port:key},getAttribute:k=>k==='data-port'?key:null,hasAttribute:k=>k==='data-port'})}});t.handlers.get('scene:pointerdown')(e('Bp'));t.handlers.get('scene:pointerdown')(e('Sl'));const s=t.w.TytDevreApp.snapshot();assert.equal(s.state.wires.length,1);assert.deepEqual(Array.from(s.state.wires[0]),['Bp','Sl']);assert.match(t.nodes.get('scene').innerHTML,/data-wire="0"/);});
+test('pointer capture connects port to endpoint by finger drag',()=>{const t=mount();t.event('settings:click',{command:'clear'});const start={clientX:88,clientY:147,pointerId:3,preventDefault(){},target:{closest:()=>({dataset:{port:'Bp'},getAttribute:()=> 'Bp',hasAttribute:k=>k==='data-port'})}};const move={clientX:232,clientY:108,pointerId:3,preventDefault(){}};t.handlers.get('scene:pointerdown')(start);assert.equal(t.scene.capture,3);t.handlers.get('scene:pointermove')(move);t.handlers.get('scene:pointerup')(move);assert.equal(t.w.TytDevreApp.snapshot().state.wires.length,1);assert.equal(t.scene.capture,undefined);});
+test('animation is opt in and stale frame stops',()=>{const t=mount();assert.equal(t.frames.length,0);t.handlers.get('play:click')();assert.equal(t.frames.length,1);t.handlers.get('play:click')();t.frames.shift()(1000);assert.equal(t.frames.length,0);});
+test('TYT navigation and MEB scope',()=>{const h=read('tyt-devre.html'),index=read('../index.html');for(const f of ['tyt-devre-math.js','tyt-devre-ui.js','tyt-devre.css'])assert.ok(h.includes(f));assert.match(h,/TYT FİZİK/);assert.ok(index.includes('labs/tyt-devre.html'));assert.ok(index.includes('data-level="tyt"')&&index.includes('data-level="ayt"'));});
+
+test('bar magnets attract for unlike poles and repel for like poles; geometry responds',()=>{
+ const t=mount();t.event('tabs:click',{tab:'poles'});const a=t.nodes.get('scene').innerHTML;assert.match(t.nodes.get('status').textContent,/ÇEKER/i);
+ const state=t.w.TytDevreApp.snapshot().state;
+ assert.equal(state.polesFlip,0);
+ // A large part of the scene really consists of two separately positioned bar magnets.
+ assert.match(a,/data-tab|rect/);
+ t.event('tabs:click',{tab:'electromagnet'});assert.match(t.nodes.get('status').textContent,/10\.1\.4\.1/);
+ assert.match(t.nodes.get('scene').innerHTML,/<ellipse/);
+});
+
+test('direct iPad drag moves second magnet and updates force geometry without rebuilding slider',()=>{
+ const t=mount();t.event('tabs:click',{tab:'poles'});
+ const old=t.nodes.get('scene').innerHTML;
+ t.nodes.set('polesDistance',{min:'1',max:'6',step:'.5',value:'3'});
+ t.nodes.set('polesDistance-out',{textContent:''});
+ const target={closest:()=>({hasAttribute:k=>k==='data-exp-drag',getAttribute:k=>k==='data-exp-drag'?'polesDistance':null})};
+ const event=x=>({clientX:x,clientY:263,pointerId:55,target,preventDefault(){}});
+ t.handlers.get('scene:pointerdown')(event(683));assert.equal(t.scene.capture,55);
+ t.handlers.get('scene:pointermove')(event(789));
+ const next=t.w.TytDevreApp.snapshot().state;
+ assert.equal(next.polesDistance,5);
+ assert.notEqual(t.nodes.get('scene').innerHTML,old);
+ t.handlers.get('scene:pointerup')(event(789));assert.equal(t.scene.capture,undefined);
+});
+test('play control is absent in non-animated modes rather than an inert fake',()=>{
+ const t=mount();for(const tab of ['generator','magnet','poles','electromagnet','wirefield','safety']){t.event('tabs:click',{tab});assert.equal(t.nodes.get('play').hidden,true);}
+ t.event('tabs:click',{tab:'circuit'});assert.equal(t.nodes.get('play').hidden,false);
+});

@@ -42,3 +42,9 @@
 /* Direct manipulation handles; only handle targets block touch panning, not the entire page. */
 .mscene [data-drag]{cursor:grab;touch-action:none;pointer-events:all}
 .mscene [data-drag]:active{cursor:grabbing}
+
+/* Active scene only: iPad Safari must not treat gear rotation as a page swipe. */
+.mscene.motion-scene svg{touch-action:none;user-select:none;-webkit-user-select:none}
+.mscene.motion-scene [data-drag]{cursor:grab;touch-action:none;outline:none}
+.mscene.motion-scene [data-drag]:active{cursor:grabbing}
+@media (prefers-reduced-motion:reduce){.mscene.motion-scene *{animation:none!important;transition:none!important}}
