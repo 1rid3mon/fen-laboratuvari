@@ -54,7 +54,7 @@ function newtonScene(){
  let b=arrows+line(100,345,800,345,'#a9d5e6',4)+rect(cartX-50,270,100,75,'#66b8cf','rx="9"');
  b+=arrow(cartX,283,s.forceRight*5,'#f3c584','forceRight')+arrow(cartX,305,-s.forceLeft*5,'#8ce8de','forceLeft');
  b+=txt(120,80,'SCD: yatay kuvvetler; düşeyde N ve mg dengede.');
- b+=line(cartX-70,315,cartX-70,250,'#f0e6b4',4)+line(cartX+70,275,cartX+70,340,'#f0e6b4',4);
+ b+=line(cartX-70,318,cartX-70,251,'#f0e6b4',4)+txt(cartX-95,246,'N',15)+line(cartX+70,275,cartX+70,339,'#f0e6b4',4)+txt(cartX+77,347,'mg',15);
  return{b,stats:'Fnet = '+fmt(p.net)+' N ('+(p.net>0?'sağ':p.net<0?'sol':'dengeli')+') · a = '+fmt(p.a)+' m/s² · x(0)→x(t): '+fmt(p.x)+' m',note:'9.3.3.2: Yatay düzlemde tek cisim. Net kuvvet Fsağ−Fsol, ivme Fnet/m ile belirlenir. Düşeyde normal kuvvet ve ağırlık birbirini dengeler. Konum çizimi yalnız belirli görüş alanını gösterir; sayısal x bilgisi fiziksel modelden gelir.'};
 }
 function frictionScene(){
@@ -64,7 +64,7 @@ function frictionScene(){
  b+=rect(x-52,275,104,75,'#7ac7d5','rx="9"');
  b+=arrow(x,290,s.applied*4,'#ffc591','applied')+arrow(x,315,p.frictionForce*4,'#89efd4');
  b+=txt(100,75,'Uygulanan kuvvet ↔ sürtünme · yatay, başlangıçta duran blok');
- return{b,stats:(p.mode==='static'?'Statik sürtünme · cisim duruyor':'Kinetik sürtünme · blok hızlanıyor')+' · Net kuvvet = '+fmt(p.net)+' N',note:'9.3.4.1: Başlangıçta durgun blok, tek kuvvet ve yatay düzlem. Statik sürtünme uygulanan kuvveti sınırına kadar dengeler. Eşik aşılınca kinetik sürtünme hareketin tersine etki eder. Katsayılarla yapılan hesap iç modeldir; müfredattaki sürtünme formülü için sayısal soru sorulmaz. En büyük statik sürtünme, her zaman uygulanan sürtünme değildir.'};
+ return{b,stats:(p.mode==='static'?'Statik sürtünme: uygulanan kuvveti dengeler':'Kinetik sürtünme: harekete zıt yönde')+' · '+(p.net===0?'net kuvvet dengeli':p.net>0?'net kuvvet sağa':'net kuvvet sola'),note:'9.3.4.1: Başlangıçta durgun blok, tek kuvvet ve yatay düzlem. Statik sürtünme uygulanan kuvveti sınırına kadar dengeler. Eşik aşılınca kinetik sürtünme hareketin tersine etki eder. Katsayılarla yapılan hesap iç modeldir; müfredattaki sürtünme formülü için sayısal soru sorulmaz. En büyük statik sürtünme, her zaman uygulanan sürtünme değildir.'};
 }
 function thirdScene(){
  const x=s.thirdX,touch=x+100>=490;
