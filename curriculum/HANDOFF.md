@@ -43,3 +43,12 @@ Vercel proje prj_IGbHMZd4pfzBH1X3t2auBqbUMe17 / fen-laboratuvari-github, takım 
 4. Sonra 9.2.2 dayanıklılık, 9.2.3 adezyon/kohezyon/kılcallık/yüzey gerilimi; tüm TYT Fizik ve diğer beş alanın her kapsam satırına devam. Hiçbir alan veya konunun tek sayfayla bittiğini varsayma. Altı alan sonunda yeniden taranır.
 
 Komutlar: node --test labs/*.test.cjs tests/*.test.js; node curriculum/render.cjs; node tests/malzeme-browser.cjs chromium / webkit; hacim-browser.cjs, ozkutle-browser.cjs, birim-browser.cjs, karisim-browser.cjs regresyonları.
+
+
+## Son kalıcı devir — PR #22 birleşti
+
+Son geliştirme main SHA: `512137cf57023a398a0bdf0f0c046d1e550ac7ca`; PR #22 HEAD `8fbda10d42f8898ef3cc517747cc9692e56860cf`. Merge öncesi son HEAD için tüm 13 check başarılı: material, hacim ve özkütle Chromium/WebKit; model/regresyon, inventory ve kapsam kapısı. Yerelde 450/450 test, sıfır atlanan. Çakışma yoktu. Kuyumculuk/porselen iki alt kabul maddesi main'e yükseltildi, ebru Eksik kaldı. 9.2.1.2 üst durumu Geliştiriliyor. Bu bölüm yukarıdaki PR aktarımı bekliyor ifadesinin yerine geçer.
+
+Bu oturumun çalışma/kullanım bütçesi nedeniyle burada devir bırakılıyor; altı alan tamamlanmadı ve çalışma arka planda sürmüyor. 431 kazanımın yalnız 9.2.1.1'i bütün alt açıklamaları için main kabulüne sahip; 9.2.1.2 iki alt maddesi main, ebru eksik; diğer 429 üst kazanım katı kabul denetiminde Eksik. Bu durum mevcut eski laboratuvarların hiç olmadığı anlamına gelmez. Gerçek iPad ve yeni laboratuvarların canlı kabulü hiçbirinde yapılmadı.
+
+Sonraki oturum önce güncel main ve açık PR'ları yeniden okusun; kapsam kayıt değişikliklerini doğrulasın. Sıradaki geliştirme 9.2.1.2 ebru: yukarıdaki birincil kaynakları okuyup bilimsel olarak dürüst yüzey taşınması/alet hareketi atölyesi tasarla, ölçüm/hipotez/kayıt/karşılaştırma/soru ekle. Ebru için yapay yoğunluk-batma kuralı veya sahte akışkan denklemi kullanma. Ardından 9.2.2, 9.2.3 ve altı alanın geri kalanını konu paketleriyle sürdür. Güncel main üzerinden her pakette ayrı dal/PR/test/merge. ÖSYM 2027 kapsamı bağımsız resmî doğrulama ve gerçek cihaz testi açık sınırlamalardır.
