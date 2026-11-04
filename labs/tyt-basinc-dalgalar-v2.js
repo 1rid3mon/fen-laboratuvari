@@ -4,7 +4,7 @@ const s={tab:'liquid',rho:1000,depth:2,gasP:100,gasVolume:4,solidForce:60,solidA
 const rect=(x,y,w,h,fill,extra='')=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'" '+extra+'/>';
 const txt=(x,y,v)=>'<text x="'+x+'" y="'+y+'" fill="#f0f9fc" font-size="19" font-family="system-ui">'+v+'</text>';
 function add(){if(s.objects.length>=6)return;const i=serial++;s.objects.push({id:i,x:255+i%3*150,y:180+Math.floor(i/3)*75,rho:[500,1000,1500][i%3],volume:2});s.selected=i;render();}
-function settle(){for(const o of s.objects){const side=50+o.volume*8,ratio=o.rho/s.rho;const target=ratio<1?120-side*(1-ratio):ratio===1?190:405-side;o.y=clamp(target,95,405-side);}}
+function settle(){for(const o of s.objects){const side=50+o.volume*8,ratio=o.rho/s.rho;const target=ratio<1?120-side*ratio:ratio===1?190:405-side;o.y=clamp(target,95,405-side);}}
 function object(o){const side=50+o.volume*8,x=clamp(o.x,190,700-side),y=clamp(o.y,95,405-side);o.x=x;o.y=y;
 const immersed=clamp((y+side-120)/side,0,1),weight=o.rho*g*o.volume/1000,buoy=s.rho*g*o.volume*immersed/1000;
 return {svg:rect(x,y,side,side,['#ffd28c','#93d5ec','#f2a6b6'][o.id%3], 'rx="8" stroke="'+(s.selected===o.id?'#fff':'#31566a')+'" stroke-width="4" data-object="'+o.id+'"')+txt(x+8,y+27,'#'+(o.id+1)),weight,buoy,immersed};}
@@ -18,7 +18,7 @@ const probeY=120+s.depth*54;b+=rect(175,120,565,290,'#166b91','fill-opacity=".78
 let rows=[];for(const o of s.objects){const q=object(o);b+=q.svg;rows.push('#'+(o.id+1)+' Fg='+fmt(q.weight)+' N; Fk='+fmt(q.buoy)+' N (konuma göre)');}
 out='Sıvı basıncı (gösterge) = ρgh = '+fmt(s.rho*g*s.depth)+' Pa. '+rows.join(' | ');
 note='Cisimleri parmağınla sürükle, dokunarak seç. Cisimlerin konumları ayrı, basınç probu ayrı hareket eder. Fk = ρsıvı·g·Vbatan; cisimlerin konumları elle belirlenir, otomatik denge/çarpışma simülasyonu yoktur. Gösterilen batmış hacim, çizimdeki dik prizma kesitinin yaklaşık oranıdır; kabın su seviyesi sabittir. Üst üste binme ve kap duvarına temas kuvvetleri modellenmez.';
-if(s.selected!==null){const o=s.objects.find(x=>x.id===s.selected);if(o)controls+='<label>Seçili cisim özkütlesi (kg/m³): <strong>'+fmt(o.rho)+'</strong><input type="range" data-key="selectedRho" min="300" max="1600" step="50" value="'+o.rho+'"></label>';}
+if(s.selected!==null){const o=s.objects.find(x=>x.id===s.selected);if(o)controls+='<label>Seçili cisim özkütlesi (kg/m³): <strong>'+fmt(o.rho)+'</strong><input type="range" data-key="selectedRho" min="300" max="1600" step="50" value="'+o.rho+'"></label><label>Seçili cisim hacmi (L): <strong>'+fmt(o.volume)+'</strong><input type="range" data-key="selectedVolume" min="1" max="8" step="1" value="'+o.volume+'"></label>';}
 }else if(s.tab==='solid'){
 controls=range('solidForce','Yüzeye dik kuvvet (N)',10,200,5)+range('solidArea','Temas alanı (m²)',.5,5,.5);
 b+=rect(130,340,650,18,'#8597a4')+rect(360,210,120+s.solidArea*30,130,'#5aa6cf','rx="7"');out='P = F/A = '+fmt(s.solidForce/s.solidArea)+' Pa';
@@ -43,7 +43,7 @@ $('controls').innerHTML=controls;$('scene').innerHTML=b;$('stats').textContent=o
 }
 $('tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t){s.tab=t.dataset.tab;s.playing=false;render();}});
 $('controls').addEventListener('click',e=>{const a=e.target.dataset.action;if(a==='add')add();if(a==='settle'){settle();render();}if(a==='remove'){s.objects=s.objects.filter(o=>o.id!==s.selected);s.selected=null;render();}if(a==='pulse'){s.phase=0;last=0;render();}if(a==='end'){s.end=s.end==='fixed'?'free':'fixed';render();}if(a==='play'){s.playing=!s.playing;last=0;render();if(s.playing)requestAnimationFrame(tick);}});
-$('controls').addEventListener('input',e=>{const k=e.target.dataset.key,v=Number(e.target.value);if(!Number.isFinite(v))return;if(k==='selectedRho'){const o=s.objects.find(o=>o.id===s.selected);if(o)o.rho=v;}else if(Object.hasOwn(s,k))s[k]=v;render();});
+$('controls').addEventListener('input',e=>{const k=e.target.dataset.key,v=Number(e.target.value);if(!Number.isFinite(v))return;if(k==='selectedRho'||k==='selectedVolume'){const o=s.objects.find(o=>o.id===s.selected);if(o)o[k==='selectedRho'?'rho':'volume']=v;}else if(Object.hasOwn(s,k))s[k]=v;render();});
 function position(e){const r=$('scene').getBoundingClientRect();return{x:(e.clientX-r.left)*900/r.width,y:(e.clientY-r.top)*470/r.height};}
 $('scene').addEventListener('pointerdown',e=>{const id=e.target.getAttribute('data-object');if(id!==null){s.selected=Number(id);pointer={id:s.selected,p:e.pointerId};e.preventDefault();render();}else if(e.target.hasAttribute('data-probe')){pointer={probe:true,p:e.pointerId};e.preventDefault();}});
 $('scene').addEventListener('pointermove',e=>{if(!pointer||pointer.p!==e.pointerId)return;const p=position(e);if(pointer.probe)s.depth=Math.round(clamp((p.y-120)/54,0,5)*4)/4;else{const o=s.objects.find(o=>o.id===pointer.id);if(o){o.x=p.x-30;o.y=p.y-30;}}render();e.preventDefault();});
