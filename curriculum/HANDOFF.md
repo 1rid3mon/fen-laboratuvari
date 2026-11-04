@@ -15,12 +15,14 @@ Proje tamamlanmadı. Hedef altı alan ve bütün ilgili kazanımlardır.
 
 Özkütle ölçüm atölyesi: 9.2.1.1 b/c/ç'nin bir bölümü. Tam kazanım statüsü yükseltilmeyecek. Yeni numuneyi sürükleme, boyut seçimi, tartım, kısmi/tam batırma, su korunumu, hipotez, ölçüm defteri, kütle–hacim ve özkütle grafikleri, kontrollü karşılaştırma, açıklama öz değerlendirmesi, gerekçeli özgün soru ve CSV.
 
-Envanter PR #15, bütün HEAD kontrolleri başarılı ve clean durumda doğrulanıp main'e birleştirildi. HEAD: fa7799b70b86806053b45a2f6fba65d8cdacbd43; merge: bcea32904f35001e17575d3770557e690d37dd8e. Özkütle paketi feature/density-learning-cycle-20261105 dalında ayrı PR olarak doğrulanıyor. Yerel 419/419 test geçti. Chromium/WebKit CI sonucu alınmadan birleştirme yapılmayacak.
+Envanter PR #15, bütün HEAD kontrolleri başarılı ve clean durumda doğrulanıp main'e birleştirildi. HEAD: fa7799b70b86806053b45a2f6fba65d8cdacbd43; merge: bcea32904f35001e17575d3770557e690d37dd8e. Özkütle PR #16 bütün kod kontrolleri ve Chromium/WebKit testleri başarılı, çakışmasız durumda main'e alındı. HEAD f9d263be1b9ac8e295db49150e98663d6f8c28c2; merge dddf8141db9dd9a82f5329e82a6bf48a6f202058. 419/419 test geçti. CI: https://github.com/1rid3mon/fen-laboratuvari/actions/runs/41917472473. Vercel otomatik dağıtımı api-deployments-free-per-day (>100) sınırında; bu bir kod testi hatası değildir. Canlı/gerçek iPad doğrulanmadı. 9.2.1.1(c)/(ç) bu pakette main'e alındı, bütün kazanım değil.
+
+Güncel paket: feature/volume-shapes-20261105, güncel main dddf814 üzerinden. Küp/prizma/silindir/küre boyut uçlarını sürükleme; tek boyut ile benzer büyütme farkı; hipotez, ölçüm defteri, oran/grafik, hacim birimleri, açıklama ve özgün soru. 424 yerel test geçti; PR ve tarayıcı kontrolleri henüz bekliyor. Bilimsel kayıt VOLUME-REVIEW.md.
 
 ## Devam sırası
 
-1. Envanter PR'sinin son HEAD kontrollerini doğrula; başarı halinde main'e birleştir.
-2. Güncel main'den özkütle paketini aç. `node --test labs/ozkutle-olcum.test.cjs` ve bütün 407 eski testi çalıştır; Chromium ve WebKit için gerçek tarayıcı senaryolarını CI'da çalıştır. Dokunma/çoklu pointer/iptal/yön değişimi/taşma/yanlış ölçüm/CSV kontrol et. Modelin bağımsız fizik denetimini kaydet.
+1. Hacim paketini ayrı PR'da Chromium/WebKit ve regresyon CI ile doğrula; başarılıysa main'e birleştir. Yeni HEAD/merge SHA'yı kaydet.
+2. Özkütle PR #16 tamam; gerekirse regresyon için: `node --test labs/ozkutle-olcum.test.cjs` ve bütün 407 eski testi çalıştır; Chromium ve WebKit için gerçek tarayıcı senaryolarını CI'da çalıştır. Dokunma/çoklu pointer/iptal/yön değişimi/taşma/yanlış ölçüm/CSV kontrol et. Modelin bağımsız fizik denetimini kaydet.
 3. Aynı kazanımın kalan b alt başlıklarını (küp, silindir, küre, düzensiz cisim), a/d/e/f ve günlük yaşam 9.2.1.2 kapsamını tek tek karşılaştır. Var olan tamamlayıcı sayfayı otomatik kabul etme.
 4. Sonra `tyt-physics.md` sırasıyla alt kazanım denetimi; ardından AYT Fizik, TYT Kimya, AYT Kimya, TYT Biyoloji, AYT Biyoloji. Önceden bitmiş varsayma. 431 satırın tümünü ve alt kavramlarını ayrı kanıtlarla kapat.
 
