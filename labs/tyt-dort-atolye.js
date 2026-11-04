@@ -1,8 +1,8 @@
 (function(d,M){'use strict';
 const el=id=>d.getElementById(id),fmt=(n,digits=2)=>Number(n).toLocaleString('tr-TR',{maximumFractionDigits:digits}),clamp=M.clamp;
 const topicNames={waves:'Dalgalar',matter:'Madde ve Özellikleri',intro:'Fizik Bilimine Giriş',heat:'Isı–Sıcaklık'};
-const modes={waves:[['spring','Yayda atma ve yansıma'],['water','Su dalgasında kırılma'],['sound','Ses ve tanecikler']],matter:[['cylinder','Özkütle ve suyla hacim ölçümü'],['capillary','Kılcallık karşılaştırması']],intro:[['vectors','Tek boyutta vektör'],['ruler','Cetvelle ölçüm']],heat:[['exchange','Temasla ısı alışverişi'],['rod','Genleşme gözlemi']]};
-const state={topic:(new URLSearchParams(window.location.search).get('topic')||d.body.dataset.topic||'waves'),mode:'',playing:false,time:0,amplitude:36,end:'fixed',
+const modes={waves:[['spring','Yayda atma ve yansıma'],['collision','Karşılaşan atmalar'],['water','Su dalgasında kırılma'],['sound','Ses ve tanecikler']],matter:[['cylinder','Özkütle ve suyla hacim ölçümü'],['capillary','Kılcallık karşılaştırması']],intro:[['vectors','Tek boyutta vektör'],['ruler','Cetvelle ölçüm']],heat:[['exchange','Temasla ısı alışverişi'],['rod','Genleşme gözlemi']]};
+const state={topic:(new URLSearchParams(window.location.search).get('topic')||d.body.dataset.topic||'waves'),mode:'',playing:false,time:0,amplitude:36,ampA:35,ampB:-35,end:'fixed',
 water1:3,water2:1.5,waterY:280,sourceX:250,theta:30,soundA:20,soundF:2,soundMedium:'air',
 waterMl:150,selectedObject:1,objects:[{id:1,x:120,y:350,volumeMl:50,massG:100,height:50,inside:false},{id:2,x:235,y:350,volumeMl:80,massG:120,height:50,inside:false},{id:3,x:345,y:350,volumeMl:30,massG:90,height:50,inside:false}],
 radius1:2,radius2:5,wetting:'yes',a:3,b:-2,rulerA:2,rulerB:7,
@@ -24,6 +24,7 @@ function controls(){
  el('modes').innerHTML=modes[state.topic].map(([key,name])=>'<button data-mode="'+key+'" aria-pressed="'+(state.mode===key)+'">'+name+'</button>').join('');
  let c='';
  if(state.topic==='waves'&&state.mode==='spring')c=input('amplitude','Atma genliği (yukarı +, aşağı −)',-65,65,5)+select('end','Yayın ucu',[['fixed','Sabit uç'],['free','Serbest uç']])+button('send-pulse','Atma gönder')+button('play-pause',state.playing?'Durdur':'Oynat');
+ if(state.topic==='waves'&&state.mode==='collision')c=input('ampA','Soldan gönderilen atma',-60,60,5)+input('ampB','Sağdan gönderilen atma',-60,60,5)+button('send-pulse','İki atmayı gönder')+button('play-pause',state.playing?'Durdur':'Oynat');
  if(state.topic==='waves'&&state.mode==='water')c=input('theta','Geliş açısı (normale göre)',0,55,1,'°')+input('water1','1. bölge derinliği',0.5,5,0.5,'göreli birim')+input('water2','2. bölge derinliği',0.5,5,0.5,'göreli birim');
  if(state.topic==='waves'&&state.mode==='sound')c=input('soundA','Titreşim genliği',0,35,5,'görsel birim')+input('soundF','Frekans',1,4,1,'göreli birim')+select('soundMedium','Ortam',[['air','Hava (tanecik modeli)'],['vacuum','Boşluk (ses yayılmaz)']])+button('play-pause',state.playing?'Durdur':'Oynat');
  if(state.topic==='matter'&&state.mode==='cylinder'){const o=state.objects.find(o=>o.id===state.selectedObject);c=input('waterMl','İlk sıvı hacmi',100,230,10,'mL');if(o)c+='<label>Seçili cismin kütlesi <output data-output="massG">'+fmt(o.massG)+'</output> g<input data-key="massG" type="range" min="20" max="300" step="10" value="'+o.massG+'"></label><label>Seçili cismin hacmi <output data-output="volumeMl">'+fmt(o.volumeMl)+'</output> cm³<input data-key="volumeMl" type="range" min="20" max="100" step="10" value="'+o.volumeMl+'"></label>';c+=button('reset-objects','Cisimleri çıkar');}
@@ -42,6 +43,14 @@ function waveSpring(){
  b+=circle(100,235-state.amplitude,14,'#fbd59e','data-drag="wave-amplitude"')+text(110,74,'Kaynağı yukarı/aşağı sürükle · atma gönder')+text(590,92,state.end==='fixed'?'Sabit uç: ters yansıma':'Serbest uç: düz yansıma');
  const incoming=M.pulse(680,state.time,{length:680,start:90,speed:140,width:46,amplitude:state.amplitude,end:state.end});
  return{b,result:'Uçtaki toplam yer değiştirme: '+fmt(incoming.displacement)+' görsel birim · t='+fmt(state.time)+' s',note:'İdeal, küçük genlikli enine atma: uçtaki gelen ve yansıyan atmalar üst üste biner. Sabit uçta toplam yer değiştirme sıfırdır, serbest uçta atma ters dönmeden yansır. Yayı oluşturan tanecikler dalgayla birlikte uzağa taşınmaz.'};
+}
+function waveCollision(){
+ let b=line(110,235,800,235,'#557b8d',2),pts=[];for(let x=110;x<=800;x+=4){const v=M.collide(x,state.time,{leftX:160,rightX:755,speed:120,width:50,a:state.ampA,b:state.ampB});pts.push(x+','+(235-v.displacement));}
+ b+=shape('polyline','points="'+pts.join(' ')+'" fill="none" stroke="#89e5da" stroke-width="5"');
+ b+=circle(160,235-state.ampA,14,'#f7c18e','data-drag="collision-a"')+circle(755,235-state.ampB,14,'#c8b9ff','data-drag="collision-b"');
+ const v=M.collide(455,state.time,{leftX:160,rightX:755,speed:120,width:50,a:state.ampA,b:state.ampB});
+ b+=text(120,80,'İki kaynağı sürükle; atmalar karşılaşınca yer değiştirmeler toplanır.');
+ return{b,result:'Merkezde sol atma: '+fmt(v.left)+' · sağ atma: '+fmt(v.right)+' · toplam: '+fmt(v.displacement)+' görsel birim · t='+fmt(state.time)+' s',note:'İdeal doğrusal yayda zıt yönlere giden atmalar üst üste geldiklerinde cebirsel olarak toplanır; eşit ve zıt atmalar anlık olarak birbirini söndürür, sonra şekilleri değişmeden yollarına devam eder. Gerçek yaydaki yayılım ve sönüm göz ardı edilir.'};
 }
 function waveWater(){
  const theta=state.theta*Math.PI/180,y=state.waterY,sx=state.sourceX,sy=115,ix=sx+(y-sy)*Math.tan(theta),r=M.refract(state.theta,state.water1,state.water2);
@@ -107,7 +116,7 @@ function heatRod(){
  return{b,result:'Sıcaklık '+fmt(state.rodTemp)+'°C · Uzama eğilimi: '+(ratio>1?'uzama':ratio<1?'kısalma':'değişim yok')+' · Ölçek büyütmesi 100×',note:'Metal çubuğun gerçek boy değişimi çok küçüktür, bu yüzden görsel fark 100 kat büyütülür. Çizilen uzunluk doğrudan gerçek boy değildir. Katsayılar yalnız eğilim ve karşılaştırma için iç hesapta kullanılır; 2018 TYT genleşme kapsamında sayısal soru amaçlanmaz.'};
 }
 function scene(){
- const data=state.topic==='waves'?(state.mode==='spring'?waveSpring():state.mode==='water'?waveWater():waveSound()):
+ const data=state.topic==='waves'?(state.mode==='spring'?waveSpring():state.mode==='collision'?waveCollision():state.mode==='water'?waveWater():waveSound()):
  state.topic==='matter'?(state.mode==='cylinder'?matterCylinder():matterCapillary()):
  state.topic==='intro'?(state.mode==='vectors'?introVectors():introRuler()):
  state.mode==='exchange'?heatExchange():heatRod();
@@ -116,7 +125,7 @@ function scene(){
 }
 function render(){controls();scene();}
 function resetHeat(){state.aTemp=state.aInitial;state.bTemp=state.bInitial;state.heatQ=0;state.blockX=155;}
-function playNeeded(){if(state.topic==='waves'&&(state.mode==='spring'||state.mode==='sound'))state.playing=true;}
+function playNeeded(){if(state.topic==='waves'&&(state.mode==='spring'||state.mode==='collision'||state.mode==='sound'))state.playing=true;}
 el('topics').addEventListener('click',e=>{const t=e.target.closest('[data-topic]');if(!t)return;state.topic=t.dataset.topic;state.mode=modes[state.topic][0][0];state.playing=false;state.time=0;render();});
 el('modes').addEventListener('click',e=>{const t=e.target.closest('[data-mode]');if(!t)return;state.mode=t.dataset.mode;state.playing=false;state.time=0;render();});
 el('controls').addEventListener('click',e=>{const action=e.target.dataset.action;if(!action)return;
@@ -141,6 +150,8 @@ el('scene').addEventListener('pointerdown',e=>{
  el('scene').setPointerCapture?.(e.pointerId);e.preventDefault();});
 el('scene').addEventListener('pointermove',e=>{if(!moving||moving.pointer!==e.pointerId)return;const p=coords(e),key=moving.key;
  if(key==='wave-amplitude'){state.amplitude=Math.round(clamp((235-p.y)/5,-13,13))*5;state.time=0;}
+ if(key==='collision-a'){state.ampA=Math.round(clamp((235-p.y)/5,-12,12))*5;state.time=0;}
+ if(key==='collision-b'){state.ampB=Math.round(clamp((235-p.y)/5,-12,12))*5;state.time=0;}
  if(key==='water-source'){state.sourceX=clamp(p.x,115,430);}
  if(key==='water-boundary'){state.waterY=clamp(p.y,205,345);}
  if(key==='sound-amplitude'){state.soundA=clamp(Math.round((p.x-80)/5)*5,0,35);}
@@ -156,7 +167,7 @@ el('scene').addEventListener('pointermove',e=>{if(!moving||moving.pointer!==e.po
  scene();e.preventDefault();});
 ['pointerup','pointercancel','lostpointercapture'].forEach(type=>el('scene').addEventListener(type,e=>{if(moving&&moving.pointer===e.pointerId){moving=null;controls();}}));
 function frame(now){const dt=lastFrame?Math.min((now-lastFrame)/1000,.08):0;lastFrame=now;
- if(state.playing&&state.topic==='waves'){state.time+=dt;if(state.mode==='spring'&&state.time>10){state.playing=false;controls();}}
+ if(state.playing&&state.topic==='waves'){state.time+=dt;if((state.mode==='spring'||state.mode==='collision')&&state.time>10){state.playing=false;controls();}}
  if(state.topic==='heat'&&state.mode==='exchange'&&state.heatOn&&state.blockX+175>=590&&dt>0){
  const old=state.aTemp,after=M.heatStep({aTemp:state.aTemp,bTemp:state.bTemp,aMass:state.aMass,bMass:state.bMass,aCapacity:1,bCapacity:1},dt,1.1);
  state.aTemp=after.aTemp;state.bTemp=after.bTemp;state.heatQ+=(old-after.aTemp)*state.aMass;}
