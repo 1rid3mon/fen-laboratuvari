@@ -19,9 +19,19 @@ function boot(){
  return{elements,tab,input,drag};
 }
 test('default motion scene responds to observer velocity and preserves signed relative result',()=>{
- const x=boot();assert.match(x.elements.stats.textContent,/Göreli hız = 2 m\/s/);
+ const x=boot();x.tab('relative');assert.match(x.elements.stats.textContent,/Göreli hız = 2 m\/s/);
  x.input('observerVelocity',4);assert.match(x.elements.stats.textContent,/Göreli hız = -1 m\/s/);
  x.drag('vehicle',600,290);assert.match(x.elements.stats.textContent,/Yerde x/);
+});
+test('motion types scene shows translation, rotation and vibration',()=>{
+ const x=boot();assert.match(x.elements.stats.textContent,/öteleme, dönme, titreşim/);
+ const before=x.elements.scene.innerHTML;x.input('time',4);assert.notEqual(x.elements.scene.innerHTML,before);
+});
+test('contact and noncontact forces show different interaction boundaries',()=>{
+ const x=boot();x.tab('forceKinds');assert.match(x.elements.stats.textContent,/temas olmadan/);
+ x.elements.controls.handlers.change({target:{tagName:'SELECT',dataset:{key:'forceExample'},value:'hand'}});
+ assert.match(x.elements.stats.textContent,/Temas yok/);
+ x.drag('source',480,300);assert.match(x.elements.stats.textContent,/temas ediyor/);
 });
 test('acceleration scene shows v-t and a-t graphs and a velocity-zero crossing',()=>{
  const x=boot();x.tab('accel');assert.match(x.elements.scene.innerHTML,/polyline/);
