@@ -13,7 +13,7 @@ function draw(){
  b+=shape('rect',{x:70,y:355,width:760,height:13,fill:'#7c8d99'})+shape('rect',{x,y,width,height,rx:6,fill:'#438fc0',stroke:'#b7e9fb','stroke-width':3,'data-drag':'area'});
  b+=arrow(450,y-65,0,55,'#ffbf81')+txt(480,y-34,'F = '+fmt(s.force)+' N');
  for(let i=0;i<Math.max(1,Math.round(s.area));i++)b+=arrow(x+width*(i+.5)/Math.round(s.area),356,0,Math.min(65,p*2),'#90e6d7');
- stat='P = F/A = '+fmt(p)+' birim basınç';info='Aynı kuvvette temas alanı büyürse katı basıncı azalır. Mavi cismi yatay sürükleyerek temas alanını değiştir.';
+ stat='P = F/A = '+fmt(p)+' N/birim² (temsili alan ölçeği)';info='Aynı kuvvette temas alanı büyürse katı basıncı azalır. Mavi cismi yatay sürükleyerek temas alanını değiştir.';
  }else if(s.tab==='liquid'){
  const waterY=90,h=320,dy=s.depth/8*h,yy=waterY+dy,pressure=s.density*G*s.depth;
  b+=shape('rect',{x:175,y:waterY,width:540,height:h,fill:'#126e91','fill-opacity':.75,stroke:'#b8e5ef','stroke-width':3});
@@ -21,13 +21,13 @@ function draw(){
  b+=txt(225,70,'Yüzey')+txt(500,yy-22,'h = '+fmt(s.depth)+' m');
  stat='Sıvı basıncı ρgh = '+fmt(pressure)+' Pa';info='Derinlik ve yoğunluk arttıkça basınç artar. Turuncu probu aşağı/yukarı sürükle. Kabın şekli basıncı değiştirmez.';
  }else if(s.tab==='buoyancy'){
- const waterY=180,vol=s.volume/10,bodyH=100+vol*160,bodyW=125,weight=s.bodyDensity*G*s.volume/1000,up=s.density*G*s.volume/1000,ratio=s.bodyDensity/s.density;
- const immersed=clamp(ratio,.02,1),bodyY=ratio<=1?waterY-bodyH*(1-immersed):waterY+70;
+ const waterY=180,vol=s.volume/10,bodyH=100+vol*160,bodyW=125,weight=s.bodyDensity*G*s.volume/1000,ratio=s.bodyDensity/s.density,immersedVolume=s.volume*clamp(ratio,0,1),up=s.density*G*immersedVolume/1000;
+ const immersed=clamp(ratio,0,1),bodyY=ratio<1?waterY-bodyH*(1-immersed):ratio===1?waterY+55:waterY+235-bodyH;
  b+=shape('rect',{x:150,y:waterY,width:600,height:235,fill:'#126e91','fill-opacity':.75});
  b+=shape('rect',{x:400,y:bodyY,width:bodyW,height:bodyH,fill:'#ddae78',stroke:'#ffe2bd','stroke-width':3,'data-drag':'bodyDensity'});
  b+=arrow(560,bodyY+bodyH/2,0,80,'#f6b280')+arrow(360,bodyY+bodyH/2,0,-80,'#9af4db');
- stat=ratio<1?'Yüzer · batan hacim oranı ≈ '+fmt(immersed*100)+'%':ratio===1?'Askıda kalır':'Batar';
- info='Kaldırma kuvveti yer değiştiren sıvının ağırlığına eşittir. Yüzen cisimde kaldırma kuvveti cismin ağırlığına eşittir. Cismi dikey sürükleyerek yoğunluğunu değiştir.';
+ stat=(ratio<1?'Yüzer · batan hacim oranı ≈ '+fmt(immersed*100)+'%':ratio===1?'Askıda kalır':'Batar')+' · Ağırlık '+fmt(weight)+' N · dengedeki kaldırma '+fmt(up)+' N';
+ info='Arşimet ilkesi: kaldırma kuvveti yer değiştiren sıvının ağırlığıdır. Batan cisimde tabana değmeden önceki kaldırma kuvveti hesaplanır; tabanın tepki kuvveti çizilmemiştir. Cismi dikey sürükleyerek yoğunluğunu değiştir.';
  }else if(s.tab==='spring'||s.tab==='water'){
  const water=s.tab==='water',baseline=235,amp=s.amplitude,f=s.frequency,phase=s.phase;
  if(water)b+=shape('rect',{x:65,y:baseline,width:770,height:165,fill:'#145a78','fill-opacity':.45});
@@ -48,9 +48,9 @@ function controls(){
  $('controls').innerHTML=map[s.tab].map(a=>control(...a)).join('')+( ['spring','water','sound'].includes(s.tab)?'<button id="play">'+(s.playing?'Durdur':'▶ Oynat')+'</button>':'');
 }
 function render(){ $('tabs').innerHTML=tabs.map(([id,name])=>'<button data-tab="'+id+'" aria-pressed="'+(id===s.tab)+'">'+name+'</button>').join('');controls();draw();}
-$('tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t){s.tab=t.dataset.tab;s.playing=false;render();}});
+$('tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t){s.tab=t.dataset.tab;s.playing=false;last=0;render();}});
 $('controls').addEventListener('input',e=>{const key=e.target.dataset.key;if(key in s){s[key]=Number(e.target.value);const out=$(key+'-out');if(out)out.textContent=fmt(s[key]);draw();}});
-$('controls').addEventListener('click',e=>{if(e.target.id==='play'){s.playing=!s.playing;controls();if(s.playing)requestAnimationFrame(tick);}});
+$('controls').addEventListener('click',e=>{if(e.target.id==='play'){s.playing=!s.playing;controls();if(s.playing){last=0;requestAnimationFrame(tick);}}});
 function tick(now){if(!s.playing)return;if(last)s.phase+=(now-last)/1000*s.speed*2*Math.PI;last=now;draw();requestAnimationFrame(tick);}
 function pos(e){const r=$('scene').getBoundingClientRect();return {x:(e.clientX-r.left)*900/r.width,y:(e.clientY-r.top)*470/r.height};}
 $('scene').addEventListener('pointerdown',e=>{const target=e.target.closest('[data-drag]');if(!target)return;drag={key:target.getAttribute('data-drag'),pointer:e.pointerId,start:pos(e),base:s[target.getAttribute('data-drag')]};$('scene').setPointerCapture?.(e.pointerId);e.preventDefault();});
