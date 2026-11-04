@@ -31,3 +31,9 @@ Bu paket yalnız (e) alt açıklamasını geliştirir. Günlük kullanım kazan�
 9.2.1.1(d), eşit kollu terazi matematiğine girilmemesini ister. Bu bir bağımsız deney gerektiren yeni içerik değil sınırdır. İlgili TYT Madde/Özellikleri, tamamlayıcı, özkütle, hacim, birim ve nitel karışım sayfaları incelendi: teraziler ideal kütle okuması içindir; kol uzunlukları veya torkla denge denklemi çözülmez. Sınır kabul edildi. AYT tork/basit makine konularındaki farklı kazanım matematiği bu yasakla karıştırılmadı.
 
 Önceki birim PR #19: HEAD 124e5b38f18b23959b09e814ddb17865378efc4e; merge feff0c8278a01e4027fc0e8f7713f535bb8a0148. 436 model/regresyon, yeni birim Chromium/WebKit ve özkütle Chromium/WebKit regresyonu başarılı. Run 41921788586 ve 41921788473.
+
+## Bütünleşik doğrulama güncellemesi
+
+Tarihçe PR #21 son HEAD 1f529e952b24f381db03e4787692b995bc73ee12, merge 84fe93695603ab365d721d435de47dc4ed5e8ccf. 438 model/regresyon ve özkütle/tarihçe Chromium/WebKit başarılı; run 41924828360. Bu dal şimdi o main ile birleştirildi; birleşik beklenen toplam 445.
+
+İlk karışım HEAD'inde Chromium başarılı, WebKit bağımlılık kurulumu uzadı. Test senaryoları gevşetilmeden karışım browser işi resmî mcr.microsoft.com/playwright:v1.62.1-noble ortamına taşındı; npm Playwright sürümü de 1.62.1. İmaj tarayıcıları ve sistem bağımlılıklarını içerir; ayrı paket kurulumu korunur ve browser dosyasının varlığı denetlenir. Kaynak: https://playwright.dev/docs/docker ; resmî tag listesi https://mcr.microsoft.com/v2/playwright/tags/list . Son HEAD gerçek iki browser sonucunu yeniden doğrula.

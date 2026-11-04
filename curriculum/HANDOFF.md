@@ -11,29 +11,31 @@
 | #17 | Küp/prizma/silindir/küre, bağımsız ölçü uçları, ölçek hipotezleri; b düzgün şekiller | 2e26e5c0e86a80758a3198b1ea67e6e65b4e1cb2 | 155aa6d8f169971f34006da96112794a54af0df9 | 424 model/regresyon; Chromium/WebKit başarılı; run 41919512287 |
 | #18 | Düzensiz cismin gerçek batmış profili, su korunumu ve ölçümü; b düzensiz şekiller | 6c054c00cb670c3fa44de677e4936ebaa3fc7f9a | 245a14b57ce5fee09ff491445ac748a2c24f0e2f | Birleşik 429 model/regresyon; Chromium/WebKit başarılı; run 41920126437 |
 
-Main son gözlenen: 245a14b57ce5fee09ff491445ac748a2c24f0e2f. b/c/ç alt açıklamalarının kanıtları JSON'a işlendi. Ana 9.2.1.1 henüz tamamlanmadı. Bilimsel kayıtlar DENSITY-REVIEW.md, VOLUME-REVIEW.md, IRREGULAR-REVIEW.md.
+Main son gözlenen: 84fe93695603ab365d721d435de47dc4ed5e8ccf. a/b/c/ç/d/f alt açıklamalarının main kanıtları JSON'a işlendi. Ana 9.2.1.1 henüz tamamlanmadı. Bilimsel kayıtlar DENSITY-REVIEW.md, VOLUME-REVIEW.md, IRREGULAR-REVIEW.md.
 
 PR #19 da tamamlandı: HEAD `124e5b38f18b23959b09e814ddb17865378efc4e`, merge `feff0c8278a01e4027fc0e8f7713f535bb8a0148`. Birim ve özkütle Chromium/WebKit senaryoları başarılı; 436 test geçti. 9.2.1.1(a) main olarak kaydedildi.
 
-## Güncel paket
+PR #21 tarihçe tamamlandı: HEAD `1f529e952b24f381db03e4787692b995bc73ee12`, merge `84fe93695603ab365d721d435de47dc4ed5e8ccf`. 438 model/regresyon ve Chromium/WebKit başarılı; run 41924828360.
 
-Dal `feature/qualitative-mixtures-20261105`, güncel main feff0c8 üzerinden. Nitel karışım (e): A/B tarifini değiştirip yeni numune hazırlama; doğrudan kaynak/karıştırıcı/örnek ucu sürükleme, bekleyerek/karıştırarak homojenleşme, erken kaydı engelleme, sabit oran ile toplam miktarı ayırma, yağ–su tabakaları, hipotez ve gözlem defteri. Sayısal karışım özkütlesi hesabı yok; hacmi yaklaşık toplanan tam karışabilir ideal sıvı koşulu açık. Model gerçek çözelti nicel tahmini değildir.
+## Güncel paket — PR #20
 
-7 yeni model testi; birleşik 443/443 yerel test geçti. Chromium/WebKit senaryosu hazırlanmış durumda; PR açılıp son HEAD CI sonuçları alınacak. Bilimsel kayıt MIXTURE-REVIEW.md. (d) eşit kollu terazi matematiği sınırı ilgili TYT sayfalarında denetlendi; AYT tork kapsamıyla karıştırılmadı.
+Dal feature/qualitative-mixtures-20261105, nitel karışım (e). Tarihçe main'i 84fe936 ile birleştirilmiş son HEAD hazırlanıyor; HEAD'i GitHub'dan oku. A/B kaynakları, yeni hazırlama kimliği, karıştırıcı ve örnek ucu doğrudan sürüklenir; aynı oran/farklı miktar, kontrollü hipotez, tabakalı örnekleme, defter ve soru. Bilimsel kayıt MIXTURE-REVIEW.md.
 
-## Açık sınırlar
+İlk karışım Chromium testi geçti; WebKit bağımlılık kurulumu uzadığı için browser işi resmî Playwright 1.62.1 noble imajına taşındı. Sistem/browser kurulumu hazır gelir; npm paketi aynı sürümdür ve executable varlığı kontrol edilir. Gerçek Chromium/WebKit deney testleri aynen çalışır, atlanmaz. Yeni HEAD için tüm sonuçları bekle. Yerel birleşik 445/445 model/regresyon testi geçti (443 + 2 tarihçe).
 
-- Gerçek iPad Safari/Apple Pencil, cihazda kaydırma ve akıcılık yapılmadı. Masaüstü WebKit veya touch emülasyonu gerçek cihaz kabulü değildir.
-- Yerel Chromium OS `socket() failed: Operation not permitted` nedeniyle başlayamıyor; gerçek browser testleri GitHub Actions üzerinde çalıştı.
-- Vercel otomatik dağıtımları bazı HEAD'lerde `api-deployments-free-per-day` (>100) limitine takıldı. Main merge üretimin güncellendiğini kanıtlamaz. Elle tekrar dağıtım tetikleme; yeni bir uygun toplu yayın aşamasında mevcut deployment SHA'sını kontrol et. Şu paketlerin canlı kabulü verilmedi.
-- Ubuntu latest üzerindeki bir WebKit kurulumu uzadığı için browser işleri desteklenen Ubuntu 24.04'e sabitlendi; 15 dakika sınırı var. Kurulum hatasını test atlayarak geçme. Bazı kurulumlar uzun sürebiliyor.
-- MEB geçiş açıklamaları 2028 yeni modele geçişi gösterir. ÖSYM 2027 ayrıntılı kapsam kılavuzu doğrulanmadı; SOURCES.md'yi güncel resmî kaynaklarla tekrar kontrol et.
+## Kabul ve yayın sınırları
 
-## Sıradaki iş
+Gerçek iPad Safari/Apple Pencil ve cihaz akıcılığı yapılmadı. Yerel Chromium OS socket izniyle başlayamadı; gerçek browser testleri Actions'ta. Masaüstü WebKit/touch gerçek cihaz sayılmaz. 431/872 envanterinin geri kalanı ayrı öğrenme/bilimsel kabul bekler. Üst kazanımı tüm alt açıklamaları main'e girmeden yükseltme.
 
-1. Nitel karışım paketinin PR/son HEAD/CI'ını oku. 443 model/regresyon ve yeni karışım Chromium/WebKit, parent sayfayı etkilediği için geometrik hacim tarayıcı regresyonları başarılı olmalı. Başarılı/çakışmasızsa merge et. e ve d durumlarını son kanıtlarla kaydet; ana kazanımın f kısmı hâlâ bekler.
-2. 9.2.1.1(f): Arşimet ve el-Hazinî'nin çalışmalarını resmî tarihçe kaynaklarıyla öğrenilmiş ölçüm yöntemine bağla. Kaynaklar: OGM Defterim Fizik 9 page51 (El-Hazinî), OGM Fizik10 Kavram Öğretimi page67 (Arşimet'in taç öyküsünde eş kütle/su yer değiştirme). Öykü öğretim bağlamıdır; özkütle tek başına malzeme saflığını kesin kanıtlar diye genelleme. Eşit kollu terazi denge hesabı ekleme.
-3. 9.2.1.2 kuyumculuk/porselen/ebru kullanımını çok etkenli doğru model veya kontrollü çıkarım etkinliğiyle işle. Mevcut statik metni tamamlandı sayma. Ebru için OGM yanıtlarındaki yüzey gerilimi yönünü kör kopyalama; bilimsel doğrulama gerekir. Kitre/öd/boya/viskozite etkileşimini tek özkütle parametresine indirgeme.
-4. Ardından 9.2.2 dayanıklılık, 9.2.3 yüzey olayları ve TYT Fizik tablosunun tüm kalan kazanımları; AYT Fizik, TYT Kimya, AYT Kimya, TYT Biyoloji, AYT Biyoloji. Birkaç deney, konu veya ders bitince durma. Altı alanın bütün kazanımlarını sonunda yeniden tara.
+Vercel proje prj_IGbHMZd4pfzBH1X3t2auBqbUMe17 / fen-laboratuvari-github, takım keremmert137-9933s-projects. Bazı otomatik dağıtımlar günlük sınırda; son gözlenen production bcea329 (#15), #17/#19 preview READY. Main yeni deneylerin üretimde olduğu anlamına gelmez. Uygun toplu yayın aşamasında üretim SHA'sını yeniden oku, tek tek elle yeniden dağıtım zorlama. Preview promotion production değişkenleriyle yeniden build yapabilir.
 
-Komutlar: `node --test labs/*.test.cjs tests/*.test.js`, `node curriculum/render.cjs`, `node tests/karisim-browser.cjs chromium` / `webkit`; regresyonlar `tests/hacim-browser.cjs`, `tests/ozkutle-browser.cjs`, `tests/birim-browser.cjs`. Playwright 1.62.1 + ilgili browser/deps gerekir. Her paket güncel main üzerinden küçük PR olur.
+ÖSYM 2027 ayrıntılı kapsam kılavuzu doğrulanmadı; MEB 2018 ve 2028 geçiş dayanakları SOURCES.md'de. Ebru/karışım kaynaklarını koşulsuz bilimsel genelleme diye kopyalama.
+
+## Sıradaki işler
+
+1. #20 son HEAD'in bütün CI (model, envanter, karışım Chromium/WebKit, gerekli regresyonlar) başarılı ve çakışmasızsa main'e al. e durumunu gerçek HEAD/merge/run kanıtıyla yükselt; 9.2.1.1(a/b/c/ç/d/e/f) bütünlüğünü tekrar incele. Tam ana kazanımı ancak bundan sonra main statüsüne çıkar. Canlı/gerçek cihaz ayrı bekler.
+2. 9.2.1.2 kuyumculuk/porselen/ebru: örneği tek özkütle parametresine indirgeme. Kuyumculukta yalnız özkütle saflık kanıtı değildir. Sabit bileşimli kapalı gözenek modeli porselende kütle/dış hacim ilişkisini anlatabilir; gerçek kalite/fırınlama tahmini yapmaz. Ebruda aynı özkütlede yüzey/viskozite farkıyla farklı davranışı kontrollü incele; ölçülmüş veri uydurma.
+3. Araştırılmış birincil ek kaynaklar: APS Gallery of Fluid Motion 2023 marbling (https://gfm.aps.org/meetings/dfd-2023/649b3ad8199e4c137897831b), Physical Review Fluids 9,110506 (2024), üniversite PDF https://people.math.wisc.edu/~spagnolie/Papers/sbsr24.pdf ; porselen gözenek/bulk density araştırması https://pmc.ncbi.nlm.nih.gov/articles/PMC9821833/ . Bunlar iç model doğrulaması içindir; öğrenciye müfredat dışı akışkan denklemleri yükleme.
+4. 9.2.2 dayanıklılık, 9.2.3 adezyon/kohezyon/kılcallık/yüzey gerilimi; sonra TYT Fizik, AYT Fizik, TYT Kimya, AYT Kimya, TYT Biyoloji, AYT Biyoloji'nin tüm kapsam satırları. Konu veya ders bitince durma; sonunda bütün alanları tekrar tara.
+
+Komutlar: node --test labs/*.test.cjs tests/*.test.js; node curriculum/render.cjs; node tests/karisim-browser.cjs chromium / webkit; ozkutle-browser.cjs, hacim-browser.cjs, birim-browser.cjs regresyonları.

@@ -132,7 +132,7 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 302,
       "status": "Geliştiriliyor",
-      "audit": "Birimler ve tüm hacim/ölçüm/grafik alt kavramları main. Nitel karışım paketi geliştiriliyor; tarihçe (f), günlük yaşam ve gerçek iPad/canlı kabulü bekliyor.",
+      "audit": "a/b/c/ç/d/f alt açıklamaları main; nitel karışım (e) tarihçe main'i ile birleşik tarayıcı CI bekliyor. Gerçek iPad/canlı kabulü bekliyor.",
       "clauses": [
         {
           "part": "a",
@@ -193,24 +193,33 @@
         {
           "part": "d",
           "sourceLine": 311,
-          "status": "Test edildi",
+          "status": "maine birleştirildi",
           "evidence": [
-            "curriculum/MIXTURE-REVIEW.md"
-          ]
+            "curriculum/HISTORY-REVIEW.md",
+            "curriculum/UNITS-REVIEW.md"
+          ],
+          "pr": 21,
+          "commit": "84fe93695603ab365d721d435de47dc4ed5e8ccf"
         },
         {
           "part": "e",
           "sourceLine": 313,
           "status": "Geliştiriliyor",
           "evidence": [
-            "curriculum/MIXTURE-REVIEW.md"
+            "curriculum/MIXTURE-REVIEW.md",
+            "https://github.com/1rid3mon/fen-laboratuvari/pull/20"
           ]
         },
         {
           "part": "f",
           "sourceLine": 314,
-          "status": "Eksik",
-          "evidence": []
+          "status": "maine birleştirildi",
+          "evidence": [
+            "curriculum/HISTORY-REVIEW.md",
+            "https://github.com/1rid3mon/fen-laboratuvari/actions/runs/41924828360"
+          ],
+          "pr": 21,
+          "commit": "84fe93695603ab365d721d435de47dc4ed5e8ccf"
         }
       ],
       "evidence": [
@@ -220,6 +229,8 @@
         "tests/ozkutle-browser.cjs",
         "curriculum/VOLUME-REVIEW.md",
         "curriculum/UNITS-REVIEW.md",
+        "curriculum/HISTORY-REVIEW.md",
+        "https://github.com/1rid3mon/fen-laboratuvari/pull/20",
         "curriculum/MIXTURE-REVIEW.md"
       ],
       "pr": null,
