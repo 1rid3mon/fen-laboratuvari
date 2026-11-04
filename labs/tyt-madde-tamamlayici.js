@@ -46,7 +46,7 @@ if(s.example===1){title='Kuyumculuk';result='Özkütle, metal ve alaşımların 
 else if(s.example===2){title='Porselen yapımı';result='Porselen üretiminde özkütle, malzeme yapısı ve üretim kontrolüyle ilişkilidir.';note='Malzemenin bileşimi ve iç boşlukları özkütleyi etkileyebilir. Burada bir fırınlama veya fiziksel mukavemet simülasyonu yapılmaz.';}
 else {title='Ebru yapımı';result='Ebruda boyaların sıvı üzerindeki davranışını özkütle de etkileyebilir.';note='Ebru desenlerinin oluşumu yalnız özkütleyle açıklanamaz: yüzey gerilimi, boya bileşimi ve kitrenin kıvamı da etkilidir. Her boya otomatik olarak su üstünde aynı biçimde durmaz.';}
 const scene=rect(0,0,850,350,'#0a2738')+label(80,90,title,32)+rect(110,140,630,125,'#24506b')+label(140,190,'2018 MEB 9.2.1.2',26)+label(140,230,'Günlük yaşamda özkütle',24);
-return {scene,result,note};
+return {scene,result:title+' · '+result,note};
 }
 function draw(){const item=s.tab==='volume'?drawVolume():s.tab==='mixture'?drawMixture():drawExamples();el('scene').innerHTML=item.scene;el('result').textContent=item.result;el('note').textContent=item.note;}
 function render(){
