@@ -10,7 +10,7 @@ Her konu için ayrı ayrı: (1) resmî 2018 MEB kazanım kodu ve metni, (2) ilgi
 |---|---|---|---|---|
 | 1 | Fizik Bilimine Giriş | `tyt-fizige-giris.html` | SI temel/türetilmiş, skaler-vektörel, ölçme, alt alanlar ve fiziksel model sınırları | Dört deney: 1B işaretli vektör toplama eklendi; alt dallar/kurumlar ve iPad kabulü eksik |
 | 2 | Madde ve Özellikleri | `tyt-madde-ozellikleri.html` (6 ilk sürüm sahne) | Özkütle, dayanıklılık, adezyon-kohezyon, yüzey gerilimi, kılcallık; hangi kazanımların dahil olduğunun resmî kontrolü | Özkütle + yeni tamamlayıcı hacim/karışım/günlük yaşam atölyeleri var; tüm kazanım ve iPad kabulü bekliyor |
-| 3 | Hareket ve Kuvvet | `newton-hareket-yasalari.html`, hareket sayfaları | TYT–AYT kazanım ayrımı; yol–yer değiştirme, sürat–hız, grafikler, net kuvvet | Ayrıntılı denetim bekliyor |
+| 3 | Hareket ve Kuvvet | `tyt-hareket-temelleri.html` ve diğer hareket sayfaları | TYT–AYT ayrımı; yol–yer değiştirme, sürat–hız, grafikler, net kuvvet | 9.3.1.2–4 için ilk iki kontrollü deney eklendi; kalan kazanımlar ve gerçek iPad denetimi bekliyor |
 | 4 | İş, Güç ve Enerji | `is-guc-enerji.html`, `enerji-lab.html` | Enerji korunumu, işaretler, sürtünme, verim ve TYT–AYT ayrımı | Ayrıntılı denetim bekliyor |
 | 5 | Isı ve Sıcaklık | `isi-sicaklik.html` | Isı–sıcaklık ayrımı, termometre, hâl değişimi, suyun 4 °C özelliği ve genleşme | 15 deney mevcut; bağımsız fizik denetimi bekliyor |
 | 6 | Elektrostatik | `tyt-elektrostatik.html` | Yük korunumu, iletken/yalıtkan, etki, dokunma, topraklama, elektroskop | 10 deney mevcut; fizik denetimi bekliyor |
@@ -120,3 +120,12 @@ Dereceli silindir SVG'si artık 2B modelde **alan korunumu** sağlar: `A_cisim k
 **Bir sonraki kalan işler:** 9.1 alt dallar ve bilim araştırma merkezleri; 9.2 adezyon/kohezyon için günlük örneklerin tam eşleştirmesi ve şemaların gerçek cihaz kontrolü; ardından 9.3 Hareket ve Kuvvet, 9.4 Enerji, 9.5 Isı/Sıcaklık, Elektrostatik, Devre/Manyetizma, Basınç/Kaldırma, Dalgalar ve Optik'in her kazanımı ayrı fizik denetiminden geçirilecek. Yeni sayfa eklemek veya CI geçmesi tek başına MEB doğruluk onayı değildir.
 
 Resmî dayanak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf (2018 Fizik programı, s. 15–16).
+
+## Aşama 3 — Hareket ve Kuvvet'in başlangıcı (2018 MEB 9.3.1.2–9.3.1.4)
+
+- `tyt-hareket-temelleri.html` ve `tyt-hareket-temelleri.js` eklendi; ana sayfaya bağlandı.
+- **Gidiş–dönüş deneyi:** iki ayrı doğrusal hareket parçasının alınan yol ve işaretli yer değiştirmesi ile toplam zamana bölünmüş ortalama sürat ve ortalama hız birlikte güncellenir. Dönüş yolu başlangıçtan fazla olduğunda negatif yer değiştirme ve negatif ortalama hız doğru gösterilir. Başlangıca dönüşte yer değiştirme sıfır, alınan yol sıfır değildir.
+- **Sabit hızlı hareket:** işaretli v ve t ile x=v·t; konum–zaman doğrusu, v–t yatay doğrusu, sıfır ve negatif hız durumları. Başlangıç x₀=0 m ve doğu yönü (+) olarak belirtilir. Sıfır zaman için `-0` gösterimi fiziksel olarak yanıltıcı olabileceği için normalleştirildi.
+- Bu bölümde ivme hesaplamasına veya AYT fırlatma/atışlarına girilmez. **9.3'ün tamamı henüz bitmedi**: hareket sınıflandırması, farklı referans noktaları, net kuvvet/Newton, sürtünme ve diğer alt kazanımların hepsi ayrı denetim gerektiriyor.
+- `tyt-hareket-temelleri.test.cjs` gerçek işaretli hareket, ortalamalar, sıfır durumları, uç değerler ve grafik tepkisini kontrol eder. Bu regresyon `tum-lab-etkilesim-ci.yml` içinde kapıdır. Tüm değişiklikler PR #10 taslağında; yeni CI ve Safari kabulü olmadan main'e aktarılmaz.
+
