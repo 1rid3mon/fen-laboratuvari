@@ -9,7 +9,7 @@ function draw(){
  if(['interference','diffraction'].includes(s.tab)){
   const double=s.tab==='interference',spacing=s.slit,fringe=double?70*wave*dist/spacing:110*wave*dist/spacing;
   b+=line(240,70,240,400,'#d8e7e9',8)+line(750,70,750,400,'#b4cbd6',8);
-  for(let n=-5;n<=5;n++){const y=235+n*fringe;if(y<82||y>389)continue;const intensity=double?Math.pow(Math.cos(n*Math.PI),2):n===0?1:Math.pow(Math.sin(n*.75)/(n*.75),2);
+  for(let n=-5;n<=5;n++){const y=235+n*fringe;if(y<82||y>389)continue;const intensity=double?1:n===0?1:0.015; // maxima for two slits; minima for single-slit diffraction
    b+=svg('rect',{x:730,y:y-8,width:38,height:16,fill:'#85f4d9',opacity:clamp(intensity,.05,1)});
    b+=line(240,235+(double?(n%2?spacing*8:-spacing*8):0),730,y,'#2f8796',1);
   }
@@ -18,19 +18,19 @@ function draw(){
   note='Dalga boyu büyürse ve yarık–perde uzaklığı artarsa desen genişler. Yarık aralığı/genişliği artarsa desen daralır. Çizim şematiktir.';
  }else if(s.tab==='doppler'){
   const shift=s.speed*100;
-  for(let i=1;i<=6;i++)b+=svg('ellipse',{cx:440+i*shift/6,cy:230,rx:i*50,ry:i*50,fill:'none',stroke:'#79cfe9','stroke-width':2});
+  for(let i=1;i<=6;i++)b+=svg('ellipse',{cx:440+(6-i)*shift,cy:230,rx:i*50,ry:i*50,fill:'none',stroke:'#79cfe9','stroke-width':2});
   b+=svg('circle',{cx:440,cy:230,r:18,fill:'#f3c285'})+label(65,75,'Kaynak sağa hareket eder');
-  read='Öndeki dalga cepheleri sıklaşır; arkadakiler seyrekleşir';
+  read=s.speed===0?'Durgun kaynak: dalga cepheleri simetrik':'Öndeki dalga cepheleri sıklaşır; arkadakiler seyrekleşir';
   note='Kaynak ve gözlemcinin göreli hareketi algılanan frekansı değiştirir. Kaynak dururken hız sıfırsa simetrik cepheler görülür.';
  }else if(s.tab==='em'){
-  let p1=[],p2=[];for(let x=80;x<820;x+=6){const t=(x-80)/740*s.frequency*Math.PI*2-s.phase;p1.push(x+','+(235-75*Math.sin(t)));p2.push(x+','+(235-55*Math.cos(t)));}
+  let p1=[],p2=[];for(let x=80;x<820;x+=6){const t=(x-80)/740*s.frequency*Math.PI*2-s.phase;p1.push(x+','+(235-75*Math.sin(t)));p2.push(x+','+(235-55*Math.sin(t)));}
   b+=svg('polyline',{points:p1.join(' '),fill:'none',stroke:'#f7c587','stroke-width':4})+svg('polyline',{points:p2.join(' '),fill:'none',stroke:'#81e7d8','stroke-width':4});
-  read='E ve B alanları birbirine ve yayılma doğrultusuna diktir';note='2B çizim iki alanın faz ve dikliğini tam üç boyutlu temsil etmez; boşlukta elektromanyetik dalgalar ışık hızıyla yayılır.';
+  read='E ve B aynı fazdadır; birbirine ve ilerleme yönüne diktir';note='İki eğri aynı fazda çizilir; E ve B uzayda farklı, birbirine dik eksenlerdedir. 2B çizim 3B alan yönlerini temsil etmez.';
  }else if(s.tab==='photo'){
-  const photon=s.frequency,kinetic=Math.max(0,photon-s.work),emits=photon>=s.work;
+  const photon=s.frequency,kinetic=Math.max(0,photon-s.work),emits=photon>s.work;
   b+=svg('rect',{x:260,y:290,width:390,height:60,fill:'#8a9aa9'})+label(350,392,'Metal yüzey');
   for(let i=0;i<4;i++){const x=180+i*85;b+=line(x,110,x+85,270,'#f2d27b',3);if(emits)b+=svg('circle',{cx:300+i*75,cy:260-kinetic*30,r:8,fill:'#8be8e5'});}
-  read=emits?'Elektron kopar · maksimum kinetik enerji = '+fmt(kinetic)+' eV':'Eşik frekans aşılmadı · elektron kopmaz';
+  read=emits?'Elektron kopar · maksimum kinetik enerji = '+fmt(kinetic)+' eV':photon===s.work?'Eşik enerjiye ulaşıldı · elektron sıfır kinetik enerjiyle çıkabilir':'Eşik frekans aşılmadı · elektron kopmaz';
   note='Foton enerjisi hf iş fonksiyonunu aşınca fotoelektron çıkar. Işık şiddeti tek başına eşik altı frekansta elektron koparamaz. Burada frekans kaydırıcısı foton enerjisi (eV) ölçeğiyle temsil edilir.';
  }else if(s.tab==='compton'){
   const theta=s.angle*Math.PI/180,delta=1-Math.cos(theta);
@@ -48,7 +48,7 @@ function draw(){
   read='γ = '+fmt(gamma)+' · hareket yönünde boy oranı L/L₀ = '+fmt(contract);
   note='Özel görelilikte hareketli saatin zaman aralığı γ ile büyür; boy kısalması yalnız hareket doğrultusundadır. Bu çizim farklı referans çerçevelerindeki ölçümleri karşılaştırır.';
  }else if(s.tab==='blackbody'){
-  const peak=2.898e6/s.temp;let pts=[];for(let x=60;x<840;x+=4){const wavelength=100+x*3.5,ratio=peak/wavelength,y=395-300*Math.pow(ratio,5)*Math.exp(5*(1-ratio));pts.push(x+','+clamp(y,80,400));}
+  const peak=2.898e6/s.temp;let pts=[];const planckShape=nm=>{const z=1.4387769e7/(nm*s.temp);return 1/(Math.pow(nm,5)*Math.expm1(z));};const peakValue=planckShape(peak);for(let x=60;x<840;x+=4){const wavelength=100+x*3.5,y=395-300*planckShape(wavelength)/peakValue;pts.push(x+','+clamp(y,80,400));}
   b+=svg('polyline',{points:pts.join(' '),fill:'none',stroke:'#f4c586','stroke-width':4});
   read='Wien yasası: λmaks ≈ '+fmt(peak)+' nm';
   note='Sıcaklık arttıkça ışımanın tepe dalga boyu küçülür. Eğri, öğretici yaklaşık spektral şekildir; mutlak güç ölçeği değildir.';
