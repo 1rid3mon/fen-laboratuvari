@@ -132,15 +132,18 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 302,
       "status": "Geliştiriliyor",
-      "audit": "PR #16/#17/#18 ölçüm, grafikler ve bütün düzgün/düzensiz hacim şekilleri main. Kütle/hacim birimleri geliştiriliyor. Nitel karışımlar, tarihçe, günlük yaşam ve gerçek iPad/canlı kabulü eksik.",
+      "audit": "Birimler ve tüm hacim/ölçüm/grafik alt kavramları main. Nitel karışım paketi geliştiriliyor; tarihçe (f), günlük yaşam ve gerçek iPad/canlı kabulü bekliyor.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 304,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
-            "curriculum/UNITS-REVIEW.md"
-          ]
+            "curriculum/UNITS-REVIEW.md",
+            "https://github.com/1rid3mon/fen-laboratuvari/actions/runs/41921788586"
+          ],
+          "pr": 19,
+          "commit": "feff0c8278a01e4027fc0e8f7713f535bb8a0148"
         },
         {
           "part": "b",
@@ -190,14 +193,18 @@
         {
           "part": "d",
           "sourceLine": 311,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Test edildi",
+          "evidence": [
+            "curriculum/MIXTURE-REVIEW.md"
+          ]
         },
         {
           "part": "e",
           "sourceLine": 313,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/MIXTURE-REVIEW.md"
+          ]
         },
         {
           "part": "f",
@@ -212,7 +219,8 @@
         "labs/ozkutle-olcum.test.cjs",
         "tests/ozkutle-browser.cjs",
         "curriculum/VOLUME-REVIEW.md",
-        "curriculum/UNITS-REVIEW.md"
+        "curriculum/UNITS-REVIEW.md",
+        "curriculum/MIXTURE-REVIEW.md"
       ],
       "pr": null,
       "commit": null,

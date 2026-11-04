@@ -13,11 +13,13 @@
 
 Main son gözlenen: 245a14b57ce5fee09ff491445ac748a2c24f0e2f. b/c/ç alt açıklamalarının kanıtları JSON'a işlendi. Ana 9.2.1.1 henüz tamamlanmadı. Bilimsel kayıtlar DENSITY-REVIEW.md, VOLUME-REVIEW.md, IRREGULAR-REVIEW.md.
 
+PR #19 da tamamlandı: HEAD `124e5b38f18b23959b09e814ddb17865378efc4e`, merge `feff0c8278a01e4027fc0e8f7713f535bb8a0148`. Birim ve özkütle Chromium/WebKit senaryoları başarılı; 436 test geçti. 9.2.1.1(a) main olarak kaydedildi.
+
 ## Güncel paket
 
-Dal `feature/measurement-units-20261105`, güncel main #18 üzerine hazırlanıyor. Kütle/hacim birimleri için ayrı düzenekler; kütle/su ekleme–çıkarma, su seviyesi sürükleme, birim değişiminde aynı fiziksel miktarı koruma, hipotez, kontrollü defter, kendi sayısal yanıtı, açıklama ve özgün soru. 9.2.1.1(a), mg/g/kg/ton ve mL/L/cm³/dm³/m³. Kütle ile hacim birbirine dönüştürülemez.
+Dal `feature/qualitative-mixtures-20261105`, güncel main feff0c8 üzerinden. Nitel karışım (e): A/B tarifini değiştirip yeni numune hazırlama; doğrudan kaynak/karıştırıcı/örnek ucu sürükleme, bekleyerek/karıştırarak homojenleşme, erken kaydı engelleme, sabit oran ile toplam miktarı ayırma, yağ–su tabakaları, hipotez ve gözlem defteri. Sayısal karışım özkütlesi hesabı yok; hacmi yaklaşık toplanan tam karışabilir ideal sıvı koşulu açık. Model gerçek çözelti nicel tahmini değildir.
 
-7 yeni model testi ve Chromium/WebKit gerçek pointer senaryosu var. Yerel birleşik 436 test geçti. Bu kaydın ilk yazımında PR/HEAD aktarımı sıradaki işlemdir; en güncel PR/HEAD/CI'ı GitHub'dan oku. Bilimsel gerekçe UNITS-REVIEW.md. CI başarılı ve çakışmasız olmadan main'e alma.
+7 yeni model testi; birleşik 443/443 yerel test geçti. Chromium/WebKit senaryosu hazırlanmış durumda; PR açılıp son HEAD CI sonuçları alınacak. Bilimsel kayıt MIXTURE-REVIEW.md. (d) eşit kollu terazi matematiği sınırı ilgili TYT sayfalarında denetlendi; AYT tork kapsamıyla karıştırılmadı.
 
 ## Açık sınırlar
 
@@ -29,10 +31,9 @@ Dal `feature/measurement-units-20261105`, güncel main #18 üzerine hazırlanıy
 
 ## Sıradaki iş
 
-1. Birim paketi PR'sini aç/son HEAD'ini kontrol et. 436 model/regresyon, yeni birim Chromium/WebKit ve parent sayfayı etkilediği için özkütle tarayıcı regresyonlarının hepsi başarılı olmalı. Birleştir; HEAD/merge SHA ve run bağlantılarını buraya kaydet; (a) alt maddesini kanıtla yükselt.
-2. 9.2.1.1(d) bir deney kazanımı değil kapsam sınırıdır: eşit kollu terazi matematiği bu konuya sokulmayacak. İlgili TYT sayfalarını denetle, AYT tork/makine matematiğiyle karıştırma.
-3. 9.2.1.1(e) nitel karışım özkütlesi; sayısal karışım hesabı yapmadan öğrencinin koşulları değiştirdiği bir deney. Mevcut tamamlayıcı sayfadaki statik metni tamamlandı sayma.
-4. 9.2.1.1(f) Arşimet/el-Hazinî tarihçesini resmî kaynakla doğrula; öğrenilmiş ölçüm yöntemiyle ilişkilendir. Sonra 9.2.1.2 kuyumculuk/porselen/ebru kullanımını çok etkenli doğru modeller veya kontrollü çıkarım etkinliğiyle işle.
-5. Ardından TYT fizik tablosunun sıradaki tüm kazanımları; AYT Fizik, TYT Kimya, AYT Kimya, TYT Biyoloji, AYT Biyoloji. Birkaç deney, bir konu veya bir ders bitince durma. Altı alanın tüm kazanımlarını sonunda yeniden tara.
+1. Nitel karışım paketinin PR/son HEAD/CI'ını oku. 443 model/regresyon ve yeni karışım Chromium/WebKit, parent sayfayı etkilediği için geometrik hacim tarayıcı regresyonları başarılı olmalı. Başarılı/çakışmasızsa merge et. e ve d durumlarını son kanıtlarla kaydet; ana kazanımın f kısmı hâlâ bekler.
+2. 9.2.1.1(f): Arşimet ve el-Hazinî'nin çalışmalarını resmî tarihçe kaynaklarıyla öğrenilmiş ölçüm yöntemine bağla. Kaynaklar: OGM Defterim Fizik 9 page51 (El-Hazinî), OGM Fizik10 Kavram Öğretimi page67 (Arşimet'in taç öyküsünde eş kütle/su yer değiştirme). Öykü öğretim bağlamıdır; özkütle tek başına malzeme saflığını kesin kanıtlar diye genelleme. Eşit kollu terazi denge hesabı ekleme.
+3. 9.2.1.2 kuyumculuk/porselen/ebru kullanımını çok etkenli doğru model veya kontrollü çıkarım etkinliğiyle işle. Mevcut statik metni tamamlandı sayma. Ebru için OGM yanıtlarındaki yüzey gerilimi yönünü kör kopyalama; bilimsel doğrulama gerekir. Kitre/öd/boya/viskozite etkileşimini tek özkütle parametresine indirgeme.
+4. Ardından 9.2.2 dayanıklılık, 9.2.3 yüzey olayları ve TYT Fizik tablosunun tüm kalan kazanımları; AYT Fizik, TYT Kimya, AYT Kimya, TYT Biyoloji, AYT Biyoloji. Birkaç deney, konu veya ders bitince durma. Altı alanın bütün kazanımlarını sonunda yeniden tara.
 
-Komutlar: `node --test labs/*.test.cjs tests/*.test.js`; `node curriculum/render.cjs`; `node tests/birim-browser.cjs chromium` / `webkit`; regresyon için `tests/ozkutle-browser.cjs` ve `tests/hacim-browser.cjs`. Playwright 1.62.1 + ilgili browser/deps gerekir. Her yeni paket güncel main üzerinden küçük bağımsız PR olur.
+Komutlar: `node --test labs/*.test.cjs tests/*.test.js`, `node curriculum/render.cjs`, `node tests/karisim-browser.cjs chromium` / `webkit`; regresyonlar `tests/hacim-browser.cjs`, `tests/ozkutle-browser.cjs`, `tests/birim-browser.cjs`. Playwright 1.62.1 + ilgili browser/deps gerekir. Her paket güncel main üzerinden küçük PR olur.
