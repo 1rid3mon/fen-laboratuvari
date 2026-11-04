@@ -31,9 +31,9 @@ out='İdeal sabit sıcaklık karşılaştırması: P = '+fmt(s.gasP*4/s.gasVolum
 note='Bu yalnız sabit sıcaklıkta, sabit miktarda ideal gaz için nitel ilişkiyi örnekleyen şemadır. Gaz tanecikleri gerçek zamanlı çarpışma fiziğiyle modellenmez; MEB TYT kapsamı dışında sayısal gaz yasası sorusu amaçlanmaz.';
 }else{
 controls=range('amp','Genlik (görsel birim)',5,65,5)+'<button data-action="play">'+(s.playing?'Durdur':'Oynat')+'</button>';
-if(s.tab==='spring')controls+='<button data-action="end">Uç: '+(s.end==='fixed'?'Sabit':'Serbest')+'</button>';
+if(s.tab==='spring')controls+='<button data-action="pulse">Yeni atma gönder</button><button data-action="end">Uç: '+(s.end==='fixed'?'Sabit':'Serbest')+'</button>';
 const wave=s.tab==='spring',water=s.tab==='water',sound=s.tab==='sound';
-let points=[];for(let x=75;x<=820;x+=6){const u=(x-75)/745,incident=s.amp*Math.exp(-Math.pow((u*745-200-s.phase*75)/95,2));const reflected=wave?(s.end==='fixed'?-1:1)*s.amp*Math.exp(-Math.pow((u*745-(1300-s.phase*75))/95,2)):0;points.push(x+','+(230-incident-reflected));}
+let points=[];for(let x=75;x<=820;x+=6){const u=(x-75)/745,incident=s.amp*Math.exp(-Math.pow((u*745-200-s.phase*75)/95,2));const reflected=wave?(s.end==='fixed'?-1:1)*s.amp*Math.exp(-Math.pow((u*745-(1290-s.phase*75))/95,2)):0;points.push(x+','+(230-incident-reflected));}
 if(sound){for(let x=95;x<810;x+=16){const dx=s.amp*.4*Math.sin(x/50-s.phase);b+='<circle cx="'+(x+dx)+'" cy="230" r="6" fill="#9ce5e9"/>';}}
 else b+='<polyline points="'+points.join(' ')+'" stroke="'+(water?'#8ce5f4':'#ffd28b')+'" stroke-width="5" fill="none"/>';
 out=wave?'Yay atması · '+(s.end==='fixed'?'Sabit uçta ters yansıma':'Serbest uçta düz yansıma'):water?'Su dalgası: atma profili (şematik)':'Ses: boyuna tanecik titreşimi (şematik)';
@@ -42,7 +42,7 @@ note=wave?'Yay ucundan yansıma işareti sabit uçta ters, serbest uçta düzdü
 $('controls').innerHTML=controls;$('scene').innerHTML=b;$('stats').textContent=out;$('explain').textContent=note;
 }
 $('tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t){s.tab=t.dataset.tab;s.playing=false;render();}});
-$('controls').addEventListener('click',e=>{const a=e.target.dataset.action;if(a==='add')add();if(a==='settle'){settle();render();}if(a==='remove'){s.objects=s.objects.filter(o=>o.id!==s.selected);s.selected=null;render();}if(a==='end'){s.end=s.end==='fixed'?'free':'fixed';render();}if(a==='play'){s.playing=!s.playing;last=0;render();if(s.playing)requestAnimationFrame(tick);}});
+$('controls').addEventListener('click',e=>{const a=e.target.dataset.action;if(a==='add')add();if(a==='settle'){settle();render();}if(a==='remove'){s.objects=s.objects.filter(o=>o.id!==s.selected);s.selected=null;render();}if(a==='pulse'){s.phase=0;last=0;render();}if(a==='end'){s.end=s.end==='fixed'?'free':'fixed';render();}if(a==='play'){s.playing=!s.playing;last=0;render();if(s.playing)requestAnimationFrame(tick);}});
 $('controls').addEventListener('input',e=>{const k=e.target.dataset.key,v=Number(e.target.value);if(!Number.isFinite(v))return;if(k==='selectedRho'){const o=s.objects.find(o=>o.id===s.selected);if(o)o.rho=v;}else if(Object.hasOwn(s,k))s[k]=v;render();});
 function position(e){const r=$('scene').getBoundingClientRect();return{x:(e.clientX-r.left)*900/r.width,y:(e.clientY-r.top)*470/r.height};}
 $('scene').addEventListener('pointerdown',e=>{const id=e.target.getAttribute('data-object');if(id!==null){s.selected=Number(id);pointer={id:s.selected,p:e.pointerId};e.preventDefault();render();}else if(e.target.hasAttribute('data-probe')){pointer={probe:true,p:e.pointerId};e.preventDefault();}});
