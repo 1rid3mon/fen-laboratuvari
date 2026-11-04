@@ -53,3 +53,12 @@ Bu tarama **bir kaynak kodu ve otomatik test denetimidir**. Görsel bir etkileş
 `node --test labs/tyt-elektro.test.cjs`
 
 Diğer mevcut fizik regresyonları `.github/workflows/ayt-fizik-hareket-ci.yml` ile çalışır. Denetim testlerinin geçmişte başarılı olması, daha sonraki commitler için yeniden koşma gereğini kaldırmaz.
+
+
+## 4 Kasım ek fizik doğruluk düzeltmeleri
+
+- TYT Basınç ve Dalgalar ile AYT Dalga Mekaniği ve Modern Fizik sayfaları eklendi. Önceki envanterdeki 33 sayfa sayısı artık **güncel değildir**; otomatik testler en az 33 sayfa bulunduğunu denetler, tüm yeni kazanımların tamamlandığını değil.
+- TYT Arşimet kaldırma kuvveti artık **batan hacim** üzerinden hesaplanır. Yüzen, askıda ve batan durumların sahne konumları ayrıldı. Basınçta temsili alan birimi açıkça belirtildi.
+- AYT elektromanyetik dalgada E/B salınımlarının faz uyumu düzeltildi. Çift yarık maksimumları ve tek yarık minimumları ayırt edildi. Fotoelektrik eşik enerjisi için sıfır kinetik enerji durumu belirtildi. Siyah cisim çizimi, Wien tepe konumu ile normalize Planck eğrisi üzerinden hesaplanır.
+- **Sınır:** Çift/tek yarık, Doppler ve Compton sahneleri nitel ve şematiktir; tam dalga alanı veya nicel saçılma deney düzeneği değildir. Özel görelilik ve yarı iletkenler de öğretici idealizasyon kullanır. Tüm 2018 MEB TYT/AYT kazanımlarının satır satır karşılandığına ilişkin kanıt hâlâ oluşturulmamıştır. Kullanıcıya %100 müfredat uyumu iddiasında bulunulamaz.
+- **Yayın:** PR #9 draft; main ve Vercel üretimi değiştirilmez.
