@@ -1,6 +1,6 @@
 # Düzensiz cismin hacmi — bilimsel denetim
 
-MEB 2018 Fizik 9.2.1.1 (b): düzgün olmayan cismin su yer değiştirmesiyle hacmi. 9.2.1.1'in tamamı kabul edilmez. Geometrik şekiller PR #17'de ayrı doğrulanıyor; bu paket güncel main'deki PR #16'nın özkütle atölyesini genişletir.
+MEB 2018 Fizik 9.2.1.1 (b): düzgün olmayan cismin su yer değiştirmesiyle hacmi. 9.2.1.1'in tamamı kabul edilmez. Geometrik şekiller PR #17 ile main'e alındı; bu paket güncel main'deki PR #16'nın özkütle atölyesini genişletir.
 
 ## Fizik modeli
 
@@ -23,3 +23,5 @@ MEB 2018 Fizik 9.2.1.1 (b): düzgün olmayan cismin su yer değiştirmesiyle hac
 - PR #15 envanter main: bcea32904f35001e17575d3770557e690d37dd8e.
 - PR #16 özkütle main: dddf8141db9dd9a82f5329e82a6bf48a6f202058; 419 model/regresyon, Chromium ve WebKit başarılı.
 - PR #17 geometri: açık; HEAD ve CI sonuçlarını yeniden oku. İlk WebKit kurulumu Ubuntu latest üzerinde uzadığı için browser runner Ubuntu 24.04'e sabitlendi ve 15 dakika sınırı kondu. Testler atlanmadı veya gevşetilmedi. Başarılı olmadan main'e birleştirme.
+
+Güncelleme: PR #17 son HEAD 2e26e5c0e86a80758a3198b1ea67e6e65b4e1cb2 tüm CI başarılı, merge 155aa6d8f169971f34006da96112794a54af0df9. Bu paketin son HEAD'i artık geometri main'i ile birleşik doğrulanıyor; beklenen model/regresyon toplamı 429.
