@@ -25,6 +25,8 @@ jobs:
       - name: Syntax and interactivity inventory
         run: |
           node --check labs/tum-laboratuvar-etkilesim.test.cjs
+          node --check labs/tyt-basinc-dalgalar-v2.js
+          test -f labs/tyt-basinc-dalgalar-v2.html
           node --test labs/tum-laboratuvar-etkilesim.test.cjs
       - name: 2018 MEB TYT matter and entry regression
         run: |
