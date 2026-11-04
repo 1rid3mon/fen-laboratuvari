@@ -83,7 +83,7 @@ $('scene').addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointe
  if(pointer.name==='impact'){const a=s.angleDeg*Math.PI/180;s.impactOffset=clamp(Math.round(((p.x-585)*Math.cos(a)+(p.y-252)*Math.sin(a))/10)*10,-110,110);}
  if(pointer.name==='barrier'){const a=Math.atan2(p.y-252,p.x-585)*180/Math.PI;s.angleDeg=clamp(Math.round(a/5)*5,50,130);}
  scene();e.preventDefault();});
-for(const e of ['pointerup','pointercancel','lostpointercapture'])$('scene').addEventListener(e,v=>{if(pointer&&pointer.id===v.pointerId){pointer=null;render();}}));
+for(const e of ['pointerup','pointercancel','lostpointercapture'])$('scene').addEventListener(e,v=>{if(pointer&&pointer.id===v.pointerId){pointer=null;render();}});
 function tick(t){const dt=prev?Math.min((t-prev)/1000,.05):0;prev=t;if(s.playing&&(['flow','earthquake'].includes(s.tab))){s.phase+=dt;scene();}requestAnimationFrame(tick);}
 render();requestAnimationFrame(tick);
 })(document,window.TYTFluidWaveModel);
