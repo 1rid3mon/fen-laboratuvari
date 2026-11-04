@@ -54,5 +54,5 @@ test('already complete document loads after all modules and never starts before 
 });
 test('HTML includes all seven deferred experiment bundles in stable order',()=>{
  const h=read('enerji-lab.html');const found=[...h.matchAll(/<script src="([^"]+)" defer><\/script>/g)].map(x=>x[1]);
- assert.deepEqual(found,['enerji-core.js',...scripts]);
+ assert.deepEqual(found,['enerji-core.js','enerji-visual.js',...scripts]);
 });

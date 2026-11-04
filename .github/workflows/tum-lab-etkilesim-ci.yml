@@ -32,3 +32,11 @@ jobs:
           node --check labs/enerji-core.js
           node --check labs/enerji-safari-defer.test.cjs
           node --test labs/enerji-safari-defer.test.cjs labs/enerji-dom.test.cjs labs/enerji-smoke.test.cjs
+
+      - name: Nine living biology scenes and Safari touch regression
+        run: |
+          node --check labs/enerji-visual.js
+          node --check labs/enerji-core.js
+          node --check labs/enerji-visual.test.cjs
+          node --check labs/enerji-touch.test.cjs
+          node --test labs/enerji-visual.test.cjs labs/enerji-touch.test.cjs labs/enerji-safari-defer.test.cjs labs/enerji-dom.test.cjs labs/enerji-smoke.test.cjs
