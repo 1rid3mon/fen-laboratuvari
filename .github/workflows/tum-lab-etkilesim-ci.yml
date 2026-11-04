@@ -57,3 +57,14 @@ jobs:
           node --check labs/tyt-mekanik-2018-ui.test.cjs
           test -f labs/tyt-mekanik-2018.html
           node --test labs/tyt-mekanik-2018-model.test.cjs labs/tyt-mekanik-2018-ui.test.cjs
+
+      - name: Flow and wave MEB qualitative physics and touch regression
+        run: |
+          node --check labs/tyt-akiskan-dalga-model.js
+          node --check labs/tyt-akiskan-dalga.js
+          node --check labs/tyt-akiskan-dalga-model.test.cjs
+          node --check labs/tyt-akiskan-dalga-ui.test.cjs
+          node --test labs/tyt-akiskan-dalga-model.test.cjs labs/tyt-akiskan-dalga-ui.test.cjs
+      - name: Existing TYT physical laboratories cross-regression
+        run: |
+          node --test labs/tyt-devre.test.cjs labs/tyt-elektro.test.cjs labs/isi-sicaklik.test.cjs labs/tyt-basinc-dalgalar.test.cjs
