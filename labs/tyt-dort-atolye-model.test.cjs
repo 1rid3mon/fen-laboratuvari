@@ -37,7 +37,7 @@ test('graduated cylinder conserves water volume and fully immersed displacement'
  near(full.displacedMl,60,1e-5);near(full.readingMl,210,1e-5);
 });
 test('partially immersed volume is less than total object volume',()=>{
- const p=M.displacement([{inside:true,y:300,height:60,volumeMl:80}],{waterMl:150});
+ const p=M.displacement([{inside:true,y:260,height:60,volumeMl:80}],{waterMl:150});
  assert.ok(p.displacedMl>0 && p.displacedMl<80);
  near(p.readingMl,150+p.displacedMl);
 });
