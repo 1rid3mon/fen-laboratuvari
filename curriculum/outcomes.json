@@ -132,7 +132,7 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 302,
       "status": "Geliştiriliyor",
-      "audit": "Özkütle ölçüm atölyesi b/c/ç kısmi uygulaması; diğer şekiller, birimler, nitel karışımlar ve tarihçe ayrı kabul bekliyor. Tarayıcı CI ve gerçek iPad bekliyor.",
+      "audit": "PR #16 özkütle main; düzensiz profil ölçümü geliştiriliyor. Geometrik şekiller PR #17 tarayıcı CI bekliyor. Kütle birimleri, nitel karışımlar, tarihçe ve gerçek iPad/canlı kabulü eksik.",
       "clauses": [
         {
           "part": "a",
@@ -143,20 +143,32 @@
         {
           "part": "b",
           "sourceLine": 306,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/IRREGULAR-REVIEW.md"
+          ]
         },
         {
           "part": "c",
           "sourceLine": 307,
-          "status": "Eksik",
-          "evidence": []
+          "status": "maine birleştirildi",
+          "evidence": [
+            "curriculum/DENSITY-REVIEW.md",
+            "https://github.com/1rid3mon/fen-laboratuvari/actions/runs/41917472473"
+          ],
+          "pr": 16,
+          "commit": "dddf8141db9dd9a82f5329e82a6bf48a6f202058"
         },
         {
           "part": "ç",
           "sourceLine": 309,
-          "status": "Eksik",
-          "evidence": []
+          "status": "maine birleştirildi",
+          "evidence": [
+            "curriculum/DENSITY-REVIEW.md",
+            "https://github.com/1rid3mon/fen-laboratuvari/actions/runs/41917472473"
+          ],
+          "pr": 16,
+          "commit": "dddf8141db9dd9a82f5329e82a6bf48a6f202058"
         },
         {
           "part": "d",
@@ -179,6 +191,7 @@
       ],
       "evidence": [
         "curriculum/DENSITY-REVIEW.md",
+        "curriculum/IRREGULAR-REVIEW.md",
         "labs/ozkutle-olcum.test.cjs",
         "tests/ozkutle-browser.cjs"
       ],
