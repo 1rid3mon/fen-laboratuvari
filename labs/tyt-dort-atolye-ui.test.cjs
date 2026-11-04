@@ -54,6 +54,13 @@ test('matter: dragging a volume into graduated cylinder raises the measured leve
  assert.match(x.nodes.result.textContent,/Ölçek okuması: 200 mL/);
  assert.match(x.nodes.result.textContent,/Cisim 1: ρ=2 g\/cm³/);
 });
+test('matter: touching cylinder wall snaps object fully inside before counting displacement',()=>{
+ const x=boot('matter');x.change('massG',200);
+ assert.match(x.nodes.result.textContent,/Cisim 1: ρ=4 g\\/cm³/);
+ x.drag('matter-1',520,354);
+ assert.match(x.nodes.scene.innerHTML,/x="506" y="329"/);
+ assert.match(x.nodes.result.textContent,/Ölçek okuması: 200 mL/);
+});
 test('matter: capillary radius touch changes ideal height',()=>{
  const x=boot('matter');x.mode('capillary');
  const prior=x.nodes.result.textContent;x.drag('cap-1',368,110);
