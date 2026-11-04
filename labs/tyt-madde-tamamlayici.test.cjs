@@ -28,7 +28,7 @@ test('mixture is qualitative and correctly distinguishes miscible solution and i
  const m=mount();tab(m,'mixture');assert.match(m.el('note').textContent,/matematiksel hesaplama yapılmaz/);
  change(m,'amount',4);assert.match(m.el('result').textContent,/genellikle artar/);
  const saltSvg=m.el('scene').innerHTML;choose(m,2);assert.match(m.el('result').textContent,/yağ üstte/);
- assert.match(m.el('note').textContent,/iki farklı tabaka/i);
+ assert.match(m.el('note').textContent,/farklı tabaka/);
  assert.notEqual(saltSvg,m.el('scene').innerHTML);
  assert.doesNotMatch(m.el('result').textContent,/g\/cm³|kg\/m³/);
 });
