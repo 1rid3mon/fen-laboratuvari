@@ -38,4 +38,5 @@ jobs:
           node --check labs/enerji-visual.js
           node --check labs/enerji-core.js
           node --check labs/enerji-visual.test.cjs
-          node --test labs/enerji-visual.test.cjs labs/enerji-safari-defer.test.cjs labs/enerji-dom.test.cjs labs/enerji-smoke.test.cjs
+          node --check labs/enerji-touch.test.cjs
+          node --test labs/enerji-visual.test.cjs labs/enerji-touch.test.cjs labs/enerji-safari-defer.test.cjs labs/enerji-dom.test.cjs labs/enerji-smoke.test.cjs
