@@ -26,3 +26,9 @@ jobs:
         run: |
           node --check labs/tum-laboratuvar-etkilesim.test.cjs
           node --test labs/tum-laboratuvar-etkilesim.test.cjs
+
+      - name: Safari deferred-load boot regression and nine bio experiments
+        run: |
+          node --check labs/enerji-core.js
+          node --check labs/enerji-safari-defer.test.cjs
+          node --test labs/enerji-safari-defer.test.cjs labs/enerji-dom.test.cjs labs/enerji-smoke.test.cjs
