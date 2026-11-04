@@ -13,6 +13,25 @@
 | 12.2.2.3 Fotosentez hızına etki eden faktörler | Deney 4-5: Işık şiddeti, dalga boyu, sıcaklık, klorofil, CO₂; kontrollü deney ve sera LED uygulaması | Kontrol edilen/bağımsız/bağımlı değişkenler ayrılır; grafikler temsili modeldir. |
 | 12.2.3.1 Kemosentez olayı | Deney 6-9: İnorganik enerji kaynağı vs CO₂, aerobik kemosentetik örnekler, nitrifikasyon, kemosentetik ekosistem ve endüstriyel kullanım | Tüm kemosentez yapanların O₂ gerektirdiği iddia edilmez. |
 
+
+## Dokunmatik Canlı Sahne — 4 Kasım 2026
+
+`enerji-visual.js`, dokuz gerçek deney modülünün mevcut `createState`, `change`, `interact` ve `next` çıktılarına bağlı olarak görselleştirme üretir. Ayrı/sahte bir ilerleme motoru yoktur.
+
+- **Deney 1:** Tilakoit ve stromaya molekül taşımaya bağlı kloroplast görünümü; etkileşime girilen moleküller sonuçları değiştirir.
+- **Deney 2–3:** Işığa bağımlı/bağımsız evrelerde girdilerin, ürünlerin ve tamamlanmanın görünür ayrımı; ATP/NADPH kullanımı şematiktir.
+- **Deney 4:** Sahne üzerinden sürüklenen ışık şiddeti belirteci, bağıl hız ve temsili O₂ göstergeleri. Eski kontrollü deney kayıtları ve grafikler korunur.
+- **Deney 5:** Parmağınla sürüklenen 400–700 nm spektrum belirteci ve değişken pigment seçimi; etki spektrumu ile soğurma spektrumu eşit sayılmaz.
+- **Deney 6–7:** Kemoototrof enerji/karbon kaynakları, farklı canlılarda fotosentez-kemosentez farkı; mevcut biyoloji kayıtlarına bağlı aşamalı görsel.
+- **Deney 8:** Nitrifikasyon sırasındaki aşamalara göre değişen azot yolu; bitkinin nitrat alımı kemosentez sayılmaz.
+- **Deney 9:** O₂ ve CO₂ kutularına doğrudan dokunma, seçilen aerobik modelde üretim sonucunun değişimi; karanlık koşullarda kemosentez mümkündür.
+
+**Etkileşim:** iPad Safari dokunmatik ve Apple Pencil için Pointer Events ile molekülün havuzdan sahneye taşınması, dokun-seç/dokun-bırak, masaüstünde klasik drag-drop, sahnedeki hedeflerin klavyeyle seçimi. Sürükleme tamamlanınca görsel ve gözlem gerçek deney durumundan yeniden çizilir. El ile sürükleme sonuçları `enerji-touch.test.cjs` içinde Safari'yi temsil eden bir olay simülasyonu kullanılarak doğrulanır.
+
+**Bilimsel sınırlar:** Çizimlerdeki parçacık noktaları belirli gerçek molekül sayısını, hücre içi kimyasal tepkimelerin geometrik yolunu veya deneysel veriyi temsil etmez. O₂ kabarcığı ile fotosentez hızı ilişkisinin işaret ettiği eğilim temsilidir. 2018 MEB AYT (12. sınıf) kapsamı korunmuştur; sayısal ATP/NADPH stokiyometrisi veya ayrıntılı elektron aktarım basamakları eklenmez.
+
+**Kabul:** Otomatik testler geliştirilen model ve emüle edilen iPad etkileşimlerini denetler; gerçek Safari/iPad/Apple Pencil görsel ve kullanım kabulü kullanıcı geri bildirimiyle yapılmalıdır.
+
 ## Dokuz etkileşimli deney
 
 1. Kloroplast; yapılar, molekül eşleştirme ve bilim insanları
