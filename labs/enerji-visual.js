@@ -1,6 +1,6 @@
 /* Interactive, scientific process visualisations — 2018 MEB AYT biology.
    Diagrams illustrate relationships, NOT stoichiometry, reaction rates or actual molecule paths. */
-(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.EnerjiVisual=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){'use strict';
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.EnerjiVisual=api;})(typeof window!=='undefined'?window:typeof globalThis!=='undefined'?globalThis:this,function(){'use strict';
 const clamp=(x,min,max)=>Math.max(min,Math.min(max,Number(x)||0));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
 const circles=(x,y,n,color)=>Array.from({length:clamp(n,0,12)},(_,i)=>'<circle class="bio-particle" cx="'+(x+(i%5)*25)+'" cy="'+(y-Math.floor(i/5)*23)+'" r="'+(5+i%3)+'" fill="'+color+'" style="animation-delay:-'+(i*.25)+'s"/>').join('');
