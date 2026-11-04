@@ -58,7 +58,7 @@ function waveWater(){
  const tx=r.totalReflection?ix+(y-120)*Math.tan(theta):ix+(430-y)*Math.tan(r.theta2*Math.PI/180),ty=r.totalReflection?120:430;
  b+=line(ix,90,ix,450,'#90bac8',2,'stroke-dasharray="6 8"')+line(sx,sy,ix,y,'#fbd68e',5,'marker-end="url(#arr)"')+line(ix,y,tx,ty,r.totalReflection?'#fc9f9f':'#a6f9d9',5,'marker-end="url(#arr)"');
  b+=circle(sx,sy,16,'#fff0c0','data-drag="water-source"')+circle(ix,y,15,'#f8b7a0','data-drag="water-boundary"')+text(93,98,'Bölge 1: h='+fmt(state.water1))+text(93,428,'Bölge 2: h='+fmt(state.water2));
- return{b,result:r.totalReflection?'Kırılan ilerleyen ışın yok: tam yansıma sınırı (ideal dalga modeli)':'Geliş açısı '+fmt(state.theta)+'° · Kırılma açısı '+fmt(r.theta2)+'°',note:'Dalgalar farklı derinliklerde farklı hızla ilerler. Sığ su uzun dalgası yaklaşımında hızın karekök(derinlik) ile değiştiği ideal model gösterilir. Derinlik azalınca dalga normale yaklaşır; frekansı sınırda değişmez. Kaynağı yatay, sınır çizgisini düşey sürükle. Akıntı, saçılma ve yüzey dalgasının tam dispersiyonu modellenmez.'};
+ return{b,result:r.totalReflection?'İletilen doğrultu yok: ideal sınırda yansıma':state.water2<state.water1?'Sığ suya geçiş: normale yaklaşır':state.water2>state.water1?'Derin suya geçiş: normalden uzaklaşır':'Aynı derinlik: doğrultu değişmez',note:'Dalgalar farklı derinliklerde farklı hızla ilerler. Sığ su uzun dalgası yaklaşımında hızın karekök(derinlik) ile değiştiği ideal model gösterilir. Derinlik azalınca dalga normale yaklaşır; frekansı sınırda değişmez. Kaynağı yatay, sınır çizgisini düşey sürükle. Akıntı, saçılma ve yüzey dalgasının tam dispersiyonu modellenmez.'};
 }
 function waveSound(){
  let b=rect(80,135,735,230,'#123e55','rx="12" stroke="#456e80" stroke-width="3"')+text(110,87,state.soundMedium==='vacuum'?'Boşlukta ses iletimi yok':'Tanecikler denge konumunda ileri–geri titreşir');
@@ -83,7 +83,7 @@ function matterCapillary(){
  const h=M.capillary(r,wet)*2,level=320-h; b+=rect(x-w/2,110,w,255,'#1b3544','stroke="#b4dae9" stroke-width="4" rx="6"');
  b+=rect(x-w/2+4,level,w-8,365-level,'#1785a8','opacity=".9"')+line(x-w/2+4,level,x+w/2-4,level,'#a3f7e4',4);
  b+=circle(x+w/2,110,11,'#f8c588','data-drag="cap-'+(i+1)+'"')+text(x-74,78,'Boru '+(i+1)+' · r='+fmt(r));}
- return{b,result:'Sol göreli seviye farkı: '+fmt(M.capillary(state.radius1,wet))+' · Sağ: '+fmt(M.capillary(state.radius2,wet)),note:'Kılcallıkta boru daraldıkça seviye değişimi büyür. Islatan sıvıda yükselme, ıslatmayan sıvıda alçalma görülür. Çizim göreli bir modeldir: gerçek kılcal yükselme; yüzey gerilimi, temas açısı, özkütle ve yerçekimine de bağlıdır. Noktalardan boru genişliğini sürükle.'};
+ return{b,result:state.radius1===state.radius2?'İki boruda aynı seviye':wet?(state.radius1<state.radius2?'Sol ince boruda daha fazla yükselme':'Sağ ince boruda daha fazla yükselme'):(state.radius1<state.radius2?'Sol ince boruda daha fazla alçalma':'Sağ ince boruda daha fazla alçalma'),note:'Kılcallıkta boru daraldıkça seviye değişimi büyür. Islatan sıvıda yükselme, ıslatmayan sıvıda alçalma görülür. Çizim göreli bir modeldir: gerçek kılcal yükselme; yüzey gerilimi, temas açısı, özkütle ve yerçekimine de bağlıdır. Noktalardan boru genişliğini sürükle.'};
 }
 function introVectors(){
  let b=arrowDef+line(95,200,805,200,'#6b90a2',3);for(let k=-10;k<=10;k++){const x=450+k*33;b+=line(x,195,x,205,'#cce4f3',2);if(k%2===0)b+=text(x-10,224,k,13);}
@@ -107,7 +107,7 @@ function heatExchange(){
  b+=text(x+24,222,'A: '+fmt(state.aTemp)+'°C')+text(614,222,'B: '+fmt(state.bTemp)+'°C')+text(160,83,'A bloğunu B’ye sürükleyerek temas ettir');
  const flow=state.aTemp>state.bTemp?'A → B':state.aTemp<state.bTemp?'B → A':'denge';if(contact){if(flow==='A → B')b+=line(540,130,588,130,'#ffe4a0',5,'marker-end="url(#arr)"');else if(flow==='B → A')b+=line(588,130,540,130,'#ffe4a0',5,'marker-end="url(#arr)"');b+=text(350,117,'Termal temas · '+flow);}
  const final=M.equilibrium({aTemp:state.aInitial,bTemp:state.bInitial,aMass:state.aMass,bMass:state.bMass});
- return{b:arrowDef+b,result:'A: '+fmt(state.aTemp)+'°C · B: '+fmt(state.bTemp)+'°C · İdeal denge: '+fmt(final)+'°C · Q(A→B)='+fmt(state.heatQ)+' J'+(contact?' · Temas var':' · Temas yok'),note:'İki cisim dış ortamdan yalıtılmış, hâl değişimi olmayan ve öz ısıları eşit, c=1 J/(kg·°C) kabul edilen ideal örnek maddelerdir. Temas ettiğinde ısı sıcak olandan soğuk olana akar; iç enerji aktarımı eşittir, son sıcaklıklar dengeye yaklaşır. Q işaretlidir: A soğursa pozitif, A ısınırsa negatif. Sürükleme ya da başlangıç ayarları deneyi değiştirir.'};
+ return{b:arrowDef+b,result:'A: '+fmt(state.aTemp)+'°C · B: '+fmt(state.bTemp)+'°C · '+(Math.abs(state.aTemp-state.bTemp)<.1?'Isıl denge':'Sıcaklıklar yaklaşıyor')+' · '+flow+(contact?' · Temas var':' · Temas yok'),note:'İki cisim dış ortamdan yalıtılmış, hâl değişimi olmayan ve öz ısıları eşit olan ideal örnek maddelerdir. Temas ettiğinde ısı sıcak olandan soğuk olana akar; iç enerji aktarımı eşittir, son sıcaklıklar dengeye yaklaşır. Enerji aktarımının yönü yalnız sıcaklık farkıyla belirlenir. Sürükleme ya da başlangıç ayarları deneyi değiştirir.'};
 }
 function heatRod(){
  const alpha={steel:12,aluminum:23,brass:19}[state.rodMaterial],ratio=1+alpha*1e-6*(state.rodTemp-20),exaggerated=1+(ratio-1)*100;
