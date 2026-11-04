@@ -26,8 +26,15 @@ jobs:
         run: |
           node --check labs/tum-laboratuvar-etkilesim.test.cjs
           node --check labs/tyt-basinc-dalgalar-v2.js
+          node --check labs/tyt-basinc-v3-model.js
+          node --check labs/tyt-basinc-v3.js
+          node --check labs/tyt-basinc-v3.test.cjs
           test -f labs/tyt-basinc-dalgalar-v2.html
           node --test labs/tum-laboratuvar-etkilesim.test.cjs
       - name: 2018 MEB TYT matter and entry regression
         run: |
           node --test labs/tyt-madde-ozellikleri.test.cjs labs/tyt-madde-tamamlayici.test.cjs labs/tyt-fizige-giris.test.cjs labs/tyt-hareket-temelleri.test.cjs
+
+      - name: Pressure V3 2018 MEB geometry and interaction regression
+        run: |
+          node --test labs/tyt-basinc-v3.test.cjs
