@@ -7,6 +7,11 @@ function pulse(x,t,{length=680,start=100,speed=120,width=48,amplitude=36,end='fi
  const reflected=(end==='fixed'?-1:1)*amplitude*gauss(x-(2*length-start-speed*t));
  return {incident,reflected,displacement:incident+reflected};
 }
+function collide(x,t,{leftX=160,rightX=760,speed=120,width=48,a=30,b=-30}={}){
+ const gaussian=z=>Math.exp(-0.5*Math.pow(z/width,2));
+ const left=a*gaussian(x-leftX-speed*t),right=b*gaussian(x-rightX+speed*t);
+ return{left,right,displacement:left+right};
+}
 function refract(thetaDeg,deep1,deep2){
  if(!(deep1>0&&deep2>0))throw RangeError('positive depths required');
  const speedRatio=Math.sqrt(deep2/deep1),theta1=thetaDeg*Math.PI/180,sin2=Math.sin(theta1)*speedRatio;
@@ -47,5 +52,5 @@ function heatStep(state,dt=1,conductance=0.35){
  const q=gap*(1-Math.exp(-conductance*dt*(1/ca+1/cb)))/(1/ca+1/cb);
  return{...state,aTemp:state.aTemp-q/ca,bTemp:state.bTemp+q/cb,transferredJ:(state.transferredJ||0)+q};
 }
-return{clamp,pulse,refract,longitudinal,vector1d,measureCm,displacement,density,capillary,equilibrium,heatStep};
+return{clamp,pulse,collide,refract,longitudinal,vector1d,measureCm,displacement,density,capillary,equilibrium,heatStep};
 });
