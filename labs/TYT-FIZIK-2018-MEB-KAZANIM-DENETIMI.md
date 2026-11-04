@@ -32,3 +32,7 @@ Her konu için ayrı ayrı: (1) resmî 2018 MEB kazanım kodu ve metni, (2) ilgi
 ## Aşama 2 — Madde ve Özellikleri
 
 Altı yeni sahne: özkütle, yoğunluk karşılaştırmasıyla yüzme/batma, benzer şekillerde kendi ağırlığına karşı dayanıklılık, adezyon/kohezyon, kılcallık ve yüzey gerilimi. Bunlar **slider tabanlı görsel tepkiler** sunar; henüz doğrudan sahne sürüklemesi yoktur. Özellikle dayanıklılık ve yüzey gerilimi nitel modellerdir. Öğrencinin doğru öğrenmesi için resmî kazanım kodu, formül sınırı ve cihaz testi doğrulanmadan 'tamam' işaretlenmeyecek.
+
+## CI olay kaydı — 4 Kasım
+
+GitHub Actions 41788276375 (commit 371242e) başarısız: `tyt-basinc-dalgalar.test.cjs` eski ve fiziksel olarak yanlış `s.density*G*s.volume/1000` ifadesini bekliyordu. Üretim kodunda yer değiştiren hacim hesabı `s.density*G*immersedVolume/1000` olarak düzeltilmişti; test beklentisi geride kalmış. Test yeni doğru ifadeye güncellendi (commit 110317e). **Yeni commitin CI sonucu doğrulanmadan yeşil kabul edilmez.** Ayrıca testin geçmesi, görselin gerçek iPad'de doğrulandığı anlamına gelmez.
