@@ -33,6 +33,12 @@ test('wave barrier rotation changes physical ray without numeric Snell problem',
  t.input('angleDeg',115);assert.notEqual(t.nodes.scene.innerHTML,before);
  assert.doesNotMatch(t.nodes.stats.textContent,/\d+(?:\.\d+)?°/);
 });
+test('parabolic wave barrier focus handle updates reflected wave geometry',()=>{
+ const t=boot();t.tab('parabola');assert.match(t.nodes.stats.textContent,/odakta toplanır/);
+ const old=t.nodes.scene.innerHTML;t.drag('focus',545,250);
+ assert.notEqual(t.nodes.scene.innerHTML,old);
+ assert.match(t.nodes.explain.textContent,/yerel normale/);
+});
 test('earthquake cabinet can be anchored; safety note remains explicit',()=>{
  const t=boot();t.tab('earthquake');assert.match(t.nodes.stats.textContent,/sabit değil/);
  t.action('anchor');assert.match(t.nodes.stats.textContent,/duvara sabit/);
