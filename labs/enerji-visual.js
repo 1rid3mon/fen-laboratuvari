@@ -3,7 +3,9 @@
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.EnerjiVisual=api;})(typeof window!=='undefined'?window:typeof globalThis!=='undefined'?globalThis:this,function(){'use strict';
 const clamp=(x,min,max)=>Math.max(min,Math.min(max,Number(x)||0));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
+const transfer=(sx,sy,ex,ey,color,title)=>'<g class="bio-transfer" aria-label="'+esc(title)+'"><path d="M'+sx+' '+sy+' L'+ex+' '+ey+'" stroke="'+color+'" stroke-width="4" fill="none" stroke-dasharray="10 8"/><circle cx="'+sx+'" cy="'+sy+'" r="9" fill="'+color+'" opacity=".85"><animateMotion dur="2.8s" repeatCount="indefinite" path="M0 0 L'+(ex-sx)+' '+(ey-sy)+'"/></circle></g>';
 const circles=(x,y,n,color)=>Array.from({length:clamp(n,0,12)},(_,i)=>'<circle class="bio-particle" cx="'+(x+(i%5)*25)+'" cy="'+(y-Math.floor(i/5)*23)+'" r="'+(5+i%3)+'" fill="'+color+'" style="animation-delay:-'+(i*.25)+'s"/>').join('');
+const circle=(x,y,r,color,attrs='')=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+color+'" '+attrs+'/>';
 const rect=(x,y,w,h,color,attrs='')=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12" fill="'+color+'" '+attrs+'/>';
 const text=(x,y,label,size=17,color='#e6f7fb',attrs='')=>'<text x="'+x+'" y="'+y+'" font-family="system-ui" font-size="'+size+'" fill="'+color+'" '+attrs+'>'+esc(label)+'</text>';
 const path=(d,stroke,w=3,extra='')=>'<path d="'+d+'" fill="none" stroke="'+stroke+'" stroke-width="'+w+'" stroke-linecap="round" '+extra+'/>';
@@ -16,6 +18,11 @@ function chloroplast(s){const n=Object.keys(s.items||{}).length,okLight=status(s
  out+=text(145,209,'TİLAKOİT',19,'#b9f8dc')+text(506,207,'STROMA',19,'#b9f8dc');
  out+=path('M430 95 Q490 65 555 110','#76dac2',4,'stroke-dasharray="8 10"');
  out+=circles(174,84,okLight?7:1,'#ffd78e')+circles(530,150,okCo2?7:1,'#9debcf');
+ if(okLight){out+=transfer(260,96,380,105,'#ffdb88','Işık ve su eşleştiğinde ATP ve NADPH sentez ilişkisi gösterilir');
+ out+='<g class="bio-product-pulse">'+circle(448,100,24,'#87e5c3')+text(434,105,'O₂',17,'#103b3e')+'</g>';
+ out+=text(432,66,'Suyun fotolizi → O₂',16,'#f5e6bc');}
+ if(okCo2)out+=transfer(560,195,430,172,'#b4d3ff','CO₂ stromada bağlanır');
+ if(n===5)out+=text(408,244,'✓ Eşleştirme tamam',16,'#bdffde');
  out+=text(150,28,'Işık ve su → tilakoit; CO₂ → stroma',17);
  out+=text(150,236,n+' / 5 eşleştirme · ATP ve NADPH stromada kullanılır',15);
  return{svg:out,zones:[['tilakoit','Tilakoit',110,260,240],['stroma','Stroma',400,260,240]],label:'Kloroplast içindeki konumlar',progress:n/5};
@@ -25,6 +32,9 @@ function thylakoid(s){
  let out=rect(90,70,580,150,'#175a56','stroke="#5dd6c1" stroke-width="3"');
  out+=path('M120 150 C195 108 240 195 300 145 S450 104 520 150 S610 180 640 142','#6de4c6',16);
  out+=circles(125,105,inputs?8:3,'#f9d38a')+circles(450,105,products?9:1,'#8fdbff');
+ if(inputs){out+=transfer(250,140,450,142,'#f7d48f','Girdiler sağlandığında enerji dönüşümü ve ürünler simgelenir');
+ out+='<g class="bio-product-pulse">'+circle(560,92,27,'#abf1e0')+text(546,98,'O₂',18,'#0d3337')+'</g>';}
+ if(products)out+=text(427,233,'✓ Ürünler yerleştirildi',16,'#b9ffdb');
  out+=text(112,51,'Tilakoit zarı: ışık enerjisinin kimyasal enerjiye dönüşümü',17);
  out+=text(120,203,'Işık / H₂O / ADP+Pi / NADP⁺',14)+text(438,203,'O₂ / ATP / NADPH',14);
  out+=text(170,247,products?'✓ Ürünler şemasında yerlerini aldı.':'İlk dört girdiyi eşleştir, sonra ürünleri tanımla.',16);
@@ -36,6 +46,9 @@ function calvin(s){
  out+=path('M350 60 Q498 88 459 214 Q380 285 286 178','#b6f0d2',5,'stroke-dasharray="14 10"');
  out+=text(319,142,'CALVIN',27,'#a7f7d5')+text(315,172,'STROMA',18,'#a7f7d5');
  out+=circles(164,150,status(s,'CO2')?7:2,'#a2d8ff')+circles(566,148,status(s,'ATP')&&status(s,'NADPH')?8:2,'#f4d190');
+ if(status(s,'CO2'))out+=transfer(210,148,293,147,'#a4d6ff','Karbon kaynağı stromaya gelir');
+ if(status(s,'ATP')&&status(s,'NADPH'))out+=transfer(540,151,465,143,'#f8d49a','Enerji ve indirgeme gücü kullanılır');
+ if(ready){out+='<g class="bio-product-pulse">'+rect(314,176,134,35,'#e9bc7c')+text(325,198,'Organik besin',15,'#0a3030')+'</g>';}
  out+=text(105,80,'CO₂',21)+text(564,78,'ATP / NADPH',20);
  out+=text(180,266,ready?'✓ Organik besin sentezi için temel girdiler hazır.':'Doğrudan ışık kullanılmaz; ATP ve NADPH gerekir.',17);
  return{svg:out,zones:[['carbon','CO₂',40,275,190],['energy','ATP',252,275,190],['reducing','NADPH',465,275,220]],label:'Stromadaki temel bileşenler',progress:n/3};
@@ -45,6 +58,9 @@ function speed(s,view){
  let out='<g class="bio-leaf"><path d="M386 250 Q170 156 375 56 Q614 66 386 250" fill="#1b7659" stroke="#7ce2a5" stroke-width="4"/>'+path('M386 250 L375 76 M385 178 L295 137 M386 150 L463 116','#83ebc0',4)+'</g>';
  out+='<path d="M130 70 L260 155" stroke="#f6d981" stroke-width="'+(3+light*13)+'" opacity="'+(.25+light*.7)+'" stroke-linecap="round"/>';
  out+=circles(160,220,Math.round(12*ratio),'#a8e7ff')+text(125,266,'O₂ (temsili gözlem)',16);
+ if(ratio>0.02){out+=transfer(354,210,230,165,'#a7e6f5','Oksijen çıkışının temsili işareti');
+ out+='<g class="bio-product-pulse">'+circle(207,167,17,'#b9f3f6')+'</g>';}
+ if(light===0)out+=text(250,275,'IŞIK YOK → modelde fotosentez hızı 0',17,'#ffcf95');
  out+=circles(585,130,Math.round(gas*11),'#d4c8fa')+text(540,195,'CO₂ ortamı',17);
  out+=text(100,40,'Sera: ışık, CO₂ ve sıcaklığı değiştir',20)+text(100,302,'Bağıl fotosentez hızı: '+(Math.round(val))+' / 100 · gerçek O₂ adedi değildir',16);
  out+=path('M115 325 H650','#527f98',3);
@@ -68,6 +84,8 @@ function chemo(s){
  let out=text(95,52,name,21);
  for(let i=0;i<4;i++){const x=165+i*130;out+=rect(x,107,90,90,'#24576b','stroke="#71c8cf"');out+=text(x+15,150,i===0?'Enerji':i===1?'O₂':i===2?'CO₂':'Besin',17);if(i<3)out+=path('M'+(x+93)+' 155 h32','#f5ce97',4);}
  out+=circles(165,89,step*3,'#b7f5d1')+text(112,238,'İnorganik madde kimyasal enerji sağlar; CO₂ karbon kaynağıdır.',16);
+ for(let i=0;i<step;i++)out+=transfer(245+i*130,158,292+i*130,158,'#f8d39c','Doğru madde basamağı');
+ out+=text(112,264,step===3?'✓ CO₂ kullanılarak organik besin sentezi mümkün.':'Aşamalar: inorganik kaynak → O₂ → CO₂',15,'#c3f2df');
  return{svg:out,zones:[['energy','Enerji kaynağı',48,270,204],['oxidizer','Oksitleyici',281,270,192],['carbon','Karbon kaynağı',502,270,207]],label:'Bu deney yalnız aerobik kemosentetik örnekler içerir',progress:step/3};
 }
 function compare(s){
@@ -84,6 +102,7 @@ function nitrogen(s){
  const parts=[['NH₃','NO₂⁻'],['NO₂⁻','NO₃⁻'],['NO₃⁻','Bitki alımı']];
  for(let i=0;i<3;i++){const x=94+i*227;out+=rect(x,117,188,108,i<step?'#216954':'#25455e','stroke="'+(i<step?'#80eabd':'#76a0b5')+'" stroke-width="3"');out+=text(x+14,160,parts[i][0],21);out+=text(x+20,194,'→ '+parts[i][1],16);if(i<2)out+=path('M'+(x+188)+' 170 h33','#f8d597',5);}
  out+=text(106,265,'Bitkinin nitrat alımı kemosentez değildir.',18);
+ for(let i=0;i<Math.min(2,step);i++)out+=transfer(250+i*227,130,320+i*227,130,'#b6eecb','Nitrifikasyon dönüşüm sırası');
  return{svg:out,zones:[['nitrit','Nitrit bakterisi',50,291,207],['nitrat','Nitrat bakterisi',276,291,207],['plant','Bitki kökü',502,291,208]],label:'Azot bileşiğini doğru adıma taşı',progress:step/3};
 }
 function ecosystem(s){
@@ -97,6 +116,8 @@ function ecosystem(s){
  out+=text(x+15,186,label,19);out+=text(x+15,211,yes?'Var':'Yok',15);
  }
  out+=text(350,257,s.last===null?'Koşulları değiştir, sonra ölç.':s.last?'✓ Kemosentez koşulları uygun.':'✕ Seçilen aerobik örnekte üretim yok.',15);
+ if(s.last===true&&ok)out+=transfer(260,190,354,190,'#a5f1d0','İnorganik madde oksidasyonu ve CO₂ ile üretim');
+ if(s.last===false)out+=rect(103,295,550,12,'#8b4746');
  return{svg:out,zones:[['test','Deneyi çalıştır',245,314,260]],label:'O₂ / CO₂ kutularına dokunarak ortamı değiştir',progress:s.last===null?0:s.last?1:0};
 }
 const scenes={exp1:chloroplast,exp2:thylakoid,exp3:calvin,exp4:speed,exp5:spectrum,exp6:chemo,exp7:compare,exp8:nitrogen,exp9:ecosystem};

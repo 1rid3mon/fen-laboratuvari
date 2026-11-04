@@ -5,17 +5,18 @@
 <meta name="theme-color" content="#071321">
 <title>AYT Biyoloji · Fotosentez ve Kemosentez Laboratuvarı</title>
 <link rel="stylesheet" href="enerji-lab.css">
+<link rel="stylesheet" href="enerji-lab-v2.css">
 </head>
-<body>
+<body class="lab-v2">
 <header class="top">
   <a href="../index.html" class="back">← Fen Laboratuvarı</a>
-  <span class="eyebrow">AYT BİYOLOJİ • 2018 MEB KAZANIMLARI</span>
-  <h1>Fotosentez <em>&</em> Kemosentez</h1>
-  <p>Dokuz yaşayan deney. Molekülü sahneye sürükle, hücresel süreçleri gözle ve deney koşullarını doğrudan değiştir.</p>
+  <span class="eyebrow">AYT BİYOLOJİ · 2018 MEB · CANLI DENEY V2.1</span>
+  <h1>Fotosentez <em>&</em> Kemosentez <small class="revision-tag">CANLI SİMÜLASYON V2.1</small></h1>
+  <p class="hero-directive">9 ayrı etkileşimli biyoloji modeli. Molekülü parmağınla bırak, ışığı ve CO₂’yi değiştir, <strong>canlı sahnede biyolojik sonucu izle.</strong></p><p><a href="enerji-lab-v2.html" class="lab-v2-open">✨ Yeni tam ekran canlı laboratuvarı aç</a></p>
   <p class="scope">2026–2027: 12. sınıfta devam eden önceki program esas alınmıştır. Son sınav kapsamı için ÖSYM duyuruları belirleyicidir. Grafikler ve animasyonlar aksi belirtilmedikçe <strong>öğretim amaçlı modellerdir</strong>.</p>
 </header>
 <main id="lab-app" class="app" aria-label="Etkileşimli biyoloji laboratuvarı">
-  <nav class="nav" aria-label="Deney seçimi"><h2>Deneyler</h2><div id="experiment-nav"></div></nav>
+  <nav class="nav" aria-label="Deney seçimi"><h2>🧪 9 DENEY · PARMAĞINLA KEŞFET</h2><div id="experiment-nav"></div></nav>
   <div class="workspace">
     <section class="panel lab-panel">
       <div class="section-heading"><div><span class="eyebrow" id="current-group">AYT BİYOLOJİ</span><h2 id="experiment-title">Laboratuvar</h2><p id="experiment-subtitle"></p></div><span class="step-badge" id="step-badge">1 / 1</span></div>
@@ -25,19 +26,19 @@
         <button type="button" id="next-btn" class="action">↪ Sonraki adım</button>
         <button type="button" id="reset-btn" class="action">↺ Sıfırla</button>
       </div>
-      <div id="scene" class="scene" aria-live="polite"></div>
+      <div class="lab-v2-experiment-label">CANLI DENEY ALANI <span>Hedeflere dokun · molekül taşı · tepkimeyi izle</span></div><div id="scene" class="scene" aria-live="polite"></div>
       <div id="guidance" class="guidance"></div>
       <div id="feedback" class="feedback" role="status" aria-live="polite">Bir deney seçerek başla.</div>
     </section>
     <aside class="sidebar">
-      <section class="panel"><h3>🧪 Molekül havuzu</h3><p class="fine">iPad’de molekülü parmağınla tutup sahnedeki hedefe bırak. İstersen moleküle ve ardından hedefe dokun. Fareyle de sürükleyebilirsin.</p><div id="palette" class="palette"></div></section>
-      <section class="panel"><h3>🎛️ Deney değişkenleri</h3><div id="controls"></div></section>
+      <section class="panel"><h3>🧬 Molekül havuzu — sürükle ve bırak</h3><p class="fine">iPad’de molekülü parmağınla tutup sahnedeki hedefe bırak. İstersen moleküle ve ardından hedefe dokun. Fareyle de sürükleyebilirsin.</p><div id="palette" class="palette"></div></section>
+      <section class="panel"><h3>🎛️ Değişkeni değiştir, sonucu gözle</h3><div id="controls"></div></section>
       <section class="panel"><h3>📈 Gözlem sonuçları</h3><div id="metrics" class="metrics"></div></section>
       <section class="panel"><h3>🧠 YKS notu</h3><div id="insight" class="insight"></div></section>
     </aside>
   </div>
 </main>
-<footer class="footer">Bağımsız eğitim aracı • Görseller şematiktir • <a href="https://ogm.meb.gov.tr/www/2026-2027-egitim-ogretim-yili-turkiye-yuzyili-maarif-modeli-taslak-cerceve-planlar-yayimlandi/icerik/2633/tr" target="_blank" rel="noopener">MEB 2026–2027 uygulama açıklaması</a></footer>
+<footer class="footer">2018 MEB 12. sınıf AYT Biyoloji • Öğretim amaçlı modeller • Gerçek stokiyometri veya deneysel ölçüm değildir.</footer>
 <script src="enerji-core.js" defer></script>
 <script src="enerji-visual.js" defer></script>
 <script src="foto-kloroplast.js" defer></script>

@@ -3,7 +3,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const root=__dirname,pages=fs.readdirSync(root).filter(n=>n.endsWith('.html')).sort();
 const exempt=new Set(['genden-proteine-rota.html']);
 function parts(html){
- const sources=[...html.matchAll(/<script[^>]*src="([^"]+\.js)"/gi)].map(m=>m[1]);
+ const sources=[...html.matchAll(/<script[^>]*src="([^"]+\.js)(?:\?[^\"]*)?"/gi)].map(m=>m[1]);
  const inline=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m=>m[1]);
  return {sources,inline};
 }
