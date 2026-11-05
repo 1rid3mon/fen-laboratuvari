@@ -1608,8 +1608,8 @@
       "title": "Üreteçlerin seri ve paralel bağlanma gerekçelerini açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 542,
-      "status": "Geliştiriliyor",
-      "audit": "#34: özdeş kaynakları öğrenci kablolar; tek/seri/ters seri/paralel, tam tükenme ve nitel iç etki main;508 test,7 check,Chromium/WebKit run42006043841. (ç) kanıt kartları/görüş tartışması son HEAD browser/CI kabulü bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "#34 özdeş pil/yük kablolaması, tam tükenme ve nitel iç etki; #35 Galvani–Volta kanıt tartışması main. Son HEAD20d9667:511 test,6 check,Chromium/WebKit run42007419556. #34 canlı tek pil ölçümü smoke geçti; gerçek iPad ve bütün canlı akış kabulü bekliyor.",
       "clauses": [
         {
           "part": "a",
@@ -1644,10 +1644,12 @@
         {
           "part": "ç",
           "sourceLine": 546,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-HISTORY-REVIEW.md"
-          ]
+          ],
+          "pr": 35,
+          "commit": "c1b38d0aa422a40f305787f282e086143c519c53"
         },
         {
           "part": "d",
@@ -1664,8 +1666,8 @@
         "curriculum/GENERATOR-REVIEW.md",
         "curriculum/GENERATOR-HISTORY-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 35,
+      "commit": "c1b38d0aa422a40f305787f282e086143c519c53",
       "realIPad": false,
       "live": false,
       "requirements": [
@@ -1698,10 +1700,12 @@
         },
         {
           "label": "Galvani–Volta görüşlerini kanıtlarla tartışma",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-HISTORY-REVIEW.md"
-          ]
+          ],
+          "pr": 35,
+          "commit": "c1b38d0aa422a40f305787f282e086143c519c53"
         }
       ]
     },
