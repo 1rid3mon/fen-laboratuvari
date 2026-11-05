@@ -1,6 +1,11 @@
 name: TYT 2018 MEB Electric Circuits and Interaction
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
+    branches: [main]
     paths:
       - 'labs/tyt-devre*'
       - 'labs/tyt-basinc-dalgalar*'
@@ -45,3 +50,4 @@ jobs:
           node --check labs/tyt-madde-ozellikleri.test.cjs
       - name: Physics and iPad drag regression
         run: node --test labs/tyt-devre.test.cjs labs/tyt-basinc-dalgalar.test.cjs labs/ayt-dalga-modern.test.cjs labs/tyt-fizige-giris.test.cjs labs/tyt-madde-ozellikleri.test.cjs labs/tyt-fizige-giris.test.cjs
+
