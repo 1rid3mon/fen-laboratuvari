@@ -249,7 +249,7 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 315,
       "status": "Geliştiriliyor",
-      "audit": "Kuyumculuk ve porselen ölçüm/kanıt atölyeleri PR #22 ile main: 512137cf57023a398a0bdf0f0c046d1e550ac7ca. Ebru eksik; üst kazanım tamamlanmadı.",
+      "audit": "Kuyumculuk/porselen PR #22 main; ebru yüzey hareketi geliştirmede, son HEAD tarayıcı doğrulaması bekliyor.",
       "clauses": [],
       "evidence": [
         "curriculum/MATERIAL-REVIEW.md"
@@ -279,8 +279,10 @@
         },
         {
           "label": "Ebru: özkütle, yüzey etkileşimi ve alet hareketinin ayrılması",
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/EBRU-REVIEW.md"
+          ]
         }
       ]
     },
