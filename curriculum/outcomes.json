@@ -1519,8 +1519,8 @@
       "title": "Elektrik Akımı, direnç ve potansiyel farkı arasındaki ilişkiyi analiz eder.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 537,
-      "status": "Geliştiriliyor",
-      "audit": "Ohm ve devre kurma #30 main. Seri/paralel öğrenci kablolaması, bütün yük A/V kapıları ve eşdeğer ölçümü geliştirildi; son HEAD browser/CI kabulü bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "#30 Ohm/devre kurma ve #33 seri/paralel eşdeğer ölçümü main. Son HEAD abecfa3:496 model/regresyon,6 check,Chromium/WebKit run42004570036 geçti. Gerçek iPad/canlı bekliyor.",
       "clauses": [
         {
           "part": "a",
@@ -1545,18 +1545,20 @@
         {
           "part": "c",
           "sourceLine": 540,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CIRCUIT-EQUIVALENT-REVIEW.md"
-          ]
+          ],
+          "pr": 33,
+          "commit": "7af9a3bc54e3422d14a11ac492ffca576928dec4"
         }
       ],
       "evidence": [
         "curriculum/CIRCUIT-BUILDER-REVIEW.md",
         "curriculum/CIRCUIT-EQUIVALENT-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 33,
+      "commit": "7af9a3bc54e3422d14a11ac492ffca576928dec4",
       "realIPad": false,
       "live": false,
       "requirements": [
@@ -1589,10 +1591,12 @@
         },
         {
           "label": "Seri/paralel eşdeğer direnç ve matematik görevlerinin tam kabulü",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CIRCUIT-EQUIVALENT-REVIEW.md"
-          ]
+          ],
+          "pr": 33,
+          "commit": "7af9a3bc54e3422d14a11ac492ffca576928dec4"
         }
       ]
     },
@@ -1604,26 +1608,32 @@
       "title": "Üreteçlerin seri ve paralel bağlanma gerekçelerini açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 542,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "İki özdeş pili öğrencinin kabloladığı tek/seri/ters seri/paralel tezgâh; tükenme, iç etki nitel karşılaştırması geliştiriliyor. Galvani–Volta kanıt tartışması(ç) eksik; üst kazanım kabul edilmez.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 543,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-REVIEW.md"
+          ]
         },
         {
           "part": "b",
           "sourceLine": 544,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-REVIEW.md"
+          ]
         },
         {
           "part": "c",
           "sourceLine": 545,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-REVIEW.md"
+          ]
         },
         {
           "part": "ç",
@@ -1634,15 +1644,47 @@
         {
           "part": "d",
           "sourceLine": 547,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-REVIEW.md"
+          ]
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/GENERATOR-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Boş tahtadan özdeş pil/yük yerleştir, taşı, döndür, kaldır ve gerçek kablo bağlantısı",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Tek/seri/ters seri/paralel ölçümü ve iki tam tükenme deneyi karşılaştırması",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-REVIEW.md"
+          ]
+        },
+        {
+          "label": "İç etki nitel karşılaştırması; hesap ve farklı EMK paraleli yok",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Galvani–Volta görüşlerini kanıtlarla tartışma",
+          "status": "Eksik",
+          "evidence": []
+        }
+      ]
     },
     {
       "key": "physics:10.1.2.3",
