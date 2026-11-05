@@ -1,3 +1,11 @@
+# Güncel geliştirme — dirençte güç/enerji
+
+Kullanıcı TYT Fizik'in tamamına devam istedi. Maina409ad250fcfdb8d8031a6e3c0522d3b19f4760c kontrol edildi; açık PR yoktu. feature/resistor-power-energy-20261105 bu main'den açıldı. 10.1.2.3(b,ç): mevcut öğrenci kablolama tahtasına P·Δt enerji birikimi, E-t grafiği, süre, kaynak/alet/yük enerji bilançosu, özdeş lamba dal gücü, hipotez/defter/tek değişken kapısı/açıklama/YKS eklendi. Geçmiş enerji yeni güçle yeniden yazılmaz.9 yeni model testiyle520/520 yerel test geçti; son HEAD eski Ohm+eşdeğer ve yeni enerji Chromium/WebKit CI kabulü bekliyor. POWER-ENERGY-REVIEW.md.
+
+Üst10.1.2.3 tamamlanmadı: (a,c) mekanik güç benzerliği/enerji dönüşümleri ayrıca geliştirilmelidir. Sonra10.1.2.4 güvenlik,10.1.1.1 iletim ve TYT83 kazanımın kalanları. Gerçek iPad ve bütün canlı kabulü bekler; elle Vercel deploy yok. Aşağıdaki toplu kayıt önceki paketlerin kanıtlarını korur.
+
+---
+
 # Güncel kayıt — public CI ve elektrik paketleri doğrulandı
 
 5 Kasım2026. Güncel uygulama main: c1b38d0aa422a40f305787f282e086143c519c53 (#35). Bu bölüm aşağıdaki eski 'kota engeli / açık PR30–35 / tarihin eksik olması' satırlarının yerine geçer. Depoyu kullanıcı public yaptı; standart public GitHub Actions çalıştı. Ücretli kullanım açılmadı.

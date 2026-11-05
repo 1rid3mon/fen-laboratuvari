@@ -1717,8 +1717,8 @@
       "title": "Elektrik enerjisi ve elektriksel güç kavramlarını ilişkilendirir.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 548,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Öğrencinin kabloladığı devrede parça parça P·Δt enerji kaydı, E-t grafiği ve özdeş lamba güç karşılaştırması geliştiriliyor. (b,ç) son HEAD browser/CI bekliyor; (a,c) mekanik benzerlik/dönüşüm kabulü ayrıca eksik.",
       "clauses": [
         {
           "part": "a",
@@ -1729,8 +1729,10 @@
         {
           "part": "b",
           "sourceLine": 551,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/POWER-ENERGY-REVIEW.md"
+          ]
         },
         {
           "part": "c",
@@ -1741,15 +1743,40 @@
         {
           "part": "ç",
           "sourceLine": 553,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/POWER-ENERGY-REVIEW.md"
+          ]
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/POWER-ENERGY-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Öğrenci kablolamasıyla dirençte P ve zamanla biriken enerji; değişken geçmişi korunur",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/POWER-ENERGY-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Özdeş lambalarda dal gücü/parlaklık ve seri-paralel karşılaştırması",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/POWER-ENERGY-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Mekanik güç benzerliği ve ısı/iş/mekanik/elektrik enerji dönüşümlerinin öğrenci deneyimi",
+          "status": "Eksik",
+          "evidence": []
+        }
+      ]
     },
     {
       "key": "physics:10.1.2.4",
