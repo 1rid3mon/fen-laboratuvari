@@ -297,44 +297,52 @@
       "title": "Dayanıklılık kavramını açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 320,
-      "status": "Geliştiriliyor",
-      "audit": "Dört şekil için kesit tarayıcı, bağımsız boyutlar, A/V ölçümü ve benzerlik karşılaştırması geliştirildi; son HEAD tarayıcı kabulü bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "Dört şekil, kesit tarama, doğrudan boyutlar, A/V ölçümü/grafiği ve benzerlik karşılaştırması #26 main. 460 test ve Chromium/WebKit başarılı; gerçek iPad/canlı bekliyor.",
       "clauses": [],
       "evidence": [
         "curriculum/STRENGTH-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 26,
+      "commit": "339e1614e79a478f049780c4a4a05443c54d6c80",
       "realIPad": false,
       "live": false,
       "requirements": [
         {
           "label": "Küp: benzer büyütme ve A/V",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/STRENGTH-REVIEW.md"
-          ]
+          ],
+          "pr": 26,
+          "commit": "339e1614e79a478f049780c4a4a05443c54d6c80"
         },
         {
           "label": "Prizma: bağımsız a/b/h ve benzerlik sınırı",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/STRENGTH-REVIEW.md"
-          ]
+          ],
+          "pr": 26,
+          "commit": "339e1614e79a478f049780c4a4a05443c54d6c80"
         },
         {
           "label": "Silindir: r/h, paralel kesit ve A/V",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/STRENGTH-REVIEW.md"
-          ]
+          ],
+          "pr": 26,
+          "commit": "339e1614e79a478f049780c4a4a05443c54d6c80"
         },
         {
           "label": "Küre: merkez/en büyük kesit ayrımı ve A/V",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/STRENGTH-REVIEW.md"
-          ]
+          ],
+          "pr": 26,
+          "commit": "339e1614e79a478f049780c4a4a05443c54d6c80"
         }
       ]
     },

@@ -9,3 +9,8 @@ A/V birimi cm⁻¹; N, maksimum taşınabilir kütle, evrensel dayanıklılık p
 Öğrenme döngüsü: dört numune türü, bağımsız uzunluklar, kesit tarama, önceden kilitli tahmin, başlangıç/son ölçüm, defter ve A/V bar grafiği, benzerlik kontrolü, öğrenci açıklaması ve özgün YKS sorusu. Serbest yazı otomatik doğru diye değerlendirilmez.
 
 Beş model testi: dört şekilde k²/k³/1/k, sabit yükseklikte prizma genişliği, kürede hareketli kesit ile sabit referans, prizma/silindirde paralel kesit, şekil değişiminde kontrol reddi ve geçersiz tarama. Browser CI gerçek tutamak/ölçüm/kayıt/karşılaştırma/soru ve iki yönü denetleyecek. Son HEAD geçmeden main kabulü yok. Gerçek iPad Safari/çoklu dokunma/akıcılık ve canlı ayrıca bekler.
+
+
+## Gözlenen kabul sonucu
+
+PR #26 son HEAD 0a9b6dad504813bbe5fa7908ec90d9b29bba3412: 460/460 yerel model/regresyon; son HEAD 15 check başarılı, Chromium/WebKit dahil. Strength run41979606018. İlk başarısız HEADler main alınmadı: tutamak ve sürgü 0,05 cm adımına eşitlendi; kürenin uç kesit testinde piksel yuvarlaması nedeniyle jest tam uca değil çok yakına geliyordu, test sınırın ötesine sürükleyerek clamp sonucunu doğrular. Main merge 339e1614e79a478f049780c4a4a05443c54d6c80. Üst ve dört alt kabul maddesi main; gerçek iPad/canlı ayrı bekler.
