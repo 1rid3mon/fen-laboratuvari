@@ -1,6 +1,11 @@
 name: AYT Fizik 2018 MEB Hareket Enerji Momentum Tork Denge
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
+    branches: [main]
     paths:
       - 'labs/hareket-*'
       - 'labs/bagil-lab.js'
@@ -118,3 +123,4 @@ jobs:
           node --check labs/hareket.test.cjs
       - name: Physics and DOM regression tests
         run: node --test labs/hareket.test.cjs labs/ivmeli.test.cjs labs/atis.test.cjs labs/fizik-enerji.test.cjs labs/momentum.test.cjs labs/mekanik-dom.test.cjs labs/tork-denge.test.cjs labs/basit-makineler.test.cjs labs/basit-makineler-motion.test.cjs labs/elektrik-alan.test.cjs labs/siga.test.cjs labs/manyetizma.test.cjs labs/meb-uyum.test.cjs labs/gorsel-hareket.test.cjs
+

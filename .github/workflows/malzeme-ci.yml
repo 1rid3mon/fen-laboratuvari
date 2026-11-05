@@ -1,10 +1,14 @@
 name: Material Evidence Learning Cycle
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
-    paths: ['labs/malzeme-*', 'labs/tyt-madde-tamamlayici.html', 'labs/ozkutle-olcum-model.js', 'tests/malzeme-browser.cjs', '.github/workflows/malzeme-ci.yml']
+    paths: ['labs/malzeme-*', 'labs/ozkutle-olcum-model.js', 'tests/malzeme-browser.cjs', '.github/workflows/malzeme-ci.yml']
   push:
     branches: [main]
-    paths: ['labs/malzeme-*', 'labs/tyt-madde-tamamlayici.html', 'labs/ozkutle-olcum-model.js', 'tests/malzeme-browser.cjs', '.github/workflows/malzeme-ci.yml']
+    paths: ['labs/malzeme-*', 'labs/ozkutle-olcum-model.js', 'tests/malzeme-browser.cjs', '.github/workflows/malzeme-ci.yml']
 permissions:
   contents: read
 jobs:

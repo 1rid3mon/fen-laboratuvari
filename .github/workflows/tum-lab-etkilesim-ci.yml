@@ -1,6 +1,11 @@
 name: All Labs Visual Interaction Audit
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
+    branches: [main]
     paths:
       - 'labs/**'
       - 'index.html'
@@ -94,3 +99,4 @@ jobs:
           node --check labs/enerji-visual.test.cjs
           node --check labs/enerji-touch.test.cjs
           node --test labs/enerji-visual.test.cjs labs/enerji-touch.test.cjs labs/enerji-safari-defer.test.cjs labs/enerji-dom.test.cjs labs/enerji-smoke.test.cjs
+
