@@ -1411,27 +1411,66 @@
       "title": "Elektrik akımı, direnç ve potansiyel farkı kavramlarını açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 527,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Elektron/iyon örnekleri,tuza/ölçüm kesitine doğrudan müdahale,kaynak/engel/kapalı yol/iyonlaşma;A/V-Ohm tahtasına bağlı tanımlar.544 yerel test; son HEAD browser/CI bekliyor.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 529,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CURRENT-CARRIERS-REVIEW.md",
+            "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+          ]
         },
         {
           "part": "b",
           "sourceLine": 530,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CURRENT-CARRIERS-REVIEW.md",
+            "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+          ]
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/CURRENT-CARRIERS-REVIEW.md",
+        "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Yük hareketinden akım/yön ve net yük korunumu",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CURRENT-CARRIERS-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Katı/sıvı/gaz/plazma ve her sıvı iletir genellemesini ayırma",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CURRENT-CARRIERS-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Gerilim/direnç tanımı,birimleri ve kapalı yol/taşıyıcı gereği; A/V-Ohm ölçümüne bağ",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CURRENT-CARRIERS-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Doğrudan tuz/kesit müdahalesi,hipotez/gözlem/defter/tek değişken/özgün YKS önermeleri",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CURRENT-CARRIERS-REVIEW.md"
+          ]
+        }
+      ]
     },
     {
       "key": "physics:10.1.1.2",
@@ -1717,8 +1756,8 @@
       "title": "Elektrik enerjisi ve elektriksel güç kavramlarını ilişkilendirir.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 548,
-      "status": "maine birleştirildi",
-      "audit": "#37 dirençte enerji/özdeş lambalar ve #38 mekanik güç/enerji dönüşüm yolları main. #38 HEADdddd312:526 test,10 check; enerji yolu run42040036945 ve devre regresyonu run42040036731 Chromium/WebKit geçti. Gerçek iPad/canlı tam kabulü bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "#37 nicel devre/enerji ve #38 nitel akış şeması main. Kullanıcının somut etkileşim açıklamasıyla fiziksel motor/jeneratör sahnesi açık ek gereklilik; üst kazanım Geliştiriliyor'a alındı, mevcut bilimsel kanıtlar korunur.",
       "clauses": [
         {
           "part": "a",
@@ -1796,6 +1835,11 @@
           ],
           "pr": 38,
           "commit": "f4d8a7a7882c54186cd6ab5e6c6ee83789ce8586"
+        },
+        {
+          "label": "Motor/jeneratörün fiziksel sahnesinde öğrenci eylemine bağlı hareket/enerji dönüşümü; kartlı akış şeması tek başına nihai kabul değildir",
+          "status": "Eksik",
+          "evidence": []
         }
       ]
     },
@@ -1807,44 +1851,52 @@
       "title": "Elektrik akımının oluşturabileceği tehlikelere karşı alınması gereken sağlık ve güvenlik önlemlerini açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 558,
-      "status": "Geliştiriliyor",
-      "audit": "Sınıf I sanal arıza/koruma tezgâhı: öğrenci PE,kaçak/aşırı akım,yük kartlarını yerleştirir; arıza,ıslaklık,temas yolu bağımsız.536 model testi;son HEAD gerçek browser/CI kabulü bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "#39 main:536 test,7 check,Chromium/WebKit run42042732205. Ardışık yük sürükleme WebKit hatası giderildi; her ekleme/kaldırma doğrulandı. Gerçek iPad/canlı tam kabulü bekliyor.",
       "clauses": [],
       "evidence": [
         "curriculum/ELECTRICAL-SAFETY-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 39,
+      "commit": "c93af2282d24f26068a753a8a936fe87d1dbd5bc",
       "realIPad": false,
       "live": false,
       "requirements": [
         {
           "label": "Topraklama/kaçak/aşırı akım korumalarının farklı görevleri ve kalan arıza",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/ELECTRICAL-SAFETY-REVIEW.md"
-          ]
+          ],
+          "pr": 39,
+          "commit": "c93af2282d24f26068a753a8a936fe87d1dbd5bc"
         },
         {
           "label": "Gövde/iki iletken temas yolları,ıslaklık ve aşırı yük riskleri",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/ELECTRICAL-SAFETY-REVIEW.md"
-          ]
+          ],
+          "pr": 39,
+          "commit": "c93af2282d24f26068a753a8a936fe87d1dbd5bc"
         },
         {
           "label": "Hasarlı ekipmanı kullanım dışı bırakma,yetkin kontrol ve yanlış çözümleri ayırma",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/ELECTRICAL-SAFETY-REVIEW.md"
-          ]
+          ],
+          "pr": 39,
+          "commit": "c93af2282d24f26068a753a8a936fe87d1dbd5bc"
         },
         {
           "label": "Öğrenci önlem/yük kurma,hipotez,gözlem,defter,tek değişken,açıklama/YKS",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/ELECTRICAL-SAFETY-REVIEW.md"
-          ]
+          ],
+          "pr": 39,
+          "commit": "c93af2282d24f26068a753a8a936fe87d1dbd5bc"
         }
       ]
     },
