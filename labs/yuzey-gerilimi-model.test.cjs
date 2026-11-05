@@ -1,0 +1,8 @@
+'use strict';const t=require('node:test'),a=require('node:assert/strict'),m=require('./yuzey-gerilimi-model.js');
+t('IAPWS water verification at 20,25,60 C',()=>{a.ok(Math.abs(m.water(20)-.072736140422)<1e-12);a.ok(Math.abs(m.water(25)-.071972205230)<1e-12);a.ok(Math.abs(m.water(60)-.06624)<1e-5);});
+t('IAPWS seawater check and additive counterexample are retained',()=>{a.ok(Math.abs(m.sample('seawater',25).gamma-.073068674787)<1e-12);a.ok(m.sample('seawater',20).gamma>m.water(20));a.ok(m.sample('soap',20).gamma<m.water(20));});
+t('warming pure water monotonically reduces tension in model interval',()=>{for(let x=20;x<60;x++)a.ok(m.water(x)>m.water(x+1));});
+t('force depends on surface tension for fixed fully wet plate perimeter',()=>{const x=m.sample('water',20),y=m.sample('ethanol',20);a.equal(x.force/x.gamma,y.force/y.gamma);a.ok(x.force>y.force);});
+t('unsupported temperature extrapolation and fluid names rejected',()=>{a.throws(()=>m.water(0));a.throws(()=>m.sample('soap',40));a.throws(()=>m.sample('unknown',20));});
+t('measurement requires pre-prediction, tare and first contact, not immersion',()=>{const s={kind:'water',t:20,position:280,zeroed:true,prediction:'heatdown'};a.ok(m.measure(s).ok);for(const patch of [{prediction:''},{zeroed:false},{position:200},{position:300}])a.equal(m.measure({...s,...patch}).ok,false);});
+t('comparison separates temperature from composition and rejects confounding',()=>{const a1=m.sample('water',20);a.equal(m.compare(a1,m.sample('water',60)).direction,'azaldı');a.equal(m.compare(a1,m.sample('seawater',20)).direction,'arttı');a.equal(m.compare(a1,m.sample('seawater',60)).controlled,false);});

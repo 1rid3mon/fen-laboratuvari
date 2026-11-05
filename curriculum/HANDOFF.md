@@ -1,3 +1,5 @@
+> SON DURUM: kılcallık #28 main (d573d4b9a2efc04d10aa6cefbc94a9444e55e740), 466 test/19 check ve Chromium/WebKit başarılı (run41981688230). Kalan yüzey gerilimi tezgâhı feature/surface-tension-20261105 dalında: IAPWS su/deniz suyu, tipik sabunlu su/etanol20°C, gerçek plaka sürükleme/ilk temas/dara, ön tahmin/defter/tek değişken karşılaştırması. 473 yerel test geçti; son HEAD tarayıcı kabulü bekliyor. Bu paket sonrası kullanıcı önceliği ELEKTRİK DEVRELERİ.
+
 > YENİ ÖNCELİK (5 Kasım): 9.2.3.1 sonrası **elektrik devreleri**. Kılcallık/ıslanma ilk paketi feature/capillary-wetting-20261105 dalında; altı model testi, 466 toplam test ve tarayıcı senaryosu hazır, son HEAD CI kabulü bekliyor. Yüzey gerilimi mekanizması ve faktörleri ayrı eksik; bu tek paket tüm 9.2.3.1 kabulü değildir. Yeni başlangıç main 9b81f82f045b3e3adc84068e208557874196c148.
 
 > GÜNCEL DEVAM NOKTASI: [5 Kasım toplu ilerleme kaydı](PROGRESS-2026-11-05.md). #25 ebru ve #26 dayanıklılık main, son uygulama merge 339e1614e79a478f049780c4a4a05443c54d6c80. Aşağıdaki eski bekliyor satırları tarihseldir; güncel tablo ve sonraki iş bağlantıdaki kayıttadır. Proje tamamlanmadı.

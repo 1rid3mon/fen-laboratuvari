@@ -355,33 +355,37 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 324,
       "status": "Geliştiriliyor",
-      "audit": "Kılcallık/ıslanma: iki boru, doğrudan yerleştirme ve bağımsız çap/kaplama modeli geliştiriliyor. Yüzey gerilimi mekanizması/faktörleri ayrı eksik; sonrası kullanıcı önceliği elektrik devreleri.",
+      "audit": "Kılcallık/ıslanma #28 main; yüzey gerilimi ilk temas tezgâhı ve sıcaklık/tür/katkı karşılaştırması geliştirmede. Bu kazanım sonrası elektrik devreleri kullanıcı önceliği.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 326,
           "status": "Geliştiriliyor",
           "evidence": [
+            "curriculum/SURFACE-REVIEW.md",
             "curriculum/CAPILLARY-REVIEW.md"
           ]
         },
         {
           "part": "b",
           "sourceLine": 328,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/SURFACE-REVIEW.md"
+          ]
         },
         {
           "part": "c",
           "sourceLine": 330,
           "status": "Geliştiriliyor",
           "evidence": [
-            "curriculum/CAPILLARY-REVIEW.md"
+            "curriculum/SURFACE-REVIEW.md"
           ]
         }
       ],
       "evidence": [
-        "curriculum/CAPILLARY-REVIEW.md"
+        "curriculum/CAPILLARY-REVIEW.md",
+        "curriculum/SURFACE-REVIEW.md"
       ],
       "pr": null,
       "commit": null,
@@ -390,26 +394,32 @@
       "requirements": [
         {
           "label": "Kılcallık/ıslanma, aynı su farklı boru yüzeyi ve kontrollü incelik",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CAPILLARY-REVIEW.md"
-          ]
+          ],
+          "pr": 28,
+          "commit": "d573d4b9a2efc04d10aa6cefbc94a9444e55e740"
         },
         {
           "label": "Yüzey gerilimi mekanizması ve günlük örneklerin etkileşimli kabulü",
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/SURFACE-REVIEW.md"
+          ]
         },
         {
           "label": "Yüzey gerilimini etkileyen faktörlerin etkileşimli kabulü",
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/SURFACE-REVIEW.md"
+          ]
         },
         {
           "label": "Öğrenciye matematik hesap yaptırmama; grafik/sonuç tutarlılığı",
           "status": "Geliştiriliyor",
           "evidence": [
-            "curriculum/CAPILLARY-REVIEW.md"
+            "curriculum/SURFACE-REVIEW.md"
           ]
         }
       ]
