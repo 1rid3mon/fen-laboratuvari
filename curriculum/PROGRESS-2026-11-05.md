@@ -1,3 +1,13 @@
+# Güncel — fiziksel enerji main, elektroskop düzeltmesi
+
+#41 HEAD d063e8134f888677a0dbc7a3b61441ee5a016f73; merge 2ec7db3de1c03c7d853e84cbe40bf8a85da9931c.555 model/regresyon ve13 check başarılı. Fiziksel jeneratör/motor Chromium/WebKit run42053587596, eski devre run42053587387, yardımcı enerji yolu run42053587569 geçti; iki WebKit görüntüsü incelendi. Kuvvet sürükleme, kablolama, motor/ampul ekleme/taşıma/çıkarma, gerçek yük etkisi, depolanmış rotor enerjisiyle geçici aktarım ve ters motor/kavrama/enerji korunumu doğrulandı.10.1.2.3 ek fiziksel gereği ve üst kabul bu pakette #41 merge SHA ile kapatıldı. TYT Fizik83 kazanımdan10 main kabulü;73 ayrıntılı kabulü kalan (eski sayfa bulunması kabul değildir).
+
+Güncel main2ec7db3 üzerinden fix/electroscope-charge-redistribution-20261105 açıldı.9.6.1.1(c): eski modelin ters etkiyi sıfırda kesmesi düzeltildi; işaretli yaprak yükü sıfırı geçer, yapraklar ters işaretle yeniden açılır, toplam yük sabit kalır. Topuz/yaprak işaretleri ve gerçek boşluklu sürüklenen çubuk, nitel yakınlık–açıklık eğrisi, tahmin/defter/tek değişken karşılaştırması/oturumluk açıklama/özgün YKS. ELECTROSCOPE-REVIEW.md bilimsel temsil sınırları.4 yeni model testi;son HEAD Chromium/WebKit/CI kabulü bekliyor. Üst9.6.1.1 tamamlanmadı.
+
+Sıradaki: elektroskop browser/CI hatalarını çöz ve yalnız yeşilse merge;alt(c) kabulünü kaydet. Sonra plastik/yün elektron yönünü keyfî ters çeviren kontrol, dokunma sonrası ayrılınca eski yüke dönme riski ve serbest etki/topraklama sırasını bilimsel durum modeliyle düzelt. Sonra manyetizma ve kalan bütün TYT83 kazanımı;diğer beş alan hedefi de korunur. Gerçek iPad Safari/Apple Pencil/çoklu dokunma/akıcılık ve bütün canlı kabulü ayrıca açık. Elle Vercel deploy tetiklenmedi.
+
+---
+
 # Güncel fiziksel tezgâh — kullanıcı eylemiyle jeneratör/motor/yük hareketi
 
 #40 HEADa027cd8a38818631cbcf54ecc52d1f1d5a98706b; merge517e5cc033c44e3a491a9d791e5b53b9257b0346.544 model/regresyon ve7 check; taşıyıcı Chromium/WebKit run42049637596,eski devre run42049637614 başarılı. İlk görsel kontrolden sonra işaretler ayrı yapay şeritlerden karışık dağılıma geçirildi,kısa sıvı ölçümünde görünür geçiş çözünürlüğü artırıldı,son sürüm tekrar test edildi.10.1.1.1 kabulü bu pakette kaydedildi.

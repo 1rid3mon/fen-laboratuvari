@@ -30,7 +30,7 @@ scene.addEventListener('pointermove',e=>{
  let delta=null;
  if(drag.tab==='friction'&&drag.key==='rub')delta=dx/308;
  else if(drag.tab==='contact'&&drag.key==='progress')delta=-dx/258;
- else if(drag.tab==='scope'&&drag.key==='approach')delta=-dx/190;
+ else if(drag.tab==='scope'&&drag.key==='approach')delta=-dx/180;
  else if(drag.tab==='cage'&&drag.key==='approach')delta=dx/120;
  else if(drag.tab==='polar'&&drag.key==='near')delta=dx/(drag.side==='paper'?-103:175);
  else if(drag.tab==='coulomb'&&drag.key==='distance')delta=dx/146;
@@ -43,3 +43,4 @@ scene.addEventListener('pointerup',release);
 scene.addEventListener('pointercancel',release);
 scene.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId)drag=null;});
 })(window,document);
+

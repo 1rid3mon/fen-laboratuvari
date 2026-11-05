@@ -1292,8 +1292,8 @@
       "title": "Elektrikle yüklenme çeşitlerini örneklerle açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 494,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Elektroskop(c): işaretli yaprak/topuz yükü ve korunum, güçlü ters etkiyle yeniden açılma, gerçek boşluklu çubuk sürükleme, hipotez/defter/eğri/karşılaştırma/özgün YKS geliştiriliyor. Son HEAD browser/CI bekliyor. Sürtünme malzeme-yönü, temas sonrası kalıcı yük ve serbest etki/toprak sırası ayrıca açık.",
       "clauses": [
         {
           "part": "a",
@@ -1310,11 +1310,15 @@
         {
           "part": "c",
           "sourceLine": 499,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/ELECTROSCOPE-REVIEW.md"
+          ]
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/ELECTROSCOPE-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
@@ -1768,8 +1772,8 @@
       "title": "Elektrik enerjisi ve elektriksel güç kavramlarını ilişkilendirir.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 548,
-      "status": "Geliştiriliyor",
-      "audit": "#37 nicel devre ve #38 yardımcı nitel şema main. Kullanıcının somut etkileşim gereği fiziksel jeneratör/motor/ampul ve yük hareketi geliştirildi;555 yerel test. Son HEAD browser/CI bekliyor; üst kabul hâlâ Geliştiriliyor.",
+      "status": "maine birleştirildi",
+      "audit": "#37 nicel güç/enerji, #38 yardımcı enerji yolu ve #41 somut fiziksel jeneratör/motor/ampul/yük sahnesi main. #41 HEAD d063e8134f888677a0dbc7a3b61441ee5a016f73;555 model/regresyon ve13 check; Chromium/WebKit run42053587596, eski devre run42053587387, yardımcı enerji run42053587569 başarılı; iki WebKit görüntüsü incelendi. Gerçek iPad ve bütün canlı kabulü açık.",
       "clauses": [
         {
           "part": "a",
@@ -1817,8 +1821,8 @@
         "curriculum/ENERGY-CONVERSION-REVIEW.md",
         "curriculum/PHYSICAL-GENERATOR-MOTOR-REVIEW.md"
       ],
-      "pr": 38,
-      "commit": "f4d8a7a7882c54186cd6ab5e6c6ee83789ce8586",
+      "pr": 41,
+      "commit": "2ec7db3de1c03c7d853e84cbe40bf8a85da9931c",
       "realIPad": false,
       "live": false,
       "requirements": [
@@ -1851,10 +1855,12 @@
         },
         {
           "label": "Motor/jeneratörün fiziksel sahnesinde öğrenci eylemine bağlı hareket/enerji dönüşümü; kartlı akış şeması tek başına nihai kabul değildir",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/PHYSICAL-GENERATOR-MOTOR-REVIEW.md"
-          ]
+          ],
+          "pr": 41,
+          "commit": "2ec7db3de1c03c7d853e84cbe40bf8a85da9931c"
         }
       ]
     },
