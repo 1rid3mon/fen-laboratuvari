@@ -52,3 +52,10 @@ Son geliştirme main SHA: `512137cf57023a398a0bdf0f0c046d1e550ac7ca`; PR #22 HEA
 Bu oturumun çalışma/kullanım bütçesi nedeniyle burada devir bırakılıyor; altı alan tamamlanmadı ve çalışma arka planda sürmüyor. 431 kazanımın yalnız 9.2.1.1'i bütün alt açıklamaları için main kabulüne sahip; 9.2.1.2 iki alt maddesi main, ebru eksik; diğer 429 üst kazanım katı kabul denetiminde Eksik. Bu durum mevcut eski laboratuvarların hiç olmadığı anlamına gelmez. Gerçek iPad ve yeni laboratuvarların canlı kabulü hiçbirinde yapılmadı.
 
 Sonraki oturum önce güncel main ve açık PR'ları yeniden okusun; kapsam kayıt değişikliklerini doğrulasın. Sıradaki geliştirme 9.2.1.2 ebru: yukarıdaki birincil kaynakları okuyup bilimsel olarak dürüst yüzey taşınması/alet hareketi atölyesi tasarla, ölçüm/hipotez/kayıt/karşılaştırma/soru ekle. Ebru için yapay yoğunluk-batma kuralı veya sahte akışkan denklemi kullanma. Ardından 9.2.2, 9.2.3 ve altı alanın geri kalanını konu paketleriyle sürdür. Güncel main üzerinden her pakette ayrı dal/PR/test/merge. ÖSYM 2027 kapsamı bağımsız resmî doğrulama ve gerçek cihaz testi açık sınırlamalardır.
+
+
+## 5 Kasım devamı — ebru yüzey atölyesi
+
+Kullanıcı ara kayıt istedi; #24 issue tüm #15–#23 paketlerini ve limitleri yeniden topladı. Güncel main başlangıcı 40c08d0903c5d9814f54c0f8447d9dad72f59e6a, açık PR yoktu. Yeni dal feature/ebru-surface-20261105. Ebru model/UI, beş model testi, Chromium/WebKit etkileşim senaryosu ve resmî Playwright imajlı workflow hazırlandı. Kaynak/model sınırları EBRU-REVIEW.md. Tamamlanmış veya canlı kabulü verilmedi.
+
+Sıradaki adım yeni PR son HEAD CI ve tüm regresyonları gözle; başarısızlığı düzelt. Ebru yüzeyde kalma kuvvetlerini çözmüyor, hazırlanmış lekede özkütleler sabitken alet etkisini araştırıyor. Öğrenci çizgi/yön/miktar/genişliği doğrudan jestle değiştirir, tahmin/ölçüm/defter/karşılaştırma/açıklama/YKS döngüsü vardır. Son HEAD başarılı olmadan birleştirme; gerçek iPad ayrıca bekler.

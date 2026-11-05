@@ -11,7 +11,7 @@ Kaynak ve sınırlar: [SOURCES.md](SOURCES.md). Otomatik kaynak: outcomes.json; 
 | 9.1.3.1 | Fiziksel nicelikleri sınıflandırır. | Eksik | 4 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.1.4.1 | Bilim araştırma merkezlerinin fizik bilimi için önemini açıklar. | Eksik | 2 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.2.1.1 | Özkütleyi, kütle ve hacimle ilişkilendirerek açıklar. | maine birleştirildi | 7 | a/b/c/ç/d/e/f için ölçüm, model, MEB sınırı ve son HEAD tarayıcı kanıtları main'de. Gerçek iPad/Safari ve canlı üretim doğrulaması ayrıca bekliyor. |
-| 9.2.1.2 | Günlük hayatta saf maddelerin ve karışımların özkütlelerinden faydalanılan durumlara örnekler verir. | Geliştiriliyor | 3 | Kuyumculuk ve porselen ölçüm/kanıt atölyeleri PR #22 ile main: 512137cf57023a398a0bdf0f0c046d1e550ac7ca. Ebru eksik; üst kazanım tamamlanmadı. |
+| 9.2.1.2 | Günlük hayatta saf maddelerin ve karışımların özkütlelerinden faydalanılan durumlara örnekler verir. | Geliştiriliyor | 3 | Kuyumculuk/porselen PR #22 main; ebru yüzey hareketi geliştirmede, son HEAD tarayıcı doğrulaması bekliyor. |
 | 9.2.2.1 | Dayanıklılık kavramını açıklar. | Eksik | 0 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.2.3.1 | Yapışma (adezyon) ve birbirini tutma (kohezyon) olaylarını örneklerle açıklar. | Eksik | 3 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.3.1.1 | Cisimlerin hareketlerini sınıflandırır. | Eksik | 0 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
