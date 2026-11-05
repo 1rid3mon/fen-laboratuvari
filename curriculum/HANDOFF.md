@@ -59,3 +59,12 @@ Sonraki oturum önce güncel main ve açık PR'ları yeniden okusun; kapsam kay�
 Kullanıcı ara kayıt istedi; #24 issue tüm #15–#23 paketlerini ve limitleri yeniden topladı. Güncel main başlangıcı 40c08d0903c5d9814f54c0f8447d9dad72f59e6a, açık PR yoktu. Yeni dal feature/ebru-surface-20261105. Ebru model/UI, beş model testi, Chromium/WebKit etkileşim senaryosu ve resmî Playwright imajlı workflow hazırlandı. Kaynak/model sınırları EBRU-REVIEW.md. Tamamlanmış veya canlı kabulü verilmedi.
 
 Sıradaki adım yeni PR son HEAD CI ve tüm regresyonları gözle; başarısızlığı düzelt. Ebru yüzeyde kalma kuvvetlerini çözmüyor, hazırlanmış lekede özkütleler sabitken alet etkisini araştırıyor. Öğrenci çizgi/yön/miktar/genişliği doğrudan jestle değiştirir, tahmin/ölçüm/defter/karşılaştırma/açıklama/YKS döngüsü vardır. Son HEAD başarılı olmadan birleştirme; gerçek iPad ayrıca bekler.
+
+
+## Ebru #25 main; sıradaki dayanıklılık paketi
+
+#25 HEAD 71d445c9abadc9023f898e63391143c3f447ca0b, merge eb512f605918b23fdc1b8c5324dcf297907ddfb7. Son HEAD 16 check başarılı: beş yeni model testi dahil 455/455 yerel/regresyon ve ebru Chromium/WebKit run41978543369, hacim/malzeme/karışım regresyonları. Çakışma yoktu. 9.2.1.2 üç örneği main kabulüne yükseltildi; gerçek iPad ve canlı ayrıca bekler.
+
+Yeni dal feature/strength-ratio-20261105 güncel ebru main üstünden. Dayanıklılık 9.2.2.1: küp/prizma/silindir/küre için doğrudan boyut tutamakları, kesit düzlemi tarama, önceden tahmin, A/V ölçüm ve defter/bar grafiği, benzerlik koşulu, açıklama ve soru. Kırılma kuvveti veya müfredat dışı hesap yok. Kürede rastgele kesit ile en büyük referans ayrıldı. Beş model testi, toplam 460 yerel test; son HEAD Chromium/WebKit ve regresyon kabulü bekliyor. Bilimsel inceleme STRENGTH-REVIEW.md.
+
+Sonraki adım dayanıklılık PR son HEAD testlerini gözle/düzelt ve geçerse merge; dört alt kabul maddesi/üst kazanımı kanıtla yükselt. Ardından 9.2.3.1 adezyon/kohezyon/kılcallık/yüzey gerilimi ve tüm altı alan. Mevcut kesit paketi henüz main kabulüne sahip değildir. Sıradaki oturum GitHub main ve açık PR durumunu yeniden okumalı.
