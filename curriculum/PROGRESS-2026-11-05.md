@@ -1,3 +1,15 @@
+# Kullanıcının somut fiziksel etkileşim açıklaması — ana kabul ölçütü
+
+Kullanıcı MEB/2027YKS kapsamı, MEB/ÖSYM soru yaklaşımı ve konuya göre doğrudan taşıma/boyutlandırma/hareket/bağlantı değiştirerek sonucu üretmeyi tekrar netleştirdi. AGENTS.md kalıcı talimatla güncellendi. Açıklama düğmesi veya bilgi kartı fiziksel deneyin yerine sayılmaz.10.1.2.3'e fiziksel motor/jeneratör sahnesi için açık ek gereklilik eklendi. #37 devre/enerji ve #38 nitel enerji yolu kanıtları korunur; üst kazanım Geliştiriliyor'a alındı. Önceki tam kabul satırları bu ek etkileşim gereği açısından tarihsel kaldı.
+
+#39 HEADc8636bffa38ab26383ac08e6fde466f9c3df5814; mergec93af2282d24f26068a753a8a936fe87d1dbd5bc.536 test ve7 check; Chromium/WebKit run42042732205 geçti. Önceki WebKit HEADleri ikinci yük sürüklemesinde başarısızdı ve merge edilmedi. Yük kaldırma açık düğmeye ayrıldı; SVG metin seçimi engellendi,capture bırakıldı,her ekleme/kaldırma ayrı doğrulandı. Takılı koruma ile gerçek kaçak etiketi ayrıldı; temas yolları çizildi.10.1.2.4 kanıtı bu pakette kaydedildi.
+
+Güncel mainc93af22 üzerinden feature/current-carriers-20261105.10.1.1.1: elektron/iyon hareketi, tuzu suya sürükleme, kesit ölçeri taşıma,kaynak/engel/kapalı yol/iyonlaşma; hipotez,defter/karşılaştırma,özgün YKS önermeleri.8 yeni model testiyle544 yerel test. CURRENT-CARRIERS-REVIEW.md. Son HEAD Chromium/WebKit/CI kabulü bekliyor. Sıradaki: bu kabulden sonra fiziksel motor/jeneratör açığı; elektrostatikte temas sonrası kalıcı yük ve güçlü ters etkiyle elektroskop yeniden açılması/deney döngüsünü incele/düzelt; sonra manyetizma ve TYT83 kazanımın tümü. Tüm altı alan hedefi korunur.
+
+Gerçek iPad Safari/Apple Pencil/çoklu dokunma/cihaz akıcılığı ve bütün canlı kabulü bekler; elle Vercel deploy yok. Aşağıdaki aşamalar tarihsel kanıttır.
+
+---
+
 # Güncel geliştirme — güç/enerji main, elektrik güvenliği
 
 #38 HEADdddd3122b8a2a25ae6a16ad12120b98891240803; mergef4d8a7a7882c54186cd6ab5e6c6ee83789ce8586.526 model/regresyon ve10 check geçti; enerji dönüşüm run42040036945 ve eski Ohm/eşdeğer/enerji run42040036731 Chromium/WebKit başarılı. WebKit enerji yolu ekran görüntüsü incelendi.10.1.2.3 tüm alt maddeleri #37/#38 kanıtlarıyla main kabulüne bu pakette işlendi. Toplam TYT Fizik83 kazanımdan8 main,75 tam kabulü kalan; diğer alanlar ayrıca eksik.

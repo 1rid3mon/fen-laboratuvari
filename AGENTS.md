@@ -34,3 +34,9 @@ Araç, süre veya kullanım limiti devamı engellerse iş bitti deme. Açık PR'
 ## Kullanıcının 5 Kasım öncelik değişikliği
 
 9.2.3.1 adezyon/kohezyon/kılcallık/yüzey gerilimi paketlerinden sonra elektrik devrelerini ele al. Öğrenci eleman yerleştirsin, kablo bağlantıları kursun/değiştirsin, değer ve ölçüm araçları gerçek devre çözümüyle güncellensin. Bu öncelik tüm altı alan hedefini daraltmaz.
+
+## Kullanıcının somut etkileşim ve soru yaklaşımı açıklaması
+
+MEB'in 2027 YKS'ye uygulanacak programındaki kavramlar ve MEB/ÖSYM soru yaklaşımı esastır. Güncel sınıf düzeyi etiketi tek başına yeterli değildir; 2018 kazanım kimlikleriyle eşlemeden yeni Maarif örneklerini bu kapsama katma. Özgün sorular deneyde değişkenler, grafik, koşul karşılaştırması ve gerekçeli çıkarımla pekişsin; resmî soru diye sunulmasın.
+
+Öğrenci doğrudan nesneyi taşımalı, konuya göre büyültüp küçültmeli/döndürmeli, kuvveti/ortamı değiştirmeli veya devreye ampul ekleyip kablosunu bağlayarak sonucu görmelidir. Sürüklenebilen açıklama kartları ve düğmeyle değişen açıklamalar fiziksel deneyin yerine geçmez. Kart/kanıt etkinliği yardımcı olabilir; konu fiziksel düzenek gerektiriyorsa yalnız bu etkinliğe dayanarak bütün kazanımı tam etkileşimli kabul etme. Görselde hareket/değişim, aynı bilimsel modeldeki ölçüm ve grafiklerle birlikte öğrenci eyleminin sonucu olmalıdır. Önceki kabul kayıtlarını da bu somut ölçütle yeniden denetle; karşılanmayan ek etkileşim gereğini kapsam kaydında açık tut.
