@@ -1,3 +1,13 @@
+# Güncel geliştirme — güç/enerji main, elektrik güvenliği
+
+#38 HEADdddd3122b8a2a25ae6a16ad12120b98891240803; mergef4d8a7a7882c54186cd6ab5e6c6ee83789ce8586.526 model/regresyon ve10 check geçti; enerji dönüşüm run42040036945 ve eski Ohm/eşdeğer/enerji run42040036731 Chromium/WebKit başarılı. WebKit enerji yolu ekran görüntüsü incelendi.10.1.2.3 tüm alt maddeleri #37/#38 kanıtlarıyla main kabulüne bu pakette işlendi. Toplam TYT Fizik83 kazanımdan8 main,75 tam kabulü kalan; diğer alanlar ayrıca eksik.
+
+Güncel mainf4d8a7a üzerinden feature/electrical-safety-20261105.10.1.2.4 için öğrenci koruma/PE/yük kartları, yalıtım/ıslaklık/sanal temas değişkenleri, enerji ayırma, ön tahmin, koruma gözlemi, kayıt/karşılaştırma/açıklama/YKS geliştirildi. Koruma açması arızayı onarmaz; floating gövde ve dengeli iki iletken teması yanlış güvenceye dönüştürülmez. HSE fiziksel işlev kaynakları ve tüm varsayımlar ELECTRICAL-SAFETY-REVIEW.md'de.10 ek model testiyle536/536 yerel; son HEAD gerçek browser/CI kabulü bekliyor.
+
+Sıradaki: güvenlik Chromium/WebKit sonuçlarını incele, sorunları çöz ve yalnız yeşilse merge.10.1.2.4 kabulünü merge SHA ile kaydet. Ardından10.1.1.1 iletim ve kalan TYT giriş/mekanik/ısı/basınç/dalga/optik/manyetizma satırlarını mevcut deneylerle tek tek denetle/geliştir. Tüm TYT veya altı alan tamamlandı değildir. Gerçek iPad ve bütün canlı kabulü bekler; elle deploy yok. Aşağıdaki aşamalar tarihsel kanıt kaydıdır.
+
+---
+
 # Güncel geliştirme — #37 main, enerji dönüşüm yolu
 
 #37 son HEAD31adea9e7a4ca131e1479f896ae98748da0a716c; merge874580094c32502067ee491203fcde46fe29032a. 520/520 model/regresyon;6 check; eski Ohm/eşdeğer+yeni touch kablolamalı enerji Chromium/WebKit run42038447678 başarılı. WebKit ekran görüntüsü incelendi. 10.1.2.3(b,ç) ve iki ilgili kabul maddesi main kanıtı bu pakette kapsam tablosuna işlendi.
