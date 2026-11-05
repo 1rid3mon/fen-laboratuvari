@@ -30,3 +30,7 @@ Durumlar: Eksik; Geliştiriliyor; Etkileşimli fakat doğruluk denetimi bekliyor
 ## Kesinti
 
 Araç, süre veya kullanım limiti devamı engellerse iş bitti deme. Açık PR'lar, son commit, testlerin gerçekten gözlenen sonuçları, tamamlanan/kalan alt kavramlar, sıradaki somut iş ve yeniden çalıştırılacak komutları GitHub'da kalıcı `curriculum/HANDOFF.md` kaydına yaz. Arka planda devam edilmediği halde devam ediliyor izlenimi verme. Altı alanın bütün kazanımlarını son kez yeniden taramadan nihai tamamlanma raporu verme.
+
+## Kullanıcının 5 Kasım öncelik değişikliği
+
+9.2.3.1 adezyon/kohezyon/kılcallık/yüzey gerilimi paketlerinden sonra elektrik devrelerini ele al. Öğrenci eleman yerleştirsin, kablo bağlantıları kursun/değiştirsin, değer ve ölçüm araçları gerçek devre çözümüyle güncellensin. Bu öncelik tüm altı alan hedefini daraltmaz.

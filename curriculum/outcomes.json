@@ -354,14 +354,16 @@
       "title": "Yapışma (adezyon) ve birbirini tutma (kohezyon) olaylarını örneklerle açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 324,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Kılcallık/ıslanma: iki boru, doğrudan yerleştirme ve bağımsız çap/kaplama modeli geliştiriliyor. Yüzey gerilimi mekanizması/faktörleri ayrı eksik; sonrası kullanıcı önceliği elektrik devreleri.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 326,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CAPILLARY-REVIEW.md"
+          ]
         },
         {
           "part": "b",
@@ -372,15 +374,45 @@
         {
           "part": "c",
           "sourceLine": 330,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CAPILLARY-REVIEW.md"
+          ]
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/CAPILLARY-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Kılcallık/ıslanma, aynı su farklı boru yüzeyi ve kontrollü incelik",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CAPILLARY-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Yüzey gerilimi mekanizması ve günlük örneklerin etkileşimli kabulü",
+          "status": "Eksik",
+          "evidence": []
+        },
+        {
+          "label": "Yüzey gerilimini etkileyen faktörlerin etkileşimli kabulü",
+          "status": "Eksik",
+          "evidence": []
+        },
+        {
+          "label": "Öğrenciye matematik hesap yaptırmama; grafik/sonuç tutarlılığı",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CAPILLARY-REVIEW.md"
+          ]
+        }
+      ]
     },
     {
       "key": "physics:9.3.1.1",
