@@ -1,3 +1,13 @@
+# Güncel devam — üreteç fizik deneyi main, tarih kanıt masası test ediliyor
+
+5 Kasım2026. #34 HEAD6004b8c1610a4084856579ee7568abb1ff837e7e; merge94494cc34c3085e9078b90a40029c229dd815592. 508/508 model/regresyon;7/7 check; Chromium/WebKit run42006043841 gerçek kablolama, taşıma/döndürme, tek/seri/ters seri/paralel, tam tükenme ve hata senaryoları başarılı. WebKit ekran görüntüsü incelendi. 10.1.2.2(a,b,c,d) ve ilgili deney kabul maddeleri main; (ç) tarih tartışması ayrı kaldı.
+
+Güncel main94494cc üzerinden feature/generator-history-evidence-20261105. Galvani–Volta modülü üç kanıt/gözlem kartının sürüklenerek sınıflanması, görüşlerin ayrı karşılaştırılması ve öğrenci açıklamasının kaydıyla fizik tezgâhını tamamlar. Gözlem tek başına kaynak tayini değildir; dokusuz pil biyolojik elektriğin yokluğunu kanıtlamaz; tarihsel metal yorumu modern kimyasal enerji açıklamasıyla eşitlenmez. Kaynaklar ve denetim GENERATOR-HISTORY-REVIEW.md. Yeni3 model testiyle511 toplam; son HEAD browser/CI kabulü bekliyor. Üst kazanım henüz kabul edilmez.
+
+Sonraki iş: tarih modülünün eski pil/tükenme regresyonu ve yeni kart etkileşimini Chromium/WebKit'te doğrula, sorunları çöz ve yalnız yeşilse merge. Sonra10.1.2.2 üst kabulünü kanıtla;10.1.2.3 güç/enerji,10.1.2.4 güvenlik ve TYT83 kazanımın kalanı. Altı alanın tümü tamamlanmadı. Gerçek iPad Safari ve canlı kabulü yok; elle Vercel üretim deploy yapılmadı. Aşağıdaki eski bekliyor/kota satırları tarihsel arşivdir.
+
+---
+
 # Güncel devam — #33 main, üreteç paketi hazırlanıyor
 
 5 Kasım2026. #33 eşdeğer direnç son HEAD abecfa3350135e8b01b6ad7d6f46682c58e701cd; merge7af9a3bc54e3422d14a11ac492ffca576928dec4. 496 model/regresyon,6/6 check; eski Ohm+yeni seri/paralel gerçek kablolama Chromium/WebKit run42004570036 başarılı. Ekran görüntüsü incelendi; araştırma yönergeleri Ohm/eşdeğer görevi için ayrıştırıldı. 10.1.2.1(c) ve üst kazanım main kanıtı kapsam tablosuna işlendi. Gerçek iPad/canlı bekler.

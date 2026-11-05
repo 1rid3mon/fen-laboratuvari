@@ -5,10 +5,10 @@ concurrency:
 
 on:
   pull_request:
-    paths: ['labs/uretec-*', 'labs/uretec-tezgahi.html', 'tests/uretec-browser.cjs', '.github/workflows/uretec-ci.yml']
+    paths: ['labs/uretec-*', 'labs/uretec-tezgahi.html', 'tests/uretec-browser.cjs', 'tests/uretec-tarih-browser.cjs', '.github/workflows/uretec-ci.yml']
   push:
     branches: [main]
-    paths: ['labs/uretec-*', 'labs/uretec-tezgahi.html', 'tests/uretec-browser.cjs', '.github/workflows/uretec-ci.yml']
+    paths: ['labs/uretec-*', 'labs/uretec-tezgahi.html', 'tests/uretec-browser.cjs', 'tests/uretec-tarih-browser.cjs', '.github/workflows/uretec-ci.yml']
 permissions:
   contents: read
 jobs:
@@ -42,6 +42,7 @@ jobs:
         run: |
           node -e "if(!require('node:fs').existsSync(require('playwright')[process.argv[1]].executablePath()))process.exit(1)" ${{ matrix.engine }}
       - run: node tests/uretec-browser.cjs ${{ matrix.engine }}
+      - run: node tests/uretec-tarih-browser.cjs ${{ matrix.engine }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:

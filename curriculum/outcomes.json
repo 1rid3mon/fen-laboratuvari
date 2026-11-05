@@ -1609,49 +1609,60 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 542,
       "status": "Geliştiriliyor",
-      "audit": "İki özdeş pili öğrencinin kabloladığı tek/seri/ters seri/paralel tezgâh; tükenme, iç etki nitel karşılaştırması geliştiriliyor. Galvani–Volta kanıt tartışması(ç) eksik; üst kazanım kabul edilmez.",
+      "audit": "#34: özdeş kaynakları öğrenci kablolar; tek/seri/ters seri/paralel, tam tükenme ve nitel iç etki main;508 test,7 check,Chromium/WebKit run42006043841. (ç) kanıt kartları/görüş tartışması son HEAD browser/CI kabulü bekliyor.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 543,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-REVIEW.md"
-          ]
+          ],
+          "pr": 34,
+          "commit": "94494cc34c3085e9078b90a40029c229dd815592"
         },
         {
           "part": "b",
           "sourceLine": 544,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-REVIEW.md"
-          ]
+          ],
+          "pr": 34,
+          "commit": "94494cc34c3085e9078b90a40029c229dd815592"
         },
         {
           "part": "c",
           "sourceLine": 545,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-REVIEW.md"
-          ]
+          ],
+          "pr": 34,
+          "commit": "94494cc34c3085e9078b90a40029c229dd815592"
         },
         {
           "part": "ç",
           "sourceLine": 546,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-HISTORY-REVIEW.md"
+          ]
         },
         {
           "part": "d",
           "sourceLine": 547,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-REVIEW.md"
-          ]
+          ],
+          "pr": 34,
+          "commit": "94494cc34c3085e9078b90a40029c229dd815592"
         }
       ],
       "evidence": [
-        "curriculum/GENERATOR-REVIEW.md"
+        "curriculum/GENERATOR-REVIEW.md",
+        "curriculum/GENERATOR-HISTORY-REVIEW.md"
       ],
       "pr": null,
       "commit": null,
@@ -1660,29 +1671,37 @@
       "requirements": [
         {
           "label": "Boş tahtadan özdeş pil/yük yerleştir, taşı, döndür, kaldır ve gerçek kablo bağlantısı",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-REVIEW.md"
-          ]
+          ],
+          "pr": 34,
+          "commit": "94494cc34c3085e9078b90a40029c229dd815592"
         },
         {
           "label": "Tek/seri/ters seri/paralel ölçümü ve iki tam tükenme deneyi karşılaştırması",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-REVIEW.md"
-          ]
+          ],
+          "pr": 34,
+          "commit": "94494cc34c3085e9078b90a40029c229dd815592"
         },
         {
           "label": "İç etki nitel karşılaştırması; hesap ve farklı EMK paraleli yok",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/GENERATOR-REVIEW.md"
-          ]
+          ],
+          "pr": 34,
+          "commit": "94494cc34c3085e9078b90a40029c229dd815592"
         },
         {
           "label": "Galvani–Volta görüşlerini kanıtlarla tartışma",
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/GENERATOR-HISTORY-REVIEW.md"
+          ]
         }
       ]
     },
