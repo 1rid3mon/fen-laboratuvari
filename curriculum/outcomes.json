@@ -1718,39 +1718,48 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 548,
       "status": "Geliştiriliyor",
-      "audit": "Öğrencinin kabloladığı devrede parça parça P·Δt enerji kaydı, E-t grafiği ve özdeş lamba güç karşılaştırması geliştiriliyor. (b,ç) son HEAD browser/CI bekliyor; (a,c) mekanik benzerlik/dönüşüm kabulü ayrıca eksik.",
+      "audit": "#37(b,ç) main:520 test,6 check,eski Ohm/eşdeğer+yeni enerji Chromium/WebKit run42038447678. (a,c) öğrenci enerji yolu/güç benzerliği geliştirildi; son HEAD browser/CI kabulü bekliyor.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 550,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/ENERGY-CONVERSION-REVIEW.md"
+          ]
         },
         {
           "part": "b",
           "sourceLine": 551,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/POWER-ENERGY-REVIEW.md"
-          ]
+          ],
+          "pr": 37,
+          "commit": "874580094c32502067ee491203fcde46fe29032a"
         },
         {
           "part": "c",
           "sourceLine": 552,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/ENERGY-CONVERSION-REVIEW.md"
+          ]
         },
         {
           "part": "ç",
           "sourceLine": 553,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/POWER-ENERGY-REVIEW.md"
-          ]
+          ],
+          "pr": 37,
+          "commit": "874580094c32502067ee491203fcde46fe29032a"
         }
       ],
       "evidence": [
-        "curriculum/POWER-ENERGY-REVIEW.md"
+        "curriculum/POWER-ENERGY-REVIEW.md",
+        "curriculum/ENERGY-CONVERSION-REVIEW.md"
       ],
       "pr": null,
       "commit": null,
@@ -1759,22 +1768,28 @@
       "requirements": [
         {
           "label": "Öğrenci kablolamasıyla dirençte P ve zamanla biriken enerji; değişken geçmişi korunur",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/POWER-ENERGY-REVIEW.md"
-          ]
+          ],
+          "pr": 37,
+          "commit": "874580094c32502067ee491203fcde46fe29032a"
         },
         {
           "label": "Özdeş lambalarda dal gücü/parlaklık ve seri-paralel karşılaştırması",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/POWER-ENERGY-REVIEW.md"
-          ]
+          ],
+          "pr": 37,
+          "commit": "874580094c32502067ee491203fcde46fe29032a"
         },
         {
           "label": "Mekanik güç benzerliği ve ısı/iş/mekanik/elektrik enerji dönüşümlerinin öğrenci deneyimi",
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/ENERGY-CONVERSION-REVIEW.md"
+          ]
         }
       ]
     },
