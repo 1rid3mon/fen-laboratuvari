@@ -1,3 +1,13 @@
+# Güncel devam — #33 main, üreteç paketi hazırlanıyor
+
+5 Kasım2026. #33 eşdeğer direnç son HEAD abecfa3350135e8b01b6ad7d6f46682c58e701cd; merge7af9a3bc54e3422d14a11ac492ffca576928dec4. 496 model/regresyon,6/6 check; eski Ohm+yeni seri/paralel gerçek kablolama Chromium/WebKit run42004570036 başarılı. Ekran görüntüsü incelendi; araştırma yönergeleri Ohm/eşdeğer görevi için ayrıştırıldı. 10.1.2.1(c) ve üst kazanım main kanıtı kapsam tablosuna işlendi. Gerçek iPad/canlı bekler.
+
+Güncel main7af9a3b üzerinden feature/generator-workbench-20261105 açıldı. URETEC:10.1.2.2(a,b,c,d) özdeş pil/yük yerleştirme/taşıma/döndürme/kaldırma, kutup kablolarını öğrenci kurar; tek/seri/ters seri/paralel, kapasite ve zaman, ölçüm defteri/grafik, iki tamamlanmış tükenme deneyi karşılaştırması, nitel iç etki, hipotez/açıklama/YKS. 12 ek model testi, yerelde508/508. Son HEAD gerçek Chromium/WebKit ve CI yeşil olmadan main kabulü yok. (ç) Galvani–Volta görüşlerini kanıtlarla tartışma eksik; üst10.1.2.2 bu paket başarılı olsa bile tamamlandı sayılmaz. GENERATOR-REVIEW.md varsayımlar/kaynaklar/testleri açıklar.
+
+Sıradaki: üreteç browser/CI sonuçlarını incele ve sorunları çöz; başarılıysa merge. Ardından eksik tarih tartışması,10.1.2.3 güç/enerji,10.1.2.4 güvenlik ve TYT83 kazanımın kalan ayrıntılı kabulü. Altı alan tamamlanmadı. Public standart Actions çalışıyor, ücretli kullanım açılmadı, elle Vercel deploy yok. Aşağıdaki eski kota veya #30–33 bekliyor satırları tarihsel arşivdir.
+
+---
+
 # Güncel devam noktası — public CI doğrulandı, 5 Kasım 2026
 
 Bu bölüm aşağıdaki tarihsel kota/bekleyen PR satırlarının yerine geçer. Proje ve TYT Fizik tamamlanmadı. Depo kullanıcı tarafından public yapıldı; standart public Actions yeniden çalıştı. Ücretli kullanım açılmadı; elle Vercel üretim dağıtımı yapılmadı.
