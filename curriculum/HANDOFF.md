@@ -1,3 +1,49 @@
+# Güncel kayıt — public CI ve elektrik paketleri doğrulandı
+
+5 Kasım2026. Güncel uygulama main: c1b38d0aa422a40f305787f282e086143c519c53 (#35). Bu bölüm aşağıdaki eski 'kota engeli / açık PR30–35 / tarihin eksik olması' satırlarının yerine geçer. Depoyu kullanıcı public yaptı; standart public GitHub Actions çalıştı. Ücretli kullanım açılmadı.
+
+| PR | İş ve kapsanan kazanım | Test HEAD | Merge SHA | Kanıt |
+|---|---|---|---|---|
+| #31 | 17 workflowda çift çalışmayı azaltma, concurrency ve hazır tarayıcı imajı | 46d1bf8d4144f794d109246aa927ef212032fec3 | 534ea29b10c1c40a1b247947f36ae9d2608b2a9e | 30/30 check |
+| #30 | 10.1.2.1(a,b): boş tahtaya eleman/kablo/A-V, Ohm, kaynak koruma | d98c402f08c788b3c4e0728cec7bf36f6f0ae6e6 | e98d93b2c8a8fc3c527bbad20b91fadc30318380 | 480 test;7 check; Chromium/WebKit run42001196596 |
+| #32 | 10.1.1.2: boy/kesit/malzeme, yeni numune ve gerçek prob bağlantısı | 9516162a3fa2147fbe04b0966e3d4277845a88e5 | 03917059bac7be6a13c88c74fa19f79261bde4c0 | 488 test;7 check; Chromium/WebKit run42002290018 |
+| #33 | 10.1.2.1(c): öğrencinin seri/paralel eşdeğer ölçümü; bütün yük A/V kapıları | abecfa3350135e8b01b6ad7d6f46682c58e701cd | 7af9a3bc54e3422d14a11ac492ffca576928dec4 | 496 test;6 check; Chromium/WebKit run42004570036 |
+| #34 | 10.1.2.2(a,b,c,d): tek/seri/ters seri/paralel özdeş pil; gözlenen tam tükenme ve nitel iç etki | 6004b8c1610a4084856579ee7568abb1ff837e7e | 94494cc34c3085e9078b90a40029c229dd815592 | 508 test;7 check; Chromium/WebKit run42006043841 |
+| #35 | 10.1.2.2(ç): Galvani–Volta kanıt/gözlem kartları, görüş karşılaştırması ve kayıtlı tartışma | 20d966720f8457597fddabcf2cca15a1e9d096c8 | c1b38d0aa422a40f305787f282e086143c519c53 | 511 test;6 check; eski/yeni Chromium/WebKit run42007419556 |
+
+Sonraki kayıt PR'si yalnız #35 kabulünü JSON/tabloya ve bu toplu devre işler; yeni fizik deneyi sayılmaz. Yukarıdaki bütün geliştirme paketleri son HEAD yeşil/çakışmasızken ayrı ayrı main'e alındı; başarısız veya doğrulanmamış HEAD birleştirilmedi. Bilimsel incelemeler: CI-MINUTES, CIRCUIT-BUILDER, WIRE-RESISTANCE, CIRCUIT-EQUIVALENT, GENERATOR ve GENERATOR-HISTORY REVIEW dosyaları.
+
+## Kapsamın gerçek durumu
+
+| Alan | Ana kazanım | Main kabulü | Ayrıntılı kabulü kalan |
+|---|---:|---:|---:|
+| TYT Fizik |83|7|76|
+| AYT Fizik |130|0|130|
+| TYT Kimya |61|0|61|
+| AYT Kimya |66|0|66|
+| TYT Biyoloji |28|0|28|
+| AYT Biyoloji |63|0|63|
+
+431 ana kazanım/872 harfli açıklama envanteri korunur. Main kabulündeki fizik kimlikleri:9.2.1.1,9.2.1.2,9.2.2.1,9.2.3.1,10.1.1.2,10.1.2.1,10.1.2.2. Diğer424 kazanımın sıkı kabulü eksik; bu kod veya eski laboratuvar yok demek değildir. Bir örnek tüm konu kabulü sayılmadı. Üst kazanımlar bütün alt açıklama/özel gereklilikler kanıtlanmadan yükseltilmedi. ÖSYM2027 ayrıntılı kapsam kılavuzu bağımsız doğrulanmış değil;2018 MEB ve2028 geçiş resmi dayanakları SOURCES.md'de. Proje veya fizik tamamlandı değildir.
+
+## Canlı ve cihaz sınırları
+
+Vercel Git entegrasyonu otomatik üretim dağıtımı yapıyor. #34 üretim dpl_7qsuEQ1yxQUHLYFmn7zLzxmV9qKx READY; kaynak94494cc ile eşleşti. https://fen-laboratuvari-github.vercel.app/labs/uretec-tezgahi.html bulut Chrome'da açıldı; arayüzden tek pil/yük eklenip uçlar kablolandı, |V|1.490V/|I|.248A ölçümü, defter ve30 model dakika ilerleme görüldü. Bu yalnız canlı temel akış kontrolü; tam canlı kabulü veya gerçek iPad sayılmadı. #35 ve sonraki yayınlar ayrıca SHA ile yeniden doğrulanmalı. Elle deploy tetiklenmedi. Sonraki ajan otomatik yayınların Vercel günlük kota etkisini kontrol etsin; ek manuel yayınlar zorlamasın.
+
+Gerçek iPad Safari, Apple Pencil, çoklu dokunma, cihaz FPS/akıcılık ve tüm canlı akışlar bekliyor. CI Chromium/WebKit ve masaüstü Chrome bunların yerine geçirilmedi. Yerel Chromium OS socket izninden başlayamıyor; gerçek browser kanıtı GitHub CI'dandır. WebKit ekran görüntüleri incelendi; fixture'ın sonunda boş/kısmi tahta testin kaldırma adımıdır, başlangıçtan düğme ekleyerek çalışan düzenek kurulur.
+
+## Sıradaki somut işler
+
+1. Güncel main/açık PR'ları oku ve bu kayıt PR'sinin merge durumunu doğrula.
+2. 10.1.2.3 güç/enerji: MEB'in (a,b,c,ç) alt sınırlarını yeniden oku. Öğrenci yük, gerilim, süre ve bağlantıyla sonucu üretmeli; W=P·t, dirençte enerji, lamba parlaklığı, ısı/iş/mekanik/elektrik dönüşümleri ve mekanik güç benzerliği. İzin verilen hesap sınırını aşma; ideal sabit dirençli lamba yaklaşımını doğru uygula. Model/defter/grafik ve kontrollü karşılaştırma tutarlı olmalı.
+3. 10.1.2.4 güvenlik: fiziksel olarak tutarlı sanal risk/koruma senaryoları, yanlış çıkarım geri bildirimi. Tek uyarıyla yanlış modeli örtme.
+4. 10.1.1.1 iletim ortamları ve kalan TYT giriş/mekanik/ısı/basınç/dalgalar/optik/manyetizma kabul boşluklarını mevcut kodla tek tek karşılaştır. Sonra AYT Fizik ve diğer dört alanın tamamı.
+5. Her paket güncel main'den dal; bilim/kapsam incelemesi; node --test labs/*.test.cjs tests/*.test.js; ilgili gerçek Chromium/WebKit etkileşimi; regresyon; PR; son HEAD yeşil/çakışmasızsa merge. Parent kabulü daha sonra merge SHA ile kaydedilir. Hiçbir zaman bütün altı alan taranmadan tamamlandı deme.
+
+Aşağıda önceki bütün paketlerin ayrıntılı tarihsel kaydı korunur.
+
+---
+
 # Güncel devam — üreteç fizik deneyi main, tarih kanıt masası test ediliyor
 
 5 Kasım2026. #34 HEAD6004b8c1610a4084856579ee7568abb1ff837e7e; merge94494cc34c3085e9078b90a40029c229dd815592. 508/508 model/regresyon;7/7 check; Chromium/WebKit run42006043841 gerçek kablolama, taşıma/döndürme, tek/seri/ters seri/paralel, tam tükenme ve hata senaryoları başarılı. WebKit ekran görüntüsü incelendi. 10.1.2.2(a,b,c,d) ve ilgili deney kabul maddeleri main; (ç) tarih tartışması ayrı kaldı.
