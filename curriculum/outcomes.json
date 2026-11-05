@@ -1429,27 +1429,63 @@
       "title": "Katı bir iletkenin direncinin bağlıolduğu değişkenleri analiz eder.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 532,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Bağımsız numune/prob tezgâhı: boy/kesit/malzeme kontrollü karşılaştırması; sayısal R, sıcaklık ve renk kodu yok. Yerel model kabulü var; Actions dakika kotası nedeniyle browser/CI bekliyor.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 533,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/WIRE-RESISTANCE-REVIEW.md"
+          ]
         },
         {
           "part": "b",
           "sourceLine": 534,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/WIRE-RESISTANCE-REVIEW.md"
+          ]
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/WIRE-RESISTANCE-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Boy etkisini sabit malzeme/kesitte araştırma",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/WIRE-RESISTANCE-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Kesit etkisini sabit malzeme/boyda araştırma",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/WIRE-RESISTANCE-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Malzeme etkisini sabit boy/kesitte araştırma",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/WIRE-RESISTANCE-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Sayısal direnç hesabı, sıcaklık ve renk kodu kapsam dışı",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/WIRE-RESISTANCE-REVIEW.md"
+          ]
+        }
+      ]
     },
     {
       "key": "physics:10.1.2.1",

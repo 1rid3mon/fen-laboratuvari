@@ -51,7 +51,7 @@ Kaynak ve sınırlar: [SOURCES.md](SOURCES.md). Otomatik kaynak: outcomes.json; 
 | 9.6.1.3 | Elektrik yüklü cisimler arasındaki etkileşimi açıklar. | Eksik | 2 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 9.6.1.4 | Elektrik alan kavramını açıklar. | Eksik | 0 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 10.1.1.1 | Elektrik akımı, direnç ve potansiyel farkı kavramlarını açıklar. | Eksik | 2 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
-| 10.1.1.2 | Katı bir iletkenin direncinin bağlıolduğu değişkenleri analiz eder. | Eksik | 2 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
+| 10.1.1.2 | Katı bir iletkenin direncinin bağlıolduğu değişkenleri analiz eder. | Geliştiriliyor | 6 | Bağımsız numune/prob tezgâhı: boy/kesit/malzeme kontrollü karşılaştırması; sayısal R, sıcaklık ve renk kodu yok. Yerel model kabulü var; Actions dakika kotası nedeniyle browser/CI bekliyor. |
 | 10.1.2.1 | Elektrik Akımı, direnç ve potansiyel farkı arasındaki ilişkiyi analiz eder. | Eksik | 3 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 10.1.2.2 | Üreteçlerin seri ve paralel bağlanma gerekçelerini açıklar. | Eksik | 5 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |
 | 10.1.2.3 | Elektrik enerjisi ve elektriksel güç kavramlarını ilişkilendirir. | Eksik | 4 | Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor. |

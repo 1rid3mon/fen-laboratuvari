@@ -1,0 +1,10 @@
+'use strict';const t=require('node:test'),a=require('node:assert/strict'),m=require('./iletken-direnci-model.js'),base={length:40,area:.4,material:'copper'};
+t('SI conversion yields physical copper specimen resistance at fixed conditions',()=>{const r=m.calculate(base);a.ok(Math.abs(r.resistance-.0172)<1e-12);a.equal(r.voltage,r.resistance*.01);});
+t('only longer specimen raises resistance; only larger cross section lowers it',()=>{const x=m.calculate(base),long=m.calculate({...base,length:80}),thick=m.calculate({...base,area:.8});a.equal(long.resistance/x.resistance,2);a.equal(thick.resistance/x.resistance,.5);a.equal(m.compare(x,long).key,'length');a.equal(m.compare(x,thick).direction,'azaldı');});
+t('same geometry distinguishes tabulated material examples',()=>{const x=m.calculate(base),fe=m.calculate({...base,material:'iron'}),ni=m.calculate({...base,material:'nichrome'});a.ok(x.resistance<fe.resistance&&fe.resistance<ni.resistance);});
+t('changing radius squares the cross-sectional area rather than treating diameter as area',()=>{const x=m.calculate(base),r=m.calculate({...base,area:.9});a.ok(Math.abs(r.radius/x.radius-1.5)<1e-12);});
+t('confounded and duplicate comparisons are rejected',()=>{const x=m.calculate(base);a.equal(m.compare(x,m.calculate({...base,length:80,area:.8})).ok,false);a.equal(m.compare(x,x).ok,false);});
+t('new specimen requires real reconnect; prior record remains unchanged',()=>{const s=m.create();s.prediction='lengthup';a.equal(m.measure(s).ok,false);s.clips=[0,1];const r=m.measure(s);a.ok(r.ok);m.prepare(s,{length:80});a.equal(m.measure(s).ok,false);a.equal(r.sample.length,40);});
+t('unsupported geometry and material rejected before changing specimen',()=>{const s=m.create();a.throws(()=>m.prepare(s,{area:0}));a.equal(s.area,.4);a.throws(()=>m.calculate({...base,material:'unknown'}));});
+
+t('lead polarity does not change a passive wire resistance; same endpoint is not a specimen measurement',()=>{const s=m.create();s.prediction='lengthup';s.clips=[1,0];a.ok(m.measure(s).ok);s.clips=[0,0];a.equal(m.measure(s).ok,false);});
