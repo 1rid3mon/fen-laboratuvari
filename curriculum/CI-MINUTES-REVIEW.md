@@ -1,3 +1,5 @@
+> Public repo sonrası kabul: #31 son HEAD30/30 check ile main534ea29; #30 HEADd98c402f08c788b3c4e0728cec7bf36f6f0ae6e6,480 model/regresyon ve Chromium/WebKit run42001196596 geçti, mergee98d93b2c8a8fc3c527bbad20b91fadc30318380. Aşağıdaki kota/CI bekliyor ifadeleri tarihsel kayıttır; gerçek iPad/canlı hâlâ bekler.
+
 # Actions dakika engeli ve tekrarlanan çalıştırmaların azaltılması
 
 5 Kasım2026 GitHub'ın 'You have used100% of the Actions minutes included for the1rid3mon account' başlıklı resmi bildirimi incelendi. Dahil olan aylık2000 dakika bitmiş; bildirim yenilenme tarihini1 Aralık2026 olarak veriyor. Bu, #30 işlerinin adım başlamadan durmasının artık doğrulanmış hesap kotası bağlamıdır. Ücretli kullanım/ödeme/limit veya depo görünürlüğü değiştirilmedi.

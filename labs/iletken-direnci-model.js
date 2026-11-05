@@ -1,0 +1,8 @@
+(function(root){'use strict';const materials={copper:{name:'Bakır örneği',rho:1.72e-8,color:'#cc936c'},iron:{name:'Demir örneği',rho:9.71e-8,color:'#a9b5c1'},nichrome:{name:'Nikrom örneği',rho:1e-6,color:'#cad4d9'}};
+function calculate({length,area,material}){if(!Number.isFinite(length)||length<20||length>100||!Number.isFinite(area)||area<.1||area>1||!materials[material])throw RangeError('Geçerli numune seç');const resistance=materials[material].rho*(length/100)/(area*1e-6);return{length,area,material,resistance,radius:Math.sqrt(area/Math.PI),voltage:resistance*.01};}
+function compare(a,b){const changed=['length','area','material'].filter(k=>a[k]!==b[k]);if(changed.length!==1)return{ok:false,message:changed.length?'Birden fazla değişken değişti; tek etken sonucu çıkarma.':'Aynı numune koşulları tekrarlandı; bir değişkeni değiştir.'};return{ok:true,key:changed[0],direction:b.resistance>a.resistance?'arttı':'azaldı'};}
+function create(){return{length:40,area:.4,material:'copper',clips:[null,null],prediction:''};}
+function prepare(s,patch){const p={...s,...patch};calculate(p);Object.assign(s,patch);s.clips=[null,null];}
+function measure(s){if(!s.prediction)return{ok:false,message:'Önce tahminini kilitle.'};if(!s.clips.every(x=>x===0||x===1))return{ok:false,message:'İki ölçüm ucunu da yeni numunenin uçlarına bağla.'};if(s.clips[0]===s.clips[1])return{ok:false,message:'İki prob aynı uçta; telin iki farklı ucunu ölçmelisin.'};return{ok:true,sample:{...calculate(s),prediction:s.prediction}};}
+const api={materials,calculate,compare,create,prepare,measure};if(typeof module==='object'&&module.exports)module.exports=api;else root.WireResistanceLab=api;
+})(typeof globalThis==='undefined'?this:globalThis);

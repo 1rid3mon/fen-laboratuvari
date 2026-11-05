@@ -1,3 +1,5 @@
+> Public repo sonrası kabul: #31 son HEAD30/30 check ile main534ea29; #30 HEADd98c402f08c788b3c4e0728cec7bf36f6f0ae6e6,480 model/regresyon ve Chromium/WebKit run42001196596 geçti, mergee98d93b2c8a8fc3c527bbad20b91fadc30318380. Aşağıdaki kota/CI bekliyor ifadeleri tarihsel kayıttır; gerçek iPad/canlı hâlâ bekler.
+
 # Elektrik devre tahtası ilk paket — 10.1.2.1(a,b), c kısmi
 
 Kullanıcı adezyon/kohezyon sonrası elektrik devrelerini önceliklendirdi. #28 kılcallık ve #29 yüzey gerilimi main sonrası yeni dal açıldı. Eski elektrik laboratuvarının fizik motoru yeniden kullanılır; eski sayfa değiştirilmez. Başlangıçta eski devre23 testi de geçti.
