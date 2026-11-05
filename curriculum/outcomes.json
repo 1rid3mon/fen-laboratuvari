@@ -248,14 +248,15 @@
       "title": "Günlük hayatta saf maddelerin ve karışımların özkütlelerinden faydalanılan durumlara örnekler verir.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 315,
-      "status": "Geliştiriliyor",
-      "audit": "Kuyumculuk/porselen PR #22 main; ebru yüzey hareketi geliştirmede, son HEAD tarayıcı doğrulaması bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "Kuyumculuk/porselen #22 ve ebru #25 main. 455 model/regresyon ve Chromium/WebKit başarılı; gerçek iPad/canlı kabulü bekliyor.",
       "clauses": [],
       "evidence": [
-        "curriculum/MATERIAL-REVIEW.md"
+        "curriculum/MATERIAL-REVIEW.md",
+        "curriculum/EBRU-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 25,
+      "commit": "eb512f605918b23fdc1b8c5324dcf297907ddfb7",
       "realIPad": false,
       "live": false,
       "requirements": [
@@ -279,10 +280,12 @@
         },
         {
           "label": "Ebru: özkütle, yüzey etkileşimi ve alet hareketinin ayrılması",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/EBRU-REVIEW.md"
-          ]
+          ],
+          "pr": 25,
+          "commit": "eb512f605918b23fdc1b8c5324dcf297907ddfb7"
         }
       ]
     },
@@ -294,14 +297,46 @@
       "title": "Dayanıklılık kavramını açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 320,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Dört şekil için kesit tarayıcı, bağımsız boyutlar, A/V ölçümü ve benzerlik karşılaştırması geliştirildi; son HEAD tarayıcı kabulü bekliyor.",
       "clauses": [],
-      "evidence": [],
+      "evidence": [
+        "curriculum/STRENGTH-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Küp: benzer büyütme ve A/V",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/STRENGTH-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Prizma: bağımsız a/b/h ve benzerlik sınırı",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/STRENGTH-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Silindir: r/h, paralel kesit ve A/V",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/STRENGTH-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Küre: merkez/en büyük kesit ayrımı ve A/V",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/STRENGTH-REVIEW.md"
+          ]
+        }
+      ]
     },
     {
       "key": "physics:9.2.3.1",
