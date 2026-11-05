@@ -1,0 +1,15 @@
+# Kılcallık/ıslanma — 9.2.3.1 alt kabul incelemesi
+
+MEB 2018 Fizik 9.2.3.1(a): adezyon/kohezyonla kılcallık ve günlük örnekler; (c) öğrenciden matematiksel hesap istenmez. Yüzey geriliminin kendisi/faktörleri bu ilk boru paketiyle tamamlanmış sayılmaz. Kaynak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf , basılı s.15.
+
+İç fizik dayanağı: OpenStax College Physics 2e §11.8, yazarların açık ders kitabı: https://openstax.org/books/college-physics-2e/pages/11-8-cohesion-and-adhesion-in-liquids-surface-tension-and-capillary-action . Aynı/farklı tanecik çekimleri, temas davranışı, kılcallık yönü ve geniş haznede denge modeli kullanılır. Model tablosundaki temiz cam/su 0°, parafin/su 107° ve sınır 90° ideal öğretim örnekleridir; gerçek yüzey ölçümü iddiası yok. Sabit su20°C γ=.0728N/m, yaklaşık ρ=1000kg/m³ ve g=9.81m/s². Sayfada sayısal açı/kuvvet/yükseklik hesabı veya denklem gösterilmez; çap yalnız düzeneği seçmek içindir.
+
+İç denge hesabı h=2γcosθ/(ρgr). r=.30–.80mm, düşey düzgün açık boru, büyük hazne, denge, sabit yüzey durumu; menisküs hacmi ve dinamik temas açısı ihmal edilir. Menisküs çizgisi eğriliğin yönünü nitel gösterir, tam Young–Laplace şekli veya temas açısı ölçümü değildir. Borular yatayda okunabilirlik için abartılır; çizimden fiziksel cetvel sonucu çıkarılmaz. Borunun hazneye batan kısmı en büyük depresyondan daha derindir; boru tepesi en büyük yükselmenin üstündedir. Kütle/enerji kaynağı gibi pompa çizilmez. Geniş hazne varsayımı dış su seviyesini sabit tutar.
+
+Sürükle-yuvaya bırak, çıkar/kurula, iki bağımsız iç çap ve kaplama; aynı sıvıda zıt yön, sabit yüzeyde incelik ve sınırdaki nötr durum. Öğrenci tahmini önceden kilitler, iki boruyu gerçekten yerleştirmeden ölçüm oluşmaz. Ölçüm kayıtları koşul ve tahmini dondurur; sonradan yeni deneyin tahmini eski kaydı değiştirmez. Bir seferde çap/yüzeyden yalnız biri değişmişse kontrollü yorum yapılır. Yüzey ve çap birlikte değişirse tek neden diye açıklama verilmez. Aynı gözlem tekrarları tek değişken kanıtı sayılmaz.
+
+Kâğıt havlunun gözenekleri ve kılcal örnekleme günlük bağlantılarıdır, havlu emme hızı veya bitki iletim modeli değildir. Bitkilerde uzun mesafe su taşıma yalnız kılcallığa bağlanmaz. Islatmayan kaplama eklenince suyun kohezyonu yok olmuş, özkütlesi veya su-hava gerilimi otomatik değişmiş diye gösterilmez. Temizleme/yerleştirmeden sonra denge görüntüsü doğrudan güncellenir; zaman ölçeği veya boşalma filmi simülasyonu olduğu iddia edilmez.
+
+Altı model testi: sabit yüzeyde incelik; kaplamada zıt yön/nötr; geçersiz parametre; tek değişken kontrolü; ön tahmin+yerleştirme kapısı; kayıtların sonradan değişmemesi. Browser CI iki boruyu gerçek pointer ile yerleştirme/çıkarma, kaplama, nötr durum, hipotez, kayıt/yanlış kontrol koşulu ve soru/yönleri denetlemeli. Son HEAD yeşil olmadan main kabulü yok. Gerçek iPad Safari ve canlı ayrıca bekler.
+
+Kullanıcı yeni öncelik verdi: bu kazanımın adezyon/kohezyon/yüzey gerilimi paketleri sonrası **elektrik devreleri**. Eleman ve kablo bağlantıları öğrenci tarafından kurulmalı; gerçek devre modeli ve ölçüm cihazları incelenmeli.
