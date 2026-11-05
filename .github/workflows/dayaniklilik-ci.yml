@@ -1,10 +1,14 @@
 name: Strength Ratio Learning Cycle
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
-    paths: ['labs/dayaniklilik-*', 'labs/tyt-madde-tamamlayici.html', 'labs/hacim-olcum-model.js', 'tests/dayaniklilik-browser.cjs', '.github/workflows/dayaniklilik-ci.yml']
+    paths: ['labs/dayaniklilik-*', 'labs/hacim-olcum-model.js', 'tests/dayaniklilik-browser.cjs', '.github/workflows/dayaniklilik-ci.yml']
   push:
     branches: [main]
-    paths: ['labs/dayaniklilik-*', 'labs/tyt-madde-tamamlayici.html', 'labs/hacim-olcum-model.js', 'tests/dayaniklilik-browser.cjs', '.github/workflows/dayaniklilik-ci.yml']
+    paths: ['labs/dayaniklilik-*', 'labs/hacim-olcum-model.js', 'tests/dayaniklilik-browser.cjs', '.github/workflows/dayaniklilik-ci.yml']
 permissions:
   contents: read
 jobs:

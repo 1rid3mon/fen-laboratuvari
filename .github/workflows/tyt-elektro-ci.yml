@@ -1,6 +1,11 @@
 name: TYT 2018 MEB Electrostatics Lab
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
+    branches: [main]
     paths:
       - 'labs/tyt-elektro*'
       - '.github/workflows/tyt-elektro-ci.yml'
@@ -30,3 +35,4 @@ jobs:
           node --check labs/tyt-elektro.test.cjs
       - name: Verify electric charge physics, gestures and MEB compliance
         run: node --test labs/tyt-elektro.test.cjs
+

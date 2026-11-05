@@ -20,3 +20,8 @@ Menisküs ve gösterge nitel çizimlerdir; tam Young–Laplace yüzey şekli, ki
 Yedi model testi: IAPWS su değerleri, deniz suyu tablo değeri/katkı karşı örneği, sıcaklık monotonluğu, sabit plaka çekişi, geçersiz koşullar, ölçüm kapıları, tek değişken kontrolü. Browser CI gerçek plaka sürükleme/ilk temas/aşırı batırma, dara sıfırlanması, sıcaklık/tür ve katkı karşılaştırması, desteklenmeyen sıcaklığın engeli, soru/yönleri denetler. Son HEAD başarılı olmadan merge yok. Gerçek iPad ve canlı ayrıca bekler.
 
 Bu paketten sonra kullanıcı önceliği **elektrik devreleri**: güncel MEB 10.1.1 alt kapsamını ve mevcut devre kodunu oku; eleman/kablo düzeni öğrenci tarafından kurulmalı, akım/gerilim/direnç ve ölçüm cihazları gerçek devre çözümünden gelmelidir.
+
+
+## Kabul sonucu
+
+#29 HEAD a67803ba7e9805e82bbce54a0877744dca80ff2a, merge 7275877a610111a4cdb298f80542bdf67a71c671. 473/473 yerel test; son HEAD19 check ve Chromium/WebKit başarılı (surface run41982513570), diğer laboratuvar regresyonları geçti. #28 ile birlikte 9.2.3.1 tüm mevcut alt kabul maddeleri main; gerçek iPad/canlı ayrı bekler.

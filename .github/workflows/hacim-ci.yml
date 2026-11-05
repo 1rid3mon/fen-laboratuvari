@@ -1,10 +1,14 @@
 name: Geometric Volume Learning Cycle
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
-    paths: ['labs/hacim-*', 'labs/tyt-madde-tamamlayici.html', 'labs/ozkutle-olcum.css', 'tests/hacim-browser.cjs', '.github/workflows/hacim-ci.yml']
+    paths: ['labs/hacim-*', 'labs/ozkutle-olcum.css', 'tests/hacim-browser.cjs', '.github/workflows/hacim-ci.yml']
   push:
     branches: [main]
-    paths: ['labs/hacim-*', 'labs/tyt-madde-tamamlayici.html', 'labs/ozkutle-olcum.css', 'tests/hacim-browser.cjs', '.github/workflows/hacim-ci.yml']
+    paths: ['labs/hacim-*', 'labs/ozkutle-olcum.css', 'tests/hacim-browser.cjs', '.github/workflows/hacim-ci.yml']
 permissions:
   contents: read
 jobs:
@@ -20,6 +24,7 @@ jobs:
       - run: node --test labs/*.test.cjs tests/*.test.js
   browser:
     runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.62.1-noble
     timeout-minutes: 15
     strategy:
       fail-fast: false
@@ -33,10 +38,12 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1
-      - run: npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Verify preinstalled browser
+        run: node -e "if(!require('node:fs').existsSync(require('playwright')[process.argv[1]].executablePath()))process.exit(1)" ${{ matrix.engine }}
       - run: node tests/hacim-browser.cjs ${{ matrix.engine }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: volume-${{ matrix.engine }}
           path: test-results/
+

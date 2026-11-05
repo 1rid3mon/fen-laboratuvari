@@ -1,4 +1,8 @@
 name: Surface Tension Learning Cycle
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
     paths: ['labs/yuzey-gerilimi-*', 'tests/yuzey-gerilimi-browser.cjs', '.github/workflows/yuzey-gerilimi-ci.yml']

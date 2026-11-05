@@ -1,6 +1,11 @@
 name: TYT 2018 MEB Heat and Temperature Lab
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
+    branches: [main]
     paths:
       - 'labs/isi-sicaklik*'
       - '.github/workflows/tyt-isi-sicaklik-ci.yml'
@@ -30,3 +35,4 @@ jobs:
           node --check labs/isi-sicaklik.test.cjs
       - name: MEB 2018 TYT heat and touch regression
         run: node --test labs/isi-sicaklik.test.cjs
+
