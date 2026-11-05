@@ -354,41 +354,47 @@
       "title": "Yapışma (adezyon) ve birbirini tutma (kohezyon) olaylarını örneklerle açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 324,
-      "status": "Geliştiriliyor",
-      "audit": "Kılcallık/ıslanma #28 main; yüzey gerilimi ilk temas tezgâhı ve sıcaklık/tür/katkı karşılaştırması geliştirmede. Bu kazanım sonrası elektrik devreleri kullanıcı önceliği.",
+      "status": "maine birleştirildi",
+      "audit": "Kılcallık/ıslanma #28 ve yüzey gerilimi/faktörler #29 main; 473 test ve Chromium/WebKit geçti. Gerçek iPad/canlı ayrı bekler.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 326,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/SURFACE-REVIEW.md",
             "curriculum/CAPILLARY-REVIEW.md"
-          ]
+          ],
+          "pr": 29,
+          "commit": "7275877a610111a4cdb298f80542bdf67a71c671"
         },
         {
           "part": "b",
           "sourceLine": 328,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/SURFACE-REVIEW.md"
-          ]
+          ],
+          "pr": 29,
+          "commit": "7275877a610111a4cdb298f80542bdf67a71c671"
         },
         {
           "part": "c",
           "sourceLine": 330,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/SURFACE-REVIEW.md"
-          ]
+          ],
+          "pr": 29,
+          "commit": "7275877a610111a4cdb298f80542bdf67a71c671"
         }
       ],
       "evidence": [
         "curriculum/CAPILLARY-REVIEW.md",
         "curriculum/SURFACE-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 29,
+      "commit": "7275877a610111a4cdb298f80542bdf67a71c671",
       "realIPad": false,
       "live": false,
       "requirements": [
@@ -403,24 +409,30 @@
         },
         {
           "label": "Yüzey gerilimi mekanizması ve günlük örneklerin etkileşimli kabulü",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/SURFACE-REVIEW.md"
-          ]
+          ],
+          "pr": 29,
+          "commit": "7275877a610111a4cdb298f80542bdf67a71c671"
         },
         {
           "label": "Yüzey gerilimini etkileyen faktörlerin etkileşimli kabulü",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/SURFACE-REVIEW.md"
-          ]
+          ],
+          "pr": 29,
+          "commit": "7275877a610111a4cdb298f80542bdf67a71c671"
         },
         {
           "label": "Öğrenciye matematik hesap yaptırmama; grafik/sonuç tutarlılığı",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/SURFACE-REVIEW.md"
-          ]
+          ],
+          "pr": 29,
+          "commit": "7275877a610111a4cdb298f80542bdf67a71c671"
         }
       ]
     },
@@ -1459,20 +1471,24 @@
       "title": "Elektrik Akımı, direnç ve potansiyel farkı arasındaki ilişkiyi analiz eder.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 537,
-      "status": "Eksik",
-      "audit": "Mevcut sayfa varlığı öğrenme ve doğruluk kabulü sayılmaz; ayrıntılı eşleme bekliyor.",
+      "status": "Geliştiriliyor",
+      "audit": "Öğrencinin kurduğu eleman/kablo tahtası: taşı/döndür/kaldır, A/V bağlantı kapısı, Ohm defter/grafik geliştiriliyor; son HEAD tarayıcı kabulü bekliyor. Eşdeğer direnç görevleri ayrıca eksik.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 538,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+          ]
         },
         {
           "part": "b",
           "sourceLine": 539,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+          ]
         },
         {
           "part": "c",
@@ -1481,11 +1497,41 @@
           "evidence": []
         }
       ],
-      "evidence": [],
+      "evidence": [
+        "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+      ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Eleman yerleştir/çıkar/taşı/döndür ve kablo kur",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Ampermetre/voltmetre gerçek bağlantı ve direnç özellikleri",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Ölçümden Ohm ilişkisi: hipotez, defter, grafik ve kontrollü karşılaştırma",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Seri/paralel eşdeğer direnç ve matematik görevlerinin tam kabulü",
+          "status": "Eksik",
+          "evidence": []
+        }
+      ]
     },
     {
       "key": "physics:10.1.2.2",
