@@ -1411,64 +1411,76 @@
       "title": "Elektrik akımı, direnç ve potansiyel farkı kavramlarını açıklar.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 527,
-      "status": "Geliştiriliyor",
-      "audit": "Elektron/iyon örnekleri,tuza/ölçüm kesitine doğrudan müdahale,kaynak/engel/kapalı yol/iyonlaşma;A/V-Ohm tahtasına bağlı tanımlar.544 yerel test; son HEAD browser/CI bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "#40 main:544 test,7 check,Chromium/WebKit run42049637596 ve eski devre run42049637614 geçti. Doğrudan tuz/kesit,taşıyıcı/yön/net yük ve özgün YKS önermeleri. Gerçek iPad/canlı tam kabulü bekler.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 529,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CURRENT-CARRIERS-REVIEW.md",
             "curriculum/CIRCUIT-BUILDER-REVIEW.md"
-          ]
+          ],
+          "pr": 40,
+          "commit": "517e5cc033c44e3a491a9d791e5b53b9257b0346"
         },
         {
           "part": "b",
           "sourceLine": 530,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CURRENT-CARRIERS-REVIEW.md",
             "curriculum/CIRCUIT-BUILDER-REVIEW.md"
-          ]
+          ],
+          "pr": 40,
+          "commit": "517e5cc033c44e3a491a9d791e5b53b9257b0346"
         }
       ],
       "evidence": [
         "curriculum/CURRENT-CARRIERS-REVIEW.md",
         "curriculum/CIRCUIT-BUILDER-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 40,
+      "commit": "517e5cc033c44e3a491a9d791e5b53b9257b0346",
       "realIPad": false,
       "live": false,
       "requirements": [
         {
           "label": "Yük hareketinden akım/yön ve net yük korunumu",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CURRENT-CARRIERS-REVIEW.md"
-          ]
+          ],
+          "pr": 40,
+          "commit": "517e5cc033c44e3a491a9d791e5b53b9257b0346"
         },
         {
           "label": "Katı/sıvı/gaz/plazma ve her sıvı iletir genellemesini ayırma",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CURRENT-CARRIERS-REVIEW.md"
-          ]
+          ],
+          "pr": 40,
+          "commit": "517e5cc033c44e3a491a9d791e5b53b9257b0346"
         },
         {
           "label": "Gerilim/direnç tanımı,birimleri ve kapalı yol/taşıyıcı gereği; A/V-Ohm ölçümüne bağ",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CURRENT-CARRIERS-REVIEW.md"
-          ]
+          ],
+          "pr": 40,
+          "commit": "517e5cc033c44e3a491a9d791e5b53b9257b0346"
         },
         {
           "label": "Doğrudan tuz/kesit müdahalesi,hipotez/gözlem/defter/tek değişken/özgün YKS önermeleri",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/CURRENT-CARRIERS-REVIEW.md"
-          ]
+          ],
+          "pr": 40,
+          "commit": "517e5cc033c44e3a491a9d791e5b53b9257b0346"
         }
       ]
     },
@@ -1757,7 +1769,7 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 548,
       "status": "Geliştiriliyor",
-      "audit": "#37 nicel devre/enerji ve #38 nitel akış şeması main. Kullanıcının somut etkileşim açıklamasıyla fiziksel motor/jeneratör sahnesi açık ek gereklilik; üst kazanım Geliştiriliyor'a alındı, mevcut bilimsel kanıtlar korunur.",
+      "audit": "#37 nicel devre ve #38 yardımcı nitel şema main. Kullanıcının somut etkileşim gereği fiziksel jeneratör/motor/ampul ve yük hareketi geliştirildi;555 yerel test. Son HEAD browser/CI bekliyor; üst kabul hâlâ Geliştiriliyor.",
       "clauses": [
         {
           "part": "a",
@@ -1802,7 +1814,8 @@
       ],
       "evidence": [
         "curriculum/POWER-ENERGY-REVIEW.md",
-        "curriculum/ENERGY-CONVERSION-REVIEW.md"
+        "curriculum/ENERGY-CONVERSION-REVIEW.md",
+        "curriculum/PHYSICAL-GENERATOR-MOTOR-REVIEW.md"
       ],
       "pr": 38,
       "commit": "f4d8a7a7882c54186cd6ab5e6c6ee83789ce8586",
@@ -1838,8 +1851,10 @@
         },
         {
           "label": "Motor/jeneratörün fiziksel sahnesinde öğrenci eylemine bağlı hareket/enerji dönüşümü; kartlı akış şeması tek başına nihai kabul değildir",
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/PHYSICAL-GENERATOR-MOTOR-REVIEW.md"
+          ]
         }
       ]
     },

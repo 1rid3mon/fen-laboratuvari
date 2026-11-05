@@ -1,3 +1,13 @@
+# Güncel fiziksel tezgâh — kullanıcı eylemiyle jeneratör/motor/yük hareketi
+
+#40 HEADa027cd8a38818631cbcf54ecc52d1f1d5a98706b; merge517e5cc033c44e3a491a9d791e5b53b9257b0346.544 model/regresyon ve7 check; taşıyıcı Chromium/WebKit run42049637596,eski devre run42049637614 başarılı. İlk görsel kontrolden sonra işaretler ayrı yapay şeritlerden karışık dağılıma geçirildi,kısa sıvı ölçümünde görünür geçiş çözünürlüğü artırıldı,son sürüm tekrar test edildi.10.1.1.1 kabulü bu pakette kaydedildi.
+
+Güncel main517e5cc üzerinden feature/physical-generator-motor-20261105.10.1.2.3 için yeniden açılan fiziksel etkileşim gereği: kuvvet tutamağını sürükle, motor/ampulü ekle/taşı/kaldır,kabloları kur; rotor,akım,ampul gücü,motor mili ve yükselen yük aynı modelden. Kuvvet bırakılınca depolanmış dönme enerjisinden geçici aktarım sürer. Pil örneği,gerçek yük etkisi,ters motor/yük tutucu kavrama ve enerji korunumu da modelde.11 yeni model testiyle555 yerel. PHYSICAL-GENERATOR-MOTOR-REVIEW.md varsayımlar/analitik bilanço. Son HEAD Chromium/WebKit ve gerekli CI bekliyor; ek kabul kapanmadı.
+
+Sıradaki: bu fiziksel tezgâhı browser/CI ile doğrula ve yalnız yeşilse merge; #41 kabulüyle10.1.2.3 ek gereğini kapat. Sonra elektrostatikte temas sonrası kalıcı yük/güçlü ters etkiyle yeniden açılan elektroskop ve öğrenme döngüsünü denetle/düzelt; manyetizma ve tüm TYT83 kazanımı. Kullanıcının MEB/2027YKS ve somut etkileşim talimatı AGENTS.md'de kalıcıdır. Kartlı nitel şema yardımcı kalır; fiziksel deney yerine sayılmaz. Gerçek iPad/Apple Pencil/çoklu dokunma/akıcılık ve bütün canlı kabulü ayrıca bekler; elle deploy yok.
+
+---
+
 # Kullanıcının somut fiziksel etkileşim açıklaması — ana kabul ölçütü
 
 Kullanıcı MEB/2027YKS kapsamı, MEB/ÖSYM soru yaklaşımı ve konuya göre doğrudan taşıma/boyutlandırma/hareket/bağlantı değiştirerek sonucu üretmeyi tekrar netleştirdi. AGENTS.md kalıcı talimatla güncellendi. Açıklama düğmesi veya bilgi kartı fiziksel deneyin yerine sayılmaz.10.1.2.3'e fiziksel motor/jeneratör sahnesi için açık ek gereklilik eklendi. #37 devre/enerji ve #38 nitel enerji yolu kanıtları korunur; üst kazanım Geliştiriliyor'a alındı. Önceki tam kabul satırları bu ek etkileşim gereği açısından tarihsel kaldı.
