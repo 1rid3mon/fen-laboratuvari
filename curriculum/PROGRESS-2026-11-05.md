@@ -1,3 +1,13 @@
+# Güncel geliştirme — #37 main, enerji dönüşüm yolu
+
+#37 son HEAD31adea9e7a4ca131e1479f896ae98748da0a716c; merge874580094c32502067ee491203fcde46fe29032a. 520/520 model/regresyon;6 check; eski Ohm/eşdeğer+yeni touch kablolamalı enerji Chromium/WebKit run42038447678 başarılı. WebKit ekran görüntüsü incelendi. 10.1.2.3(b,ç) ve iki ilgili kabul maddesi main kanıtı bu pakette kapsam tablosuna işlendi.
+
+Güncel main8745800 üzerinden feature/energy-conversion-bench-20261105 açıldı. 10.1.2.3(a,c): kaynak/dönüştürücüleri öğrenci yerleştirir, uyumsuz giriş reddedilir; mekanik/elektrik/ısıl enerji yolu, soğuk ortam gereği, korunum göstergeleri, aynı enerji–farklı süre, hipotez/defter/açıklama/YKS. Altı model testiyle526/526 yerel test. ENERGY-CONVERSION-REVIEW.md bilimsel model/sınırlar. Son HEAD gerçek browser/CI kabulü bekliyor; üst kazanım henüz tamamlandı değil.
+
+Sıradaki: bu enerji dönüşüm paketinin Chromium/WebKit sonuçlarını incele ve yeşilse merge;10.1.2.3 üst kabulü merge SHA ile kaydet;10.1.2.4 elektrik güvenliği,10.1.1.1 iletim ve kalan TYT83 kazanımı. Gerçek iPad ve bütün canlı kabulü bekler; elle deploy yok. Aşağıdaki eski aşamalar tarihsel kayıttır.
+
+---
+
 # Güncel geliştirme — dirençte güç/enerji
 
 Kullanıcı TYT Fizik'in tamamına devam istedi. Maina409ad250fcfdb8d8031a6e3c0522d3b19f4760c kontrol edildi; açık PR yoktu. feature/resistor-power-energy-20261105 bu main'den açıldı. 10.1.2.3(b,ç): mevcut öğrenci kablolama tahtasına P·Δt enerji birikimi, E-t grafiği, süre, kaynak/alet/yük enerji bilançosu, özdeş lamba dal gücü, hipotez/defter/tek değişken kapısı/açıklama/YKS eklendi. Geçmiş enerji yeni güçle yeniden yazılmaz.9 yeni model testiyle520/520 yerel test geçti; son HEAD eski Ohm+eşdeğer ve yeni enerji Chromium/WebKit CI kabulü bekliyor. POWER-ENERGY-REVIEW.md.
