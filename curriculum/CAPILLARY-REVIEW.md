@@ -13,3 +13,8 @@ Kâğıt havlunun gözenekleri ve kılcal örnekleme günlük bağlantılarıdı
 Altı model testi: sabit yüzeyde incelik; kaplamada zıt yön/nötr; geçersiz parametre; tek değişken kontrolü; ön tahmin+yerleştirme kapısı; kayıtların sonradan değişmemesi. Browser CI iki boruyu gerçek pointer ile yerleştirme/çıkarma, kaplama, nötr durum, hipotez, kayıt/yanlış kontrol koşulu ve soru/yönleri denetlemeli. Son HEAD yeşil olmadan main kabulü yok. Gerçek iPad Safari ve canlı ayrıca bekler.
 
 Kullanıcı yeni öncelik verdi: bu kazanımın adezyon/kohezyon/yüzey gerilimi paketleri sonrası **elektrik devreleri**. Eleman ve kablo bağlantıları öğrenci tarafından kurulmalı; gerçek devre modeli ve ölçüm cihazları incelenmeli.
+
+
+## Kabul sonucu
+
+#28 HEAD b8b0eebe0432040f7b21e079d45bccf3388d2513, merge d573d4b9a2efc04d10aa6cefbc94a9444e55e740. 466/466 yerel test, son HEAD19 check ve Chromium/WebKit başarılı. Capillary run41981688230. Yalnız kılcallık/ıslanma alt kabulü main; diğer alt maddeler ayrı. Gerçek iPad/canlı bekler.
