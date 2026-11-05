@@ -80,7 +80,7 @@ function create(config){
    return;
   }
   const s=byId.get(state.tab),p=values[state.tab];
-  if(a==='reset'){stop();values[state.tab]={...s.defaults};controlHTML();render();}
+  if(a==='reset'){stop();if(s.onReset)s.onReset();values[state.tab]={...s.defaults};controlHTML();render();}
   if(s.motion&&a==='motion-home'){stop();p[s.motion.key]=s.motion.min;const x=el('ctl-'+s.motion.key);if(x)x.value=String(p[s.motion.key]);const out=el('out-'+s.motion.key);if(out)out.textContent=fmt(p[s.motion.key])+' '+(s.controls.find(c=>c.id===s.motion.key)?.unit||'');render();}
   if(s.motion&&a==='motion-step'){stop();p[s.motion.key]=Number(Math.min(s.motion.max,p[s.motion.key]+s.motion.step).toFixed(5));const x=el('ctl-'+s.motion.key);if(x)x.value=String(p[s.motion.key]);const out=el('out-'+s.motion.key);if(out)out.textContent=fmt(p[s.motion.key])+' '+(s.controls.find(c=>c.id===s.motion.key)?.unit||'');render();}
   if(s.motion&&a==='motion-play'){if(state.playing){stop();render();return;}if(p[s.motion.key]>=s.motion.max-1e-8)p[s.motion.key]=s.motion.min;state.playing=true;state.last=0;const generation=++state.generation;render();root.requestAnimationFrame(t=>animateFrame(t,generation));}
@@ -90,6 +90,7 @@ function create(config){
  function init(){
   el('tabs').addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t)change(t.dataset.tab);});
   el('controls').addEventListener('input',e=>{const input=e.target.closest('input[data-control]');if(!input||state.tab==='quiz')return;const s=byId.get(state.tab),c=s.controls.find(c=>c.id===input.dataset.control);if(!c)return;stop();values[state.tab][c.id]=Number(input.value);if(s.animate&&c.id!==s.animate.key){values[state.tab][s.animate.key]=0;const x=el('ctl-'+s.animate.key);if(x)x.value='0';const out=el('out-'+s.animate.key);if(out)out.textContent='0 s';}
+    if(s.onInput){s.onInput(values[state.tab],c.id);for(const other of s.controls){const x=el('ctl-'+other.id),o=el('out-'+other.id);if(x)x.value=String(values[state.tab][other.id]);if(o)o.textContent=fmt(values[state.tab][other.id])+' '+(other.unit||'');}}
     const out=el('out-'+c.id);if(out)out.textContent=fmt(values[state.tab][c.id])+' '+(c.unit||'');render();});
   el('actions').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b)click(b.dataset.action);});
   el('quiz').addEventListener('click',e=>{const b=e.target.closest('[data-choice]');if(b&&!state.checked){state.choice=Number(b.dataset.choice);quiz();}});
@@ -101,3 +102,4 @@ function create(config){
 }
 root.MekanikUI=Object.freeze({create,U});
 })(window,document);
+
