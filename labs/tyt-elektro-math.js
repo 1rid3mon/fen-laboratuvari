@@ -23,9 +23,16 @@ function induction({rodSign=-1,stage=0}={}){
 }
 function electroscope({known=0,rod=-1,approach=0}={}){
  finite(known,rod,approach);if(![-1,0,1].includes(known)||![-1,1].includes(rod)||approach<0||approach>1)throw RangeError('electroscope input');
- const baseline=known===0?0:.35,change=approach*(known===0?.58:known===rod?.55:-.48);
- const opening=Math.max(0,Math.min(1,baseline+change));
- return {opening,leafSign:known===0?(approach>0?rod:0):known,trend:known===0?(approach>0?'induction':'closed'):known===rod?'opens':'closes',baseline};
+ // Quasi-static, isolated two-region charge representation. The external rod
+ // redistributes electrons; it never transfers net charge across the air gap.
+ // Fractions/coupling are illustrative, not capacitances or a calibrated angle.
+ const baseline=Math.abs(known)*.35;
+ let leaves=.35*known+.58*rod*approach;
+ if(Math.abs(leaves)<1e-12)leaves=0;
+ const head=known-leaves,opening=Math.min(1,Math.abs(leaves));
+ const leafSign=Math.sign(leaves),reversed=known!==0&&leafSign!==0&&leafSign!==known;
+ const trend=known===0?(approach>0?'induction':'closed'):known===rod?'opens':reversed?'reopens':leaves===0?'closed':'closes';
+ return {opening,leafSign,trend,baseline,leaves,eachLeaf:leaves/2,head,total:known,reversed};
 }
 function distribution({material='conductor',charge=-6,grounded=false}={}){
  finite(charge);if(!['conductor','insulator'].includes(material))throw RangeError('material');
@@ -54,3 +61,4 @@ function polarize({rod=-1,near=0}={}){
 }
 w.TytElektroMath=Object.freeze({K,elementaryCharge,friction,contact,induction,electroscope,distribution,grounding,cage,coulomb,field,polarize});
 })(window);
+
