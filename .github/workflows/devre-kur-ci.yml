@@ -1,15 +1,15 @@
 name: Circuit Builder Learning Cycle
+on:
+  pull_request:
+    paths: ['labs/devre-kur-*', 'labs/devre-kur.html', 'labs/tyt-devre-math.js', 'tests/devre-kur-browser.cjs', 'tests/devre-esdeger-browser.cjs', '.github/workflows/devre-kur-ci.yml']
+  push:
+    branches: [main]
+    paths: ['labs/devre-kur-*', 'labs/devre-kur.html', 'labs/tyt-devre-math.js', 'tests/devre-kur-browser.cjs', 'tests/devre-esdeger-browser.cjs', '.github/workflows/devre-kur-ci.yml']
+permissions:
+  contents: read
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-on:
-  pull_request:
-    paths: ['labs/devre-kur-*', 'labs/devre-kur.html', 'labs/tyt-devre-math.js', 'tests/devre-kur-browser.cjs', '.github/workflows/devre-kur-ci.yml']
-  push:
-    branches: [main]
-    paths: ['labs/devre-kur-*', 'labs/devre-kur.html', 'labs/tyt-devre-math.js', 'tests/devre-kur-browser.cjs', '.github/workflows/devre-kur-ci.yml']
-permissions:
-  contents: read
 jobs:
   models-and-regression:
     runs-on: ubuntu-latest
@@ -41,6 +41,7 @@ jobs:
         run: |
           node -e "if(!require('node:fs').existsSync(require('playwright')[process.argv[1]].executablePath()))process.exit(1)" ${{ matrix.engine }}
       - run: node tests/devre-kur-browser.cjs ${{ matrix.engine }}
+      - run: node tests/devre-esdeger-browser.cjs ${{ matrix.engine }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
