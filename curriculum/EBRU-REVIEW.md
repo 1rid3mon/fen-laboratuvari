@@ -17,3 +17,8 @@ Renkler farklı özkütleli iki boya değil, tek hazırlanmış lekenin izleyici
 ## Kabul kapıları
 
 Beş anlamlı birim testi: uzaklığa bağlı çekiş, tam ters çekiş, dik çekiş sırasının etkisi, sıfır/geçersiz parametreler, yerel alan korunumu. Chromium/WebKit gerçek pointer sürükleme, tahmin zamanlaması, defter/karşılaştırma, geri al, soru, iki yön ve sayfa hataları CI'da çalıştırılacak. Bunlar gerçek iPad Safari/çoklu dokunma/akıcılık testi değildir. Son HEAD CI başarıyla gözlenmeden main kabulü verilmez. Laboratuvar bu aşamada geliştirmede; tüm 9.2.1.2'yi henüz tamamlandı sayma.
+
+
+## Gözlenen kabul sonucu
+
+PR #25 HEAD 71d445c9abadc9023f898e63391143c3f447ca0b: 455 model/regresyon ve son HEAD 16 check başarılı; ebru Chromium/WebKit run41978543369. Main merge eb512f605918b23fdc1b8c5324dcf297907ddfb7. Yukarıdaki CI bekliyor ifadesi bu sonuçla güncellenir. Gerçek iPad/canlı beklemeye devam eder.

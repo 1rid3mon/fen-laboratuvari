@@ -1,3 +1,5 @@
+> GÜNCEL DEVAM NOKTASI: [5 Kasım toplu ilerleme kaydı](PROGRESS-2026-11-05.md). #25 ebru ve #26 dayanıklılık main, son uygulama merge 339e1614e79a478f049780c4a4a05443c54d6c80. Aşağıdaki eski bekliyor satırları tarihseldir; güncel tablo ve sonraki iş bağlantıdaki kayıttadır. Proje tamamlanmadı.
+
 # Fen Laboratuvarı devam kaydı · 5 Kasım 2026
 
 **Proje tamamlanmadı.** Hedef altı alanın bütün ilgili kazanımları. 431 ana kazanım / 872 alt açıklama satırı başlangıç envanteri var; her alt açıklama gerektiğinde daha küçük kavramlara bölünmelidir. Eski bir sayfanın varlığı kabul değildir.
