@@ -1441,61 +1441,73 @@
       "title": "Katı bir iletkenin direncinin bağlıolduğu değişkenleri analiz eder.",
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 532,
-      "status": "Geliştiriliyor",
-      "audit": "Bağımsız numune/prob tezgâhı: boy/kesit/malzeme kontrollü karşılaştırması; sayısal R, sıcaklık ve renk kodu yok. Yerel model kabulü var; Actions dakika kotası nedeniyle browser/CI bekliyor.",
+      "status": "maine birleştirildi",
+      "audit": "Bağımsız numune/prob tezgâhı: boy/kesit/malzeme kontrollü karşılaştırması; sayısal R, sıcaklık ve renk kodu yok. #32 main;488 model/regresyon ve Chromium/WebKit geçti. Gerçek iPad/canlı bekliyor.",
       "clauses": [
         {
           "part": "a",
           "sourceLine": 533,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/WIRE-RESISTANCE-REVIEW.md"
-          ]
+          ],
+          "pr": 32,
+          "commit": "03917059bac7be6a13c88c74fa19f79261bde4c0"
         },
         {
           "part": "b",
           "sourceLine": 534,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/WIRE-RESISTANCE-REVIEW.md"
-          ]
+          ],
+          "pr": 32,
+          "commit": "03917059bac7be6a13c88c74fa19f79261bde4c0"
         }
       ],
       "evidence": [
         "curriculum/WIRE-RESISTANCE-REVIEW.md"
       ],
-      "pr": null,
-      "commit": null,
+      "pr": 32,
+      "commit": "03917059bac7be6a13c88c74fa19f79261bde4c0",
       "realIPad": false,
       "live": false,
       "requirements": [
         {
           "label": "Boy etkisini sabit malzeme/kesitte araştırma",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/WIRE-RESISTANCE-REVIEW.md"
-          ]
+          ],
+          "pr": 32,
+          "commit": "03917059bac7be6a13c88c74fa19f79261bde4c0"
         },
         {
           "label": "Kesit etkisini sabit malzeme/boyda araştırma",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/WIRE-RESISTANCE-REVIEW.md"
-          ]
+          ],
+          "pr": 32,
+          "commit": "03917059bac7be6a13c88c74fa19f79261bde4c0"
         },
         {
           "label": "Malzeme etkisini sabit boy/kesitte araştırma",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/WIRE-RESISTANCE-REVIEW.md"
-          ]
+          ],
+          "pr": 32,
+          "commit": "03917059bac7be6a13c88c74fa19f79261bde4c0"
         },
         {
           "label": "Sayısal direnç hesabı, sıcaklık ve renk kodu kapsam dışı",
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/WIRE-RESISTANCE-REVIEW.md"
-          ]
+          ],
+          "pr": 32,
+          "commit": "03917059bac7be6a13c88c74fa19f79261bde4c0"
         }
       ]
     },
@@ -1508,7 +1520,7 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 537,
       "status": "Geliştiriliyor",
-      "audit": "Eleman yerleştir/taşı/döndür/kaldır, gerçek kablo ve A/V Ohm deneyi #30 main;480 model/regresyon ve Chromium/WebKit geçti. Eşdeğer direnç(c) kabulü eksik.",
+      "audit": "Ohm ve devre kurma #30 main. Seri/paralel öğrenci kablolaması, bütün yük A/V kapıları ve eşdeğer ölçümü geliştirildi; son HEAD browser/CI kabulü bekliyor.",
       "clauses": [
         {
           "part": "a",
@@ -1533,12 +1545,15 @@
         {
           "part": "c",
           "sourceLine": 540,
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CIRCUIT-EQUIVALENT-REVIEW.md"
+          ]
         }
       ],
       "evidence": [
-        "curriculum/CIRCUIT-BUILDER-REVIEW.md"
+        "curriculum/CIRCUIT-BUILDER-REVIEW.md",
+        "curriculum/CIRCUIT-EQUIVALENT-REVIEW.md"
       ],
       "pr": null,
       "commit": null,
@@ -1574,8 +1589,10 @@
         },
         {
           "label": "Seri/paralel eşdeğer direnç ve matematik görevlerinin tam kabulü",
-          "status": "Eksik",
-          "evidence": []
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CIRCUIT-EQUIVALENT-REVIEW.md"
+          ]
         }
       ]
     },

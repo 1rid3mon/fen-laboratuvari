@@ -1,3 +1,21 @@
+# Güncel devam noktası — public CI doğrulandı, 5 Kasım 2026
+
+Bu bölüm aşağıdaki tarihsel kota/bekleyen PR satırlarının yerine geçer. Proje ve TYT Fizik tamamlanmadı. Depo kullanıcı tarafından public yapıldı; standart public Actions yeniden çalıştı. Ücretli kullanım açılmadı; elle Vercel üretim dağıtımı yapılmadı.
+
+| PR | Son test HEAD | Merge SHA | Kabul |
+|---|---|---|---|
+| #31 | 46d1bf8d4144f794d109246aa927ef212032fec3 | 534ea29b10c1c40a1b247947f36ae9d2608b2a9e | CI tekrarlarını azaltma;30/30 check geçti |
+| #30 | d98c402f08c788b3c4e0728cec7bf36f6f0ae6e6 | e98d93b2c8a8fc3c527bbad20b91fadc30318380 | Boş tahtadan eleman/kablo/A-V/Ohm;480 test ve7 check, Chromium/WebKit run42001196596 |
+| #32 | 9516162a3fa2147fbe04b0966e3d4277845a88e5 | 03917059bac7be6a13c88c74fa19f79261bde4c0 | Boy/kesit/malzeme ve öğrenci prob bağlantısı;488 test ve7 check, Chromium/WebKit run42002290018 |
+
+10.1.1.2 #32 kabulü bu pakette kapsam tablosuna işlendi. 10.1.2.1(a,b) #30 main; (c) seri/paralel eşdeğer direnç sıradaki bağımsız pakettir: feature/equivalent-resistance-20261105, başlangıç0391705. Bu dalda öğrenci seri/paralel/karışık kabloları kurar, A bütün akımı/V bütün yük grubunu ölçer; yanlış kısmi ölçümler kayıt olamaz. 8 ek model testiyle yerelde496/496; son HEAD browser/CI geçmeden main kabulü yok. CIRCUIT-EQUIVALENT-REVIEW.md bilimsel sınırları kaydeder. Yeni browser senaryosu eski Ohm senaryosuyla iki motorda çalışacak.
+
+Gerçek iPad Safari, Apple Pencil, çoklu dokunma/akıcılık ve yeni deneylerin canlı kabulü bekliyor. Yerel tarayıcı OS socket engeli sebebiyle çalışmadı; CI browser kanıtı bunun yerine gerçek cihaz diye sunulmadı. ÖSYM2027 ayrıntılı kapsam kılavuzu bağımsız doğrulanmış değil;2018 MEB/2028 geçiş kaynakları SOURCES.md'de.
+
+Sıradaki: eşdeğer paketi CI/testleri → başarılıysa PR/main; ardından10.1.2.2 üreteç,10.1.2.3 enerji/güç,10.1.2.4 güvenlik ve kalan TYT83 kazanımın ayrıntılı denetimi. Altı alan431 kazanım ve872 harfli açıklama envanteri korunur. Önceki paketlerin ayrıntılı SHA/kapsam kaydı aşağıdadır. Fizik bitince diğer alanlar sürer.
+
+---
+
 > GÜNCEL: Kullanıcı depoyu public yaptı; standart runner testleri yeniden başladı. #31 HEAD46d1bf8d4144f794d109246aa927ef212032fec3 30/30 check ile main534ea29b10c1c40a1b247947f36ae9d2608b2a9e. #30 güncel HEADd98c402f08c788b3c4e0728cec7bf36f6f0ae6e6,480 test ve Chromium/WebKit run42001196596 başarılı; maine98d93b2c8a8fc3c527bbad20b91fadc30318380. #32 iletken direnci bu güncel main ile uzlaştırıldı; son HEAD gerçek CI/browser bekliyor. Eski 1Aralık quota bekleme notları tarihsel kaldı. TYT Fizik hedefi devam: sıradaki eşdeğer direnç, üreteçler, güç/enerji/güvenlik. Gerçek iPad ve canlı ayrı bekler.
 
 > GÜNCEL: #29 yüzey gerilimi main7275877a610111a4cdb298f80542bdf67a71c671; 473 test/19 check ve Chromium/WebKit başarılı (run41982513570). 9.2.3.1 alt maddelerinin main kanıtları işlendi. Kullanıcı önceliğiyle ELEKTRİK DEVRELERİNE geçildi: feature/circuit-builder-20261105, boş tahta/eleman ekle-kaldır-taşı-döndür/gerçek kablo/Ohm ölçüm kapısı ve grafik. 480 yerel test; son HEAD browser kabulü bekliyor. İlk paket10.1.2.1(a,b), eşdeğer direnç(c) ve üreteç/güç/güvenlik ayrı eksik. Son HEAD CI geçerse merge; ardından elektrik paketlerini güncel main üstünden sürdür.

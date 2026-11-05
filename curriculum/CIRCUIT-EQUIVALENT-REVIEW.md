@@ -1,0 +1,13 @@
+# Eşdeğer direnç — 10.1.2.1(c)
+
+2018 MEB Fizik10.1.2.1(c): eşdeğer direnç, direnç, potansiyel farkı ve elektrik akımı hesapları. Resmi kaynak: https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf , basılı s.21. #30'un gerçek parça/kablo/Ohm tezgâhı üzerine ayrı paket; üreteçler, güç/enerji ve güvenlik bu paketle tamamlandı sayılmaz. Kirchhoff yasaları öğrenciye öğretilmez.
+
+Yeni araştırmada öğrenci aynı model dirençleri kendi kablolarıyla seri/paralel bağlar; V bütün yük grubunun uçlarına, A grubun toplam akımına seri olmalıdır. Özel görevde A kaynağa komşu konumdadır; başka geçerli genel devre düzenleri bu görevin kapısında reddedilebilir, fizik motorunda çalışmayı sürdürür. A dışında kaynak akımı geçiren yol veya V yalnız bir direnci ölçüyorsa toplam eşdeğer kaydı oluşmaz. Yanlış daldaki V/I oranından sahte eşdeğer kanıtı üretilmez.
+
+ÖlçülenRₑş=|V|/|I|. Model teorisi kaynak ve ölçü aletlerini yük eşdeğerine katmaz: seri dirençler toplanır, paralelde iletkenlikler toplanır. İç doğrulama1–3 pasif yükün seri/paralel indirgemesidir; açık yollar ve boşta dallar ayrılır. Bağlantılarda kablo/S ve teorik hesapta A ideal alınır; gerçek ölçüm motoru A=.002Ω,V=1GΩ içerir. Bu nedenle ölçülenRₑş çok küçük alet farkıyla teorik yüke yaklaşır. Değerler üç basamakla gösterilir; tam ideal ile yaklaşık ideal sonuç karıştırılmaz. Model lambalar sabit dirençlidir; gerçek akkor telin ısınması çözülmez.
+
+Defter görev türü, kaynak, yük değerleri, aktif yükler ve topolojiyi dondurur. Aynı kaynak/aynı model yükler altında seri–paralel karşılaştırma yapılır. Kaynak veya ortak yük değerleri de değişirse tek değişken onayı verilmez. İlk Ohm görevindeki kayıtlar eşdeğer görevindeki kayıtlarla karıştırılmaz. Yanlış 'seride azalır/paralelde artar' tahminleri aynı iki yükün karşılaştırmasında ölçümle düzeltilir. I–V grafiğinin fiziksel ölçeği korunur ve eksen adı son tikle çakışmaz.
+
+Sekiz ek model testi: eşit olmayan seri yük14Ω; paralel24/7Ω; karışık4.8Ω; V tek yükte reddi; A dışından kaynak akımı reddi; dönüş kolundaki A/ters V; boşta yükün eşdeğeri değiştirmemesi; açık/kısa devrede kayıt engeli. Önceki15/7 model işlevleri geriye uyumludur. Yeni browser senaryosu öğrencinin gerçek terminal dokunuşlarıyla seri/paralel kurar; yanlış V ve A bağlantılarını, defteri, koşul kapılarını ve YKS sorusunu dener. Eski Ohm browser testi de korunur; her Chromium/WebKit işinde ikisi birlikte çalışır. Yerel toplam496 model/regresyon.
+
+Main başlangıcı03917059bac7be6a13c88c74fa19f79261bde4c0 (#31,#30,#32 kabul edildi). Son HEAD gerçek CI yeşil olmadan main kabulü verilmez. Gerçek iPad Safari/Apple Pencil/çoklu dokunma/akıcılık ve canlı ayrıca bekler. Public standart runner kota engelini kaldırdı; ücretli kullanım açılmadı.
