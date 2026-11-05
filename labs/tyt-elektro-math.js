@@ -15,6 +15,16 @@ function contact({first=8,second=0,progress=1}={}){
  const total=first+second,touched=progress>=1-1e-9,after=total/2;
  return {first:touched?after:first,second:touched?after:second,total,touched,initialTotal:total};
 }
+function contactTrial({first=8,second=0}={}){
+ finite(first,second);
+ return {first,second,initialFirst:first,initialSecond:second,total:first+second,initialTotal:first+second,progress:0,touched:false,hasTouched:false,contacts:0,electronToA:0};
+}
+function moveContact(previous,progress){
+ finite(previous.first,previous.second,previous.total,progress);if(progress<0||progress>1)throw RangeError('progress');
+ const touched=progress>=1-1e-9,newTouch=touched&&!previous.touched;
+ const after=previous.total/2,first=newTouch?after:previous.first,second=newTouch?after:previous.second;
+ return {...previous,progress,first,second,touched,hasTouched:previous.hasTouched||touched,contacts:previous.contacts+(newTouch?1:0),electronToA:newTouch?previous.first-first:0};
+}
 function induction({rodSign=-1,stage=0}={}){
  finite(rodSign,stage);if(![-1,1].includes(rodSign)||!Number.isInteger(stage)||stage<0||stage>4)throw RangeError('stage or sign');
  const rodPresent=stage>=1&&stage<=3,groundConnected=stage===2;
@@ -59,6 +69,6 @@ function polarize({rod=-1,near=0}={}){
  finite(rod,near);if(![-1,1].includes(rod)||near<0||near>1)throw RangeError('rod/near');
  return {nearSign:-rod,farSign:rod,attracted:near>.15,net:0};
 }
-w.TytElektroMath=Object.freeze({K,elementaryCharge,friction,contact,induction,electroscope,distribution,grounding,cage,coulomb,field,polarize});
+w.TytElektroMath=Object.freeze({K,elementaryCharge,friction,contact,contactTrial,moveContact,induction,electroscope,distribution,grounding,cage,coulomb,field,polarize});
 })(window);
 

@@ -1,3 +1,13 @@
+# Güncel — elektroskop main, temas sonrası kalıcı yük
+
+#42 HEAD e4fa5613579cbb56ad1640e1fb2147054f3ef648; merge9f3d236bf2e2386a9bf9272a5404224a291a0d78.559 model/regresyon ve7 check başarılı. Chromium/WebKit run42056029895; WebKit görüntüsü incelendi.9.6.1.1(c) alt kabulü bu pakette kaydedildi;üst kazanım açık.
+
+Main9f3d236 üzerinden fix/persistent-contact-charge-20261105. Dokunma sahnesinin temastan sonra ayrılınca başlangıç yüküne dönme hatası düzeltildi. Kalıcı durum, gerçek sağ küre sürükleme/temas/ayırma, özdeş kürelerde işaretli paylaşım, tekrar temas, sekmede kalıcılık, açık yeni deney/reset, bağımsız başlangıç yükleri, gözlem defteri/karşılaştırma/özgün YKS eklendi. CONTACT-CHARGE-REVIEW.md.4 model+2 sahne entegrasyon testi;son HEAD eski elektroskop ve yeni dokunma Chromium/WebKit/CI kabulü bekliyor. Ortak MekanikUI isteğe bağlı onInput/onReset kancaları dışında değiştirilmedi;genel regresyon gerekir.
+
+Sıradaki: yeni paketin son HEAD browser/CI/görselini doğrula,hataları çöz ve yalnız yeşilse merge;özel temas gereğini merge SHA ile kapat. Ardından sürtünmede plastik/yün elektron yönü ve serbest etki/topraklama sırasının fiziksel durum modeli. Sonra manyetizma ve bütün TYT83 kazanımın kalanları;altı alan nihai hedefi korunur. TYT83 kazanımdan10 üst main kabulü/73 ayrıntılı kabulü kalan. Gerçek iPad Safari/Apple Pencil/çoklu dokunma/akıcılık ve bütün canlı kabulü açık;elle Vercel deploy yok.
+
+---
+
 # Güncel — fiziksel enerji main, elektroskop düzeltmesi
 
 #41 HEAD d063e8134f888677a0dbc7a3b61441ee5a016f73; merge 2ec7db3de1c03c7d853e84cbe40bf8a85da9931c.555 model/regresyon ve13 check başarılı. Fiziksel jeneratör/motor Chromium/WebKit run42053587596, eski devre run42053587387, yardımcı enerji yolu run42053587569 geçti; iki WebKit görüntüsü incelendi. Kuvvet sürükleme, kablolama, motor/ampul ekleme/taşıma/çıkarma, gerçek yük etkisi, depolanmış rotor enerjisiyle geçici aktarım ve ters motor/kavrama/enerji korunumu doğrulandı.10.1.2.3 ek fiziksel gereği ve üst kabul bu pakette #41 merge SHA ile kapatıldı. TYT Fizik83 kazanımdan10 main kabulü;73 ayrıntılı kabulü kalan (eski sayfa bulunması kabul değildir).

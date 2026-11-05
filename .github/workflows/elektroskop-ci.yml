@@ -4,10 +4,10 @@ concurrency:
   cancel-in-progress: true
 on:
   pull_request:
-    paths: ['labs/tyt-elektro*', 'labs/elektroskop*', 'labs/mekanik-ui.js', 'tests/elektroskop-browser.cjs', '.github/workflows/elektroskop-ci.yml']
+    paths: ['labs/tyt-elektro*', 'labs/elektroskop*', 'labs/dokunma*', 'labs/mekanik-ui.js', 'tests/elektroskop-browser.cjs', 'tests/dokunma-browser.cjs', '.github/workflows/elektroskop-ci.yml']
   push:
     branches: [main]
-    paths: ['labs/tyt-elektro*', 'labs/elektroskop*', 'labs/mekanik-ui.js', 'tests/elektroskop-browser.cjs', '.github/workflows/elektroskop-ci.yml']
+    paths: ['labs/tyt-elektro*', 'labs/elektroskop*', 'labs/dokunma*', 'labs/mekanik-ui.js', 'tests/elektroskop-browser.cjs', 'tests/dokunma-browser.cjs', '.github/workflows/elektroskop-ci.yml']
 permissions:
   contents: read
 jobs:
@@ -41,6 +41,7 @@ jobs:
         run: |
           node -e "if(!require('node:fs').existsSync(require('playwright')[process.argv[1]].executablePath()))process.exit(1)" ${{ matrix.engine }}
       - run: node tests/elektroskop-browser.cjs ${{ matrix.engine }}
+      - run: node tests/dokunma-browser.cjs ${{ matrix.engine }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -85,6 +85,20 @@ test('charge sharing appears visually only when the two spheres touch',()=>{
  assert.match(t.nodes.get('interpret').textContent,/henüz temas etmedi/);
  t.input('progress',1);assert.match(t.nodes.get('interpret').textContent,/eşit paylaşır/);assert.notEqual(a,t.nodes.get('scene').innerHTML);
 });
+test('contact scene preserves shared charge on withdrawal, tab return and motion-home; explicit reset starts a new trial',()=>{
+ const t=mount();t.tab('contact');t.input('progress',1);t.input('progress',0);
+ assert.equal(t.win.TytElektroLab.contactSnapshot().first,4);
+ t.tab('scope');t.tab('contact');t.action('motion-home');
+ const shared=t.win.TytElektroLab.contactSnapshot();assert.equal(shared.first,4);assert.equal(shared.second,4);
+ shared.first=999;assert.equal(t.win.TytElektroLab.contactSnapshot().first,4);
+ t.action('reset');const fresh=t.win.TytElektroLab.contactSnapshot();assert.equal(fresh.first,8);assert.equal(fresh.second,0);assert.notEqual(fresh.trialId,shared.trialId);
+});
+test('changing initial charges prepares separated spheres and preserves the new signed total',()=>{
+ const t=mount();t.tab('contact');t.input('progress',1);t.input('second',-4);
+ assert.equal(t.win.TytElektroLab.snapshot().values.contact.progress,0);
+ const initial=t.win.TytElektroLab.contactSnapshot();assert.equal(initial.first,8);assert.equal(initial.second,-4);assert.equal(initial.hasTouched,false);
+ t.input('progress',1);t.input('progress',0);const end=t.win.TytElektroLab.contactSnapshot();assert.equal(end.first,2);assert.equal(end.second,2);assert.equal(end.total,4);
+});
 test('Coulomb dragging changes 1/r² force and updates SVG vectors',()=>{
  const t=mount();t.tab('coulomb');t.control('distance',1.5,.5,3.5,.1);
  const a=t.nodes.get('measurements').innerHTML,b=t.nodes.get('scene').innerHTML;
@@ -137,3 +151,4 @@ test('2018 MEB 9.6.1.4 forbids electric-field numerical calculation in the UI',(
  assert.doesNotMatch(t.nodes.get('formula').textContent,/9 × 10⁹/);
  t.tab('coulomb');assert.match(t.nodes.get('measurements').innerHTML,/ N/);
 });
+

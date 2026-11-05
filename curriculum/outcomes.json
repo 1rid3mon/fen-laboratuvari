@@ -1293,7 +1293,7 @@
       "source": "https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf",
       "sourceLine": 494,
       "status": "Geliştiriliyor",
-      "audit": "Elektroskop(c): işaretli yaprak/topuz yükü ve korunum, güçlü ters etkiyle yeniden açılma, gerçek boşluklu çubuk sürükleme, hipotez/defter/eğri/karşılaştırma/özgün YKS geliştiriliyor. Son HEAD browser/CI bekliyor. Sürtünme malzeme-yönü, temas sonrası kalıcı yük ve serbest etki/toprak sırası ayrıca açık.",
+      "audit": "#42 elektroskop(c) main;559 test,7 check,Chromium/WebKit run42056029895 ve WebKit görsel kabul. Dokunmayla kalıcı yük geçmişi/öğrenme döngüsü geliştiriliyor;son HEAD browser/CI bekler. Sürtünme malzeme yönü ve serbest etki/toprak sırası açık;üst kazanım tamamlanmadı.",
       "clauses": [
         {
           "part": "a",
@@ -1310,19 +1310,41 @@
         {
           "part": "c",
           "sourceLine": 499,
-          "status": "Geliştiriliyor",
+          "status": "maine birleştirildi",
           "evidence": [
             "curriculum/ELECTROSCOPE-REVIEW.md"
-          ]
+          ],
+          "pr": 42,
+          "commit": "9f3d236bf2e2386a9bf9272a5404224a291a0d78"
         }
       ],
       "evidence": [
-        "curriculum/ELECTROSCOPE-REVIEW.md"
+        "curriculum/ELECTROSCOPE-REVIEW.md",
+        "curriculum/CONTACT-CHARGE-REVIEW.md"
       ],
       "pr": null,
       "commit": null,
       "realIPad": false,
-      "live": false
+      "live": false,
+      "requirements": [
+        {
+          "label": "Temas sonrası ayrılınca yüklerin kalması; başlangıç deneyi ile konum değişikliğinin ayrılması",
+          "status": "Geliştiriliyor",
+          "evidence": [
+            "curriculum/CONTACT-CHARGE-REVIEW.md"
+          ]
+        },
+        {
+          "label": "Sürtünmede malzeme eşleşmesine uygun elektron yönü ve yük/birim yük kavramları",
+          "status": "Eksik",
+          "evidence": []
+        },
+        {
+          "label": "Öğrencinin serbest etki/topraklama sıralaması ve yanlış sıralamanın bilimsel sonucu",
+          "status": "Eksik",
+          "evidence": []
+        }
+      ]
     },
     {
       "key": "physics:9.6.1.2",
