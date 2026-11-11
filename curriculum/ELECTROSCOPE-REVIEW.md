@@ -1,6 +1,6 @@
 # Elektroskop — 9.6.1.1(c), temassız yük dağılımı
 
-2018 MEB Fizik 9.6.1.1(c) elektroskopun kullanım amacına yönelik deneydir. Kaynak: SOURCES.md ve resmî https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf . Bu paket bütün elektriklenme kazanımını kapatmaz; sürtünme, kalıcı temas ve serbest etki/topraklama sırası ayrıca bekler.
+2018 MEB Fizik 9.6.1.1(c) elektroskopun yük cinsinin tayininde kullanılmasına örnek verilmesidir. Kaynak: SOURCES.md ve resmî https://mufredat.meb.gov.tr/Dosyalar/201812103112910-orta%C3%B6%C4%9Fretim_fizik_son.pdf . Bu paket bütün elektriklenme kazanımını kapatmaz; sürtünme, kalıcı temas ve serbest etki/topraklama sırası ayrıca bekler.
 
 ## Bulunan hata ve düzeltme
 
